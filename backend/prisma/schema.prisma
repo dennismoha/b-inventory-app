@@ -1,0 +1,1038 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// model Categories {
+//   categoryId     String   @id @default(uuid()) @db.Uuid
+//   category_slug  String   @unique
+//   category_name  String   @unique
+//   description    String
+//   created_at     DateTime @default(now()) @db.Timestamp(6)
+//   updated_at     DateTime @updatedAt @db.Timestamp(6)
+//   SubCategories  SubCategories[]
+//   Products       Products[]
+
+//   @@map("Categories")
+// }
+
+// model SubCategories {
+//   subcategory_id   String      @id @default(uuid()) @db.Uuid
+//   subcategory_name String      
+//   category_id      String      @db.Uuid 
+//   description      String
+//   created_at       DateTime    @default(now()) @db.Timestamp(6)
+//   updated_at       DateTime    @updatedAt @db.Timestamp(6)
+//   category         Categories  @relation(fields: [category_id], references: [categoryId])
+//   Products         Products[]
+
+//   // Add composite unique constraint
+//   @@unique([category_id, subcategory_name])  // Ensures unique combinations of category_id and subcategory_name
+//   @@map("SubCategories")
+// }
+
+model Categories {
+  categoryId    String                @id @default(uuid()) @db.Uuid
+  category_slug String                @unique
+  category_name String                @unique
+  description   String
+  created_at    DateTime              @default(now()) @db.Timestamp(6)
+  updated_at    DateTime              @updatedAt @db.Timestamp(6)
+  SubCategories CategorySubCategory[] // Many-to-many relationship
+  Products      Products[]
+
+  @@map("Categories")
+}
+
+model SubCategories {
+  subcategory_id   String                @id @default(uuid()) @db.Uuid
+  subcategory_name String                @unique
+  description      String
+  created_at       DateTime              @default(now()) @db.Timestamp(6)
+  updated_at       DateTime              @updatedAt @db.Timestamp(6)
+  Categories       CategorySubCategory[] // Many-to-many relationship
+  Products         Products[]
+
+  @@map("SubCategories")
+}
+
+// Pivot table for the many-to-many relationship between Categories and SubCategories
+model CategorySubCategory {
+  category_subcategory_id String   @default(uuid()) @db.Uuid
+  category_id             String   @db.Uuid
+  subcategory_id          String   @db.Uuid
+  created_at              DateTime @default(now()) @db.Timestamp(6)
+
+  category    Categories    @relation(fields: [category_id], references: [categoryId])
+  subcategory SubCategories @relation(fields: [subcategory_id], references: [subcategory_id])
+
+  @@id([category_id, subcategory_id]) // Composite primary key for the pivot table
+  @@map("CategorySubCategory")
+}
+
+model SupplierPricing {
+  supplier_pricing     String           @id @default(uuid()) @db.Uuid
+  supplier_products_id String           @db.Uuid
+  Quantity             Decimal          @db.Decimal(8, 2)
+  unit_id              String           @db.Uuid
+  price                Decimal          @db.Decimal(8, 2)
+  effective_date       DateTime         @db.Date
+  created_at           DateTime         @default(now()) @db.Timestamp(6)
+  updated_at           DateTime         @updatedAt @db.Timestamp(6)
+  supplierProduct      SupplierProducts @relation(fields: [supplier_products_id], references: [supplier_products_id])
+  unit                 Units            @relation(fields: [unit_id], references: [unit_id])
+  OrderProducts        OrderProducts[]
+
+  @@map("SupplierPricing")
+}
+
+model ProductUnits {
+  product_unit_id String   @id @default(uuid()) @db.Uuid
+  product_id      String   @db.Uuid
+  unit_id         String   @db.Uuid
+  product         Products @relation(fields: [product_id], references: [product_id])
+  unit            Units    @relation(fields: [unit_id], references: [unit_id])
+
+  @@map("ProductUnits")
+}
+
+model Units {
+  unit_id         String            @id @default(uuid()) @db.Uuid
+  unit            String            @unique
+  short_name      String            @unique
+  no_of_products  Int
+  created_at      DateTime          @default(now()) @db.Timestamp(6)
+  updated_at      DateTime          @updatedAt @db.Timestamp(6)
+  ProductUnits    ProductUnits[]
+  SupplierPricing SupplierPricing[]
+  OrderProducts   OrderProducts[]
+  Inventory       Inventory[]
+  ProductPricing  ProductPricing[]
+  Purchase        Purchase[]
+
+  @@unique([unit, short_name], name: "unit_short_name")
+  @@map("Units")
+}
+
+model SupplierProducts {
+  supplier_products_id String            @id @default(uuid()) @db.Uuid
+  supplier_id          String            @db.Uuid
+  product_id           String            @db.Uuid
+  created_at           DateTime          @default(now()) @db.Timestamp(6)
+  updated_at           DateTime          @updatedAt @db.Timestamp(6)
+  supplier             Suppliers         @relation(fields: [supplier_id], references: [supplier_id])
+  product              Products          @relation(fields: [product_id], references: [product_id])
+  SupplierPricing      SupplierPricing[]
+  Inventory            Inventory?
+  ProductPricing       ProductPricing?
+
+  SalesProducts Sales[]
+
+  // batchInventories BatchInventory[]
+
+  Purchases Purchase[]
+  ProductSummary ProductSummary[]
+
+  @@unique([supplier_id, product_id]) // Enforcing uniqueness on supplier_id and product_id combination
+  @@map("SupplierProducts")
+}
+
+model Products {
+  product_id       String             @id @default(uuid()) @db.Uuid
+  name             String
+  description      String
+  category_id      String             @db.Uuid
+  subcategory_id   String             @db.Uuid
+  image_url        String
+  sku              String             @unique
+  created_at       DateTime           @default(now()) @db.Timestamp(6)
+  updated_at       DateTime           @updatedAt @db.Timestamp(6)
+  category         Categories         @relation(fields: [category_id], references: [categoryId])
+  subcategory      SubCategories      @relation(fields: [subcategory_id], references: [subcategory_id])
+  ProductUnits     ProductUnits[]
+  SupplierProducts SupplierProducts[]
+  OrderProducts    OrderProducts[]
+
+  @@map("Products")
+}
+
+model Suppliers {
+  supplier_id      String             @id @default(uuid()) @db.Uuid
+  name             String             @unique
+  address          String
+  contact          String
+  created_at       DateTime           @default(now()) @db.Timestamp(6)
+  updated_at       DateTime           @updatedAt @db.Timestamp(6)
+  SupplierProducts SupplierProducts[]
+  Order            Order[]
+
+  @@map("Suppliers")
+}
+
+model Order {
+  supplier_id       String        @db.Uuid
+  orderId           String        @id @default(uuid()) @db.Uuid
+  orderName         String        @unique
+  totalAmount       Decimal       @db.Decimal(10, 2)
+  paymentStatus     PaymentStatus
+  paymentMethod     PaymentMethod
+  orderDate         DateTime
+  shippingDate      DateTime
+  orderDeliveryDate DateTime
+  orderStatus       OrderStatus   @default(empty)
+  comments          String?
+  supplierDetails   String?
+  receiptPictorials String?
+  receiptText       String?
+  created_at        DateTime      @default(now())
+  last_updated_at   DateTime      @updatedAt
+
+  // Relations
+  supplier      Suppliers       @relation(fields: [supplier_id], references: [supplier_id])
+  miscellaneous Miscellaneous?
+  orderProducts OrderProducts[]
+}
+
+model Miscellaneous {
+  miscellaneous_id       String   @id @default(uuid()) @db.Uuid
+  order_id               String   @unique @db.Uuid
+  base_fare              Decimal  @db.Decimal(10, 2)
+  discount_amount        Decimal  @default(0) @db.Decimal(10, 2)
+  additional_charges     Decimal  @default(0) @db.Decimal(10, 2)
+  tax_amount             Decimal  @db.Decimal(10, 2)
+  shipping_charge        Decimal  @db.Decimal(10, 2)
+  payment_processing_fee Decimal  @default(0) @db.Decimal(10, 2)
+  total_order_value      Decimal  @db.Decimal(10, 2)
+  currency_code          String   @db.VarChar(3)
+  fare_breakdown         Json?
+  tip_amount             Decimal  @default(0) @db.Decimal(10, 2)
+  refund_amount          Decimal  @default(0) @db.Decimal(10, 2)
+  other_fees             Decimal  @default(0) @db.Decimal(10, 2)
+  payment_status         String   @db.VarChar(20)
+  created_at             DateTime @default(now())
+  updated_at             DateTime @updatedAt
+  notes                  String
+
+  // Relations
+  order Order @relation(fields: [order_id], references: [orderId])
+}
+
+model OrderProducts {
+  orderProductsId           String  @id @default(uuid())
+  orderId                   String  @db.Uuid
+  productId                 String  @db.Uuid
+  productName               String
+  quantity                  Int
+  order_quantity            Int
+  price_per_unit            Decimal @db.Decimal(10, 2)
+  unit_id                   String  @db.Uuid
+  totalAmount               Decimal @db.Decimal(10, 2)
+  supplierProductsPricingId String  @db.Uuid
+
+  // Relations
+  order             Order               @relation(fields: [orderId], references: [orderId])
+  supplierPricing   SupplierPricing     @relation(fields: [supplierProductsPricingId], references: [supplier_pricing])
+  products          Products            @relation(fields: [productId], references: [product_id])
+  units             Units               @relation(fields: [unit_id], references: [unit_id])
+  inventoryTracking InventoryTracking[]
+}
+
+model Inventory {
+  inventoryId          String          @id @default(uuid())
+  supplier_products_id String          @unique @db.Uuid
+  batch_inventory_id   String          @unique @db.Uuid
+  // productName           String
+  // sku                   String
+  // product_weight         Decimal                  @db.Decimal(8, 2)
+  stock_quantity       Decimal         @db.Decimal(8, 2)
+  // reorder_level          Int
+  // last_restocked         DateTime
+  unit_id              String          @db.Uuid
+  created_at           DateTime        @default(now()) @db.Timestamp(6)
+  updated_at           DateTime        @updatedAt @db.Timestamp(6)
+  // Soft delete flag to mark an inventory item as deleted without actually removing it from the database.
+  // softDelete             Boolean                  @default(false)
+  // Status to indicate whether the inventory item is active, inactive, or discontinued.
+  status               InventoryStatus @default(ACTIVE)
+  // Relations
+
+  supplierProduct        SupplierProducts         @relation(fields: [supplier_products_id], references: [supplier_products_id])
+  unit                   Units                    @relation(fields: [unit_id], references: [unit_id])
+  Sales     Sales[]
+  // InventoryRestock       InventoryRestock[]
+  InventorySalesTracking InventorySalesTracking[]
+  inventory              BatchInventory           @relation(fields: [batch_inventory_id], references: [batch_inventory_id])
+
+  // `last_restocked` is the timestamp when new stock was last added to the inventory. 
+  // It is updated whenever stock_quantity is restocked, e.g., when new products are received from the supplier.
+
+  // `updated_at` is the timestamp when any update occurs to the inventory record. 
+  // This field will be updated on any modification of the inventory item, 
+  // including when stock levels are adjusted (due to sales, stock adjustments, etc.), 
+  // price updates, or status changes.
+  @@unique([batch_inventory_id, status])
+}
+
+model InventoryLog {
+  log_id             String   @id @default(uuid()) @db.Uuid
+  batch_inventory_id String   @db.Uuid
+  inventory_id       String   @db.Uuid
+  batch_id           String
+  quantity           Decimal  @db.Decimal(10, 2)
+  action             String // e.g. "ACTIVATE", "DEACTIVATE", "RESTOCK"
+  user               String
+  created_at         DateTime @default(now())
+
+  @@map("InventoryLog")
+}
+
+model InventoryRestock {
+  inventoryRestockId String @id @default(uuid())
+  inventory_Id       String
+
+  new_stock_quantity Decimal @db.Decimal(8, 2)
+  old_stock_quantity Decimal @db.Decimal(8, 2)
+  reorder_level      Int
+
+  restock_date DateTime @default(now()) @db.Timestamp(6) // it's the day it's restocked
+
+  softDelete Boolean @default(false)
+
+  // Relations
+  // InventoryItemID Inventory? @relation(fields: [inventory_Id], references: [inventoryId])
+}
+
+model ProductPricing {
+  product_pricing_id   String           @id @default(uuid())
+  supplier_products_id String           @unique @db.Uuid
+  Quantity             Decimal          @db.Decimal(8, 2)
+  unit_id              String           @db.Uuid
+  price                Decimal          @db.Decimal(8, 2)
+  VAT                  Decimal?         @db.Decimal(8, 2)
+  discount             Decimal?         @db.Decimal(8, 2)
+  effective_date       DateTime         @updatedAt @db.Timestamp(6)
+  created_at           DateTime         @default(now()) @db.Timestamp(6)
+  updated_at           DateTime         @updatedAt @db.Timestamp(6)
+  supplierProduct      SupplierProducts @relation(fields: [supplier_products_id], references: [supplier_products_id])
+  unit                 Units            @relation(fields: [unit_id], references: [unit_id])
+}
+
+model InventorySalesTracking {
+  inventorysalesTrackingId String  @id @default(uuid())
+  inventoryId              String
+  new_stock_quantity       Decimal @db.Decimal(8, 2)
+  old_stock_quantity       Decimal @db.Decimal(8, 2)
+  reorder_level            Int
+
+  restock_date DateTime @default(now()) @db.Timestamp(6) // it's the day it's restocked
+
+  softDelete Boolean @default(false)
+
+  // Relations
+  InventoryItemID Inventory @relation(fields: [inventoryId], references: [inventoryId])
+}
+
+model InventoryTracking {
+  inventoryTrackingId String   @id @default(uuid())
+  productID           String
+  orderProductId      String
+  quantityDeducted    Int
+  dateDeducted        DateTime @default(now())
+  notes               String?
+
+  // Relations
+  orderProduct OrderProducts @relation(fields: [orderProductId], references: [orderProductsId])
+}
+
+model Customer {
+  customerId  String  @id @default(uuid()) 
+  firstName   String 
+  lastName    String 
+  email       String  @unique 
+  phoneNumber String  @unique 
+  address     String? 
+
+  country                String? 
+  createdAt              DateTime @default(now()) // Date when the customer was added
+  updatedAt              DateTime @updatedAt 
+  status                 String? // Customer status: "active", "inactive", etc.
+  loyaltyPoints          Int    ?  @default(0) // Optional: Loyalty points, if applicable
+  totalSpent             Float   ? @default(0) // Total amount the customer has spent 
+  deleted                Boolean  @default(false)
+  notes                  String? // Optional: Any special notes or preferences about the customer
+  preferredPaymentMethod String? // Optional: Preferred payment method (e.g., Credit card, PayPal)
+
+  // Relationship with transactions
+  transactions Transaction[] // A customer can have many transactions
+  CustomerReceivable CustomerReceivable[]
+  @@index([email], name: "customer_email_idx") // Index for email for quick searches
+}
+
+model CustomerReceivable {
+  customer_receivable_id              String   @id @default(cuid())
+  customer_id     String   
+  total_Amount Decimal
+  transaction_id String  @unique
+  status          AccountStatus @default(ACTIVE)
+
+  // Relations
+  customer        Customer           @relation(fields: [customer_id], references: [customerId])
+  Transactions    Transaction     @relation(fields: [transaction_id], references: [transactionId])
+}
+
+model Transaction {
+  Id                     Int           @id @default(autoincrement()) // Unique identifier for the transaction in autoincrement form
+  transactionId          String        @unique // Unique identifier for the transaction
+  // VAT applied to the product
+  customerId             String? // Optional: Customer ID if applicable
+  transactionDateCreated DateTime      @default(now()) // Timestamp for when the transaction was created
+  totalCost              Float // Total cost after applying discounts and VAT
+  paymentMethod          PaymentMethod // Payment method (e.g., card, PayPal, cash)
+  subtotal               Float // Subtotal (price * quantity)
+
+  // Relationships
+
+  customer Customer? @relation(fields: [customerId], references: [customerId]) // Link to the customer (nullable)
+  CustomerReceivable CustomerReceivable?
+  // Optional: Indexes for faster querying
+  Sales Sales[]
+
+  @@index([customerId])
+}
+
+model Sales {
+  SalesId String           @id @default(uuid())
+  supplier_products_id String           @db.Uuid
+  inventoryId          String
+  // unit String
+  stock_quantity       Decimal
+  quantity             Int
+  productName          String
+  price                Float
+  discount             Float
+  VAT                  Float
+  // totalCost       Float
+  productSubTotalCost  Float
+  productTotalCost     Float
+  transactionId        String
+  BatchInventoryId      String
+  createdAt            DateTime         @default(now()) // Date when the customer was added
+  InventoryItemID      Inventory?       @relation(fields: [inventoryId], references: [inventoryId])
+  supplierProduct      SupplierProducts @relation(fields: [supplier_products_id], references: [supplier_products_id]) // Link to supplier product
+  transaction          Transaction      @relation(fields: [transactionId], references: [transactionId])
+}
+
+// 1. Batch Table - Master record for incoming goods
+// model Batch {
+//   batch_id     String    @id @default(uuid()) @db.Uuid
+//   arrival_date DateTime
+//   supplier_id  String    @db.Uuid
+//   product_id   String    @db.Uuid
+//   created_at   DateTime  @default(now())
+//   updated_at   DateTime  @updatedAt
+
+//   supplier     Suppliers @relation(fields: [supplier_id], references: [supplier_id])
+//   product      SupplierProducts  @relation(fields: [product_id], references: [supplier_products_id])
+
+//   purchases       Purchase[]
+//   purchaseExpenses PurchaseExpense[]
+//   purchaseDamages PurchaseDamage[]
+//   batchInventory  BatchInventory?
+//   batchPayables   BatchPayables?
+
+//   @@map("Batch")
+// }
+
+// 2. Purchases Table - Purchase details linked to batch
+model Purchase {
+  purchase_id            String        @id @default(uuid()) @db.Uuid
+  batch                  String        @unique
+  supplier_products_id   String        @db.Uuid
+  quantity               Int
+  damaged_units          Int
+  reason_for_damage      String?
+  undamaged_units        Int
+  unit_id                String        @db.Uuid
+  purchase_cost_per_unit Decimal       @db.Decimal(10, 2)
+  total_purchase_cost    Decimal       @db.Decimal(12, 2)
+  discounts              Decimal       @db.Decimal(10, 2)
+  tax                    Decimal       @db.Decimal(10, 2)
+  payment_type           PaymentType
+  payment_method         PaymentMethod
+  payment_status         PaymentStatus
+  payment_date           DateTime?
+  account_id             String?       @db.Uuid // Nullable if not paid via account
+  payment_reference      String?
+  arrival_date           DateTime
+  created_at             DateTime      @default(now())
+  updated_at             DateTime      @updatedAt
+
+  // batch                Batch     @relation(fields: [batch_id], references: [batch_id])
+  supplierProduct        SupplierProducts         @relation(fields: [supplier_products_id], references: [supplier_products_id])
+  Units                  Units                    @relation(fields: [unit_id], references: [unit_id])
+  Account                Account?                 @relation(fields: [account_id], references: [account_id])
+  PartialPurchasePayment PartialPurchasePayment[]
+  PurchaseExpense        PurchaseExpense[]
+  PurchaseDamage         PurchaseDamage[]
+  BatchInventory         BatchInventory?
+  BatchPayables          BatchPayables?
+
+  @@map("Purchase")
+  expenses Expense[]
+
+}
+
+model Expense {
+  id              String    @id @default(uuid())
+  description     String
+  amount          Float
+  category        String    // e.g., "Transport", "Import Duty", "General", etc.
+  expenseDate     DateTime  @default(now())
+  accountId       String @db.Uuid
+  // Link to Purchase (optional)
+  purchaseId      String?   @db.Uuid
+  purchase        Purchase? @relation(fields: [purchaseId], references: [purchase_id], onDelete: Cascade)
+
+  // Link to batch (if tied to purchase, redundancy for reporting)
+  batch           String?
+
+  // General expense (if no purchaseId)
+  isGeneral       Boolean   @default(false)
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  ExpenseAccounts Account @relation(fields: [accountId], references: [account_id])
+}
+
+
+//all products in our system from purchase , total will be stored here. 
+model  ProductSummary {
+  product_summary_id  String @id @default(uuid())
+  supplier_products_id String @db.Uuid @unique
+  total_received Int @default(0)
+  total_sold Int @default(0)
+  reorder_level  Int @default(0)
+  total_cost_value Decimal
+  supplierProduct        SupplierProducts         @relation(fields: [supplier_products_id], references: [supplier_products_id])  
+
+}
+
+model PartialPurchasePayment {
+  partial_purchase_id String        @id @default(uuid()) @db.Uuid
+  purchase_id         String        @db.Uuid
+  full_amount         Decimal       @db.Decimal(12, 2)
+  initial_payment     Decimal       @db.Decimal(12, 2)
+  balance             Decimal       @db.Decimal(12, 2)
+  payment_method      PaymentMethod
+  payment_date        DateTime      @default(now())
+  created_at          DateTime      @default(now())
+
+  Purchase Purchase            @relation(fields: [purchase_id], references: [purchase_id])
+  Logs     PartialPaymentLog[]
+}
+
+model PartialPaymentLog {
+  id                 String        @id @default(uuid()) @db.Uuid
+  partial_payment_id String        @db.Uuid
+  initial_payment    Decimal       @db.Decimal(12, 2)
+  amount_paid        Decimal       @db.Decimal(12, 2)
+  payment_date       DateTime      @default(now())
+  payment_method     PaymentMethod
+
+  PartialPayment PartialPurchasePayment @relation(fields: [partial_payment_id], references: [partial_purchase_id])
+}
+
+// 3. Purchase Expenses Table - Additional costs linked to batch
+model PurchaseExpense {
+  expense_id           String   @id @default(uuid()) @db.Uuid
+  purchase_id          String   @db.Uuid
+  // batch_id          String    @db.Uuid
+  supplier_products_id String   @db.Uuid
+  expense_type         String // transport, offloading, storage, customs, etc.
+  amount               Decimal  @db.Decimal(12, 2)
+  created_at           DateTime @default(now())
+  updated_at           DateTime @updatedAt
+
+  // batch             Batch     @relation(fields: [batch_id], references: [batch_id])
+  // supplierProduct   SupplierProducts @relation(fields: [supplier_products_id], references: [supplier_products_id])
+  purchase Purchase @relation(fields: [purchase_id], references: [purchase_id])
+
+  @@map("PurchaseExpense")
+}
+
+// 4. Purchase Damages Table - Track damaged units per batch
+model PurchaseDamage {
+  damage_id   String   @id @default(uuid()) @db.Uuid
+  purchase_id String   @db.Uuid
+  // supplier_products_id String  @db.Uuid
+  quantity    Int
+  reason      String
+  damage_date DateTime
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  // batch            Batch     @relation(fields: [batch_id], references: [batch_id])
+  // supplierProduct  SupplierProducts @relation(fields: [supplier_products_id], references: [supplier_products_id])
+  purchase Purchase @relation(fields: [purchase_id], references: [purchase_id])
+
+  @@map("PurchaseDamage")
+}
+
+// 5. Batch Inventory Table - Available stock after damages and sales
+model BatchInventory {
+  batch_inventory_id String          @id @default(uuid()) @db.Uuid
+  // batch_id           String   @unique @db.Uuid
+  purchase_id        String          @unique @db.Uuid
+  total_units        Int
+  batch_name         String          @unique
+  // damaged_units      Int
+  status             BatchInventoryStatus @default(PENDING) // ACTIVE,PENDING, INACTIVE, DISCONTINUED
+  supplier_products_id   String        @db.Uuid
+  // units_sold         Int
+  // available_units    Int      // calculated as total_units - damaged_units - units_sold
+  updated_at DateTime @updatedAt
+  created_at DateTime @default(now())
+
+  // batch              Batch    @relation(fields: [batch_id], references: [batch_id])
+  purchase Purchase @relation(fields: [purchase_id], references: [purchase_id])
+
+  BatchInventory Inventory[]
+  BatchLifeCycle BatchLifecycle[]
+
+  @@map("BatchInventory")
+}
+
+model BatchLifecycle {
+  id         String   @id @default(uuid())
+  batch_id   String   @db.Uuid @unique
+  started_at DateTime @default(now())
+  ended_at   DateTime?
+
+  // Relations
+  batch BatchInventory @relation(fields: [batch_id], references: [batch_inventory_id])
+}
+
+
+
+// 6. Batch Payables Table - Credit purchase tracking per batch
+model BatchPayables {
+  payable_id      String        @id @default(uuid()) @db.Uuid
+  purchase_id     String        @unique @db.Uuid
+  amount_due      Decimal       @db.Decimal(12, 2)
+  total_paid      Decimal       @default(0.00) @db.Decimal(12, 2) // Total amount paid so far
+  status          PayableStatus
+  payment_type    PaymentType
+  balance_due     Decimal       @default(0.00) @db.Decimal(12, 2) // Remaining balance if partially paid
+  settlement_date DateTime?
+  created_at      DateTime      @default(now())
+  updated_at      DateTime      @updatedAt
+
+  batchpayable Purchase @relation(fields: [purchase_id], references: [purchase_id])
+
+  @@map("BatchPayables")
+}
+
+model CashBookLedger {
+  ledger_id                  String          @id @default(uuid())
+  opening_closing_balance_id String          @db.Uuid
+  transaction_date           DateTime        @default(now())
+  transaction_type           TransactionType
+  amount                     Decimal         @db.Decimal(12, 2)
+  method                     PaymentMethod
+  reference_type             ReferenceType
+  reference_id               String?         @db.Uuid // Can be null if no specific reference
+  balance_after              Decimal?        @default(0.00) @db.Decimal(14, 2)
+  description                String?
+  created_at                 DateTime        @default(now())
+  updated_at                 DateTime        @updatedAt
+
+  // Relations
+  account_id  String  @db.Uuid
+  AccountInfo Account @relation(fields: [account_id], references: [account_id])
+
+  // Linked to OpeningClosingBalance session
+  openingClosingBalance OpeningClosingBalance? @relation(fields: [opening_closing_balance_id], references: [cash_bank_ledger_id])
+
+  // TerminalSessionId Int? // Nullable if not linked to a terminal session
+}
+
+// model Account {
+//   account_id      String        @id @default(uuid()) @db.Uuid
+//   name            String
+//   account_number  String?       @unique
+//   type            AccountType
+//   description     String?
+//   opening_balance         Decimal       @default(0.00) @db.Decimal(14, 2)
+//   running_balance Decimal       @default(0.00) @db.Decimal(14, 2)
+//   deleted         Boolean       @default(false) // Soft delete flag
+//   account_status  AccountStatus @default(ACTIVE) // ACTIVE, INACTIVE, CLOSED
+//   created_at      DateTime      @default(now())
+//   updated_at      DateTime      @updatedAt
+
+//   Purchase         Purchase[] // Purchases made through this account
+//   // Relations
+//   AccountInfo      CashBookLedger[]
+//   AccountBalances  AccountBalanceSnapshot[]
+//   AccountStatusLog AccountStatusLog[]
+//   // OpeningClosingBalance OpeningClosingBalance[]
+// }
+
+model Account {
+  account_id      String   @id @default(uuid()) @db.Uuid()
+  name            String 
+  account_number  String  @unique
+  type            AccountType   // Asset, Liability, Equity, Income, Expense
+  opening_balance Decimal @default(0.00) @db.Decimal(14,2)
+  running_balance Decimal @default(0.00) @db.Decimal(14,2) 
+  deleted         Boolean       @default(false) // Soft delete flag
+  account_status  AccountStatus @default(ACTIVE) // ACTIVE, INACTIVE, CLOSED
+  created_at      DateTime      @default(now())
+  updated_at      DateTime      @updatedAt
+
+  Purchase         Purchase[] // Purchases made through this account
+  // Relations
+  AccountInfo      CashBookLedger[]
+  AccountBalances  AccountBalanceSnapshot[]
+  AccountStatusLog AccountStatusLog[]
+  ExpenseAccounts Expense[]
+  // OpeningClosingBalance OpeningClosingBalance[]
+  // @@unique([name, type])
+  journalLines    JournalLine[]
+}
+
+model JournalEntry {
+  entry_id     String   @id @default(uuid())
+  transactionId String
+  date         DateTime @default(now())
+  description  String
+  lines        JournalLine[]
+}
+
+model JournalLine {
+  line_id   String  @id @default(uuid())
+  entry_id  String
+  account_id String @db.Uuid
+  debit     Decimal @default(0.00) @db.Decimal(14,2)
+  credit    Decimal @default(0.00) @db.Decimal(14,2)
+
+  account   Account @relation(fields: [account_id], references: [account_id])
+  journal   JournalEntry @relation(fields: [entry_id], references: [entry_id])
+}
+
+//Log Account status change for each account. from Active, inActive etc created
+model AccountStatusLog {
+  id         String   @id @default(uuid())
+  account_id String   @db.Uuid
+  old_status AccountStatus? // old status can be empty before it gets created
+  new_status AccountStatus
+  pos_session_id String
+  changed_by String
+  changed_at DateTime @default(now())
+
+  // Relations
+  account Account @relation(fields: [account_id], references: [account_id], onDelete: Cascade)
+
+  @@map("account_status_log")
+}
+
+// for each pos_end session the opening and closing balnce of each account is recorded
+model AccountSessionLog {
+  id              String   @id @default(cuid())
+  account_id      String
+  opening_balance Decimal
+  closing_balance Decimal
+  pos_session     String
+  user            String
+  created_at      DateTime @default(now())
+
+  @@map("account_session_log") // Optional: map to table name if needed
+}
+
+// for each activity done to the acccount, debit or credit it is recorded here.
+model AccountsLog {
+  accounts_log_id  String   @id @default(cuid())
+  account_id       String
+  action           String // 'debit' | 'credit'
+  opening_balance  Decimal
+  old_running_balance  Decimal
+  new_running_balance      Decimal
+  pos_session_id   String
+  user             String
+  created_at       DateTime @default(now())
+
+  @@map("accounts_log") // Optional: use this if your table name in DB is different
+}
+
+model Employee {
+  id         String          @id @default(uuid())
+  firstName  String
+  lastName   String
+  email      String   @unique
+  phone      String?
+  department String?
+  position   String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relation: one employee can have many assets
+  assets AssetRegister[]
+}
+
+model AssetRegister {
+  id              String   @id @default(uuid())
+  assetTag        String   @unique
+  name            String
+  category        String
+  description     String?
+  purchaseDate    DateTime
+  purchaseCost    Float
+  supplier        String?
+  location        String?
+  status          String   @default("active") // active, under_maintenance, disposed
+  depreciation    Float?
+  usefulLifeYears Int?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relation: optional custodian
+  custodianId String?
+  custodian   Employee? @relation(fields: [custodianId], references: [id])
+}
+
+
+
+// Enums for your new tables
+enum PaymentType {
+  full
+  partial
+  credit
+}
+
+enum PayableStatus {
+  settled
+  unsettled
+}
+
+model User {
+  user_id  String @id @default(uuid())
+  username String
+  email    String @unique
+  password String
+
+  role      UserRoles
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  UserLoginLog     UserLoginLog[]
+  userLoginAttempt UserLoginAttempt[]
+  PosSessionOpened PosSession[]       @relation("OpenedSessions")
+  PosSessionClosed PosSession[]       @relation("ClosedSessions")
+}
+
+model UserLoginLog {
+  id         Int       @id @default(autoincrement())
+  userId     String
+  terminalId String
+  loginTime  DateTime  @default(now())
+  logoutTime DateTime?
+  isLoggedIn Boolean   @default(false)
+
+  user User @relation(fields: [userId], references: [user_id])
+}
+
+model UserLoginAttempt {
+  id          Int      @id @default(autoincrement())
+  userId      String
+  attemptTime DateTime
+  ipAddress   String
+  userAgent   String
+  status      String // e.g., 'FAILED_ACTIVE_SESSION', 'WRONG_PASSWORD'
+  user        User     @relation(fields: [userId], references: [user_id])
+}
+
+model PosSession {
+  pos_session_id String                @id @default(uuid())
+  posId          String
+  openedBy       String
+  openedAt       DateTime              @default(now())
+  closedBy       String?
+  closedAt       DateTime?
+  status         TerminalSessionStatus @default(CLOSED)
+  createdAt      DateTime              @default(now())
+
+  openedUser User                    @relation("OpenedSessions", fields: [openedBy], references: [email], onDelete: Cascade)
+  closedUser User?                   @relation("ClosedSessions", fields: [closedBy], references: [email], onDelete: Cascade)
+  balances   OpeningClosingBalance[]
+  // ledgerEntries CashBookLedger[]
+}
+
+model OpeningClosingBalance {
+  id                  String        @id @default(uuid()) @db.Uuid
+  pos_session_id      String
+  cash_bank_ledger_id String        @unique @db.Uuid // Nullable if not linked to a specific cash bank ledger
+  opening_date        DateTime      @default(now())
+  closing_date        DateTime?
+  status              SessionStatus @default(PREV) // e.g. PREV, CLOSED
+  opening_balance     Decimal       @db.Decimal(14, 2)
+  closing_balance     Decimal?      @db.Decimal(14, 2)
+  total_for_accounts  Decimal?      @db.Decimal(14, 2)
+
+  // Link to account snapshot
+  account_collection_id String?            @db.Uuid
+  accountCollection     AccountCollection? @relation(fields: [account_collection_id], references: [collection_id])
+  cashBookLedgers       CashBookLedger[]
+  session               PosSession         @relation(fields: [pos_session_id], references: [pos_session_id])
+  // account         Account   @relation(fields: [accountId], references: [account_id])
+}
+
+// Acccounts
+// model OpeningClosingBalance {
+//   session_id         String     @id @default(uuid()) @db.Uuid
+//   opening_date       DateTime   @default(now())
+//   closing_date       DateTime?
+//   status             SessionStatus @default(PREV) // e.g. PREV, CLOSED
+//   opening_balance    Decimal    @db.Decimal(14, 2)
+//   closing_balance    Decimal?   @db.Decimal(14, 2)
+//   total_for_accounts Decimal?   @db.Decimal(14, 2)
+
+//   // Link to account snapshot
+//   account_collection_id String? @db.Uuid
+//   accountCollection     AccountCollection? @relation(fields: [account_collection_id], references: [collection_id])
+
+//   // Ledger entries for this session
+//   cashBankLedgers CashBookLedger[]
+
+//   created_at        DateTime   @default(now())
+//   updated_at        DateTime   @updatedAt
+// }
+
+model AccountCollection {
+  collection_id String   @id @default(uuid()) @db.Uuid
+  snapshot_date DateTime @default(now())
+
+  // A snapshot can store many accounts' balances
+  accounts AccountBalanceSnapshot[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // Back-reference to session
+  openingClosingBalances OpeningClosingBalance[]
+}
+
+model AccountBalanceSnapshot {
+  snapshot_id String  @id @default(uuid()) @db.Uuid
+  account_id  String  @db.Uuid
+  account     Account @relation(fields: [account_id], references: [account_id])
+  balance     Decimal @db.Decimal(14, 2)
+
+  collection_id String            @db.Uuid
+  collection    AccountCollection @relation(fields: [collection_id], references: [collection_id])
+}
+
+enum TerminalSessionStatus {
+  OPEN
+  CLOSED
+}
+
+enum TransactionType {
+  INFLOW
+  OUTFLOW
+}
+
+// enum TransactionType {
+//   SALE
+//   PURCHASE
+//   EXPENSE
+//   INCOME
+// }
+
+enum ReferenceType {
+  SALE
+  PURCHASE_PAYMENT
+  EXPENSE
+  CUSTOMER_PAYMENT
+  SUPPLIER_PAYMENT
+  ACCOUNT_TOPUP
+}
+
+enum SessionStatus {
+  PREV
+  CLOSED
+}
+
+// user roles
+enum UserRoles {
+  admin
+  user
+}
+
+// Enums for payment status, payment method, and order status
+enum PaymentStatus {
+  paid
+  unpaid
+  partially_paid
+}
+
+enum AccountType {
+  ASSET
+  LIABILITY
+  EQUITY
+  INCOME
+  EXPENSE
+}
+
+// enum AccountType {
+//   cash
+//   bank
+//   credit_card
+//   other
+// }
+
+enum PaymentMethod {
+  CASH
+  BANK
+  CREDIT
+  CARD
+}
+
+enum OrderStatus {
+  pending
+  empty
+  failed
+  fulfilled
+  extended
+  order_default
+}
+
+// Enum to represent the possible statuses of the inventory item
+enum InventoryStatus {
+  ACTIVE // Item is available for sale and can be interacted with.
+  INACTIVE // Item is temporarily unavailable for sale, could be out of stock or on hold.
+  DISCONTINUED // Item is no longer available for sale and will not be restocked.
+}
+
+enum BatchInventoryStatus {
+  ACTIVE // Item is available for sale and can be interacted with.
+  INACTIVE // Item is temporarily unavailable for sale, could be out of stock or on hold.
+  DISCONTINUED // Item is no longer available for sale and will not be restocked.
+  FINISHED // that batch is done being sold
+  PENDING // all other batches that are not being sold at the moment.
+}
+
+enum AccountStatus {
+  ACTIVE // Account is active and can be used for transactions.
+  INACTIVE // Account is inactive, cannot be used for transactions.
+  CLOSED // Account is closed and cannot be used for any transactions.
+  CREATED
+}

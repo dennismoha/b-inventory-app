@@ -1,0 +1,120 @@
+# open-api.yaml
+
+openapi: 3.0.0
+info:
+  title: Category API
+  description: API documentation for managing categories
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:3000/api'
+
+paths:
+  /categories:
+    get:
+      summary: Get all categories
+      tags:
+        - Categories
+      responses:
+        '200':
+          description: Successfully fetched all categories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Category'
+        '500':
+          description: Internal Server Error
+
+    post:
+      summary: Create a new category
+      tags:
+        - Categories
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        '201':
+          description: Category created successfully
+        '400':
+          description: Invalid input data
+        '409':
+          description: Category slug already exists
+        '500':
+          description: Internal Server Error
+
+  /categories/{categoryId}:
+    put:
+      summary: Update an existing category
+      tags:
+        - Categories
+      parameters:
+        - in: path
+          name: categoryId
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The ID of the category to update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        '200':
+          description: Category updated successfully
+        '400':
+          description: Invalid input data
+        '404':
+          description: Category not found
+        '500':
+          description: Internal Server Error
+
+    delete:
+      summary: Delete an existing category
+      tags:
+        - Categories
+      parameters:
+        - in: path
+          name: categoryId
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: The ID of the category to delete
+      responses:
+        '204':
+          description: Category deleted successfully
+        '404':
+          description: Category not found
+        '500':
+          description: Internal Server Error
+
+components:
+  schemas:
+    Category:
+      type: object
+      properties:
+        categoryId:
+          type: string
+          format: uuid
+        category_slug:
+          type: string
+        category_name:
+          type: string
+        description:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time

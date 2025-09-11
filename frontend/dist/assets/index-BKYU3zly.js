@@ -1,0 +1,1 @@
+const e=()=>({enableGlobalFilter:!1,enableRowPinning:!0,initialState:{showColumnFilters:!0},manualFiltering:!0,manualPagination:!0,manualSorting:!0,muiTableHeadCellProps:{sx:{fontSize:"1.1rem"}},paginationDisplayMode:"pages",defaultColumn:{}});export{e as g};

@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Customer" ALTER COLUMN "status" DROP NOT NULL,
+ALTER COLUMN "loyaltyPoints" DROP NOT NULL,
+ALTER COLUMN "totalSpent" DROP NOT NULL;

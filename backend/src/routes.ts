@@ -1,0 +1,82 @@
+import { Application } from 'express';
+import { categoryRoutes } from '@src/features/categories/routes/category-routes';
+import { subCategoryRoutes } from '@src/features/categories/routes/subcategory-routes';
+import { BASE_PATH } from './constants';
+import { productUnitsRoutes } from '@src/features/products/routes/product-units-routes';
+import { productsRoutes } from '@src/features/products/routes/product-routes';
+import { unitsRoutes } from '@src/features/units/routes/units-routes';
+import { suppliersRoutes } from '@src/features/suppliers/routes/suppliers-routes';
+import { supplierProductsRoutes } from '@src/features/suppliers/routes/supplier-products-routes';
+import { supplierPricingRoutes } from '@src/features/suppliers/routes/supplier-pricing-routes';
+// import { orderProductsRoutes } from '@src/features/orders/routes/order-product-routes';
+// import { ordersRoutes } from '@src/features/orders/routes/orders-routes';
+import { healthRoutes } from '@src/features/health/routes';
+import { miscellaneousRoutes } from '@src/features/miscellaneous/routes/miscellaneous-routes';
+import { inventoryRoutes } from '@src/features/inventory/routes/inventory-routes';
+import { productPricingRoutes } from '@src/features/inventory/routes/product-pricing';
+import { authRoutes } from '@src/features/auth/routes/auth-routes';
+import { currentUserRoutes } from '@src/features/auth/routes/current-user-routes';
+import { transactionRoutes } from '@src/features/transactions/routes/transaction-routes';
+import { customerRoutes } from '@src/features/customers/routes/customers-routes';
+// import { salesRoutes } from '@src/features/analysis/routes/analysis-routes';
+import { authMiddleware } from '@src/shared/globals/helpers/auth-middleware';
+import { verifyAuthRoles } from '@src/shared/globals/helpers/verify-roles';
+import { accountRoutes } from '@src/features/accounting/routes/account-routes';
+import { posSessionRoutes } from '@src/features/pos/routes/pos-session-routes';
+import { purchaseRoutes } from './features/purchase/routes/product-purchase-routes';
+import { cashbookLedgerRoutes } from './features/accounting/routes/cashbook-ledger-routes';
+import { payablesRoutes } from './features/accounting/routes/payables-routes';
+import { purchasePayablesRoutes } from './features/purchase/routes/product-purchase-payables-routes';
+import { batchInventoryRoutes } from './features/purchase/routes/product-batch-inventory-routes';
+import { assetRoutes } from './features/hrm/assets/routes/assets-routes';
+import { employeeRoutes } from './features/hrm/employees/routes/employees.routes';
+import { expenseRoutes } from './features/expenses/routes/expenses-routes';
+import { reportRoutes } from './features/accounting/routes/report-routes';
+import { productSummaryRoutes } from './features/inventory/routes/manage-inventory-routes';
+
+// import { verifyRoles } from '@src/shared/globals/helpers/verify-roles';
+
+// import { authMiddleware } from './shared/globals/helpers/auth-middleware';
+
+export default (app: Application) => {
+  const routes = () => {
+    app.use('', healthRoutes.health()); // checks the health of the application
+    app.use('', healthRoutes.env());
+    app.use('', healthRoutes.fiboRoutes());
+    app.use(BASE_PATH, authRoutes.routes());
+    app.use(BASE_PATH, authRoutes.signoutRoute());
+    app.use(BASE_PATH, authMiddleware.verifyUser, productsRoutes.routes());
+    app.use(BASE_PATH, authMiddleware.verifyUser, currentUserRoutes.routes());
+    app.use(`${BASE_PATH}/categories`, authMiddleware.verifyUser, verifyAuthRoles('admin'), categoryRoutes.routes());
+    app.use(`${BASE_PATH}`, authMiddleware.verifyUser, subCategoryRoutes.routes());
+    app.use(BASE_PATH, productUnitsRoutes.routes());
+    app.use(BASE_PATH, reportRoutes.routes());
+
+    app.use(BASE_PATH, suppliersRoutes.routes());
+    app.use(BASE_PATH, supplierProductsRoutes.routes());
+    app.use(BASE_PATH, supplierPricingRoutes.routes());
+    // app.use(BASE_PATH, ordersRoutes.routes());
+    // app.use(BASE_PATH, orderProductsRoutes.routes());
+    app.use(BASE_PATH, miscellaneousRoutes.routes());
+    app.use(BASE_PATH, inventoryRoutes.routes());
+    app.use(BASE_PATH, productPricingRoutes.routes());
+    app.use(BASE_PATH, transactionRoutes.routes());
+    app.use(BASE_PATH, authMiddleware.verifyUser, verifyAuthRoles('admin', 'user'), customerRoutes.routes());
+    app.use(BASE_PATH, unitsRoutes.routes());
+    app.use(BASE_PATH, assetRoutes.routes());
+    app.use(BASE_PATH, employeeRoutes.routes());
+    app.use(BASE_PATH, expenseRoutes.routes());
+    // app.use(BASE_PATH, salesRoutes.routes());
+    app.use(BASE_PATH, accountRoutes.routes());
+    app.use(BASE_PATH, posSessionRoutes.routes());
+    app.use(BASE_PATH, purchaseRoutes.routes());
+    app.use(BASE_PATH, cashbookLedgerRoutes.routes());
+    app.use(BASE_PATH, payablesRoutes.routes());
+    app.use(BASE_PATH, purchasePayablesRoutes.routes());
+    app.use(BASE_PATH, batchInventoryRoutes.routes());
+    app.use(BASE_PATH, productSummaryRoutes.routes());
+
+  };
+
+  routes();
+};

@@ -1,0 +1,56 @@
+name: Frontend CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Trigger deployment on changes to the main branch
+    paths:
+      - 'frontend/**'  # Only trigger if files in the frontend folder are changed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # Set the Node.js version required for the project
+
+      - name: Install dependencies
+        working-directory: ./frontend  # Run migration in the backend folder
+        run: |
+          npm ci   # Clean install of dependencies
+
+      # Step 3: TypeScript check (optional)
+      # - name: Run TypeScript type checks
+      #   working-directory: ./frontend  # Run migration in the backend folder
+      #   run: |
+      #     npm run type-check   # Make sure this script is defined in package.json
+
+      # Step 4: Run tests (optional, if you have tests set up)
+      # - name: Run tests
+      #   working-directory: ./frontend
+      #   run: |
+      #     npm run test   # This assumes you have a test script in your package.json
+
+      # Step 5: Build the project
+      - name: Build Next.js project
+        working-directory: ./frontend
+        run: |
+          npm run build   # Make sure this is the correct build command for Next.js
+
+      # Step 6: Lint the project (optional, if you're using eslint)
+      # - name: Lint code
+      #   working-directory: ./frontend
+      #   run: |
+      #     npm run lint  # If you have linting set up in your package.json
+
+      # Step 7: Optionally, deploy (you can replace this with your deployment steps)
+      - name: Deploy (example step, adjust according to your deployment method)
+        working-directory: ./frontend
+        run: |
+          echo "Deploying your project..."  # Replace with actual deployment script
