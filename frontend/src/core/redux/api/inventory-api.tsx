@@ -66,7 +66,8 @@ interface ApiError {
 }
 
 const rawBaseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost:8081/api/v1/',
+  // baseUrl: 'http://localhost:8081/api/v1/',
+  baseUrl: import.meta.env.VITE_APP_PUBLIC_API_BASE_URL,
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const pos_session = (getState() as RootState).PosSession.posSessionId;
@@ -97,7 +98,7 @@ export const baseQuery: BaseQueryFn<string | FetchArgs, unknown, ApiError> = asy
     };
   }
 
-  // 🔑 Normalize errors from server
+  //  Normalize errors from server
   if (result.error && 'data' in result.error) {
     const err = result.error as FetchBaseQueryError & {
       data: { message: string; statusCode?: number; status?: string };
