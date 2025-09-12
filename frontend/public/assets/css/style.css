@@ -12524,7 +12524,7 @@ table.dataTable > thead .sku:before {
 
 .custom-select {
   min-width: 80px;
-  background: url(/react/template/src/assets/img/icons/dropdown.svg) no-repeat 95% 50%;
+  background: url(/chicksfeeds/src/assets/img/icons/dropdown.svg) no-repeat 95% 50%;
 }
 
 .dataTables_paginate .pagination li {
@@ -14806,7 +14806,7 @@ svg.feather {
   li.flag-nav
   .dropdown-menu
   .dropdown-item:hover {
-  background: #212b36 url(/react/template/src/assets/img/icons/check.svg) no-repeat calc(100% - 12px)
+  background: #212b36 url(/chicksfeeds/src/assets/img/icons/check.svg) no-repeat calc(100% - 12px)
     center;
 }
 [data-theme="dark"] .user-menu.nav.nav > li > a.dropdown-toggle.nav-link.show {
@@ -19826,7 +19826,7 @@ body.layout-mode-rtl .item-list p::before {
 [data-layout="modern"] .page-wrapper::after {
   content: none;
   height: 168px;
-  /* background: url("/react/template/src/assets/img/bg/modern-bg.png"); */
+  /* background: url("/chicksfeeds/src/assets/img/bg/modern-bg.png"); */
   background-repeat: no-repeat;
   width: 60%;
   position: absolute;
@@ -19940,7 +19940,7 @@ body.layout-mode-rtl .item-list p::before {
 [data-layout="horizontal-overlay"] .sidebar-horizontal.sidebar::before {
   content: none;
   height: 100%;
-  background: url("/react/template/src/assets/img/bg/overlay-bg.png");
+  background: url("/chicksfeeds/src/assets/img/bg/overlay-bg.png");
   background-repeat: no-repeat;
   width: 100%;
   position: absolute;
@@ -31099,7 +31099,7 @@ body.data-layout-transparent .page-wrapper .head-icons {
 }
 
 [data-sidebarbg="sidebarbg1"] #sidebar {
-  background-image: url(/react/template/src/assets/img/theme/bg-01.jpg);
+  background-image: url(/chicksfeeds/src/assets/img/theme/bg-01.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
@@ -31115,7 +31115,7 @@ body.data-layout-transparent .page-wrapper .head-icons {
 }
 
 [data-sidebarbg="sidebarbg6"] #sidebar {
-  background-image: url(/react/template/src/assets/img/theme/bg-06.jpg);
+  background-image: url(/chicksfeeds/src/assets/img/theme/bg-06.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
@@ -31321,7 +31321,7 @@ body.data-layout-transparent .page-wrapper .head-icons {
 }
 
 [data-sidebarbg="sidebarbg1"] #sidebar {
-  background-image: url(/react/template/src/assets/img/theme/bg-01.jpg);
+  background-image: url(/chicksfeeds/src/assets/img/theme/bg-01.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
@@ -31340,7 +31340,7 @@ body.data-layout-transparent .page-wrapper .head-icons {
 }
 
 [data-sidebarbg="sidebarbg2"] #sidebar {
-  background-image: url(/react/template/src/assets/img/theme/bg-02.jpg);
+  background-image: url(/chicksfeeds/src/assets/img/theme/bg-02.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
@@ -31359,7 +31359,7 @@ body.data-layout-transparent .page-wrapper .head-icons {
 }
 
 [data-sidebarbg="sidebarbg3"] #sidebar {
-  background-image: url(/react/template/src/assets/img/theme/bg-03.jpg);
+  background-image: url(/chicksfeeds/src/assets/img/theme/bg-03.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
@@ -31378,7 +31378,7 @@ body.data-layout-transparent .page-wrapper .head-icons {
 }
 
 [data-sidebarbg="sidebarbg4"] #sidebar {
-  background-image: url(/react/template/src/assets/img/theme/bg-04.jpg);
+  background-image: url(/chicksfeeds/src/assets/img/theme/bg-04.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
@@ -31397,7 +31397,7 @@ body.data-layout-transparent .page-wrapper .head-icons {
 }
 
 [data-sidebarbg="sidebarbg5"] #sidebar {
-  background-image: url(/react/template/src/assets/img/theme/bg-05.jpg);
+  background-image: url(/chicksfeeds/src/assets/img/theme/bg-05.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
@@ -31416,7 +31416,7 @@ body.data-layout-transparent .page-wrapper .head-icons {
 }
 
 [data-sidebarbg="sidebarbg6"] #sidebar {
-  background-image: url(/react/template/src/assets/img/theme/bg-06.jpg);
+  background-image: url(/chicksfeeds/src/assets/img/theme/bg-06.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 50% 50%;
@@ -31733,7 +31733,7 @@ body.data-layout-transparent .page-wrapper .head-icons {
 [data-layout="horizontal-sidemenu"]
   [data-topbarbg="pattern1"]
   .main-wrapper::after {
-  background: url("/react/template/src/assets/img/theme/pattern-01.png");
+  background: url("/chicksfeeds/src/assets/img/theme/pattern-01.png");
 }
 
 [data-layout="horizontal-overlay"]
@@ -31742,7 +31742,7 @@ body.data-layout-transparent .page-wrapper .head-icons {
 [data-layout="horizontal-sidemenu"]
   [data-topbarbg="pattern2"]
   .main-wrapper::after {
-  background: url("/react/template/src/assets/img/theme/pattern-01.png");
+  background: url("/chicksfeeds/src/assets/img/theme/pattern-01.png");
 }
 
 [data-layout="horizontal-overlay"]
@@ -31751,7 +31751,7 @@ body.data-layout-transparent .page-wrapper .head-icons {
 [data-layout="horizontal-sidemenu"]
   [data-topbarbg="pattern3"]
   .main-wrapper::after {
-  background: url("/react/template/src/assets/img/theme/pattern-03.png");
+  background: url("/chicksfeeds/src/assets/img/theme/pattern-03.png");
 }
 
 [data-layout="horizontal-overlay"][data-topbarcolor="maroon"]
@@ -48942,7 +48942,7 @@ body.layout-mode-rtl .user-info {
 }
 .tag-with-img .bootstrap-tagsinput .label-info::before {
   content: "";
-  background-image: url(/react/template/src/assets/img/profiles/mail-user.jpg);
+  background-image: url(/chicksfeeds/src/assets/img/profiles/mail-user.jpg);
   background-repeat: no-repeat;
   width: 15px;
   height: 15px;
@@ -49195,7 +49195,7 @@ a.link-hover:hover {
 }
 
 .comming-soon-pg {
-  background-image: url(/react/template/src/assets/img/coming-soon.png);
+  background-image: url(/chicksfeeds/src/assets/img/coming-soon.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -49439,7 +49439,7 @@ a.link-hover:hover {
   display: flex;
 }
 .login-wrapper.bg-img {
-  background-image: url(/react/template/src/assets/img/authentication/login-img.jpg);
+  background-image: url(/chicksfeeds/src/assets/img/authentication/login-img.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -49449,16 +49449,16 @@ a.link-hover:hover {
   backdrop-filter: blur(17px);
 }
 .login-wrapper.bg-img.register-wrap {
-  background-image: url(/react/template/src/assets/img/authentication/register-img.jpg);
+  background-image: url(/chicksfeeds/src/assets/img/authentication/register-img.jpg);
 }
 .login-wrapper.bg-img.forgot-pass-wrap {
-  background-image: url(/react/template/src/assets/img/authentication/forgot-password-img.jpg);
+  background-image: url(/chicksfeeds/src/assets/img/authentication/forgot-password-img.jpg);
 }
 .login-wrapper.bg-img.reset-pass-wrap {
-  background-image: url(/react/template/src/assets/img/authentication/reset-password-img.jpg);
+  background-image: url(/chicksfeeds/src/assets/img/authentication/reset-password-img.jpg);
 }
 .login-wrapper.bg-img.email-veri-wrap {
-  background-image: url(/react/template/src/assets/img/authentication/email-verification-img.jpg);
+  background-image: url(/chicksfeeds/src/assets/img/authentication/email-verification-img.jpg);
 }
 @media (max-width: 991.96px) {
   .login-wrapper.bg-img {
@@ -49914,7 +49914,7 @@ a.link-hover:hover {
   justify-content: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
-  background-image: url(/react/template/src/assets/img/authentication/login-bg.png);
+  background-image: url(/chicksfeeds/src/assets/img/authentication/login-bg.png);
   background-position: bottom center;
   background-repeat: no-repeat;
   background-size: 100% 500px;
@@ -50532,7 +50532,7 @@ span.badge.badges-warning {
 }
 
 .cal-icon {
-  background-image: url(/react/template/src/assets/img/icons/calendars.svg);
+  background-image: url(/chicksfeeds/src/assets/img/icons/calendars.svg);
   background-repeat: no-repeat;
   background-position: 95% 50%;
 }
@@ -60616,7 +60616,7 @@ svg.feather-14 {
 }
 
 .bg-01 {
-  background: url("/react/template/src/assets/img/bg/upgrade-bg.svg");
+  background: url("/chicksfeeds/src/assets/img/bg/upgrade-bg.svg");
 }
 
 .access-wrap {

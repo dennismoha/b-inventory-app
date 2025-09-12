@@ -83,7 +83,7 @@ export class ServerSetup {
     app.use(corsCredentials);
     app.use(
       cors({
-        origin: 'http://localhost:5173',
+        origin: 'http://localhost:8080',
         credentials: true,
         optionsSuccessStatus: 200,
         methods: ['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS']

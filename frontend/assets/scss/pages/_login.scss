@@ -11,7 +11,7 @@
     display: -ms-flexbox;
     display: flex;
     &.bg-img {
-        background-image: url(/react/template/src/assets/img/authentication/login-img.jpg);
+        background-image: url(/chicksfeeds/src/assets/img/authentication/login-img.jpg);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -20,16 +20,16 @@
             backdrop-filter: blur(17px);
         }
         &.register-wrap {
-            background-image: url(/react/template/src/assets/img/authentication/register-img.jpg);
+            background-image: url(/chicksfeeds/src/assets/img/authentication/register-img.jpg);
         }
         &.forgot-pass-wrap {
-            background-image: url(/react/template/src/assets/img/authentication/forgot-password-img.jpg);
+            background-image: url(/chicksfeeds/src/assets/img/authentication/forgot-password-img.jpg);
         }
         &.reset-pass-wrap {
-            background-image: url(/react/template/src/assets/img/authentication/reset-password-img.jpg);
+            background-image: url(/chicksfeeds/src/assets/img/authentication/reset-password-img.jpg);
         }
         &.email-veri-wrap {
-            background-image: url(/react/template/src/assets/img/authentication/email-verification-img.jpg);
+            background-image: url(/chicksfeeds/src/assets/img/authentication/email-verification-img.jpg);
         }
         @include mixins.respond-below(custom991) {
            background-image: none;
@@ -444,7 +444,7 @@
     justify-content: center;
     -webkit-justify-content: center;
     -ms-flex-pack: center;
-    background-image: url(/react/template/src/assets/img/authentication/login-bg.png);
+    background-image: url(/chicksfeeds/src/assets/img/authentication/login-bg.png);
     background-position: bottom center;
     background-repeat: no-repeat;
     background-size: 100% 500px;
