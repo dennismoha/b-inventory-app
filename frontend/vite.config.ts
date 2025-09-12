@@ -6,6 +6,21 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   // base: '/react/template/',
+    server: {
+    host: '0.0.0.0',
+    port: 8080,
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:8081',
+    //     changeOrigin: true,
+    //     secure: false
+    //   }
+    // }
+  },
+    preview: {
+    host: true,
+    port: 8080,    
+  },
   base: '/',
   resolve: {
     alias: [{ find: '@core_types', replacement: 'src/core/interface' },
