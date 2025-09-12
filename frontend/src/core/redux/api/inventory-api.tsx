@@ -49,7 +49,8 @@ import type {
   BalanceSheetResponse,
   LowStockResponseItem,
   StockResponseItem,
-  TrialBalance
+  TrialBalance,
+  pos_session_header
 } from '@/feature-module/interface/features-interface';
 
 import type { ApiResponse } from '@/utils/api';
@@ -70,9 +71,10 @@ const rawBaseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_APP_PUBLIC_API_BASE_URL,
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
-    const pos_session = (getState() as RootState).PosSession.posSessionId;
-    if (pos_session?.pos_session_id) {
-      headers.set('pos_session', pos_session.pos_session_id);
+    const pos_session: { pos_session_id: string } | null = (getState() as RootState).PosSession.posSessionId;
+    console.log('pos session is ', pos_session?.pos_session_id);
+    if (pos_session) {
+      headers.set('pos_session', pos_session?.pos_session_id);
     }
     return headers;
   }
@@ -480,7 +482,7 @@ export const PosSessionAPI = InventoryApi.injectEndpoints({
     }),
 
     // Check if an active POS session exists
-    checkPosSession: build.query<{ active: boolean; posSessionId?: string }, void>({
+    checkPosSession: build.query<ApiResponse<pos_session_header>, void>({
       query: () => ({
         url: '/pos/session/fetch',
         method: 'GET'

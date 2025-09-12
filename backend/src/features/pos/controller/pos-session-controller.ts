@@ -168,6 +168,8 @@ import { StatusCodes } from 'http-status-codes';
 import prisma from '@src/shared/prisma/prisma-client';
 import {  ConflictError, NotFoundError } from '@src/shared/globals/helpers/error-handler';
 import { v4 as uuidv4 } from 'uuid';
+import GetSuccessMessage from '@src/shared/globals/helpers/success-messages';
+import { pos_session_header } from '../interface/pos.interface';
 
 export class PosSessionController {
   /**
@@ -497,7 +499,7 @@ export class PosSessionController {
     // const posSessionId = req.headers['pos-session-id'] as string;
 
 
-    const  posSessionId = await prisma.posSession.findFirst({
+    const  posSessionId:  pos_session_header | null = await prisma.posSession.findFirst({
       where: {        
         status: 'OPEN'
       },
@@ -510,10 +512,12 @@ export class PosSessionController {
       throw new NotFoundError('No active POS session found for the user.');
     }
 
-    res.json({
-      message: 'POS session is',
-      posSessionId
-    });
+    console.log('Active POS session found:', posSessionId);
+    res.status(StatusCodes.OK).send(GetSuccessMessage(StatusCodes.OK, posSessionId, 'pos session found'));
+    // res.json({
+    //   message: 'POS session is',
+    //   posSessionId
+    // });
     // 1️Check if the POS session exists and is active
     // const session = await prisma.posSession.findUnique({
     //   where: { id: posSessionId },

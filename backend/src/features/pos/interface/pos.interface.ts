@@ -16,3 +16,5 @@ export interface PosSession {
   closedUser?: User;
   balances: OpeningClosingBalance[];
 }
+
+export type pos_session_header  = {pos_session_id: string} 

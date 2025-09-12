@@ -22,8 +22,9 @@ const PosSession = () => {
 
   // Store session from query into Redux when found
   useEffect(() => {
-    if (data?.posSessionId && !posSessionId) {
-      dispatch(setPosSessionId({ pos_session_id: data.posSessionId }));
+    if (data?.data.pos_session_id && !posSessionId) {
+      console.log('Storing POS session ID in Redux:', data?.data.pos_session_id);
+      dispatch(setPosSessionId({ pos_session_id: data?.data.pos_session_id }));
       navigate(all_routes.pos); // redirect to POS page
     }
   }, [data, posSessionId, dispatch, navigate]);
@@ -79,7 +80,7 @@ const PosSession = () => {
   }
 
   // If session exists already
-  if (posSessionId || data?.posSessionId) {
+  if (posSessionId || data?.data.pos_session_id) {
     return (
       <div className="card bg-white border-0">
         <div className="alert custom-alert1 alert-secondary">

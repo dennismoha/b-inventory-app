@@ -1045,3 +1045,5 @@ export interface StockResponseItem {
   // derived
   remaining: number;
 }
+
+export type pos_session_header = { pos_session_id: string };
