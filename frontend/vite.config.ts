@@ -20,6 +20,7 @@ export default defineConfig({
     preview: {
     host: true,
     port: 8080,    
+    allowedHosts:['king-prawn-app-6pooy.ondigitalocean.app']
   },
   base: '/',
   resolve: {
