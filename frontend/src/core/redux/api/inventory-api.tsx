@@ -72,7 +72,7 @@ const rawBaseQuery = fetchBaseQuery({
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const pos_session: { pos_session_id: string } | null = (getState() as RootState).PosSession.posSessionId;
-    console.log('pos session is ', pos_session?.pos_session_id);
+    console.log('pos session is .', pos_session?.pos_session_id);
     if (pos_session) {
       headers.set('pos_session', pos_session?.pos_session_id);
     }
