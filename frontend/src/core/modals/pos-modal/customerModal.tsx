@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useCreateCustomerMutation } from '@core/redux/api/inventory-api';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import { Modal } from 'bootstrap';
 
 const CustomerModal: React.FC = () => {
-  const [createCustomer, { isLoading, isSuccess, isError, error }] = useCreateCustomerMutation();
+  const [createCustomer, { isLoading, isSuccess, isError, error, reset }] = useCreateCustomerMutation();
 
   // Form states
   const [firstName, setFirstName] = useState('');
@@ -21,6 +22,11 @@ const CustomerModal: React.FC = () => {
     // Required fields validation
     if (!firstName.trim() || !lastName.trim() || !phoneNumber.trim()) {
       alert('Please fill in all required fields (First Name, Last Name, Phone).');
+      return;
+    }
+
+    if (isNaN(Number(phoneNumber))) {
+      alert('Phone number must be numeric.');
       return;
     }
 
@@ -53,10 +59,23 @@ const CustomerModal: React.FC = () => {
       setNotes('');
       setPreferredPaymentMethod('');
 
-      const modalEl = document.getElementById('create');
-      if (modalEl) {
-        const modal = window.bootstrap?.Modal.getInstance(modalEl);
-        if (modal) modal.hide();
+      reset();
+      const el = document.getElementById('create');
+      if (el) {
+        const modal = Modal.getInstance(el);
+        if (modal) {
+          modal.hide();
+          el.classList.remove('show');
+          el.style.display = 'none';
+          document.body.classList.remove('modal-open');
+          document.querySelector('.modal-backdrop')?.remove();
+        } else {
+          // fallback: if somehow no instance, forcibly clean up
+          el.classList.remove('show');
+          el.style.display = 'none';
+          document.body.classList.remove('modal-open');
+          document.querySelector('.modal-backdrop')?.remove();
+        }
       }
     }
   }, [isSuccess]);
@@ -161,6 +180,8 @@ const CustomerModal: React.FC = () => {
               <button type="submit" className="btn btn-md btn-primary" disabled={isLoading}>
                 {isLoading ? 'Submitting...' : 'Submit'}
               </button>
+
+              {isSuccess && <div className="text-success">Customer created successfully!</div>}
             </div>
           </form>
         </div>
