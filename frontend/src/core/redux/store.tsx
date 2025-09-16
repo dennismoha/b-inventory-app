@@ -40,7 +40,7 @@ const storage = typeof window === 'undefined' ? createNoopStorage() : createWebS
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['common', 'sidebar', 'rootReducer', 'themeSetting']
+  whitelist: ['common', 'sidebar', 'rootReducer', 'themeSetting', 'auth']
 };
 
 /* COMBINED REDUCER */
@@ -107,7 +107,7 @@ export default function StoreProvider({ children }: { children: React.ReactNode 
 
   return (
     <Provider store={storeRef.current}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={<div>loading...</div>} persistor={persistor}>
         {children}
       </PersistGate>
     </Provider>

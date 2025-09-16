@@ -26,6 +26,10 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({ children, allowedRol
     skip: !shouldFetchUser
   });
 
+  console.log('access token ', accessToken ? accessToken : 'no access token');
+  console.log('is auth ready ', isAuthReady);
+  console.log('should fetch user is ', shouldFetchUser);
+
   const hasSetCredsRef = useRef(false);
 
   // Set credentials once when user data is loaded
