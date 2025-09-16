@@ -49,17 +49,14 @@ export class Login {
     // 3️ Check if user already has an active login from another device
 
     if (user.role === 'user') {
-
       // If the user is a super admin, allow login without checking for active sessions
       console.log('Super admin login allowed without active session check');
       const existingLogin = await prisma.userLoginLog.findFirst({
         where: {
           userId: user.user_id,
-          isLoggedIn: true,
+          isLoggedIn: true
         }
       });
-
-
 
       if (existingLogin) {
         const currentDevice = req.headers['user-agent'] || '';
@@ -76,13 +73,9 @@ export class Login {
           }
         });
 
-        throw new BadRequestError(
-          'You are already logged in on another device. Please log out from that device first.'
-        );
+        throw new BadRequestError('You are already logged in on another device. Please log out from that device first.');
       }
-
     }
-
 
     //  Register successful login
     await prisma.userLoginLog.create({
@@ -91,7 +84,7 @@ export class Login {
         loginTime: new Date(),
         logoutTime: null, // Set to null for active session
         terminalId: '', // Assuming terminalId is not required for login
-        isLoggedIn: true, // Mark as logged in
+        isLoggedIn: true // Mark as logged in
         // ipAddress: req.ip || 'unknown',
         // userAgent: req.headers['user-agent'] || ''
       }
@@ -105,19 +98,15 @@ export class Login {
 
     // console.log('Active session:', posSession);
 
-    const jwtTokenPayload:AuthPayload = {
-       email: user.email,
-        username: user.username,
-        role: user.role,
-        posSessionId: posSession?.pos_session_id || null
+    const jwtTokenPayload: AuthPayload = {
+      email: user.email,
+      username: user.username,
+      role: user.role,
+      posSessionId: posSession?.pos_session_id || null
     };
 
     // 6 Generate token
-    const token = jwt.sign(
-     jwtTokenPayload,
-      config.JWT_SECRET,
-      { expiresIn: '1h' }
-    );
+    const token = jwt.sign(jwtTokenPayload, config.JWT_SECRET, { expiresIn: '1h' });
 
     // await prisma.userLoginLog.create({
     //   data: {
@@ -137,12 +126,11 @@ export class Login {
 
     // req.session = { jwt: token };
     req.session = { jwt: token };
-    
 
     req.currentUser = {
       email: user.email,
       username: user.username,
-      role: user.role,
+      role: user.role
       // posSessionId: posSession?.pos_session_id || null // Include the active session ID
     };
 
@@ -198,7 +186,7 @@ export class Login {
   //   return res.status(200).json({
   //     message: 'Login successful',
   //     token,
-  //     user: {      
+  //     user: {
   //       email: user.email,
   //       username: user.username,
   //       role: user.role

@@ -15,21 +15,19 @@ import { AccountController } from '@src/features/accounting/controller/accounts-
 import { Account_Cash, Account_Inventory } from '@src/constants';
 import { JournalService } from '@src/features/accounting/controller/journals-controller';
 
-
 /**
  * when and showing them to user have a productsummary remaining total for each product and inventory_quantity for each.
- * 
+ *
  * Now, if  quantity picked by user >  inventory stock but < productSummary reminaing total then we will have to load a new batch to inventiry
  *  .... etc,,, etc
  * if greater than all then it means that what is ordered  > than our stock.
  * if < inventory_stock then no need for loading another batch
- * 
- * 
+ *
+ *
  */
 
-
 function money(v: number) {
-  return Math.round((v + Number.EPSILON) * 100) / 100;  // round to 2dp to avoid floating noise
+  return Math.round((v + Number.EPSILON) * 100) / 100; // round to 2dp to avoid floating noise
 }
 
 export class TransactionsController {
@@ -51,20 +49,9 @@ export class TransactionsController {
    * Create a new transaction.
    */
 
-
-
-
-
-
-
   @joiValidation(transactionSchema)
   public async createTransaction(req: Request, res: Response): Promise<void> {
-    const {
-      cartProducts,
-      customerId,
-      paymentMethod,
-      totalCost,
-    }: TransactionProductItems = req.body;
+    const { cartProducts, customerId, paymentMethod, totalCost }: TransactionProductItems = req.body;
 
     // POS session check
     const posSession = req.headers['pos_session'];
@@ -75,7 +62,7 @@ export class TransactionsController {
     // Resolve opening/closing balance
     const ocb = await prisma.openingClosingBalance.findFirst({
       where: { pos_session_id: posSession },
-      select: { cash_bank_ledger_id: true, id: true },
+      select: { cash_bank_ledger_id: true, id: true }
     });
     if (!ocb) {
       throw new BadRequestError('POS session not linked to opening/closing balance');
@@ -93,8 +80,8 @@ export class TransactionsController {
           customerId: customerId ?? null,
           totalCost: money(totalCost.total),
           subtotal: money(totalCost.subtotal),
-          paymentMethod: 'CASH',
-        },
+          paymentMethod: 'CASH'
+        }
       });
 
       const txProductsData: Array<{
@@ -119,7 +106,7 @@ export class TransactionsController {
           await TransactionsController.allocateNextBatch(tx, item, transactionId);
           // FIFO batch allocation
           // we subtract items.stock_quantity from inventory.stock_quantity to get second_batch for example
-          // 
+          //
           // we update the proper tables with that action. productSummary.total_sold for that respective supplier_product_id
           // we log that batch in the  batchLifecyles with end time
           // we find , fetch the next batch from batchInventorystock with status pending order by dates and updated it to 'Active' and also update the state of the previous batch to finished
@@ -130,7 +117,6 @@ export class TransactionsController {
 
           // we subtract items.stock_quantity from inventory.stock_quantity to get second_batch for example
           // const remaining_quantity = Number(item.stock_quantity) - item.quantity;
-
 
           // // we log that batch in the  batchLifecyles with end time
           // const lifecycleUpdate = await tx.batchLifecycle.update({
@@ -154,7 +140,6 @@ export class TransactionsController {
           //   orderBy: {created_at:'asc'}
           // });
 
-
           // if (!batches) {
           //   throw new BadRequestError(
           //     `No active batches available for product: ${item.productName}`
@@ -168,7 +153,7 @@ export class TransactionsController {
           // });
 
           // // we update the batchLifeCycle with the details of the new batch and start_date
-          // const updateBatchLifeCycleWithNewBatch = await tx.batchLifecycle.create({            
+          // const updateBatchLifeCycleWithNewBatch = await tx.batchLifecycle.create({
           //   data:{batch_id: batches!.batch_inventory_id, started_at: new Date()}
           // });
 
@@ -181,9 +166,8 @@ export class TransactionsController {
           //    // we update the proper tables with that action. productSummary.total_sold for that respective supplier_product_id
           // const logLastBatchItems = await tx.productSummary.update({
           //   where: { supplier_products_id: item.supplier_products_id },
-          //   data: { total_received: item.total_stock_quantity - Number(item.stock_quantity) },        
+          //   data: { total_received: item.total_stock_quantity - Number(item.stock_quantity) },
           // });
-
 
           // const batches = await tx.batchInventory.findMany({
           //   where: {
@@ -194,7 +178,6 @@ export class TransactionsController {
           //   orderBy: [{ arrival_date: 'asc' }, { created_at: 'asc' }],
           //   select: { id: true, remaining_quantity: true, status: true },
           // });
-
 
           // let need = item.quantity;
           // for (const b of batches) {
@@ -256,9 +239,7 @@ export class TransactionsController {
           totalAllocated = item.quantity;
 
           const productSubTotalCost = money(item.price * item.quantity);
-          const productTotalCost = money(
-            item.price * item.quantity * (1 + item.VAT / 100) - item.discount
-          );
+          const productTotalCost = money(item.price * item.quantity * (1 + item.VAT / 100) - item.discount);
 
           txProductsData.push({
             inventoryId: item.inventoryId,
@@ -272,21 +253,21 @@ export class TransactionsController {
             discount: Number(item.discount),
             productSubTotalCost,
             productTotalCost,
-            transactionId,
+            transactionId
           });
         }
 
         // Update inventory & product summary
         await tx.inventory.update({
           where: { supplier_products_id: item.supplier_products_id },
-          data: { stock_quantity: { decrement: totalAllocated } },
+          data: { stock_quantity: { decrement: totalAllocated } }
         });
 
         await tx.productSummary.update({
           where: { supplier_products_id: item.supplier_products_id },
           data: {
-            total_sold: { increment: totalAllocated },
-          },
+            total_sold: { increment: totalAllocated }
+          }
         });
       }
 
@@ -298,23 +279,31 @@ export class TransactionsController {
       // Handle payments
       if (paymentMethod === 'CASH') {
         console.log('WE ARE IN THE CASH ACCOUNT ');
-        const inventoryAccount = await AccountController.findAccount({ tx, name: Account_Inventory.name, type: Account_Inventory.acc_type });
-        const cashAccount = await AccountController.findAccount({tx, name: Account_Cash.name , type:Account_Cash.acc_type });
-        if (!inventoryAccount && !cashAccount ) {
+        const inventoryAccount = await AccountController.findAccount({
+          tx,
+          name: Account_Inventory.name,
+          type: Account_Inventory.acc_type
+        });
+        const cashAccount = await AccountController.findAccount({ tx, name: Account_Cash.name, type: Account_Cash.acc_type });
+        if (!inventoryAccount && !cashAccount) {
           throw new BadRequestError('Account not configured');
         }
         console.log('inventory account is ', inventoryAccount);
 
         const journalEntry = await JournalService.createJournalEntry(tx, {
-          transactionId: 'purchase_payment', description: 'purchase payment', lines: [{
-            account_id: inventoryAccount.account_id!,
-            credit: new Decimal(totalCost.total)
-          }, {
-            account_id: cashAccount.account_id,
-            debit: new Decimal(totalCost.total),
-          }]
+          transactionId: 'purchase_payment',
+          description: 'purchase payment',
+          lines: [
+            {
+              account_id: inventoryAccount.account_id!,
+              credit: new Decimal(totalCost.total)
+            },
+            {
+              account_id: cashAccount.account_id,
+              debit: new Decimal(totalCost.total)
+            }
+          ]
         });
-
 
         console.log('journal entry is ', journalEntry);
 
@@ -325,11 +314,6 @@ export class TransactionsController {
         // if (!cashAccount) throw new BadRequestError('No active cash account configured');
 
         // const newBalance = money(Number(cashAccount.running_balance) + totalCost.total);
-
-
-
-
-
 
         // // await tx.account.update({
         // //   where: { account_id: cashAccount.account_id },
@@ -352,8 +336,6 @@ export class TransactionsController {
         //   pos_session_id: posSession,
         //   user: req.currentUser!.email
         // });
-
-
 
         // await tx.cashBookLedger.create({
         //   data: {
@@ -386,18 +368,14 @@ export class TransactionsController {
         //   select: { id: true },
         // });
 
-
-
         await tx.customerReceivable.create({
           data: {
             customer_id: customerId,
             total_Amount: money(totalCost.total),
             transaction_id: transactionId
-          },
+          }
         });
       }
-
-
 
       // await tx.auditLog.create({
       //   data: {
@@ -426,17 +404,11 @@ export class TransactionsController {
     //   .send(GetSuccessMessage(StatusCodes.CREATED, result, message));
   }
 
-
   /**
-     * Handles FIFO batch allocation when a product needs a new batch load.
-     * Covers edge cases and ensures data consistency.
-     */
-  static async allocateNextBatch(
-    tx: PrismaTransactionalClient,
-    item: TransactionProduct,
-    transactionId: string
-
-  ) {
+   * Handles FIFO batch allocation when a product needs a new batch load.
+   * Covers edge cases and ensures data consistency.
+   */
+  static async allocateNextBatch(tx: PrismaTransactionalClient, item: TransactionProduct, transactionId: string) {
     // ===================================================
     // 1. Calculate remaining quantity after deduction
     // ===================================================
@@ -456,9 +428,7 @@ export class TransactionsController {
     }> = [];
 
     if (remainingQuantity < 0) {
-      throw new BadRequestError(
-        `Invalid calculation: remaining quantity for ${item.productName} is negative.`
-      );
+      throw new BadRequestError(`Invalid calculation: remaining quantity for ${item.productName} is negative.`);
     }
 
     // ===================================================
@@ -466,7 +436,7 @@ export class TransactionsController {
     // ===================================================
     await tx.batchLifecycle.updateMany({
       where: { batch_id: item.batch_inventory_id, ended_at: null },
-      data: { ended_at: new Date() },
+      data: { ended_at: new Date() }
     });
 
     // ===================================================
@@ -475,9 +445,9 @@ export class TransactionsController {
     await tx.batchInventory.updateMany({
       where: {
         batch_inventory_id: item.batch_inventory_id,
-        status: 'ACTIVE',
+        status: 'ACTIVE'
       },
-      data: { status: 'FINISHED' },
+      data: { status: 'FINISHED' }
     });
 
     // ===================================================
@@ -486,15 +456,13 @@ export class TransactionsController {
     const nextBatch = await tx.batchInventory.findFirst({
       where: {
         supplier_products_id: item.supplier_products_id,
-        status: 'PENDING',
+        status: 'PENDING'
       },
-      orderBy: { created_at: 'asc' },
+      orderBy: { created_at: 'asc' }
     });
 
     if (!nextBatch) {
-      throw new BadRequestError(
-        `No pending batch available for product: ${item.productName}`
-      );
+      throw new BadRequestError(`No pending batch available for product: ${item.productName}`);
     }
 
     // ===================================================
@@ -505,14 +473,12 @@ export class TransactionsController {
       data: {
         stock_quantity: nextBatch.total_units,
         status: 'ACTIVE',
-        batch_inventory_id: nextBatch.batch_inventory_id,
-      },
+        batch_inventory_id: nextBatch.batch_inventory_id
+      }
     });
 
     if (Number(loadNewBatch.stock_quantity) <= 0) {
-      throw new BadRequestError(
-        `Next batch for ${item.productName} has no stock units.`
-      );
+      throw new BadRequestError(`Next batch for ${item.productName} has no stock units.`);
     }
 
     // ===================================================
@@ -521,8 +487,8 @@ export class TransactionsController {
     await tx.batchLifecycle.create({
       data: {
         batch_id: nextBatch.batch_inventory_id,
-        started_at: new Date(),
-      },
+        started_at: new Date()
+      }
     });
 
     // ===================================================
@@ -532,14 +498,12 @@ export class TransactionsController {
     console.log('final Quantity is ', finalQuantity);
 
     if (finalQuantity < 0) {
-      throw new BadRequestError(
-        `Next batch for ${item.productName} does not have enough to cover carry-over.`
-      );
+      throw new BadRequestError(`Next batch for ${item.productName} does not have enough to cover carry-over.`);
     }
 
     await tx.inventory.update({
       where: { supplier_products_id: item.supplier_products_id },
-      data: { stock_quantity: finalQuantity },
+      data: { stock_quantity: finalQuantity }
     });
 
     // ===================================================
@@ -548,17 +512,13 @@ export class TransactionsController {
     await tx.productSummary.update({
       where: { supplier_products_id: item.supplier_products_id },
       data: {
-        total_received:
-          item.total_stock_quantity - Number(item.stock_quantity),
-        total_sold: { increment: item.quantity },
-      },
+        total_received: item.total_stock_quantity - Number(item.stock_quantity),
+        total_sold: { increment: item.quantity }
+      }
     });
 
-
     const productSubTotalCost = money(item.price * Number(item.stock_quantity));
-    const productTotalCost = money(
-      item.price * Number(item.stock_quantity) * (1 + item.VAT / 100) - item.discount
-    );
+    const productTotalCost = money(item.price * Number(item.stock_quantity) * (1 + item.VAT / 100) - item.discount);
 
     txProductsData.push({
       inventoryId: item.inventoryId,
@@ -571,10 +531,9 @@ export class TransactionsController {
       discount: Number(item.discount),
       productSubTotalCost,
       productTotalCost,
-      transactionId,
+      transactionId
     });
   }
-
 
   // @joiValidation(transactionSchema)
   // public async createTransaction(req: Request, res: Response): Promise<void> {
@@ -650,7 +609,7 @@ export class TransactionsController {
   //       VAT: Number(product.VAT),
   //       supplier_products_id: product.supplier_products_id,
   //       quantity: product.quantity,
-  //       productName: product.productName,        
+  //       productName: product.productName,
   //       price: product.price,
   //       discount: Number(product.discount),
   //       productSubTotalCost,
@@ -794,5 +753,3 @@ export class TransactionsController {
   //   res.status(StatusCodes.NO_CONTENT).send();
   // }
 }
-
-

@@ -11,18 +11,10 @@ class ProductSummaryRoutes {
 
   public routes(): Router {
     // Fetch low stock
-    this.router.get(
-      '/inventory/low-stock',
-      authMiddleware.verifyUser,
-      ProductSummaryController.prototype.fetchLowStock
-    );
+    this.router.get('/inventory/low-stock', authMiddleware.verifyUser, ProductSummaryController.prototype.fetchLowStock);
 
     // Update stock level
-    this.router.put(
-      '/inventory/update-stock-level',
-      authMiddleware.verifyUser,
-      ProductSummaryController.prototype.updateStockLevel
-    );
+    this.router.put('/inventory/update-stock-level', authMiddleware.verifyUser, ProductSummaryController.prototype.updateStockLevel);
 
     // fetch all stock
     this.router.get('/inventory/stock', authMiddleware.verifyUser, ProductSummaryController.prototype.fetchStock);
@@ -30,6 +22,5 @@ class ProductSummaryRoutes {
     return this.router;
   }
 }
-
 
 export const productSummaryRoutes = new ProductSummaryRoutes();

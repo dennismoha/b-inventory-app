@@ -75,7 +75,6 @@ export default (app: Application) => {
     app.use(BASE_PATH, purchasePayablesRoutes.routes());
     app.use(BASE_PATH, batchInventoryRoutes.routes());
     app.use(BASE_PATH, productSummaryRoutes.routes());
-
   };
 
   routes();

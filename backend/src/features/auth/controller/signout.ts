@@ -5,7 +5,7 @@ export class SignOut {
   public async update(req: Request, res: Response): Promise<void> {
     console.log('SignOut request received:::::', req.currentUser);
 
-    if(!req.currentUser){
+    if (!req.currentUser) {
       res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: 'Unauthorized' });
       return;
     }
@@ -14,7 +14,7 @@ export class SignOut {
       where: { email: req.currentUser.email }
     });
 
-    if (!User) {    
+    if (!User) {
       res.status(HTTP_STATUS.UNAUTHORIZED).json({ message: 'User not found' });
       return;
     }
@@ -29,7 +29,7 @@ export class SignOut {
       },
       data: {
         logoutTime: new Date(),
-        isLoggedIn: false, // Mark as logged out
+        isLoggedIn: false // Mark as logged out
         // Explicitly track logout status
         // isLoggedOut: true // if you add this boolean field
       }

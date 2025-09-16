@@ -27,7 +27,7 @@ export interface Customer {
   lastName: string; // Customer's last name
   email: string;
   phoneNumber: string;
-  address: string | null ; // Optional: Customer's address
+  address: string | null; // Optional: Customer's address
 
   country: string | null; // Optional: Customer's country
   createdAt: Date;
@@ -36,6 +36,6 @@ export interface Customer {
   loyaltyPoints: number | null;
   totalSpent: number | null;
 
-  notes: string | null ; // Optional: Any special notes or preferences about the customer
+  notes: string | null; // Optional: Any special notes or preferences about the customer
   preferredPaymentMethod: string | null; // Optional: Preferred payment method (e.g., Credit card, PayPal)
 }

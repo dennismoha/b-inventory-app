@@ -18,9 +18,7 @@ export class ExpensesController {
       include: { purchase: true }
     });
 
-    res
-      .status(StatusCodes.OK)
-      .send(GetSuccessMessage(StatusCodes.OK, expenses, 'Expenses fetched successfully'));
+    res.status(StatusCodes.OK).send(GetSuccessMessage(StatusCodes.OK, expenses, 'Expenses fetched successfully'));
   }
 
   /**
@@ -35,9 +33,7 @@ export class ExpensesController {
 
     if (!expense) throw new NotFoundError('Expense not found');
 
-    res
-      .status(StatusCodes.OK)
-      .send(GetSuccessMessage(StatusCodes.OK, expense, 'Expense fetched successfully'));
+    res.status(StatusCodes.OK).send(GetSuccessMessage(StatusCodes.OK, expense, 'Expense fetched successfully'));
   }
 
   /**
@@ -52,7 +48,7 @@ export class ExpensesController {
       category,
       accountId,
       batch,
-      isGeneral,
+      isGeneral
     }: {
       purchaseId?: string;
       description: string;
@@ -67,7 +63,7 @@ export class ExpensesController {
       //  If tied to a purchase, validate purchase existence
       if (purchaseId) {
         const purchase = await tx.purchase.findUnique({
-          where: { purchase_id: purchaseId },
+          where: { purchase_id: purchaseId }
         });
         if (!purchase) {
           throw new NotFoundError('Purchase not found');
@@ -83,11 +79,10 @@ export class ExpensesController {
           accountId,
           purchaseId,
           batch,
-          isGeneral: isGeneral ?? !purchaseId, // if no purchase, mark as general
-        },
+          isGeneral: isGeneral ?? !purchaseId // if no purchase, mark as general
+        }
       });
 
-      
       //  Create Journal Entry
       await JournalService.createJournalEntry(tx, {
         transactionId: createdExpense.id,
@@ -95,34 +90,24 @@ export class ExpensesController {
         lines: [
           {
             account_id: accountId,
-            credit: amount,
+            credit: amount
           },
           {
             account_id: accountId,
-            debit: amount,
-          },
-        ],
+            debit: amount
+          }
+        ]
       });
-
 
       return createdExpense;
     });
 
-    res.status(StatusCodes.CREATED).send(
-      GetSuccessMessage(
-        StatusCodes.CREATED,
-        expense,
-        'Expense created successfully'
-      )
-    );
+    res.status(StatusCodes.CREATED).send(GetSuccessMessage(StatusCodes.CREATED, expense, 'Expense created successfully'));
   }
-
 
   // public async createExpense(req: Request, res: Response): Promise<void> {
   //   const { purchaseId, } = req.body;
   //   const data = req.body
-
-
 
   //   const expense = await prisma.$transaction(async (tx) => {
   //     // If tied to a purchase, validate purchase existence
@@ -141,8 +126,6 @@ export class ExpensesController {
   //     const expense = await prisma.expense.create({ data: req.body });
   //   })
 
-
-
   //   res
   //     .status(StatusCodes.CREATED)
   //     .send(GetSuccessMessage(StatusCodes.CREATED, expense, 'Expense created successfully'));
@@ -160,9 +143,7 @@ export class ExpensesController {
 
     const updated = await prisma.expense.update({ where: { id }, data: req.body });
 
-    res
-      .status(StatusCodes.OK)
-      .send(GetSuccessMessage(StatusCodes.OK, updated, 'Expense updated successfully'));
+    res.status(StatusCodes.OK).send(GetSuccessMessage(StatusCodes.OK, updated, 'Expense updated successfully'));
   }
 
   /**
@@ -176,8 +157,6 @@ export class ExpensesController {
 
     await prisma.expense.delete({ where: { id } });
 
-    res
-      .status(StatusCodes.OK)
-      .send(GetSuccessMessage(StatusCodes.OK, null, 'Expense deleted successfully'));
+    res.status(StatusCodes.OK).send(GetSuccessMessage(StatusCodes.OK, null, 'Expense deleted successfully'));
   }
 }

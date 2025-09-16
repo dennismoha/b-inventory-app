@@ -36,9 +36,7 @@ export const accountSchema: ObjectSchema = Joi.object().keys({
   })
 });
 
-//  amount, description, reference_id, accountId 
-
-
+//  amount, description, reference_id, accountId
 
 export const AccountTopSchema: ObjectSchema = Joi.object({
   amount: Joi.number()
@@ -50,31 +48,23 @@ export const AccountTopSchema: ObjectSchema = Joi.object({
       'any.required': 'Amount is required'
     }),
 
-  description: Joi.string()
-    .allow('', null)
-    .max(255)
-    .messages({
-      'string.base': 'Description must be a string',
-      'string.max': 'Description cannot exceed 255 characters'
-    }),
+  description: Joi.string().allow('', null).max(255).messages({
+    'string.base': 'Description must be a string',
+    'string.max': 'Description cannot exceed 255 characters'
+  }),
 
-  reference_id: Joi.string()     
-    .messages({
-      'string.base': 'Reference ID must be a string',
-   
-      'any.required': 'Reference ID is required'
-    }),
+  reference_id: Joi.string().messages({
+    'string.base': 'Reference ID must be a string',
 
-  accountId: Joi.string()
-    .uuid()
-    .required()
-    .messages({
-      'string.base': 'Account ID must be a string',
-      'string.guid': 'Invalid Account ID',
-      'any.required': 'Account ID is required'
-    })
+    'any.required': 'Reference ID is required'
+  }),
+
+  accountId: Joi.string().uuid().required().messages({
+    'string.base': 'Account ID must be a string',
+    'string.guid': 'Invalid Account ID',
+    'any.required': 'Account ID is required'
+  })
 });
-
 
 export const accountStatusSchema: ObjectSchema = Joi.object().keys({
   account_status: Joi.string()

@@ -5,70 +5,56 @@ import { NotAuthorizedError } from './error-handler';
 type Role = 'user' | 'admin'; // extend this if you add more roles later
 
 export const verifyAuthRoles = (...allowedRoles: Role[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!req?.currentUser?.role) {
+      return res.sendStatus(401); // Unauthorized
+    }
 
-    return (req: Request, res: Response, next: NextFunction) => {
-
-
-        if (!req?.currentUser?.role) {
-            return res.sendStatus(401); // Unauthorized
-        }
-
-
-        if (allowedRoles.includes(req.currentUser.role)) {
-
-            return next();
-
-        }
-        return res.sendStatus(403); // Forbidden
-
-    };
+    if (allowedRoles.includes(req.currentUser.role)) {
+      return next();
+    }
+    return res.sendStatus(403); // Forbidden
+  };
 };
 
-
 export const verifyRoles = () => {
-    console.log('verifyRoles middleware called');
-    return (req: Request, res: Response, next: NextFunction) => {
-        if (!req?.currentUser?.role) return res.sendStatus(401);
-        console.log('req.currentUser.role::::::', req.currentUser.role);
-        // Check if the user has the 'admin' role
-        if (req.currentUser.role !== 'admin') throw new NotAuthorizedError('You are not authorized to access this resource');
-        // if (req.currentUser.role !== 'admin') return res.sendStatus(403);
+  console.log('verifyRoles middleware called');
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!req?.currentUser?.role) return res.sendStatus(401);
+    console.log('req.currentUser.role::::::', req.currentUser.role);
+    // Check if the user has the 'admin' role
+    if (req.currentUser.role !== 'admin') throw new NotAuthorizedError('You are not authorized to access this resource');
+    // if (req.currentUser.role !== 'admin') return res.sendStatus(403);
 
-        next();
-
-    };
+    next();
+  };
 };
 
 export const verifyUserRoles = () => {
-    console.log('verifyRoles middleware called');
-    return (req: Request, res: Response, next: NextFunction) => {
-        if (!req?.currentUser?.role) return res.sendStatus(401);
-        console.log('req.currentUser.role::::::', req.currentUser.role);
-        // Check if the user has the 'admin' role
-        if (req.currentUser.role !== 'user') return res.sendStatus(403);
+  console.log('verifyRoles middleware called');
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!req?.currentUser?.role) return res.sendStatus(401);
+    console.log('req.currentUser.role::::::', req.currentUser.role);
+    // Check if the user has the 'admin' role
+    if (req.currentUser.role !== 'user') return res.sendStatus(403);
 
-        next();
-
-    };
+    next();
+  };
 };
 
 export const verifyBothRoles = () => {
-    console.log('verifyRoles middleware called');
-    return (req: Request, res: Response, next: NextFunction) => {
-        if (!req?.currentUser?.role) return res.sendStatus(401);
-        console.log('req.currentUser.role::::::', req.currentUser.role);
-        // Check if the user has the 'admin' role
-        if (req.currentUser.role === 'user' || req.currentUser.role === 'admin') {
-            return next();
-        }
+  console.log('verifyRoles middleware called');
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!req?.currentUser?.role) return res.sendStatus(401);
+    console.log('req.currentUser.role::::::', req.currentUser.role);
+    // Check if the user has the 'admin' role
+    if (req.currentUser.role === 'user' || req.currentUser.role === 'admin') {
+      return next();
+    }
 
-        return res.sendStatus(403);
-
-    };
+    return res.sendStatus(403);
+  };
 };
-
-
-
 
 // type Roles = {
 //     admin: 'string';
@@ -100,5 +86,3 @@ export const verifyBothRoles = () => {
 //         next();
 //     };
 // };
-
-

@@ -24,7 +24,11 @@ import { CashbookLedgerRecords } from '@src/features/accounting/interfaces/cashb
 import { Asset } from '@src/features/hrm/assets/interface/assets.interface';
 import { Employee } from '@src/features/hrm/employees/interfaces/employee.interface';
 import { Expense } from '@src/features/expenses/interface/expenses.interface';
-import { BalanceSheetResponse, CashflowStatement, ProfitAndLossResponse } from '@src/features/accounting/interfaces/financial-reports.interface';
+import {
+  BalanceSheetResponse,
+  CashflowStatement,
+  ProfitAndLossResponse
+} from '@src/features/accounting/interfaces/financial-reports.interface';
 import { pos_session_header } from '@src/features/pos/interface/pos.interface';
 // Utility type to handle both singular and array types
 type WithArray<T> = T | T[];

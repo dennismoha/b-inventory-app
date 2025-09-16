@@ -8,37 +8,33 @@ import GetSuccessMessage from '@src/shared/globals/helpers/success-messages';
 import { Asset } from '@src/features/hrm/assets/interface/assets.interface';
 import { JournalService } from '@src/features/accounting/controller/journals-controller';
 import { AccountController } from '@src/features/accounting/controller/accounts-controller';
-import {  Account_Utilities } from '@src/constants';
+import { Account_Utilities } from '@src/constants';
 import { Decimal } from '@prisma/client/runtime/library';
 
 export class AssetsController {
- public async fetchAssets(req: Request, res: Response): Promise<void> {
-  const assets: Asset[] = await prisma.assetRegister.findMany({
-    include: {
-      custodian: true
-    }
-  });
+  public async fetchAssets(req: Request, res: Response): Promise<void> {
+    const assets: Asset[] = await prisma.assetRegister.findMany({
+      include: {
+        custodian: true
+      }
+    });
 
-  res
-    .status(StatusCodes.OK)
-    .send(GetSuccessMessage(StatusCodes.OK, assets, 'Assets fetched successfully'));
-}
-
-public async fetchAssetById(req: Request, res: Response): Promise<void> {
-  const { id } = req.params;
-  const asset = await prisma.assetRegister.findUnique({
-    where: { id },
-    include: { custodian: true }
-  });
-
-  if (!asset) {
-    throw new NotFoundError('Asset not found');
+    res.status(StatusCodes.OK).send(GetSuccessMessage(StatusCodes.OK, assets, 'Assets fetched successfully'));
   }
 
-  res
-    .status(StatusCodes.OK)
-    .send(GetSuccessMessage(StatusCodes.OK, asset, 'Asset fetched successfully'));
-}
+  public async fetchAssetById(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+    const asset = await prisma.assetRegister.findUnique({
+      where: { id },
+      include: { custodian: true }
+    });
+
+    if (!asset) {
+      throw new NotFoundError('Asset not found');
+    }
+
+    res.status(StatusCodes.OK).send(GetSuccessMessage(StatusCodes.OK, asset, 'Asset fetched successfully'));
+  }
 
   /**
    * Create a new asset
@@ -57,7 +53,7 @@ public async fetchAssetById(req: Request, res: Response): Promise<void> {
       status,
       depreciation,
       usefulLifeYears,
-      accountId,   // expense/cash account paying for asset
+      accountId // expense/cash account paying for asset
     }: {
       assetTag: string;
       name: string;
@@ -76,7 +72,7 @@ public async fetchAssetById(req: Request, res: Response): Promise<void> {
     const asset = await prisma.$transaction(async (tx) => {
       // Check duplicate tag
       const existingAsset = await tx.assetRegister.findUnique({
-        where: { assetTag },
+        where: { assetTag }
       });
       if (existingAsset) {
         throw new ConflictError('Asset with this tag already exists');
@@ -90,16 +86,16 @@ public async fetchAssetById(req: Request, res: Response): Promise<void> {
           category,
           description: description ?? null,
           purchaseDate,
-          purchaseCost : Number(purchaseCost),
+          purchaseCost: Number(purchaseCost),
           supplier: supplier ?? null,
           location: location ?? null,
           status: status ?? 'active',
           depreciation: depreciation ?? null,
-          usefulLifeYears: usefulLifeYears ?? null,
-        },
-      });      
+          usefulLifeYears: usefulLifeYears ?? null
+        }
+      });
 
-      const cashAccount = await AccountController.findAccount({tx, name: Account_Utilities.name, type:Account_Utilities.acc_type});
+      const cashAccount = await AccountController.findAccount({ tx, name: Account_Utilities.name, type: Account_Utilities.acc_type });
       //  Post Journal Entry (Dr Asset, Cr Cash/Bank)
       await JournalService.createJournalEntry(tx, {
         transactionId: createdAsset.id, // link journal to this asset
@@ -107,27 +103,20 @@ public async fetchAssetById(req: Request, res: Response): Promise<void> {
         lines: [
           {
             account_id: accountId,
-            debit: purchaseCost,
+            debit: purchaseCost
           },
           {
             account_id: cashAccount.account_id, // credit cash/bank
-            credit: purchaseCost,
-          },
-        ],
+            credit: purchaseCost
+          }
+        ]
       });
 
       return createdAsset;
     });
 
-    res.status(StatusCodes.CREATED).send(
-      GetSuccessMessage(
-        StatusCodes.CREATED,
-        asset,
-        'Asset created successfully'
-      )
-    );
+    res.status(StatusCodes.CREATED).send(GetSuccessMessage(StatusCodes.CREATED, asset, 'Asset created successfully'));
   }
-
 
   // public async createAsset(req: Request, res: Response): Promise<void> {
   //   const { assetTag } = req.body;
@@ -166,9 +155,7 @@ public async fetchAssetById(req: Request, res: Response): Promise<void> {
       data: req.body
     });
 
-    res
-      .status(StatusCodes.OK)
-      .send(GetSuccessMessage(StatusCodes.OK, updated, 'Asset updated successfully'));
+    res.status(StatusCodes.OK).send(GetSuccessMessage(StatusCodes.OK, updated, 'Asset updated successfully'));
   }
 
   /**
@@ -184,8 +171,6 @@ public async fetchAssetById(req: Request, res: Response): Promise<void> {
 
     await prisma.assetRegister.delete({ where: { id } });
 
-    res
-      .status(StatusCodes.OK)
-      .send(GetSuccessMessage(StatusCodes.OK, null, 'Asset deleted successfully'));
+    res.status(StatusCodes.OK).send(GetSuccessMessage(StatusCodes.OK, null, 'Asset deleted successfully'));
   }
 }

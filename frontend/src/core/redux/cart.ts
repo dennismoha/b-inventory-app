@@ -77,7 +77,7 @@ const checkoutSlice = createSlice({
         });
       }
 
-      // ✅ Use each item's own values, not the payload values
+      // Use each item's own values, not the payload values
       const subtotal = state.cartProducts.reduce((total, item) => total + item.quantity * item.price, 0);
 
       const totalVAT = state.cartProducts.reduce((total, item) => total + (item.quantity * item.price * item.VAT) / 100, 0);

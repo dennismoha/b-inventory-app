@@ -29,7 +29,7 @@ type InputData = {
 
 export class InventoryController {
   /**
-   * Fetches all inventory items 
+   * Fetches all inventory items
    */
   public async fetchInventory(req: Request, res: Response): Promise<void> {
     const inventory = await prisma.inventory.findMany({
@@ -63,10 +63,10 @@ export class InventoryController {
                 effective_date: true
               }
             },
-            ProductSummary:{
-              select:{
+            ProductSummary: {
+              select: {
                 total_received: true,
-                total_sold:true
+                total_sold: true
               }
             }
           }

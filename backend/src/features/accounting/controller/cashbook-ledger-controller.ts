@@ -7,88 +7,80 @@ import { CashBookLedger, CashbookLedgerRecords } from '../interfaces/cashbook-le
 import GetSuccessMessage from '@src/shared/globals/helpers/success-messages';
 import { Decimal } from '@prisma/client/runtime/library';
 
-
 export class CashBookLedgerController {
-    /**
-     * Fetch all cash book ledger entries
-     */
-    public async getCashBookLedgers(req: Request, res: Response): Promise<Response> {
-        const ledgers = await prisma.openingClosingBalance.findMany({
-            include: {
-                cashBookLedgers: {
-                    include: {
-                        AccountInfo: true
-                    }
-                }
-            }
-        });
+  /**
+   * Fetch all cash book ledger entries
+   */
+  public async getCashBookLedgers(req: Request, res: Response): Promise<Response> {
+    const ledgers = await prisma.openingClosingBalance.findMany({
+      include: {
+        cashBookLedgers: {
+          include: {
+            AccountInfo: true
+          }
+        }
+      }
+    });
 
+    const orderRecords = (sessions: OpeningClosingBalance[]) => {
+      return sessions.map((session) => {
+        if (!session.cashBookLedgers || session.cashBookLedgers.length === 0) {
+          return { ...session, cashBookLedgers: [] };
+        }
 
+        const inflows = session.cashBookLedgers
+          .filter((txn: CashBookLedger) => txn.transaction_type === 'INFLOW')
+          .map((txn: CashBookLedger) => ({
+            transaction_date: txn.transaction_date,
+            transaction_type: txn.transaction_type,
+            amount: Number(txn.amount),
+            method: txn.method,
+            description: txn.description,
+            account_name: txn.AccountInfo!.name,
+            current_balance: txn.AccountInfo!.running_balance
+          }));
 
+        const outflows = session.cashBookLedgers
+          .filter((txn: CashBookLedger) => txn.transaction_type === 'OUTFLOW')
+          .map((txn: CashBookLedger) => ({
+            transaction_date: txn.transaction_date,
+            transaction_type: txn.transaction_type,
+            amount: Number(txn.amount),
+            method: txn.method,
+            description: txn.description,
+            account_name: txn.AccountInfo!.name,
+            current_balance: txn.AccountInfo!.running_balance
+          }));
 
+        const total_inflows = inflows.reduce((sum: number, txn: { amount: number }) => sum + txn.amount, 0);
+        const total_outflows = outflows.reduce((sum: number, txn: { amount: number }) => sum + txn.amount, 0);
+        const net_balance = total_inflows - total_outflows;
 
-        const orderRecords = (sessions: OpeningClosingBalance[]) => {
-            return sessions.map(session => {
-                if (!session.cashBookLedgers || session.cashBookLedgers.length === 0) {
-                    return { ...session, cashBookLedgers: [] };
-                }
+        return {
+          pos_session_id: session.pos_session_id,
+          opening_date: session.opening_date,
+          closing_date: session.closing_date,
+          status: session.status,
+          opening_balance: session.opening_balance || 0,
+          closing_balance: new Decimal(session.closing_balance || 0),
+          total_for_accounts: new Decimal(session.total_for_accounts || 0),
+          cashBookLedgers: {
+            inflows,
+            outflows,
+            total_inflows,
+            total_outflows,
+            net_balance
+          }
+        };
+      });
+    };
 
-                const inflows = session.cashBookLedgers
-                    .filter((txn: CashBookLedger) => txn.transaction_type === 'INFLOW')
-                    .map((txn: CashBookLedger) => ({
-                        transaction_date: txn.transaction_date,
-                        transaction_type: txn.transaction_type,
-                        amount: Number(txn.amount),
-                        method: txn.method,
-                        description: txn.description,
-                        account_name: txn.AccountInfo!.name,
-                        current_balance: txn.AccountInfo!.running_balance
-                    }));
+    const data: CashbookLedgerRecords[] = orderRecords(ledgers);
 
-                const outflows = session.cashBookLedgers
-                    .filter((txn: CashBookLedger) => txn.transaction_type === 'OUTFLOW')
-                    .map((txn: CashBookLedger) => ({
-                        transaction_date: txn.transaction_date,
-                        transaction_type: txn.transaction_type,
-                        amount: Number(txn.amount),
-                        method: txn.method,
-                        description: txn.description,
-                        account_name: txn.AccountInfo!.name,
-                        current_balance: txn.AccountInfo!.running_balance
-                    }));
+    return res.status(StatusCodes.ACCEPTED).send(GetSuccessMessage(StatusCodes.ACCEPTED, data, 'cash book records fetched successfully'));
+  }
 
-                const total_inflows = inflows.reduce((sum: number, txn: { amount: number }) => sum + txn.amount, 0);
-                const total_outflows = outflows.reduce((sum: number, txn: { amount: number }) => sum + txn.amount, 0);
-                const net_balance = total_inflows - total_outflows;
-
-                return {
-                    pos_session_id: session.pos_session_id,
-                    opening_date: session.opening_date,
-                    closing_date: session.closing_date,
-                    status: session.status,
-                    opening_balance: (session.opening_balance || 0),
-                    closing_balance: new Decimal(session.closing_balance || 0),
-                    total_for_accounts: new Decimal(session.total_for_accounts || 0),
-                    cashBookLedgers: {
-                        inflows,
-                        outflows,
-                        total_inflows,
-                        total_outflows,
-                        net_balance
-                    }
-                };
-            });
-        };   
-
-        const data :  CashbookLedgerRecords[]  = orderRecords(ledgers);
-
-
-     
-
-        return res.status(StatusCodes.ACCEPTED).send(GetSuccessMessage(StatusCodes.ACCEPTED, data, 'cash book records fetched successfully'));
-    }
-
-    /**
+  /**
      * 
      * Now what we have to do is data transformation.
      * 
@@ -123,66 +115,64 @@ export class CashBookLedgerController {
      * 
      */
 
+  /**
+   * Fetch a single cash book ledger entry by ID
+   */
+  // public async getCashBookLedgerById(req: Request, res: Response): Promise<Response> {
+  //     const { id } = req.params;
+  //     const ledger = await prisma.cashBookLedger.findUnique({
+  //         where: { ledger_id: id },
+  //         include: {
+  //             CashBookLedgers: true,
+  //             openingClosingBalance: true,
+  //         },
+  //     });
+  //     return res.status(StatusCodes.OK).json({
+  //         message: 'Cash book ledger fetched successfully',
+  //         data: ledger,
+  //     });
+  // }
 
-    /**
-     * Fetch a single cash book ledger entry by ID
-     */
-    // public async getCashBookLedgerById(req: Request, res: Response): Promise<Response> {
-    //     const { id } = req.params;
-    //     const ledger = await prisma.cashBookLedger.findUnique({
-    //         where: { ledger_id: id },
-    //         include: {
-    //             CashBookLedgers: true,
-    //             openingClosingBalance: true,
-    //         },
-    //     });
-    //     return res.status(StatusCodes.OK).json({
-    //         message: 'Cash book ledger fetched successfully',
-    //         data: ledger,
-    //     });
-    // }
+  // /**
+  //  * Create a new cash book ledger entry
+  //  */
+  // public async createCashBookLedger(req: Request, res: Response): Promise<Response> {
+  //     const data = req.body;
+  //     const ledger = await prisma.cashBookLedger.create({
+  //         data,
+  //     });
+  //     return res.status(StatusCodes.CREATED).json({
+  //         message: 'Cash book ledger created successfully',
+  //         data: ledger,
+  //     });
+  // }
 
-    // /**
-    //  * Create a new cash book ledger entry
-    //  */
-    // public async createCashBookLedger(req: Request, res: Response): Promise<Response> {
-    //     const data = req.body;
-    //     const ledger = await prisma.cashBookLedger.create({
-    //         data,
-    //     });
-    //     return res.status(StatusCodes.CREATED).json({
-    //         message: 'Cash book ledger created successfully',
-    //         data: ledger,
-    //     });
-    // }
+  // /**
+  //  * Update a cash book ledger entry by ID
+  //  */
+  // public async updateCashBookLedger(req: Request, res: Response): Promise<Response> {
+  //     const { id } = req.params;
+  //     const data = req.body;
+  //     const ledger = await prisma.cashBookLedger.update({
+  //         where: { ledger_id: id },
+  //         data,
+  //     });
+  //     return res.status(StatusCodes.OK).json({
+  //         message: 'Cash book ledger updated successfully',
+  //         data: ledger,
+  //     });
+  // }
 
-    // /**
-    //  * Update a cash book ledger entry by ID
-    //  */
-    // public async updateCashBookLedger(req: Request, res: Response): Promise<Response> {
-    //     const { id } = req.params;
-    //     const data = req.body;
-    //     const ledger = await prisma.cashBookLedger.update({
-    //         where: { ledger_id: id },
-    //         data,
-    //     });
-    //     return res.status(StatusCodes.OK).json({
-    //         message: 'Cash book ledger updated successfully',
-    //         data: ledger,
-    //     });
-    // }
-
-    // /**
-    //  * Delete a cash book ledger entry by ID
-    //  */
-    // public async deleteCashBookLedger(req: Request, res: Response): Promise<Response> {
-    //     const { id } = req.params;
-    //     await prisma.cashBookLedger.delete({
-    //         where: { ledger_id: id },
-    //     });
-    //     return res.status(StatusCodes.OK).json({
-    //         message: 'Cash book ledger deleted successfully',
-    //     });
-    // }
+  // /**
+  //  * Delete a cash book ledger entry by ID
+  //  */
+  // public async deleteCashBookLedger(req: Request, res: Response): Promise<Response> {
+  //     const { id } = req.params;
+  //     await prisma.cashBookLedger.delete({
+  //         where: { ledger_id: id },
+  //     });
+  //     return res.status(StatusCodes.OK).json({
+  //         message: 'Cash book ledger deleted successfully',
+  //     });
+  // }
 }
-

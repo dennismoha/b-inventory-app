@@ -1,12 +1,11 @@
 import Joi from 'joi';
 
 export const inventorySchema = Joi.object({
-  batch_name: Joi.string().required(),
+  batch_name: Joi.string().required()
   // supplier_products_id: Joi.string().uuid().required(),
   // quantity: Joi.number().positive().required(),
   // unit_id: Joi.string().uuid().required(),
 });
-
 
 // export const inventorySchema = Joi.object({
 //   supplier_products_id: Joi.string().required(),

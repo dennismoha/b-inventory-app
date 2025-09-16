@@ -4,9 +4,7 @@ import { CashBookLedger } from './cashbook-ledger.interface';
 import { Decimal } from '@prisma/client/runtime/library';
 
 // Enums
-export type AccountType =
-  'ASSET' | 'LIABILITY' | 'EQUITY' | 'INCOME' | 'EXPENSE'
-
+export type AccountType = 'ASSET' | 'LIABILITY' | 'EQUITY' | 'INCOME' | 'EXPENSE';
 
 export enum AccountStatus {
   ACTIVE = 'ACTIVE',
@@ -16,19 +14,19 @@ export enum AccountStatus {
 
 // this is for what is returned in the balance sheet
 export type journalLines = {
-  line_id:string;
+  line_id: string;
   entry_id: string;
   account_id: string;
   debit: string;
-  credit: string
-}
+  credit: string;
+};
 
 // Account type
 export interface Account {
   account_id: string;
   name: string;
   account_number?: string | null;
-  type: 'ASSET' | 'LIABILITY' | 'EXPENSE' | 'EQUITY' | 'INCOME'
+  type: 'ASSET' | 'LIABILITY' | 'EXPENSE' | 'EQUITY' | 'INCOME';
   description?: string | null;
   opening_balance: Decimal; // Prisma Decimal is best handled as string in TS
   running_balance: Decimal;
@@ -52,7 +50,6 @@ export interface AccountCollection {
   updated_at: Date;
   openingClosingBalances: OpeningClosingBalance[];
 }
-
 
 export interface AccountBalanceSnapshot {
   id: string;
@@ -86,9 +83,9 @@ export type TrialBalance = {
   totalDebit: number;
   totalCredit: number;
   trialBalance: {
-    name: string,
+    name: string;
     account_type: AccountType;
     debit: number;
-    credit:number;
-  }[]
-}
+    credit: number;
+  }[];
+};

@@ -29,9 +29,7 @@ const prismaClient = new PrismaClient({
   ]
 });
 
-export type PrismaTransactionalClient = Parameters<
-    Parameters<PrismaClient['$transaction']>[0]
->[0];
+export type PrismaTransactionalClient = Parameters<Parameters<PrismaClient['$transaction']>[0]>[0];
 
 // Log Prisma queries with the correct typing
 prismaClient.$on('query', (e: Prisma.QueryEvent) => {

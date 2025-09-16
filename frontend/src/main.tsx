@@ -19,7 +19,7 @@ import { LazyWrapper } from './components/lazy-loading';
 import '../src/assets/icons/boxicons/css/boxicons.min.css';
 import '../node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css';
 import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
-import './tailwind.css';
+// import './tailwind.css';
 import StoreProvider from './core/redux/store';
 
 createRoot(document.getElementById('root')!).render(

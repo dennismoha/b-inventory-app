@@ -2,7 +2,7 @@ import Joi from 'joi';
 
 export const expenseCreateSchema = Joi.object({
   description: Joi.string().required(),
-  accountId:Joi.string().required(),
+  accountId: Joi.string().required(),
   amount: Joi.number().positive().required(),
   category: Joi.string().required(),
   expenseDate: Joi.date().optional(),

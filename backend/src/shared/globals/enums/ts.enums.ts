@@ -3,17 +3,17 @@
 // =====================
 export enum SessionStatus {
   PREV = 'PREV',
-  CLOSED = 'CLOSED',
+  CLOSED = 'CLOSED'
 }
 
 export enum TerminalSessionStatus {
   CLOSED = 'CLOSED',
-  OPEN = 'OPEN', // If you have this in schema (assuming)
+  OPEN = 'OPEN' // If you have this in schema (assuming)
 }
 
 export enum UserRoles {
   admin = 'admin',
-  user = 'user',
+  user = 'user'
 }
 
 export enum PaymentMethod {
@@ -22,11 +22,4 @@ export enum PaymentMethod {
   CREDIT = 'credit'
 }
 
-export type ReferenceType = 
-  'SALE' |
-  'PURCHASE_PAYMENT' |
-  'EXPENSE' | 
-  'CUSTOMER_PAYMENT' |
-  'SUPPLIER_PAYMENT' |
-  'ACCOUNT_TOPUP'
-
+export type ReferenceType = 'SALE' | 'PURCHASE_PAYMENT' | 'EXPENSE' | 'CUSTOMER_PAYMENT' | 'SUPPLIER_PAYMENT' | 'ACCOUNT_TOPUP';

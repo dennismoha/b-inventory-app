@@ -73,7 +73,7 @@ export class ServerSetup {
         maxAge: 24 * 7 * 3600000, // 7 days
         // secure: false, // false for HTTP (dev only)
         httpOnly: true, //  better to keep this true
-        signed: true, //  match middleware expectations
+        signed: true //  match middleware expectations
         // sameSite: 'lax' //  for dev; avoids SameSite=None + Secure issue
       })
     );

@@ -1,8 +1,8 @@
 /**
- * 
+ *
  * This controller handles the accounting operations related to purchases.
  * It includes methods for creating, updating, and deleting  records,
- * 
+ *
  * so we will need to create a new table for accounting with the following columns:
  * - accounting_id String @id @default(uuid()) @db.Uuid
  * - account_number String @unique
@@ -15,20 +15,20 @@
  * - created_at DateTime @default(now())
  * - updated_at DateTime @updatedAt
  * - deleted_at DateTime? // Nullable for soft delete
- * 
- * 
+ *
+ *
  * AccountStatus enum {
  *   ACTIVE
  *  INACTIVE
  *  CLOSED
  * }
- * 
+ *
  * AccountType enum {
  *   cASH
  *   BANK
  *  CREDIT
  * }
- * 
+ *
  * # rules:
  * * - The account_number must be unique.
  * * - The opening_balance must be a positive number.
@@ -41,8 +41,8 @@
  * * - We cannot update an account that has transactions associated with it. eg changin the account number
  * * -We cannot add - numbers to opening balance
  * * - We cannot add a negative number to the opening balance.
- * 
- * 
+ *
+ *
  * So now we need another table for showing transactions related to the accounting operations
  *  * - transaction_id String @id @default(uuid()) @db.Uuid
  * - account_id String @db.Uuid
@@ -52,7 +52,7 @@
  * - transaction_date DateTime @default(now())
  * - balance_after_transaction Decimal @db.Decimal(12, 2) // Balance after this transaction
  * -refrence type ReferenceType
- * 
+ *
  * * ReferenceType enum {
  *      PURCHASE // Purchase transaction
  *      SALE // Sale transaction
@@ -61,8 +61,8 @@
  *  DEBIT // Money going out of the account
  *  CREDIT // Money coming into the account
  *  }
- * 
- * 
+ *
+ *
  * # updating the account balance
  * # RULES:
  * * - When a transaction is made, the account balance must be updated accordingly.
@@ -70,7 +70,7 @@
  * * - If the transaction is a credit, the balance must be increased by the amount of the transaction.
  * * - You cannot update the balance of an account that is closed.
  * * - You cannot update a soft-deleted account.
- * 
+ *
  * # deleteing an account
  * # RULES:
  * * - You cannot delete an account that has a balance greater than 0.
@@ -79,15 +79,14 @@
  * * - You can delete an account that is inactive but with not related transactions.
  * * - You can delete an account that is active but with not related transactions.
  * * - deleting will be soft delete, meaning the account will be marked as deleted and not actually removed from the database.
- * 
+ *
  * # There needs to be a column for showing sof deleted acounts.
  *  you can undelete deleted accounts by setting the deleted column to false.
- * 
- * 
- * 
- * 
+ *
+ *
+ *
+ *
  */
-
 
 // src/controllers/accountController.ts
 
@@ -100,9 +99,6 @@ import { accountSchema, accountStatusSchema, AccountTopSchema } from '@src/featu
 import GetSuccessMessage from '@src/shared/globals/helpers/success-messages';
 import { Account, AccountType, TrialBalance } from '../interfaces/accounts.interface';
 import { Decimal } from '@prisma/client/runtime/library';
-
-
-
 
 /**
  * AccountController
@@ -130,7 +126,7 @@ export class AccountController {
    */
   @joiValidation(accountSchema)
   public async createAccount(req: Request, res: Response): Promise<Response> {
-    const { name, type, account_number,  balance } = req.body;
+    const { name, type, account_number, balance } = req.body;
     console.log('Creating account with data:', req.body);
     const opening_balance = balance;
 
@@ -151,7 +147,7 @@ export class AccountController {
         opening_balance,
         running_balance: balance,
         deleted: false, // Ensure new accounts are not marked as deleted
-        account_status: 'ACTIVE', // Default status for new accounts
+        account_status: 'ACTIVE' // Default status for new accounts
       }
     });
 
@@ -163,7 +159,6 @@ export class AccountController {
     //     changed_by: req.currentUser!.email
     //   }
     // });
-
 
     return res.status(StatusCodes.CREATED).json({
       message: 'Account created successfully',
@@ -214,7 +209,7 @@ export class AccountController {
     console.log('Updating account with data:', req.body);
     console.log('Account ID from params:', req.params);
     const { accountId } = req.params;
-    const { name, type,  balance, account_number } = req.body;
+    const { name, type, balance, account_number } = req.body;
     const opening_balance = balance;
 
     // 1. Check if account exists
@@ -225,8 +220,6 @@ export class AccountController {
     if (!accountExists) {
       throw new NotFoundError(`Account with ID ${accountId} not found`);
     }
-
-
 
     if (accountExists.deleted) {
       throw new BadRequestError(`Account with ID ${accountId} is deleted and cannot be updated`);
@@ -254,7 +247,7 @@ export class AccountController {
         name,
         type,
         // description,
-        opening_balance,
+        opening_balance
       }
     });
 
@@ -265,13 +258,12 @@ export class AccountController {
   }
 
   /**
-  * Update the status of an account (active, inactive, closed)
-  */
+   * Update the status of an account (active, inactive, closed)
+   */
   @joiValidation(accountStatusSchema)
   public async updateStatus(req: Request, res: Response): Promise<Response> {
     const { accountId } = req.params;
     const { account_status } = req.body; // expected: 'active', 'inactive', 'closed'
-
 
     // . Check if account exists
     const account = await prisma.account.findFirst({
@@ -363,15 +355,13 @@ export class AccountController {
   @joiValidation(AccountTopSchema)
   public async topUp(req: Request, res: Response): Promise<Response> {
     const { accountId } = req.params;
-    const { amount, description, } = req.body;
+    const { amount, description } = req.body;
 
     const passedPosSessionId = Array.isArray(req.headers['pos_session'])
       ? req.headers['pos_session'][0] // take the first if multiple
       : req.headers['pos_session'] || ''; // fallback to empty string if undefined
 
-
     console.log('passedPosSessionId is ', passedPosSessionId);
-
 
     const posid = await prisma.openingClosingBalance.findFirst({
       where: { pos_session_id: passedPosSessionId, status: 'PREV' },
@@ -412,7 +402,8 @@ export class AccountController {
       amount: amount,
       description: description || 'Account Top-up',
       transaction_date: new Date(),
-      method: account.type === 'ASSET' ? 'ASSET' : account.type === 'INCOME' ? 'cash' : account.type === 'LIABILITY' ? 'LIABILITY' : 'INCOME',
+      method:
+        account.type === 'ASSET' ? 'ASSET' : account.type === 'INCOME' ? 'cash' : account.type === 'LIABILITY' ? 'LIABILITY' : 'INCOME',
       reference_type: 'ACCOUNT_TOPUP',
       // reference_id,
       balance_after: updatedAccount.running_balance
@@ -442,12 +433,12 @@ export class AccountController {
     await prisma.accountsLog.create({
       data: {
         account_id: accountId,
-        action: 'credit',                               // or 'debit'
-        opening_balance: account.opening_balance,         // opening balance before transaction
-        old_running_balance: Number(account.running_balance) - amount,          // balance after applying transaction
-        new_running_balance: account.running_balance,             // same as running_balance unless system computes separately
-        pos_session_id: passedPosSessionId,              // from current POS session
-        user: req.currentUser!.email                    // or user ID
+        action: 'credit', // or 'debit'
+        opening_balance: account.opening_balance, // opening balance before transaction
+        old_running_balance: Number(account.running_balance) - amount, // balance after applying transaction
+        new_running_balance: account.running_balance, // same as running_balance unless system computes separately
+        pos_session_id: passedPosSessionId, // from current POS session
+        user: req.currentUser!.email // or user ID
       }
     });
 
@@ -475,8 +466,7 @@ export class AccountController {
 
     const opening = new Decimal(account.running_balance);
     const amt = new Decimal(amount);
-    const newBalance =
-      action === 'debit' ? opening.minus(amt) : opening.plus(amt);
+    const newBalance = action === 'debit' ? opening.minus(amt) : opening.plus(amt);
 
     //  no negative balances
     if (action === 'debit' && newBalance.lessThan(0)) {
@@ -502,12 +492,8 @@ export class AccountController {
   }
 
   // select and return accounts. this is a utility function used to select and return account details
-  static async findAccount(args: {
-    tx: PrismaTransactionalClient;
-    name: string,
-    type: AccountType
-  }) {
-    const { tx,name, type } = args;
+  static async findAccount(args: { tx: PrismaTransactionalClient; name: string; type: AccountType }) {
+    const { tx, name, type } = args;
 
     const account = await tx.account.findFirst({ where: { name, type } });
     if (!account) {
@@ -515,7 +501,6 @@ export class AccountController {
     }
 
     return account;
-
   }
 
   public async getTrialBalance(req: Request, res: Response) {
@@ -527,16 +512,15 @@ export class AccountController {
         type: true,
         running_balance: true
       },
-      orderBy: { type: 'asc' } 
+      orderBy: { type: 'asc' }
     });
 
     // Separate debit and credit for display
-    const trialBalance = accounts.map(a => {
+    const trialBalance = accounts.map((a) => {
       let debit = 0;
       let credit = 0;
-      const running_balanceNum = Number(a.running_balance);      
+      const running_balanceNum = Number(a.running_balance);
 
-      
       // Asset & Expense → normal debit
       // Liability, Equity & Income → normal credit
       switch (a.type) {
@@ -565,10 +549,7 @@ export class AccountController {
     const totalDebit = trialBalance.reduce((sum, a) => sum + a.debit, 0);
     const totalCredit = trialBalance.reduce((sum, a) => sum + a.credit, 0);
 
-    const data: TrialBalance =  { trialBalance, totalDebit, totalCredit };
+    const data: TrialBalance = { trialBalance, totalDebit, totalCredit };
     res.status(StatusCodes.ACCEPTED).send(GetSuccessMessage(StatusCodes.ACCEPTED, data, 'trial balance returned succesfully'));
   }
 }
-
-
-

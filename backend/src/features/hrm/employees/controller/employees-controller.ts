@@ -15,9 +15,7 @@ export class EmployeesController {
     const employees: Employee[] = await prisma.employee.findMany({
       include: { assets: true }
     });
-    res
-      .status(StatusCodes.OK)
-      .send(GetSuccessMessage(StatusCodes.OK, employees, 'Employees fetched successfully'));
+    res.status(StatusCodes.OK).send(GetSuccessMessage(StatusCodes.OK, employees, 'Employees fetched successfully'));
   }
 
   /**
@@ -35,9 +33,7 @@ export class EmployeesController {
       throw new NotFoundError('Employee not found');
     }
 
-    res
-      .status(StatusCodes.OK)
-      .send(GetSuccessMessage(StatusCodes.OK, employee, 'Employee fetched successfully'));
+    res.status(StatusCodes.OK).send(GetSuccessMessage(StatusCodes.OK, employee, 'Employee fetched successfully'));
   }
 
   /**
@@ -54,9 +50,7 @@ export class EmployeesController {
 
     const created = await prisma.employee.create({ data: req.body });
 
-    res
-      .status(StatusCodes.CREATED)
-      .send(GetSuccessMessage(StatusCodes.CREATED, created, 'Employee created successfully'));
+    res.status(StatusCodes.CREATED).send(GetSuccessMessage(StatusCodes.CREATED, created, 'Employee created successfully'));
   }
 
   /**
@@ -86,9 +80,7 @@ export class EmployeesController {
       data: req.body
     });
 
-    res
-      .status(StatusCodes.OK)
-      .send(GetSuccessMessage(StatusCodes.OK, updated, 'Employee updated successfully'));
+    res.status(StatusCodes.OK).send(GetSuccessMessage(StatusCodes.OK, updated, 'Employee updated successfully'));
   }
 
   /**
@@ -102,8 +94,6 @@ export class EmployeesController {
 
     await prisma.employee.delete({ where: { id } });
 
-    res
-      .status(StatusCodes.OK)
-      .send(GetSuccessMessage(StatusCodes.OK, null, 'Employee deleted successfully'));
+    res.status(StatusCodes.OK).send(GetSuccessMessage(StatusCodes.OK, null, 'Employee deleted successfully'));
   }
 }

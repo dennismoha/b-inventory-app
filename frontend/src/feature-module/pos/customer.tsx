@@ -14,7 +14,11 @@ const Customers: React.FC = () => {
   const selectedCustomer = useAppSelector((state) => state.cart.customerId);
   console.log('selected option is ', selectedCustomer);
   const dispatch = useAppDispatch();
-  const { isLoading, isError, error, data } = useGetCustomersQuery();
+  const { isLoading, isError, error, data } = useGetCustomersQuery(undefined, {
+    refetchOnMountOrArgChange: false,
+    refetchOnFocus: false,
+    refetchOnReconnect: false
+  });
   console.log('data for customers is ', data);
 
   const handleChange = useCallback(

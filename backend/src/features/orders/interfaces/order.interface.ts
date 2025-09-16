@@ -10,7 +10,7 @@ export interface Order {
   orderName: string;
   totalAmount: Decimal;
   paymentStatus: 'paid' | 'unpaid' | 'partially_paid';
-  paymentMethod: PaymentMethod
+  paymentMethod: PaymentMethod;
   shippingDate: Date;
   orderDeliveryDate: Date;
   orderStatus?: 'pending' | 'empty' | 'failed' | 'fulfilled' | 'extended' | 'order_default';

@@ -13,10 +13,10 @@ export const customerSchema = Joi.object({
   email: Joi.string().email().max(255).required(), // Required: valid email format
   // phoneNumber: Joi.number().min(10).max(15).required(), // Required: phone number (string, optional length)
   phoneNumber: Joi.string()
-  .pattern(/^[0-9]+$/) // only digits
-  .min(10)             // at least 10 digits
-  .max(15)             // at most 15 digits
-  .required(),
+    .pattern(/^[0-9]+$/) // only digits
+    .min(10) // at least 10 digits
+    .max(15) // at most 15 digits
+    .required(),
   address: Joi.string().max(255).optional().allow(null), // Optional: address (string or null)
   country: Joi.string().max(255).optional().allow(null), // Optional: country (string or null)
 

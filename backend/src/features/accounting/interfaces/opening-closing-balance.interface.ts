@@ -11,7 +11,7 @@ export interface OpeningClosingBalance {
   opening_date: Date;
   closing_date: Date | null;
   status: 'PREV' | 'CLOSED';
-  opening_balance: Decimal;  // Decimal as Decimal
+  opening_balance: Decimal; // Decimal as Decimal
   closing_balance?: Decimal | null; // Decimal as Decimal | undefined
   total_for_accounts?: Decimal | null; // Decimal as number | undefined
 
@@ -20,8 +20,6 @@ export interface OpeningClosingBalance {
   cashBookLedgers?: CashBookLedger[];
   session?: PosSession;
 }
-
-
 
 // model OpeningClosingBalance {
 //   id                  String        @id @default(uuid()) @db.Uuid
@@ -68,7 +66,6 @@ export interface OpeningClosingBalance {
 //   user        User     @relation(fields: [userId], references: [user_id])
 // }
 
-
 // model User {
 //   user_id  String @id @default(uuid())
 //   username String
@@ -95,8 +92,6 @@ export interface OpeningClosingBalance {
 //   user        User     @relation(fields: [userId], references: [user_id])
 // }
 
-
-
 // model AccountCollection {
 //   collection_id String   @id @default(uuid()) @db.Uuid
 //   snapshot_date DateTime @default(now())
@@ -110,7 +105,6 @@ export interface OpeningClosingBalance {
 //   // Back-reference to session
 //   openingClosingBalances OpeningClosingBalance[]
 // }
-
 
 // model AccountCollection {
 //   collection_id String   @id @default(uuid()) @db.Uuid

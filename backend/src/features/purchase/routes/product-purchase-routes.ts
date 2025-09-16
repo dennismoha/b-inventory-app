@@ -13,18 +13,10 @@ class PurchaseRoutes {
 
   public routes(): Router {
     // Create new purchase
-    this.router.post(
-      '/purchase',
-      authMiddleware.checkAuthentication,
-      PurchaseController.prototype.create
-    );
+    this.router.post('/purchase', authMiddleware.checkAuthentication, PurchaseController.prototype.create);
 
     // // Get all purchases
-    this.router.get(
-      '/purchase',
-      authMiddleware.checkAuthentication,
-      PurchaseController.prototype.getAll
-    );
+    this.router.get('/purchase', authMiddleware.checkAuthentication, PurchaseController.prototype.getAll);
 
     // // Get single purchase by ID
     // this.router.get(

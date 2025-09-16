@@ -1,18 +1,16 @@
 // import { TransactionType } from '@src/features/purchase/interface/purchase.interface';
 import { Account } from './accounts.interface';
-import {  ReferenceType } from '@src/shared/globals/enums/ts.enums';
+import { ReferenceType } from '@src/shared/globals/enums/ts.enums';
 import { OpeningClosingBalance } from './opening-closing-balance.interface';
 import { Decimal } from '@prisma/client/runtime/library';
-
-
 
 export interface CashBookLedger {
   ledger_id: string;
   opening_closing_balance_id: string;
   transaction_date: Date;
-  transaction_type: 'INFLOW' |  'OUTFLOW';
+  transaction_type: 'INFLOW' | 'OUTFLOW';
   amount: Decimal;
-  method: 'CASH' |'BANK'| 'CREDIT' | 'CARD',
+  method: 'CASH' | 'BANK' | 'CREDIT' | 'CARD';
   reference_type: ReferenceType;
   reference_id?: string | null;
   balance_after: Decimal | null;
@@ -40,7 +38,7 @@ type CashBookLedgerEntry = {
   method: string;
   // description: string | null;
   account_name: string | undefined;
-} & Pick<CashBookLedger , 'description'> 
+} & Pick<CashBookLedger, 'description'>;
 
 interface CashBookLedgers {
   inflows: CashBookLedgerEntry[];
@@ -55,13 +53,10 @@ export type CashbookLedgerRecords = {
   pos_session_id: UUID;
   cash_bank_ledger_id?: UUID;
 
-
   opening_date: ISODate;
   closing_date: ISODate | null;
 
-  status: Status; 
- 
+  status: Status;
 
-  cashBookLedgers: CashBookLedgers | string[]; 
-} &  Pick<OpeningClosingBalance, 'account_collection_id' | 'closing_balance'  | 'total_for_accounts'>
-
+  cashBookLedgers: CashBookLedgers | string[];
+} & Pick<OpeningClosingBalance, 'account_collection_id' | 'closing_balance' | 'total_for_accounts'>;

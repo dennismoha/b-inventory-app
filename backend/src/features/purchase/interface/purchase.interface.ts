@@ -8,13 +8,11 @@ import { Decimal } from '@prisma/client/runtime/library';
 // Enum helpers (keep aligned with your Prisma enums)
 export type PaymentType = 'full' | 'partial' | 'credit' | 'full_split';
 export type PaymentStatus = 'paid' | 'partially_paid' | 'unpaid';
-export type PaymentMethod = 'CASH' | 'CARD' |
-  'BANK' |
-  'CREDIT'
+export type PaymentMethod = 'CASH' | 'CARD' | 'BANK' | 'CREDIT';
 export type TransactionType = {
   INFLOW: 'INFLOW';
   OUTFLOW: 'OUTFLOW';
-}
+};
 
 // export type ReferenceTypes = {
 //   SALE: 'SALE';
@@ -24,12 +22,7 @@ export type TransactionType = {
 //   SUPPLIER_PAYMENT: 'SUPPLIER_PAYMENT';
 // }
 
-export type ReferenceTypes =
-  | 'SALE'
-  | 'PURCHASE_PAYMENT'
-  | 'EXPENSE'
-  | 'CUSTOMER_PAYMENT'
-  | 'SUPPLIER_PAYMENT';
+export type ReferenceTypes = 'SALE' | 'PURCHASE_PAYMENT' | 'EXPENSE' | 'CUSTOMER_PAYMENT' | 'SUPPLIER_PAYMENT';
 
 export interface CreatePurchaseRequest {
   batch: string;
@@ -81,8 +74,6 @@ export interface PartialPurchasePayment {
   Purchase?: CreatePurchaseRequest;
   Logs?: PartialPaymentLog[];
 }
-
-
 
 export type BatchPayableResult = {
   payable_id: string;

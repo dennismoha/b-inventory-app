@@ -1,4 +1,3 @@
-
 import prisma from '@src/shared/prisma/prisma-client';
 import { BalanceSheetResponse, CashflowStatement, ProfitAndLossResponse } from '../interfaces/financial-reports.interface';
 // import { Decimal } from '@prisma/client/runtime/library';
@@ -12,27 +11,21 @@ export class FinancialReportsService {
       include: {
         journalLines: {
           where: {
-            journal: { date: { gte: startDate, lte: endDate } },
-          },
-        },
-      },
+            journal: { date: { gte: startDate, lte: endDate } }
+          }
+        }
+      }
     });
 
-    const incomeAccounts = accounts.filter(a => a.type === 'INCOME');
-    const expenseAccounts = accounts.filter(a => a.type === 'EXPENSE');
+    const incomeAccounts = accounts.filter((a) => a.type === 'INCOME');
+    const expenseAccounts = accounts.filter((a) => a.type === 'EXPENSE');
 
     const totalIncome = incomeAccounts.reduce((sum, acc) => {
-      return (
-        sum +
-        acc.journalLines.reduce((s, l) => s + Number(l.credit) - Number(l.debit), 0)
-      );
+      return sum + acc.journalLines.reduce((s, l) => s + Number(l.credit) - Number(l.debit), 0);
     }, 0);
 
     const totalExpenses = expenseAccounts.reduce((sum, acc) => {
-      return (
-        sum +
-        acc.journalLines.reduce((s, l) => s + Number(l.debit) - Number(l.credit), 0)
-      );
+      return sum + acc.journalLines.reduce((s, l) => s + Number(l.debit) - Number(l.credit), 0);
     }, 0);
 
     const data: ProfitAndLossResponse = {
@@ -41,8 +34,8 @@ export class FinancialReportsService {
       totals: {
         totalIncome,
         totalExpenses,
-        netProfit: totalIncome - totalExpenses,
-      },
+        netProfit: totalIncome - totalExpenses
+      }
     };
 
     console.log('data is ', data);
@@ -59,8 +52,6 @@ export class FinancialReportsService {
     // };
   }
 
-
-
   /**
    * Balance Sheet
    */
@@ -69,21 +60,18 @@ export class FinancialReportsService {
       include: {
         journalLines: {
           where: {
-            journal: { date: { lte: asOfDate } },
-          },
-        },
-      },
+            journal: { date: { lte: asOfDate } }
+          }
+        }
+      }
     });
 
-    const assets = accounts.filter(a => a.type === 'ASSET');
-    const liabilities = accounts.filter(a => a.type === 'LIABILITY');
-    const equity = accounts.filter(a => a.type === 'EQUITY');
+    const assets = accounts.filter((a) => a.type === 'ASSET');
+    const liabilities = accounts.filter((a) => a.type === 'LIABILITY');
+    const equity = accounts.filter((a) => a.type === 'EQUITY');
 
-    const calcBalance = (acc: typeof accounts[number]) =>
-      acc.journalLines.reduce(
-        (sum, l) => sum + (Number(l.debit) - Number(l.credit)),
-        0,
-      );
+    const calcBalance = (acc: (typeof accounts)[number]) =>
+      acc.journalLines.reduce((sum, l) => sum + (Number(l.debit) - Number(l.credit)), 0);
 
     const totalAssets = assets.reduce((sum, acc) => sum + calcBalance(acc), 0);
     const totalLiabilities = liabilities.reduce((sum, acc) => sum + calcBalance(acc), 0);
@@ -96,8 +84,8 @@ export class FinancialReportsService {
       totals: {
         totalAssets,
         totalLiabilities,
-        totalEquity,
-      },
+        totalEquity
+      }
     };
 
     console.log('data is ', data);
@@ -157,10 +145,10 @@ export class FinancialReportsService {
         journal: { date: { gte: startDate, lte: endDate } },
         account: {
           type: 'ASSET',
-          name: { in: ['Cash', 'Bank'] }, // Only includes Cash and Bank accounts, since cashflow reports deal with actual movement of cash.
-        },
+          name: { in: ['Cash', 'Bank'] } // Only includes Cash and Bank accounts, since cashflow reports deal with actual movement of cash.
+        }
       },
-      include: { account: true, journal: true },
+      include: { account: true, journal: true }
     });
 
     // Buckets
@@ -183,7 +171,7 @@ export class FinancialReportsService {
        */
       const contraLines = await prisma.journalLine.findMany({
         where: { entry_id: line.entry_id, NOT: { line_id: line.line_id } },
-        include: { account: true },
+        include: { account: true }
       });
       /***
        * Classify by contra account type
@@ -215,30 +203,26 @@ export class FinancialReportsService {
         }
       }
     }
-    
 
     const data: CashflowStatement = {
       operating: {
         inflow: operatingInflow,
         outflow: operatingOutflow,
-        net: operatingInflow - operatingOutflow,
+        net: operatingInflow - operatingOutflow
       },
       investing: {
         inflow: investingInflow,
         outflow: investingOutflow,
-        net: investingInflow - investingOutflow,
+        net: investingInflow - investingOutflow
       },
       financing: {
         inflow: financingInflow,
         outflow: financingOutflow,
-        net: financingInflow - financingOutflow,
+        net: financingInflow - financingOutflow
       },
       totals: {
-        netCashflow:
-          (operatingInflow - operatingOutflow) +
-          (investingInflow - investingOutflow) +
-          (financingInflow - financingOutflow),
-      },
+        netCashflow: operatingInflow - operatingOutflow + (investingInflow - investingOutflow) + (financingInflow - financingOutflow)
+      }
     };
 
     return data;
@@ -267,47 +251,44 @@ export class FinancialReportsService {
     // };
   }
 
-  static async  getTrialBalanceStatement(startDate: Date, endDate: Date) {
-  const lines = await prisma.journalLine.findMany({
-    where: {
-      journal: {
-        date: {
-          gte: startDate,
-          lte: endDate,
-        },
+  static async getTrialBalanceStatement(startDate: Date, endDate: Date) {
+    const lines = await prisma.journalLine.findMany({
+      where: {
+        journal: {
+          date: {
+            gte: startDate,
+            lte: endDate
+          }
+        }
       },
-    },
-    include: {
-      account: true,
-    },
-  });
+      include: {
+        account: true
+      }
+    });
 
-  console.log('the lines are ', lines);
+    console.log('the lines are ', lines);
 
-  // Aggregate debit/credit per account
-  const trialBalanceMap = new Map<
-    string,
-    { account_number: string; name: string; type: string; debit: number; credit: number }
-  >();
+    // Aggregate debit/credit per account
+    const trialBalanceMap = new Map<string, { account_number: string; name: string; type: string; debit: number; credit: number }>();
 
-  for (const line of lines) {
-    const key = line.account_id;
+    for (const line of lines) {
+      const key = line.account_id;
 
-    if (!trialBalanceMap.has(key)) {
-      trialBalanceMap.set(key, {
-        account_number: line.account.account_number,
-        name: line.account.name,
-        type: line.account.type,
-        debit: 0,
-        credit: 0,
-      });
+      if (!trialBalanceMap.has(key)) {
+        trialBalanceMap.set(key, {
+          account_number: line.account.account_number,
+          name: line.account.name,
+          type: line.account.type,
+          debit: 0,
+          credit: 0
+        });
+      }
+
+      const acc = trialBalanceMap.get(key)!;
+      acc.debit += Number(line.debit);
+      acc.credit += Number(line.credit);
     }
-
-    const acc = trialBalanceMap.get(key)!;
-    acc.debit += Number(line.debit);
-    acc.credit += Number(line.credit);
+    console.log('trial balance is ', trialBalanceMap);
+    return Array.from(trialBalanceMap.values());
   }
-  console.log('trial balance is ', trialBalanceMap);
-  return Array.from(trialBalanceMap.values());
-}
 }

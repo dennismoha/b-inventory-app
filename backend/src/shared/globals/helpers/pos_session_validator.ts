@@ -3,11 +3,7 @@ import { BadRequestError, NotFoundError } from './error-handler';
 import prismaClient from '@src/shared/prisma/prisma-client';
 
 export function createValidatePosSessionMiddleware() {
-  return async function ValidatePosSession(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
+  return async function ValidatePosSession(req: Request, res: Response, next: NextFunction) {
     try {
       const passedPosSessionId = Array.isArray(req.headers['pos_session'])
         ? req.headers['pos_session'][0]

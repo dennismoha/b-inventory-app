@@ -2,7 +2,7 @@
  * user logs in to the system
  * i need a table to register a user has been logged in , time .
  * Also on the same table we can register the user has logged out.
- * 
+ *
  * after registering a user logged in, I should check if the user has an active opening session. That should either be in my req.session or jwt or table.
  * So i need a Session Table to register active daily sessions for opening/closing balance .
  * if no session, return to the user that they are logged in
@@ -13,24 +13,24 @@
  * Then next it should prompt the user to enter the opening balance for that session. The opening balance should be the previous balance for the previous session and it should be registered at the cash register
  *  The opening balance should be saved in the session table.
  * I also need a  opening/closing balance table to register the opening / closing balance  in respective accounts. That way i can be able to track the opening and closing balances for each account.
- * 
+ *
  * So once the opening balance has been entered, we can then proceed to the next step of the session.
  * Now, once that is done we should be able to save the issession for the day open in our either localstorage or session storage.using redux or context api.
  * Thhis should persist beyond user login/logout.
  * Even if the sesssion is on but user is logged out , logout screen should show untill the drawer is closed then we can wrap that.
- * 
- * 
+ *
+ *
  * To close a session ,
  *  All the above details should be saved in the respective tables. req.sesssion should be cleared and the session in our localStorage or whatever should be cleared.
- * closing session for whoever closed should also be recorded. 
- * 
+ * closing session for whoever closed should also be recorded.
+ *
  * The above makes sure that  any operation in the system at any tine us raccounted for in a session. and this can be able to track who did what under each sesion.
- * 
- * 
- * 
- * 
- * 
- * 
+ *
+ *
+ *
+ *
+ *
+ *
  */
 
 /***
@@ -162,7 +162,6 @@
          * 
          */
 
-
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import prisma from '@src/shared/prisma/prisma-client';
@@ -182,8 +181,6 @@ export class PosSessionController {
    * 7. Return session + user details
    */
   public async openSession(req: Request, res: Response): Promise<Response> {
-
-
     const posId = 'posid';
     const openedBy = req.currentUser!.username; // Get the user ID from the current user context
 
@@ -255,7 +252,7 @@ export class PosSessionController {
     return res.status(StatusCodes.CREATED).json({
       message: 'POS session opened successfully',
       data: {
-        session: newPosSession,
+        session: newPosSession
         // openingClosingBalance,
         // user: userDetails
       }
@@ -263,90 +260,88 @@ export class PosSessionController {
   }
 
   /**
-     * Close an active POS session
-     */
-    public async closeSession(req: Request, res: Response): Promise<void> {
-        try {
-            const currentUser = req.currentUser;
-            if (!currentUser?.posSessionId) {
-                res.status(400).json({ message: 'No active session to close.' });
-                return;
-            }
+   * Close an active POS session
+   */
+  public async closeSession(req: Request, res: Response): Promise<void> {
+    try {
+      const currentUser = req.currentUser;
+      if (!currentUser?.posSessionId) {
+        res.status(400).json({ message: 'No active session to close.' });
+        return;
+      }
 
-            const sessionId = currentUser.posSessionId;
+      const sessionId = currentUser.posSessionId;
 
-            // 1. Create AccountCollection record
-            const accountCollection = await prisma.accountCollection.create({
-                data: {
-                    collection_id: uuidv4(),
-                    snapshot_date: new Date(),
-                }
-            });
-
-            // 2. Get all accounts and save snapshots
-            const accounts = await prisma.account.findMany({
-                where: { deleted: false }
-            });
-
-            const snapshots = accounts.map((acc) => ({
-                snapshot_id: uuidv4(),
-                account_id: acc.account_id,
-                balance: acc.running_balance,
-                collection_id: accountCollection.collection_id
-            }));
-
-            await prisma.accountBalanceSnapshot.createMany({
-                data: snapshots
-            });
-
-            // 3. Calculate total closing balance
-            const totalClosingBalance = accounts.reduce((sum, acc) => {
-                return sum + Number(acc.running_balance);
-            }, 0);
-
-            // 4. Update OpeningClosingBalance
-            await prisma.openingClosingBalance.updateMany({
-                where: {
-                    pos_session_id: sessionId,
-                    closing_date: null
-                },
-                data: {
-                    closing_date: new Date(),
-                    closing_balance: totalClosingBalance,
-                    total_for_accounts: totalClosingBalance,
-                    account_collection_id: accountCollection.collection_id,
-                    status: 'CLOSED'
-                }
-            });
-
-            // 5. Update PosSession
-            await prisma.posSession.update({
-                where: { pos_session_id: sessionId },
-                data: {
-                    closedBy: currentUser.email,
-                    closedAt: new Date(),
-                    status: 'CLOSED'
-                }
-            });
-
-            // 6. Remove session from current user context
-            currentUser.posSessionId = undefined;
-
-            // 7. Return updated session
-            res.status(200).json({
-                message: 'POS session closed successfully.',
-                sessionId: sessionId,
-                closedBy: currentUser.email,
-                closingBalance: totalClosingBalance
-            });
-
-        } catch (error) {
-            console.error('Error closing POS session:', error);
-            res.status(500).json({ message: 'Failed to close POS session.' });
+      // 1. Create AccountCollection record
+      const accountCollection = await prisma.accountCollection.create({
+        data: {
+          collection_id: uuidv4(),
+          snapshot_date: new Date()
         }
-    }
-}
+      });
 
+      // 2. Get all accounts and save snapshots
+      const accounts = await prisma.account.findMany({
+        where: { deleted: false }
+      });
+
+      const snapshots = accounts.map((acc) => ({
+        snapshot_id: uuidv4(),
+        account_id: acc.account_id,
+        balance: acc.running_balance,
+        collection_id: accountCollection.collection_id
+      }));
+
+      await prisma.accountBalanceSnapshot.createMany({
+        data: snapshots
+      });
+
+      // 3. Calculate total closing balance
+      const totalClosingBalance = accounts.reduce((sum, acc) => {
+        return sum + Number(acc.running_balance);
+      }, 0);
+
+      // 4. Update OpeningClosingBalance
+      await prisma.openingClosingBalance.updateMany({
+        where: {
+          pos_session_id: sessionId,
+          closing_date: null
+        },
+        data: {
+          closing_date: new Date(),
+          closing_balance: totalClosingBalance,
+          total_for_accounts: totalClosingBalance,
+          account_collection_id: accountCollection.collection_id,
+          status: 'CLOSED'
+        }
+      });
+
+      // 5. Update PosSession
+      await prisma.posSession.update({
+        where: { pos_session_id: sessionId },
+        data: {
+          closedBy: currentUser.email,
+          closedAt: new Date(),
+          status: 'CLOSED'
+        }
+      });
+
+      // 6. Remove session from current user context
+      currentUser.posSessionId = undefined;
+
+      // 7. Return updated session
+      res.status(200).json({
+        message: 'POS session closed successfully.',
+        sessionId: sessionId,
+        closedBy: currentUser.email,
+        closingBalance: totalClosingBalance
+      });
+    } catch (error) {
+      console.error('Error closing POS session:', error);
+      res.status(500).json({ message: 'Failed to close POS session.' });
+    }
+  }
+}
 
 /***
  * session closere.

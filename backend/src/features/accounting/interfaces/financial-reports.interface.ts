@@ -2,24 +2,24 @@ import { Decimal } from '@prisma/client/runtime/library';
 import { Account } from './accounts.interface';
 
 export interface BalanceSheetResponse {
-    assets: Account[];
-    liabilities: Account[];
-    equity: Account[];
-    totals: {
-        totalAssets: number;
-        totalLiabilities: number;
-        totalEquity: number;
-    }
+  assets: Account[];
+  liabilities: Account[];
+  equity: Account[];
+  totals: {
+    totalAssets: number;
+    totalLiabilities: number;
+    totalEquity: number;
+  };
 }
 
 export interface ProfitAndLossResponse {
-    incomeAccounts: Account[];
-    expenseAccounts: Account[];
-    totals: {
-        totalIncome: number;
-        totalExpenses: number;
-        netProfit: number;
-    }
+  incomeAccounts: Account[];
+  expenseAccounts: Account[];
+  totals: {
+    totalIncome: number;
+    totalExpenses: number;
+    netProfit: number;
+  };
 }
 
 // cashflow
@@ -43,13 +43,13 @@ export interface CashflowStatement {
 }
 
 export interface JournalLineInput {
-    account_id: string;
-    debit?: Decimal;
-    credit?: Decimal;
+  account_id: string;
+  debit?: Decimal;
+  credit?: Decimal;
 }
 
 export interface JournalEntryInput {
-    transactionId: string; // links to the POS transaction
-    description: string;
-    lines: JournalLineInput[];
+  transactionId: string; // links to the POS transaction
+  description: string;
+  lines: JournalLineInput[];
 }

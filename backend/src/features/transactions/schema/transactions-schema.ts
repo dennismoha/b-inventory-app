@@ -38,7 +38,7 @@ const cartProductSchema = Joi.object().keys({
   status: Joi.string().allow(null),
   stock_quantity: Joi.number().min(0).required(), // `stock_quantity` (non-negative number)
   supplier_products_id: Joi.string().uuid().required(), // `supplier_products_id` as UUID (required)
-  total_stock_quantity:  Joi.number().min(0).required(),
+  total_stock_quantity: Joi.number().min(0).required(),
   needsBatchLoad: Joi.boolean().required()
 });
 

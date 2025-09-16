@@ -38,7 +38,7 @@ class ReportRoutes {
     );
 
     // get trial balance
-     this.router.get(
+    this.router.get(
       '/reports/trialbalance',
       authMiddleware.verifyUser,
       // createValidatePosSessionMiddleware(),

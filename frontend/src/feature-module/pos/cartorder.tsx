@@ -209,7 +209,7 @@ const PaymentMethods = () => {
               <p className="fs-14 fw-medium">Cash</p>
             </button>
           </div>
-          <div className="col-sm-6 col-md-4 d-flex">
+          {/* <div className="col-sm-6 col-md-4 d-flex">
             <button
               onClick={() => dispatch(changePaymentMethod({ paymentMethod: 'CARD' }))}
               className="payment-item d-flex align-items-center justify-content-center p-2 flex-fill"
@@ -217,7 +217,7 @@ const PaymentMethods = () => {
               <img src="/assets/img/icons/card.svg" className="me-2" alt="img" />
               <p className="fs-14 fw-medium">Card</p>
             </button>
-          </div>
+          </div> */}
           {/* <div className="col-sm-6 col-md-4 d-flex">
             <Link
               to="#"
@@ -296,7 +296,7 @@ const PaymentMethods = () => {
               <p className="fs-14 fw-medium">External</p>
             </Link>
           </div> */}
-          <div className="col-sm-6 col-md-4 d-flex">
+          {/* <div className="col-sm-6 col-md-4 d-flex">
             <Link
               to="#"
               className="payment-item d-flex align-items-center justify-content-center p-2 flex-fill"
@@ -306,7 +306,7 @@ const PaymentMethods = () => {
               <img src="/assets/img/icons/split-bill.svg" className="me-2" alt="img" />
               <p className="fs-14 fw-medium">Split Bill</p>
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
@@ -385,7 +385,7 @@ const PaymentSummary = () => {
       <h5 className="mb-3">Payment Summary</h5>
       <table className="table table-responsive table-borderless">
         <tbody>
-          <tr>
+          {/* <tr>
             <td>
               Shipping
               <Link to="#" className="ms-3 link-default" data-bs-toggle="modal" data-bs-target="#shipping-cost">
@@ -431,7 +431,7 @@ const PaymentSummary = () => {
               </div>
             </td>
             <td className="text-gray-9 text-end">+0.11</td>
-          </tr>
+          </tr> */}
           <tr>
             <td>Sub Total</td>
             <td className="text-gray-9 text-end">kes {totalcost.subtotal}</td>

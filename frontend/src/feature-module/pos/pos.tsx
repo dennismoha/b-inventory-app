@@ -50,7 +50,11 @@ const Pos = () => {
     isError: isInventoryFetchingError,
     // error: inventoryFetchingError,
     isLoading: isInventoryFetchingLoading
-  } = useGetInventoryItemsQuery();
+  } = useGetInventoryItemsQuery(undefined, {
+    refetchOnMountOrArgChange: false,
+    refetchOnFocus: false,
+    refetchOnReconnect: false
+  });
   //   const [
   //     createTransaction,
   //     { reset, isLoading: transactionLoading, isError: transactionError, isSuccess: transactionSuccess, error: TransactionErrorMessage }

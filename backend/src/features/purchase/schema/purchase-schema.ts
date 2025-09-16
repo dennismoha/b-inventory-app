@@ -19,7 +19,6 @@ import Joi, { ObjectSchema } from 'joi';
 //   arrival_date: Joi.date().required()
 // });
 
-
 const paymentSchema = Joi.object({
   account_id: Joi.string().uuid().required(),
   amount_paid: Joi.number().positive().required(),

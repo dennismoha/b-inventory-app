@@ -9,7 +9,7 @@ declare global {
     interface Request {
       currentUser?: AuthPayload;
       posLedgerId?: string;
-      possession:string;
+      possession: string;
     }
   }
 }
@@ -29,11 +29,9 @@ export interface AuthPayload {
   // userId: string;
   email: string;
   username: string;
-  role: Role
+  role: Role;
   posSessionId?: string | null; // Optional, if the user has a POS session
 }
-
-
 
 export interface UserLoginAttempt {
   id: number;

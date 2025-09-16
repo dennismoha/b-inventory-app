@@ -429,8 +429,7 @@ async function main() {
       deleted: false,
       notes: 'This is a generic walk-in customer used for POS cash sales.'
     }
-  }
-  );
+  });
 
   // Create Miscellaneous for the Order
   await prisma.miscellaneous.create({

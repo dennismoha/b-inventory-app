@@ -11,39 +11,19 @@ class AssetRoutes {
 
   public routes(): Router {
     // Fetch all assets
-    this.router.get(
-      '/assets',
-      authMiddleware.verifyUser,
-      AssetsController.prototype.fetchAssets
-    );
+    this.router.get('/assets', authMiddleware.verifyUser, AssetsController.prototype.fetchAssets);
 
     // Fetch single asset
-    this.router.get(
-      '/assets/:id',
-      authMiddleware.verifyUser,
-      AssetsController.prototype.fetchAssetById
-    );
+    this.router.get('/assets/:id', authMiddleware.verifyUser, AssetsController.prototype.fetchAssetById);
 
     // Create a new asset
-    this.router.post(
-      '/assets',
-      authMiddleware.verifyUser,
-      AssetsController.prototype.createAsset
-    );
+    this.router.post('/assets', authMiddleware.verifyUser, AssetsController.prototype.createAsset);
 
     // Update asset
-    this.router.put(
-      '/assets/:id',
-      authMiddleware.verifyUser,
-      AssetsController.prototype.updateAsset
-    );
+    this.router.put('/assets/:id', authMiddleware.verifyUser, AssetsController.prototype.updateAsset);
 
     // Delete asset
-    this.router.delete(
-      '/assets/:id',
-      authMiddleware.verifyUser,
-      AssetsController.prototype.deleteAsset
-    );
+    this.router.delete('/assets/:id', authMiddleware.verifyUser, AssetsController.prototype.deleteAsset);
 
     return this.router;
   }

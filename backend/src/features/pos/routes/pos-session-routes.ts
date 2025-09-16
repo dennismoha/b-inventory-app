@@ -5,37 +5,29 @@ import { PosSessionController } from '@src/features/pos/controller/pos-session-c
 import { authMiddleware } from '@src/shared/globals/helpers/auth-middleware';
 import { createValidatePosSessionMiddleware } from '@src/shared/globals/helpers/pos_session_validator';
 class PosSessionRoutes {
-    private router: Router;
+  private router: Router;
 
-    constructor() {
-        this.router = express.Router();
-    }
+  constructor() {
+    this.router = express.Router();
+  }
 
-    public routes(): Router {
-        // Open POS session
-        this.router.post(
-            '/pos/session/open',
-            authMiddleware.verifyUser,
-            PosSessionController.prototype.openSession
-        );
+  public routes(): Router {
+    // Open POS session
+    this.router.post('/pos/session/open', authMiddleware.verifyUser, PosSessionController.prototype.openSession);
 
-        // Close POS session
-        this.router.post(
-            '/pos/session/close',
-            authMiddleware.verifyUser,
-            createValidatePosSessionMiddleware(),
-            PosSessionController.prototype.closeSession
-        );
+    // Close POS session
+    this.router.post(
+      '/pos/session/close',
+      authMiddleware.verifyUser,
+      createValidatePosSessionMiddleware(),
+      PosSessionController.prototype.closeSession
+    );
 
-        // check if possession_id is active
-        this.router.get(
-            '/pos/session/fetch',
-            authMiddleware.verifyUser,            
-            PosSessionController.prototype.checkPosSession
-        );
+    // check if possession_id is active
+    this.router.get('/pos/session/fetch', authMiddleware.verifyUser, PosSessionController.prototype.checkPosSession);
 
-        return this.router;
-    }
+    return this.router;
+  }
 }
 
 export const posSessionRoutes = new PosSessionRoutes();

@@ -158,7 +158,6 @@ export interface StockResponseItem {
   remaining: number;
 }
 
-
 export interface StockSummariesItem {
   supplier_products_id: string;
   total_received: number;
@@ -183,6 +182,3 @@ export interface StockSummariesItem {
     } | null;
   };
 }
-
-
-
