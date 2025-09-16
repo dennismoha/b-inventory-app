@@ -181,8 +181,11 @@ const CartSection = () => {
 
 const PaymentMethods = () => {
   const dispatch = useAppDispatch();
+  const activePaymentMethod = useAppSelector((state) => state.cart.paymentMethod);
+  const paymentButtonStyle = (method: string, activeMethod: string) =>
+    method === activeMethod ? { backgroundColor: '#fff6ee', borderColor: '#fe9f43', color: '#fe9f43' } : {};
   // const paymentSelected = useAppSelector((state) => state.cart.paymentMethod);
-
+  console.log('active payment method is ', activePaymentMethod);
   return (
     <div className="card payment-method">
       <div className="card-body">
@@ -203,7 +206,10 @@ const PaymentMethods = () => {
           <div className="col-sm-6 col-md-4 d-flex">
             <button
               onClick={() => dispatch(changePaymentMethod({ paymentMethod: 'CASH' }))}
-              className={`payment-item d-flex align-items-center justify-content-center p-2 flex-fill`}
+              // className={`payment-item d-flex align-items-center justify-content-center p-2 flex-fill`}
+              className={`payment-item d-flex align-items-center justify-content-center p-2 flex-fill 
+         `}
+              style={paymentButtonStyle('CASH', activePaymentMethod)}
             >
               <img src="/assets/img/icons/cash-icon.svg" className="me-2" alt="img" />
               <p className="fs-14 fw-medium">Cash</p>
@@ -285,7 +291,14 @@ const PaymentMethods = () => {
             </Link>
           </div> */}
           <div className="col-sm-6 col-md-4 d-flex">
-            <Link to="#" className="payment-item d-flex align-items-center justify-content-center p-2 flex-fill">
+            <Link
+              to="#"
+              onClick={() => dispatch(changePaymentMethod({ paymentMethod: 'CREDIT' }))}
+              //  className="payment-item d-flex align-items-center justify-content-center p-2 flex-fill"
+              className={`payment-item d-flex align-items-center justify-content-center p-2 flex-fill 
+          ${activePaymentMethod === 'CREDIT' ? 'active-payment' : ''}`}
+              style={paymentButtonStyle('CREDIT', activePaymentMethod)}
+            >
               <img src="/assets/img/icons/paylater.svg" className="me-2" alt="img" />
               <p className="fs-14 fw-medium">Pay Later</p>
             </Link>
