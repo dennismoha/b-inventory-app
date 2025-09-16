@@ -344,8 +344,10 @@ const PaymentMethods = () => {
 };
 
 const PaymentOrders = () => {
-  const [createTransaction, { reset, isError: transactionError, isSuccess: transactionSuccess, error: TransactionErrorMessage }] =
-    useCreateTransactionMutation();
+  const [
+    createTransaction,
+    { reset, isLoading: loading, isError: transactionError, isSuccess: transactionSuccess, error: TransactionErrorMessage }
+  ] = useCreateTransactionMutation();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -384,9 +386,13 @@ const PaymentOrders = () => {
           <i className="ti ti-printer me-2" /> Print Order
         </Link>
       } */}
-      <button onClick={handleCheckoutHandler} className="btn btn-secondary flex-fill">
-        <i className="ti ti-shopping-cart me-2" /> complete payment
-      </button>
+      {loading ? (
+        <p>processing payments</p>
+      ) : (
+        <button onClick={handleCheckoutHandler} className="btn btn-secondary flex-fill">
+          <i className="ti ti-shopping-cart me-2" /> complete payment
+        </button>
+      )}
     </div>
   );
 };
