@@ -140,7 +140,7 @@ const Signin = () => {
                 </div>
 
                 {/* Register */}
-                <div className="signinform">
+                {/* <div className="signinform">
                   <h4>
                     New on our platform?
                     <Link to={route.register} className="hover-a">
@@ -148,15 +148,15 @@ const Signin = () => {
                       Create an account
                     </Link>
                   </h4>
-                </div>
+                </div> */}
 
                 {/* OR */}
-                <div className="form-setlogin or-text">
+                {/* <div className="form-setlogin or-text">
                   <h4>OR</h4>
-                </div>
+                </div> */}
 
                 {/* Social */}
-                <div className="mt-2">
+                {/* <div className="mt-2">
                   <div className="d-flex align-items-center justify-content-center flex-wrap">
                     <div className="text-center me-2 flex-fill">
                       <Link to="#" className="br-10 p-2 btn btn-info d-flex align-items-center justify-content-center">
@@ -174,7 +174,7 @@ const Signin = () => {
                       </Link>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 {/* Footer */}
                 <div className="my-4 d-flex justify-content-center align-items-center copyright-text">

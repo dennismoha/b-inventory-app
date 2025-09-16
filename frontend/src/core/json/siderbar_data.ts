@@ -21,12 +21,12 @@ export const SidebarData = [
           // { label: "Sales Dashboard", link: "/sales-dashboard" },
         ]
       },
-      {
-        label: 'Blank Page',
-        link: '/blank-page',
-        icon: 'file',
-        showSubRoute: false
-      },
+      // {
+      //   label: 'Blank Page',
+      //   link: '/blank-page',
+      //   icon: 'file',
+      //   showSubRoute: false
+      // },
       // {
       //   label: "Super Admin",
       //   icon: 'user-edit',
@@ -89,12 +89,12 @@ export const SidebarData = [
         showSubRoute: false,
         submenuItems: [
           { label: 'Horizontal', link: route.Horizontal, showSubRoute: false },
-          { label: 'Detached', link: route.Detached, showSubRoute: false },
+          // { label: 'Detached', link: route.Detached, showSubRoute: false },
           // { label: "Modern", link: route.Modern, showSubRoute: false },
-          { label: 'Two Column', link: route.TwoColumn, showSubRoute: false },
-          { label: 'Hovered', link: route.Hovered, showSubRoute: false },
-          { label: 'Boxed', link: route.Boxed, showSubRoute: false },
-          { label: 'RTL', link: route.RTL, showSubRoute: false },
+          // { label: 'Two Column', link: route.TwoColumn, showSubRoute: false },
+          // { label: 'Hovered', link: route.Hovered, showSubRoute: false },
+          // { label: 'Boxed', link: route.Boxed, showSubRoute: false },
+          // { label: 'RTL', link: route.RTL, showSubRoute: false },
           { label: 'Dark', link: route.Dark, showSubRoute: false }
         ]
       }
@@ -252,14 +252,14 @@ export const SidebarData = [
           // { label: "Online Orders", link: route.onlineorder, showSubRoute: false },
           { label: 'POS Orders', link: route.posorder, showSubRoute: false }
         ]
-      },
-      {
-        label: 'Invoices',
-        link: route.invoice,
-        icon: 'file-invoice',
-        showSubRoute: false,
-        submenu: false
-      },
+      }
+      // {
+      //   label: 'Invoices',
+      //   link: route.invoice,
+      //   icon: 'file-invoice',
+      //   showSubRoute: false,
+      //   submenu: false
+      // },
       // {
       //   label: "Sales Return",
       //   link: "/sales-returns",
@@ -274,19 +274,19 @@ export const SidebarData = [
       //   showSubRoute: false,
       //   submenu: false,
       // },
-      {
-        label: 'POS',
-        icon: 'device-laptop',
-        showSubRoute: false,
-        submenu: true,
-        submenuItems: [
-          { label: 'POS 1', link: '/pos', showSubRoute: false },
-          { label: 'POS 2', link: '/pos-2', showSubRoute: false }
-          // { label: "POS 3", link: "/pos-3", showSubRoute: false },
-          // { label: "POS 4", link: "/pos-4", showSubRoute: false },
-          // { label: "POS 5", link: "/pos-5", showSubRoute: false },
-        ]
-      }
+      // {
+      //   label: 'POS',
+      //   icon: 'device-laptop',
+      //   showSubRoute: false,
+      //   submenu: true,
+      //   submenuItems: [
+      //     { label: 'POS 1', link: '/pos', showSubRoute: false },
+      //     { label: 'POS 2', link: '/pos-2', showSubRoute: false }
+      //     // { label: "POS 3", link: "/pos-3", showSubRoute: false },
+      //     // { label: "POS 4", link: "/pos-4", showSubRoute: false },
+      //     // { label: "POS 5", link: "/pos-5", showSubRoute: false },
+      //   ]
+      // }
     ]
   },
   // {
@@ -378,34 +378,34 @@ export const SidebarData = [
     showSubRoute: false,
     submenuHdr: 'Finance & Accounts',
     submenuItems: [
-      {
-        label: 'Expenses',
-        submenu: true,
-        showSubRoute: false,
-        icon: 'file-stack',
-        submenuItems: [
-          { label: 'Expenses', link: '/expense-list', showSubRoute: false },
-          {
-            label: 'Expense Category',
-            link: '/expense-category',
-            showSubRoute: false
-          }
-        ]
-      },
-      {
-        label: 'Income',
-        submenu: true,
-        showSubRoute: false,
-        icon: 'file-pencil',
-        submenuItems: [
-          { label: 'Income', link: '/income', showSubRoute: false },
-          {
-            label: 'Income Category',
-            link: '/income-category',
-            showSubRoute: false
-          }
-        ]
-      },
+      // {
+      //   label: 'Expenses',
+      //   submenu: true,
+      //   showSubRoute: false,
+      //   icon: 'file-stack',
+      //   submenuItems: [
+      //     { label: 'Expenses', link: '/expense-list', showSubRoute: false },
+      //     {
+      //       label: 'Expense Category',
+      //       link: '/expense-category',
+      //       showSubRoute: false
+      //     }
+      //   ]
+      // },
+      // {
+      //   label: 'Income',
+      //   submenu: true,
+      //   showSubRoute: false,
+      //   icon: 'file-pencil',
+      //   submenuItems: [
+      //     { label: 'Income', link: '/income', showSubRoute: false },
+      //     {
+      //       label: 'Income Category',
+      //       link: '/income-category',
+      //       showSubRoute: false
+      //     }
+      //   ]
+      // },
       {
         label: 'Asset register',
         link: route.asset_regster,
@@ -534,37 +534,37 @@ export const SidebarData = [
       //   icon: 'git-merge',
       //   showSubRoute: false,
       // },
-      {
-        label: 'Shifts',
-        link: '/shift',
-        icon: 'arrows-shuffle',
-        showSubRoute: false
-      },
+      // {
+      //   label: 'Shifts',
+      //   link: '/shift',
+      //   icon: 'arrows-shuffle',
+      //   showSubRoute: false
+      // },
 
-      {
-        label: 'Attendance',
-        link: '#',
-        icon: 'user-cog',
-        showSubRoute: false,
-        submenu: true,
+      // {
+      //   label: 'Attendance',
+      //   link: '#',
+      //   icon: 'user-cog',
+      //   showSubRoute: false,
+      //   submenu: true,
 
-        submenuItems: [
-          { label: 'Employee', link: '/attendance-employee' }
-          // { label: "Admin", link: "/attendance-admin" },
-        ]
-      },
-      {
-        label: 'Leaves',
-        link: '#',
-        icon: 'calendar',
-        showSubRoute: false,
-        submenu: true,
-        submenuItems: [
-          { label: 'Employee Leaves', link: '/leaves-employee' },
-          // { label: "Admin Leaves", link: "/leaves-admin" },
-          { label: 'Leave Types', link: '/leave-types' }
-        ]
-      },
+      //   submenuItems: [
+      //     { label: 'Employee', link: '/attendance-employee' }
+      //     // { label: "Admin", link: "/attendance-admin" },
+      //   ]
+      // },
+      // {
+      //   label: 'Leaves',
+      //   link: '#',
+      //   icon: 'calendar',
+      //   showSubRoute: false,
+      //   submenu: true,
+      //   submenuItems: [
+      //     { label: 'Employee Leaves', link: '/leaves-employee' },
+      //     // { label: "Admin Leaves", link: "/leaves-admin" },
+      //     { label: 'Leave Types', link: '/leave-types' }
+      //   ]
+      // },
       // {
       //   label: "Holidays",
       //   link: "/holidays",
@@ -591,101 +591,101 @@ export const SidebarData = [
     showSubRoute: false,
     submenuHdr: 'Reports',
     submenuItems: [
-      {
-        label: 'Sales Report',
-        icon: 'chart-bar',
-        showSubRoute: false,
-        submenu: true,
-        submenuItems: [
-          { label: 'Sales Report', link: '/sales-report' },
-          { label: 'Best Seller', link: '/best-seller' }
-        ]
-      },
-      {
-        label: 'Purchase Report',
-        link: '/purchase-report',
-        icon: 'chart-pie-2',
-        showSubRoute: false
-      },
-      {
-        label: 'Inventory Report',
-        icon: 'triangle-inverted',
-        showSubRoute: false,
-        submenu: true,
-        submenuItems: [
-          { label: 'Inventory Report', link: '/inventory-report' },
-          { label: 'Stock History', link: '/stock-history' },
-          { label: 'Sold Stock', link: '/sold-stock' }
-        ]
-      },
-      {
-        label: 'Invoice Report',
-        link: route.invoicereportnew,
-        icon: 'businessplan',
-        showSubRoute: false
-      },
-      {
-        label: 'Supplier Report',
-        icon: 'user-star',
-        showSubRoute: false,
-        submenu: true,
-        submenuItems: [
-          { label: 'Supplier Report', link: '/supplier-report' },
-          { label: 'Supplier Due Report', link: '/supplier-due-report' }
-        ]
-      },
-      {
-        label: 'Customer Report',
+      // {
+      //   label: 'Sales Report',
+      //   icon: 'chart-bar',
+      //   showSubRoute: false,
+      //   submenu: true,
+      //   submenuItems: [
+      //     { label: 'Sales Report', link: '/sales-report' },
+      //     { label: 'Best Seller', link: '/best-seller' }
+      //   ]
+      // },
+      // {
+      //   label: 'Purchase Report',
+      //   link: '/purchase-report',
+      //   icon: 'chart-pie-2',
+      //   showSubRoute: false
+      // },
+      // {
+      //   label: 'Inventory Report',
+      //   icon: 'triangle-inverted',
+      //   showSubRoute: false,
+      //   submenu: true,
+      //   submenuItems: [
+      //     { label: 'Inventory Report', link: '/inventory-report' },
+      //     { label: 'Stock History', link: '/stock-history' },
+      //     { label: 'Sold Stock', link: '/sold-stock' }
+      //   ]
+      // },
+      // {
+      //   label: 'Invoice Report',
+      //   link: route.invoicereportnew,
+      //   icon: 'businessplan',
+      //   showSubRoute: false
+      // },
+      // {
+      //   label: 'Supplier Report',
+      //   icon: 'user-star',
+      //   showSubRoute: false,
+      //   submenu: true,
+      //   submenuItems: [
+      //     { label: 'Supplier Report', link: '/supplier-report' },
+      //     { label: 'Supplier Due Report', link: '/supplier-due-report' }
+      //   ]
+      // },
+      // {
+      //   label: 'Customer Report',
 
-        icon: 'report',
-        showSubRoute: false,
-        submenu: true,
-        submenuItems: [
-          { label: 'Customer Report', link: '/customer-report' },
-          { label: 'Customer Due Report', link: '/customer-due-report' }
-        ]
-      },
-      {
-        label: 'Product Report',
-        icon: 'report-analytics',
-        showSubRoute: false,
-        submenu: true,
-        submenuItems: [
-          { label: 'Product Report', link: '/product-report' },
-          { label: 'Product Expiry Report', link: '/product-expiry-report' },
-          { label: 'Product Quantity Alert', link: route.productquantityreport }
-        ]
-      },
-      {
-        label: 'Expense Report',
-        link: '/expense-report',
-        icon: 'file-vector',
-        showSubRoute: false
-      },
-      {
-        label: 'Income Report',
-        link: '/income-report',
-        icon: 'chart-ppf',
-        showSubRoute: false
-      },
-      {
-        label: 'Tax Report',
-        link: '/tax-report',
-        icon: 'chart-dots-2',
-        showSubRoute: false
-      },
+      //   icon: 'report',
+      //   showSubRoute: false,
+      //   submenu: true,
+      //   submenuItems: [
+      //     { label: 'Customer Report', link: '/customer-report' },
+      //     { label: 'Customer Due Report', link: '/customer-due-report' }
+      //   ]
+      // },
+      // {
+      //   label: 'Product Report',
+      //   icon: 'report-analytics',
+      //   showSubRoute: false,
+      //   submenu: true,
+      //   submenuItems: [
+      //     { label: 'Product Report', link: '/product-report' },
+      //     { label: 'Product Expiry Report', link: '/product-expiry-report' },
+      //     { label: 'Product Quantity Alert', link: route.productquantityreport }
+      //   ]
+      // },
+      // {
+      //   label: 'Expense Report',
+      //   link: '/expense-report',
+      //   icon: 'file-vector',
+      //   showSubRoute: false
+      // },
+      // {
+      //   label: 'Income Report',
+      //   link: '/income-report',
+      //   icon: 'chart-ppf',
+      //   showSubRoute: false
+      // },
+      // {
+      //   label: 'Tax Report',
+      //   link: '/tax-report',
+      //   icon: 'chart-dots-2',
+      //   showSubRoute: false
+      // },
       {
         label: 'Profit & Loss',
         link: '/profit-loss-report',
         icon: 'chart-donut',
         showSubRoute: false
       },
-      {
-        label: 'Annual Report',
-        link: '/annual-report',
-        icon: 'report-search',
-        showSubRoute: false
-      }
+      // {
+      //   label: 'Annual Report',
+      //   link: '/annual-report',
+      //   icon: 'report-search',
+      //   showSubRoute: false
+      // }
     ]
   },
 
@@ -1333,50 +1333,50 @@ export const SidebarData = [
   //     },
   //   ],
   // },
-  {
-    label: 'Help',
-    submenuOpen: true,
-    showSubRoute: false,
-    submenuHdr: 'Help',
-    submenuItems: [
-      {
-        label: 'Documentation',
-        link: '#',
-        icon: 'file-text',
-        showSubRoute: false
-      },
-      {
-        label: 'Changelog v2.0.7',
-        link: '#',
-        icon: 'exchange',
-        showSubRoute: false
-      },
-      {
-        label: 'Multi Level',
-        showSubRoute: false,
-        submenu: true,
-        icon: 'menu-2',
-        submenuItems: [
-          { label: 'Level 1.1', link: '#', showSubRoute: false },
-          {
-            label: 'Level 1.2',
-            submenu: true,
-            showSubRoute: false,
-            submenuItems: [
-              { label: 'Level 2.1', link: '#', showSubRoute: false },
-              {
-                label: 'Level 2.2',
-                submenu: true,
-                showSubRoute: false,
-                submenuItems: [
-                  { label: 'Level 3.1', link: '#', showSubRoute: false },
-                  { label: 'Level 3.2', link: '#', showSubRoute: false }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+  // {
+  //   label: 'Help',
+  //   submenuOpen: true,
+  //   showSubRoute: false,
+  //   submenuHdr: 'Help',
+  //   submenuItems: [
+  //     {
+  //       label: 'Documentation',
+  //       link: '#',
+  //       icon: 'file-text',
+  //       showSubRoute: false
+  //     },
+  //     {
+  //       label: 'Changelog v2.0.7',
+  //       link: '#',
+  //       icon: 'exchange',
+  //       showSubRoute: false
+  //     },
+  //     {
+  //       label: 'Multi Level',
+  //       showSubRoute: false,
+  //       submenu: true,
+  //       icon: 'menu-2',
+  //       submenuItems: [
+  //         { label: 'Level 1.1', link: '#', showSubRoute: false },
+  //         {
+  //           label: 'Level 1.2',
+  //           submenu: true,
+  //           showSubRoute: false,
+  //           submenuItems: [
+  //             { label: 'Level 2.1', link: '#', showSubRoute: false },
+  //             {
+  //               label: 'Level 2.2',
+  //               submenu: true,
+  //               showSubRoute: false,
+  //               submenuItems: [
+  //                 { label: 'Level 3.1', link: '#', showSubRoute: false },
+  //                 { label: 'Level 3.2', link: '#', showSubRoute: false }
+  //               ]
+  //             }
+  //           ]
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // }
 ];
