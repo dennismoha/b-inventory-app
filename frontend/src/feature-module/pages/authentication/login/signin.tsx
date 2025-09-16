@@ -4,7 +4,11 @@ import { useAppDispatch, useAppSelector } from '@core/redux/store';
 import { setCredentials } from '@core/redux/authslice';
 import { useLoginMutation as useSigninMutation } from '@core/redux/api/inventory-api';
 import { all_routes as route } from '@routes/all_routes';
-import { appleLogo, facebookLogo, googleLogo, logoPng, logoWhitePng } from '../../../../utils/imagepath';
+import {
+  //  appleLogo,    facebookLogo, googleLogo,
+  logoPng,
+  logoWhitePng
+} from '../../../../utils/imagepath';
 
 // import logoPng from '@assets/logo.png';
 // import logoWhitePng from '@assets/logo-white.png';
