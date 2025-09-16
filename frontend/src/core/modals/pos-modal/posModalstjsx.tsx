@@ -124,10 +124,10 @@ const PosModals = () => {
                   <h3 className="mb-2">Payment Completed</h3>
                   <p className="mb-3">Do you want to Print Receipt for the Completed Order</p>
                   <div className="d-flex align-items-center justify-content-center gap-2 flex-wrap">
-                    <button type="button" className="btn btn-md btn-secondary" data-bs-toggle="modal" data-bs-target="#print-receipt">
+                    {/* <button type="button" className="btn btn-md btn-secondary" data-bs-toggle="modal" data-bs-target="#print-receipt">
                       Print Receipt
                       <i className="feather-arrow-right-circle icon-me-5" />
-                    </button>
+                    </button> */}
                     <button type="button" data-bs-dismiss="modal" className="btn btn-md btn-primary">
                       Next Order
                     </button>

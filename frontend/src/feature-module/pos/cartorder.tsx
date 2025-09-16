@@ -58,11 +58,14 @@ const CartItem: React.FC<CartData> = ({ data, idx }) => {
     <tr key={idx}>
       <td>
         <div className="d-flex align-items-center">
-          <Link className="delete-icon" to="#" data-bs-toggle="modal" data-bs-target="#delete">
+          {/* <Link className="delete-icon" to="#" data-bs-toggle="modal" data-bs-target="#delete">
             <i className="ti ti-trash-x-filled" />
-          </Link>
+          </Link> */}
           <h6 className="fs-13 fw-normal">
-            <Link to="#" className=" link-default" data-bs-toggle="modal" data-bs-target="#products">
+            {/* <Link to="#" className=" link-default" data-bs-toggle="modal" data-bs-target="#products">
+              {productName}
+            </Link> */}
+            <Link to="#" className=" link-default">
               {productName}
             </Link>
           </h6>

@@ -252,7 +252,7 @@ const Pos = () => {
           </div>
           <div className="pos-footer bg-white p-3 border-top">
             <div className="d-flex align-items-center justify-content-center flex-wrap gap-2">
-              <Link
+              {/* <Link
                 to="#"
                 className="btn btn-orange d-inline-flex align-items-center justify-content-center"
                 data-bs-toggle="modal"
@@ -291,8 +291,8 @@ const Pos = () => {
               >
                 <i className="ti ti-reload me-2" />
                 Reset
-              </Link>
-              <Link
+              </Link> */}
+              {/* <Link
                 to="#"
                 className="btn btn-danger d-inline-flex align-items-center justify-content-center"
                 data-bs-toggle="modal"
@@ -300,7 +300,7 @@ const Pos = () => {
               >
                 <i className="ti ti-refresh-dot me-2" />
                 Transaction
-              </Link>
+              </Link> */}
             </div>
           </div>
         </div>
