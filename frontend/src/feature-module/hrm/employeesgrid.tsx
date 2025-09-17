@@ -3,13 +3,20 @@ import {
   MRT_EditActionButtons,
   MaterialReactTable,
   type MRT_ColumnDef,
-  type MRT_Row,
+  // type MRT_Row,
   type MRT_TableOptions,
   useMaterialReactTable
 } from 'material-react-table';
-import { Box, Button, DialogActions, DialogContent, DialogTitle, IconButton, Tooltip } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import {
+  Box,
+  Button,
+  DialogActions,
+  DialogContent,
+  DialogTitle
+  // IconButton, Tooltip
+} from '@mui/material';
+// import EditIcon from '@mui/icons-material/Edit';
+// import DeleteIcon from '@mui/icons-material/Delete';
 
 import {
   useGetEmployeesQuery,
@@ -18,13 +25,16 @@ import {
   useDeleteEmployeeMutation
 } from '@core/redux/api/inventory-api';
 import type { Employee } from '../interface/features-interface';
+import { Link } from 'react-router';
 
 export default function EmployeesTable() {
   const { data, isLoading, isFetching, isError } = useGetEmployeesQuery();
-  const [createEmployee, { isLoading: isCreating }] = useCreateEmployeeMutation();
+  const [createEmployee, { isLoading: isCreating, reset: createReset, isError: isCreatingError, error: createErrorr }] =
+    useCreateEmployeeMutation();
   const [updateEmployee, { isLoading: isUpdating, reset: updateReset, isError: isUpdatingError, error: updateError }] =
     useUpdateEmployeeMutation();
   const [deleteEmployee, { isLoading: isDeleting }] = useDeleteEmployeeMutation();
+  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const employees = data?.data ?? [];
 
@@ -128,7 +138,9 @@ export default function EmployeesTable() {
       return;
     }
     setValidationErrors({});
+    createReset();
     const value = { ...values };
+    delete value.id;
     delete value.createdAt;
     delete value.updatedAt;
     await createEmployee(value).unwrap();
@@ -152,24 +164,24 @@ export default function EmployeesTable() {
   };
 
   // DELETE
-  const openDeleteConfirmModal = (row: MRT_Row<Employee>) => {
-    if (window.confirm('Are you sure you want to delete this employee?')) {
-      deleteEmployee(row.original.id);
-    }
-  };
+  // const openDeleteConfirmModal = (row: MRT_Row<Employee>) => {
+  //   if (window.confirm('Are you sure you want to delete this employee?')) {
+  //     deleteEmployee(row.original.id);
+  //   }
+  // };
 
   const table = useMaterialReactTable({
     columns,
     data: employees ?? [],
-    createDisplayMode: 'modal',
+    createDisplayMode: 'row',
     editDisplayMode: 'row',
     enableEditing: true,
     getRowId: (row) => row.id,
     muiToolbarAlertBannerProps:
-      isError || isUpdatingError
+      isError || isUpdatingError || isCreatingError
         ? {
             color: 'error',
-            children: updateError?.message
+            children: updateError?.message || createErrorr?.message
           }
         : undefined,
     muiTableContainerProps: { sx: { minHeight: '500px' } },
@@ -200,16 +212,20 @@ export default function EmployeesTable() {
 
     renderRowActions: ({ row, table }) => (
       <Box sx={{ display: 'flex', gap: '0.5rem' }}>
-        <Tooltip title="Edit">
-          <IconButton onClick={() => table.setEditingRow(row)}>
-            <EditIcon />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Delete">
-          <IconButton color="error" onClick={() => openDeleteConfirmModal(row)}>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
+        {/* <IconButton onClick={() => table.setEditingRow(row)}> */}
+        <Link className="me-2 p-2 d-flex align-items-center border rounded" to="#">
+          <i onClick={() => table.setEditingRow(row)} data-feather="edit" className="feather-edit" />{' '}
+        </Link>
+
+        <Link
+          data-bs-toggle="modal"
+          data-bs-target="#delete-modal"
+          onClick={() => setDeleteId(row.original.id)}
+          className="me-2 p-2 d-flex align-items-center border rounded error"
+          to="#"
+        >
+          <i data-feather="trash-2" className="feather-trash-2" />
+        </Link>
       </Box>
     ),
 
@@ -222,7 +238,7 @@ export default function EmployeesTable() {
     state: {
       isLoading,
       isSaving: isCreating || isUpdating || isDeleting,
-      showAlertBanner: isError || isUpdatingError,
+      showAlertBanner: isError || isUpdatingError || isCreatingError,
       showProgressBars: isFetching
     }
   });
@@ -231,6 +247,39 @@ export default function EmployeesTable() {
     <div className="page-wrapper">
       <div className="content">
         <MaterialReactTable table={table} />
+      </div>
+      <div className="modal fade" id="delete-modal">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="page-wrapper-new p-0">
+              <div className="content p-5 px-3 text-center">
+                <span className="rounded-circle d-inline-flex p-2 bg-danger-transparent mb-2">
+                  <i className="ti ti-trash fs-24 text-danger" />
+                </span>
+                <h4 className="fs-20 text-gray-9 fw-bold mb-2 mt-1">Delete Employee</h4>
+                <p className="text-gray-6 mb-0 fs-16">Are you sure you want to delete employee?</p>
+                <div className="modal-footer-btn mt-3 d-flex justify-content-center">
+                  <button type="button" className="btn me-2 btn-secondary fs-13 fw-medium p-2 px-3 shadow-none" data-bs-dismiss="modal">
+                    Cancel
+                  </button>
+                  <button
+                    onClick={async () => {
+                      if (deleteId) {
+                        await deleteEmployee(deleteId);
+                        setDeleteId(null); // reset after delete
+                      }
+                    }}
+                    type="button"
+                    data-bs-dismiss="modal"
+                    className="btn btn-submit fs-13 fw-medium p-2 px-3"
+                  >
+                    Yes Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
