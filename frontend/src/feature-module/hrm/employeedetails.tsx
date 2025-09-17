@@ -1,9 +1,8 @@
+import CommonFooter from '../../components/footer/commonFooter';
 
-import CommonFooter from "../../components/footer/commonFooter";
-
-import { all_routes } from "../../routes/all_routes";
-import { Link } from "react-router-dom";
-import { user32 } from "../../utils/imagepath";
+import { all_routes } from '../../routes/all_routes';
+import { Link } from 'react-router-dom';
+import { user32 } from '../../utils/imagepath';
 
 const Employeedetails = () => {
   const route = all_routes;
@@ -13,34 +12,20 @@ const Employeedetails = () => {
       <div className="content">
         <div className="page-header">
           <div>
-            <Link
-              to={route.employeegrid}
-              className="d-inline-flex align-items-center"
-            >
+            <Link to={route.employeegrid} className="d-inline-flex align-items-center">
               <i className="ti ti-chevron-left me-2" />
               Back to List
             </Link>
           </div>
           <ul className="table-top-head">
             <li className="me-2">
-              <Link
-                to={""}
-                data-bs-toggle="tooltip"
-                data-bs-placement="top"
-                title="Refresh"
-              >
+              <Link to={''} data-bs-toggle="tooltip" data-bs-placement="top" title="Refresh">
                 <i className="feather icon-rotate-ccw feather-rotate-ccw" />
               </Link>
             </li>
             <li className="me-2">
-              <Link
-                to={""}
-                data-bs-toggle="tooltip"
-                data-bs-placement="top"
-                title="Collapse"
-                id="collapse-header"
-              >
-                <i  className="feather icon-chevron-up feather-chevron-up" />
+              <Link to={''} data-bs-toggle="tooltip" data-bs-placement="top" title="Collapse" id="collapse-header">
+                <i className="feather icon-chevron-up feather-chevron-up" />
               </Link>
             </li>
           </ul>
@@ -54,9 +39,7 @@ const Employeedetails = () => {
                 </span>
                 <div className="me-3">
                   <h6 className="text-white mb-1">Stephan Peralt</h6>
-                  <span className="badge bg-purple-transparent text-purple">
-                    Designer
-                  </span>
+                  <span className="badge bg-purple-transparent text-purple">Designer</span>
                 </div>
                 <div>
                   <Link to="#" className="btn btn-white">
@@ -99,17 +82,13 @@ const Employeedetails = () => {
                   <div className="col-md-4">
                     <div className="mb-3">
                       <p className="fs-13 mb-2">Phone</p>
-                      <span className="text-gray-900 fs-13">
-                        +1 458 7877 879
-                      </span>
+                      <span className="text-gray-900 fs-13">+1 458 7877 879</span>
                     </div>
                   </div>
                   <div className="col-md-4">
                     <div className="mb-3">
                       <p className="fs-13 mb-2">Email</p>
-                      <span className="text-gray-900 fs-13">
-                        perralt12@example.com
-                      </span>
+                      <span className="text-gray-900 fs-13">perralt12@example.com</span>
                     </div>
                   </div>
                   <div className="col-md-4">
@@ -121,17 +100,13 @@ const Employeedetails = () => {
                   <div className="col-md-4">
                     <div className="mb-3">
                       <p className="fs-13 mb-2">Birdthday</p>
-                      <span className="text-gray-900 fs-13">
-                        24th July 1990
-                      </span>
+                      <span className="text-gray-900 fs-13">24th July 1990</span>
                     </div>
                   </div>
                   <div className="col-md-4">
                     <div className="mb-3">
                       <p className="fs-13 mb-2">Address</p>
-                      <span className="text-gray-900 fs-13">
-                        1861 Bayonne Ave, Manchester
-                      </span>
+                      <span className="text-gray-900 fs-13">1861 Bayonne Ave, Manchester</span>
                     </div>
                   </div>
                   <div className="col-md-4">
@@ -161,12 +136,9 @@ const Employeedetails = () => {
               </div>
               <div className="card-body pb-0">
                 <p>
-                  As an award winning designer, I deliver exceptional quality
-                  work and bring value to your brand! With 10 years of
-                  experience and 350+ projects completed worldwide with
-                  satisfied customers, I developed the 360° brand approach,
-                  which helped me to create numerous brands that are relevant,
-                  meaningful and loved.Phone
+                  As an award winning designer, I deliver exceptional quality work and bring value to your brand! With 10 years of
+                  experience and 350+ projects completed worldwide with satisfied customers, I developed the 360° brand approach, which
+                  helped me to create numerous brands that are relevant, meaningful and loved.Phone
                 </p>
               </div>
             </div>
@@ -179,9 +151,7 @@ const Employeedetails = () => {
                   <div className="col-lg-3 col-md-6">
                     <div className="mb-3">
                       <p className="fs-13 mb-2">Bank Name</p>
-                      <span className="text-gray-900 fs-13">
-                        Swizz International
-                      </span>
+                      <span className="text-gray-900 fs-13">Swizz International</span>
                     </div>
                   </div>
                   <div className="col-lg-3 col-md-6">
@@ -214,9 +184,7 @@ const Employeedetails = () => {
                   <div className="col-md-4">
                     <div className="mb-3">
                       <p className="fs-13 mb-2">Name</p>
-                      <span className="text-gray-900 fs-13">
-                        Andrea Jermiah
-                      </span>
+                      <span className="text-gray-900 fs-13">Andrea Jermiah</span>
                     </div>
                   </div>
                   <div className="col-md-4">
@@ -228,9 +196,7 @@ const Employeedetails = () => {
                   <div className="col-md-4">
                     <div className="mb-3">
                       <p className="fs-13 mb-2">Phone Number</p>
-                      <span className="text-gray-900 fs-13">
-                        +1 43566 67788
-                      </span>
+                      <span className="text-gray-900 fs-13">+1 43566 67788</span>
                     </div>
                   </div>
                 </div>

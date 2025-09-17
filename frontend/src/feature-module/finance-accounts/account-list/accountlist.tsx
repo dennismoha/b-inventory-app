@@ -28,7 +28,7 @@ import type { Account } from '@features/interface/features-interface';
 
 const defaultMRTOptions = getDefaultMRTOptions<Account>();
 
-// ✅ Validation helpers
+// Validation helpers
 const validateRequired = (value: string) => !!value?.length;
 
 function validateAccount(account: Partial<Account>) {

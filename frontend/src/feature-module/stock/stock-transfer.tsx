@@ -1,13 +1,13 @@
-import { stockTransferData } from "../../core/json/stock-transfer-data";
-import PrimeDataTable from "../../components/data-table";
-import SearchFromApi from "../../components/data-table/search";
-import DeleteModal from "../../components/delete-modal";
-import CommonSelect from "../../components/select/common-select";
-import TableTopHead from "../../components/table-top-head";
-import CommonFooter from "../../components/footer/commonFooter";
-import { downloadImg, stockImg02 } from "../../utils/imagepath";
-import  { useState } from "react";
-import { Link } from "react-router";
+import { stockTransferData } from '../../core/json/stock-transfer-data';
+import PrimeDataTable from '../../components/data-table';
+import SearchFromApi from '../../components/data-table/search';
+import DeleteModal from '../../components/delete-modal';
+import CommonSelect from '../../components/select/common-select';
+import TableTopHead from '../../components/table-top-head';
+import CommonFooter from '../../components/footer/commonFooter';
+import { downloadImg, stockImg02 } from '../../utils/imagepath';
+import { useState } from 'react';
+import { Link } from 'react-router';
 
 const StockTransfer = () => {
   const [listData, _setListData] = useState<any[]>(stockTransferData);
@@ -15,42 +15,42 @@ const StockTransfer = () => {
   const [totalRecords, _setTotalRecords] = useState<any>(5);
   const [rows, setRows] = useState<number>(10);
   const [_searchQuery, setSearchQuery] = useState<string | undefined>(undefined);
-  const [selectedWarehouseFrom, setSelectedWarehouseFrom] = useState("");
-  const [selectedWarehouseTo, setSelectedWarehouseTo] = useState("");
-  const [selectedImportFrom, setSelectedImportFrom] = useState("");
-  const [selectedImportTo, setSelectedImportTo] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedWarehouseFrom, setSelectedWarehouseFrom] = useState('');
+  const [selectedWarehouseTo, setSelectedWarehouseTo] = useState('');
+  const [selectedImportFrom, setSelectedImportFrom] = useState('');
+  const [selectedImportTo, setSelectedImportTo] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
 
   const warehouseFromOptions = [
-    { label: "Select", value: "" },
-    { label: "Lobar Handy", value: "lobar" },
-    { label: "Quaint Warehouse", value: "quaint" },
+    { label: 'Select', value: '' },
+    { label: 'Lobar Handy', value: 'lobar' },
+    { label: 'Quaint Warehouse', value: 'quaint' }
   ];
 
   const warehouseToOptions = [
-    { label: "Select", value: "" },
-    { label: "Selosy", value: "selosy" },
-    { label: "Logerro", value: "logerro" },
+    { label: 'Select', value: '' },
+    { label: 'Selosy', value: 'selosy' },
+    { label: 'Logerro', value: 'logerro' }
   ];
 
   const importFromOptions = [
-    { label: "select", value: "" },
-    { label: "Lavish Warehouse", value: "lavish" },
-    { label: "Lobar Handy", value: "lobar" },
-    { label: "Quaint Warehouse", value: "quaint" },
+    { label: 'select', value: '' },
+    { label: 'Lavish Warehouse', value: 'lavish' },
+    { label: 'Lobar Handy', value: 'lobar' },
+    { label: 'Quaint Warehouse', value: 'quaint' }
   ];
 
   const importToOptions = [
-    { label: "Select", value: "" },
-    { label: "North Zone Warehouse", value: "north" },
-    { label: "Nova Storage Hub", value: "nova" },
-    { label: "Cool Warehouse", value: "cool" },
+    { label: 'Select', value: '' },
+    { label: 'North Zone Warehouse', value: 'north' },
+    { label: 'Nova Storage Hub', value: 'nova' },
+    { label: 'Cool Warehouse', value: 'cool' }
   ];
 
   const statusOptions = [
-    { label: "Select", value: "" },
-    { label: "Sent", value: "sent" },
-    { label: "Pending", value: "pending" },
+    { label: 'Select', value: '' },
+    { label: 'Sent', value: 'sent' },
+    { label: 'Pending', value: 'pending' }
   ];
 
   const columns = [
@@ -68,22 +68,22 @@ const StockTransfer = () => {
         </label>
       ),
       sortable: false,
-      key: "checked",
+      key: 'checked'
     },
-    { header: "From Warehouse", field: "fromWarehouse", key: "fromWarehouse" },
-    { header: "To Warehouse", field: "toWarehouse", key: "toWarehouse" },
-    { header: "No of Products", field: "noOfProducts", key: "noOfProducts" },
+    { header: 'From Warehouse', field: 'fromWarehouse', key: 'fromWarehouse' },
+    { header: 'To Warehouse', field: 'toWarehouse', key: 'toWarehouse' },
+    { header: 'No of Products', field: 'noOfProducts', key: 'noOfProducts' },
     {
-      header: "Quantity Transfered",
-      field: "quantityTransferred",
-      key: "quantityTransferred",
+      header: 'Quantity Transfered',
+      field: 'quantityTransferred',
+      key: 'quantityTransferred'
     },
-    { header: "Ref Number", field: "refNumber", key: "refNumber" },
-    { header: "Date", field: "date", key: "date" },
+    { header: 'Ref Number', field: 'refNumber', key: 'refNumber' },
+    { header: 'Date', field: 'date', key: 'date' },
     {
-      header: "",
-      field: "actions",
-      key: "actions",
+      header: '',
+      field: 'actions',
+      key: 'actions',
       sortable: false,
       body: () => (
         <div className="edit-delete-action d-flex align-items-center justify-content-center">
@@ -104,8 +104,8 @@ const StockTransfer = () => {
             <i className="feather icon-trash-2" />
           </Link>
         </div>
-      ),
-    },
+      )
+    }
   ];
 
   const handleSearch = (value: any) => {
@@ -114,7 +114,7 @@ const StockTransfer = () => {
 
   return (
     <>
-      {" "}
+      {' '}
       <div className="page-wrapper">
         <div className="content">
           <div className="page-header">
@@ -126,23 +126,13 @@ const StockTransfer = () => {
             </div>
             <TableTopHead />
             <div className="page-btn">
-              <Link
-                to="#"
-                className="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#add-stock-transfer"
-              >
+              <Link to="#" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-stock-transfer">
                 <i className="ti ti-circle-plus me-1" />
                 Add New
               </Link>
             </div>
             <div className="page-btn import">
-              <Link
-                to="#"
-                className="btn btn-secondary color"
-                data-bs-toggle="modal"
-                data-bs-target="#view-notes"
-              >
+              <Link to="#" className="btn btn-secondary color" data-bs-toggle="modal" data-bs-target="#view-notes">
                 <i className="feather icon-download me-1" />
                 Import Transfer
               </Link>
@@ -151,18 +141,10 @@ const StockTransfer = () => {
           {/* /product list */}
           <div className="card">
             <div className="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
-              <SearchFromApi
-                callback={handleSearch}
-                rows={rows}
-                setRows={setRows}
-              />
+              <SearchFromApi callback={handleSearch} rows={rows} setRows={setRows} />
               <div className="d-flex table-dropdown my-xl-auto right-content align-items-center flex-wrap row-gap-3">
                 <div className="dropdown me-2">
-                  <Link
-                    to="#"
-                    className="dropdown-toggle btn btn-white btn-md d-inline-flex align-items-center"
-                    data-bs-toggle="dropdown"
-                  >
+                  <Link to="#" className="dropdown-toggle btn btn-white btn-md d-inline-flex align-items-center" data-bs-toggle="dropdown">
                     From Warehouse
                   </Link>
                   <ul className="dropdown-menu  dropdown-menu-end p-3">
@@ -189,11 +171,7 @@ const StockTransfer = () => {
                   </ul>
                 </div>
                 <div className="dropdown me-2">
-                  <Link
-                    to="#"
-                    className="dropdown-toggle btn btn-white btn-md d-inline-flex align-items-center"
-                    data-bs-toggle="dropdown"
-                  >
+                  <Link to="#" className="dropdown-toggle btn btn-white btn-md d-inline-flex align-items-center" data-bs-toggle="dropdown">
                     To Warehouse
                   </Link>
                   <ul className="dropdown-menu  dropdown-menu-end p-3">
@@ -220,11 +198,7 @@ const StockTransfer = () => {
                   </ul>
                 </div>
                 <div className="dropdown">
-                  <Link
-                    to="#"
-                    className="dropdown-toggle btn btn-white btn-md d-inline-flex align-items-center"
-                    data-bs-toggle="dropdown"
-                  >
+                  <Link to="#" className="dropdown-toggle btn btn-white btn-md d-inline-flex align-items-center" data-bs-toggle="dropdown">
                     Sort By : Last 7 Days
                   </Link>
                   <ul className="dropdown-menu  dropdown-menu-end p-3">
@@ -281,12 +255,7 @@ const StockTransfer = () => {
               <div className="page-title">
                 <h4>Add Transfer</h4>
               </div>
-              <button
-                type="button"
-                className="close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
+              <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
             </div>
@@ -296,8 +265,7 @@ const StockTransfer = () => {
                   <div className="col-lg-6">
                     <div className="mb-3">
                       <label className="form-label">
-                        Warehouse From{" "}
-                        <span className="text-danger ms-1">*</span>
+                        Warehouse From <span className="text-danger ms-1">*</span>
                       </label>
                       <CommonSelect
                         className="w-100"
@@ -327,8 +295,7 @@ const StockTransfer = () => {
                   <div className="col-lg-12">
                     <div className="mb-3">
                       <label className="form-label">
-                        Reference Number{" "}
-                        <span className="text-danger ms-1">*</span>
+                        Reference Number <span className="text-danger ms-1">*</span>
                       </label>
                       <input type="text" className="form-control" />
                     </div>
@@ -339,11 +306,7 @@ const StockTransfer = () => {
                         Product<span className="text-danger ms-1">*</span>
                       </label>
                       <div className="position-relative">
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Search Product"
-                        />
+                        <input type="text" className="form-control" placeholder="Search Product" />
                         <i className="feather icon-search feather-search" />
                       </div>
                     </div>
@@ -353,17 +316,13 @@ const StockTransfer = () => {
                       <label className="form-label">
                         Notes <span className="text-danger ms-1">*</span>
                       </label>
-                      <textarea className="form-control" defaultValue={""} />
+                      <textarea className="form-control" defaultValue={''} />
                     </div>
                   </div>
                 </div>
               </div>
               <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary me-2"
-                  data-bs-dismiss="modal"
-                >
+                <button type="button" className="btn btn-secondary me-2" data-bs-dismiss="modal">
                   Cancel
                 </button>
                 <button type="submit" className="btn btn-primary">
@@ -383,12 +342,7 @@ const StockTransfer = () => {
               <div className="page-title">
                 <h4>Edit Transfer</h4>
               </div>
-              <button
-                type="button"
-                className="close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
+              <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
             </div>
@@ -431,11 +385,7 @@ const StockTransfer = () => {
                       <label className="form-label">
                         Reference No<span className="text-danger ms-1">*</span>
                       </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        defaultValue={32434545}
-                      />
+                      <input type="text" className="form-control" defaultValue={32434545} />
                     </div>
                   </div>
                   <div className="col-lg-12">
@@ -444,11 +394,7 @@ const StockTransfer = () => {
                         Product<span className="text-danger ms-1">*</span>
                       </label>
                       <div className="position-relative">
-                        <input
-                          type="text"
-                          className="form-control"
-                          defaultValue="Nike Jordan"
-                        />
+                        <input type="text" className="form-control" defaultValue="Nike Jordan" />
                         <i className="feather icon-search feather-search" />
                       </div>
                     </div>
@@ -470,10 +416,7 @@ const StockTransfer = () => {
                             <tr>
                               <td>
                                 <div className="d-flex align-items-center">
-                                  <Link
-                                    to="#"
-                                    className="avatar avatar-md me-2"
-                                  >
+                                  <Link to="#" className="avatar avatar-md me-2">
                                     <img src={stockImg02} alt="product" />
                                   </Link>
                                   <Link to="#">Nike Jordan</Link>
@@ -486,11 +429,7 @@ const StockTransfer = () => {
                                   <span className="quantity-btn">
                                     <i className="feather icon-minus-circle feather-search" />
                                   </span>
-                                  <input
-                                    type="text"
-                                    className="quntity-input bg-transparent"
-                                    defaultValue={2}
-                                  />
+                                  <input type="text" className="quntity-input bg-transparent" defaultValue={2} />
                                   <span className="quantity-btn">
                                     +
                                     <i className="feather icon-plus-circle plus-circle" />
@@ -523,7 +462,7 @@ const StockTransfer = () => {
                       <textarea
                         className="form-control"
                         defaultValue={
-                          "The Jordan brand is owned by Nike (owned by the Knight family), as, at the time, the company was building its strategy to work with athletes to launch shows that could inspire consumers.Although Jordan preferred Converse and Adidas, they simply could not match the offer Nike made. "
+                          'The Jordan brand is owned by Nike (owned by the Knight family), as, at the time, the company was building its strategy to work with athletes to launch shows that could inspire consumers.Although Jordan preferred Converse and Adidas, they simply could not match the offer Nike made. '
                         }
                       />
                     </div>
@@ -531,11 +470,7 @@ const StockTransfer = () => {
                 </div>
               </div>
               <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary me-2"
-                  data-bs-dismiss="modal"
-                >
+                <button type="button" className="btn btn-secondary me-2" data-bs-dismiss="modal">
                   Cancel
                 </button>
                 <button type="submit" className="btn btn-primary">
@@ -555,12 +490,7 @@ const StockTransfer = () => {
               <div className="page-title">
                 <h4>Import Transfer</h4>
               </div>
-              <button
-                type="button"
-                className="close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
+              <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
             </div>
@@ -616,10 +546,7 @@ const StockTransfer = () => {
                     <div className="row">
                       <div>
                         <div className="modal-footer-btn download-file">
-                          <Link
-                            to="#"
-                            className="btn btn-submit"
-                          >
+                          <Link to="#" className="btn btn-submit">
                             Download Sample File
                           </Link>
                         </div>
@@ -652,20 +579,12 @@ const StockTransfer = () => {
                 <div className="col-lg-12">
                   <div className="mb-3">
                     <label className="form-label">Description</label>
-                    <textarea
-                      className="form-control"
-                      rows={3}
-                      defaultValue={""}
-                    />
+                    <textarea className="form-control" rows={3} defaultValue={''} />
                   </div>
                 </div>
               </div>
               <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary me-2"
-                  data-bs-dismiss="modal"
-                >
+                <button type="button" className="btn btn-secondary me-2" data-bs-dismiss="modal">
                   Cancel
                 </button>
                 <button type="submit" className="btn btn-primary">

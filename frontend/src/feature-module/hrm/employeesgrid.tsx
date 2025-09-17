@@ -1,73 +1,229 @@
-import { MaterialReactTable, useMaterialReactTable, type MRT_ColumnDef } from 'material-react-table';
-import { useGetEmployeesQuery } from '@core/redux/api/inventory-api';
+import { useMemo, useState } from 'react';
+import {
+  MRT_EditActionButtons,
+  MaterialReactTable,
+  type MRT_ColumnDef,
+  type MRT_Row,
+  type MRT_TableOptions,
+  useMaterialReactTable
+} from 'material-react-table';
+import { Box, Button, DialogActions, DialogContent, DialogTitle, IconButton, Tooltip } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-import { getDefaultMRTOptions } from '@components/material-react-data-table';
+import {
+  useGetEmployeesQuery,
+  useCreateEmployeeMutation,
+  useUpdateEmployeeMutation,
+  useDeleteEmployeeMutation
+} from '@core/redux/api/inventory-api';
 import type { Employee } from '../interface/features-interface';
 
-const defaultMRTOptions = getDefaultMRTOptions<Employee>();
-
 export default function EmployeesTable() {
-  const { data, isLoading } = useGetEmployeesQuery();
+  const { data, isLoading, isFetching, isError } = useGetEmployeesQuery();
+  const [createEmployee, { isLoading: isCreating }] = useCreateEmployeeMutation();
+  const [updateEmployee, { isLoading: isUpdating, reset: updateReset, isError: isUpdatingError, error: updateError }] =
+    useUpdateEmployeeMutation();
+  const [deleteEmployee, { isLoading: isDeleting }] = useDeleteEmployeeMutation();
 
   const employees = data?.data ?? [];
 
-  const columns: MRT_ColumnDef<Employee>[] = [
-    {
-      accessorKey: 'firstName',
-      header: 'First Name',
-      enableEditing: false
-    },
-    {
-      accessorKey: 'lastName',
-      header: 'Last Name',
-      enableEditing: false
-    },
-    {
-      accessorKey: 'email',
-      header: 'Email',
-      enableEditing: false
-    },
-    {
-      accessorKey: 'phone',
-      header: 'Phone',
-      enableEditing: false
-    },
-    {
-      accessorKey: 'department',
-      header: 'Department',
-      enableEditing: false
-    },
-    {
-      accessorKey: 'position',
-      header: 'Position',
-      enableEditing: false
-    },
-    {
-      accessorKey: 'createdAt',
-      header: 'Created At',
-      enableEditing: false,
-      Cell: ({ cell }) => cell.getValue<string>() && new Date(cell.getValue<string>()).toLocaleDateString()
-    },
-    {
-      accessorKey: 'updatedAt',
-      header: 'Updated At',
-      enableEditing: false,
-      Cell: ({ cell }) => cell.getValue<string>() && new Date(cell.getValue<string>()).toLocaleDateString()
+  const [validationErrors, setValidationErrors] = useState<Record<string, string | undefined>>({});
+
+  // validation utils
+  const validateRequired = (value: string) => !!value?.length;
+  const validateEmail = (email: string) =>
+    !!email?.length &&
+    email
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+
+  function validateEmployee(emp: Partial<Employee>) {
+    return {
+      firstName: !validateRequired(emp.firstName || '') ? 'First Name is Required' : undefined,
+      lastName: !validateRequired(emp.lastName || '') ? 'Last Name is Required' : undefined,
+      email: !validateEmail(emp.email || '') ? 'Invalid Email Format' : undefined
+    };
+  }
+
+  const columns = useMemo<MRT_ColumnDef<Employee>[]>(
+    () => [
+      {
+        accessorKey: 'id',
+        header: 'id',
+        enableEditing: false
+        // muiEditTextFieldProps: {
+        //   required: true,
+        //   error: !!validationErrors?.firstName,
+        //   helperText: validationErrors?.firstName,
+        //   onFocus: () => setValidationErrors((prev) => ({ ...prev, firstName: undefined }))
+        // }
+      },
+      {
+        accessorKey: 'firstName',
+        header: 'First Name',
+        muiEditTextFieldProps: {
+          required: true,
+          error: !!validationErrors?.firstName,
+          helperText: validationErrors?.firstName,
+          onFocus: () => setValidationErrors((prev) => ({ ...prev, firstName: undefined }))
+        }
+      },
+      {
+        accessorKey: 'lastName',
+        header: 'Last Name',
+        muiEditTextFieldProps: {
+          required: true,
+          error: !!validationErrors?.lastName,
+          helperText: validationErrors?.lastName,
+          onFocus: () => setValidationErrors((prev) => ({ ...prev, lastName: undefined }))
+        }
+      },
+      {
+        accessorKey: 'email',
+        header: 'Email',
+        muiEditTextFieldProps: {
+          type: 'email',
+          required: true,
+          error: !!validationErrors?.email,
+          helperText: validationErrors?.email,
+          onFocus: () => setValidationErrors((prev) => ({ ...prev, email: undefined }))
+        }
+      },
+      {
+        accessorKey: 'phone',
+        header: 'Phone'
+      },
+      {
+        accessorKey: 'department',
+        header: 'Department'
+      },
+      {
+        accessorKey: 'position',
+        header: 'Position'
+      },
+      {
+        accessorKey: 'createdAt',
+        header: 'Created At',
+        enableEditing: false,
+        Cell: ({ cell }) => cell.getValue<string>() && new Date(cell.getValue<string>()).toLocaleDateString()
+      },
+      {
+        accessorKey: 'updatedAt',
+        header: 'Updated At',
+        enableEditing: false,
+        Cell: ({ cell }) => cell.getValue<string>() && new Date(cell.getValue<string>()).toLocaleDateString()
+      }
+    ],
+    [validationErrors]
+  );
+
+  // CREATE
+  const handleCreateEmployee: MRT_TableOptions<Employee>['onCreatingRowSave'] = async ({ values, table }) => {
+    const newValidationErrors = validateEmployee(values);
+    if (Object.values(newValidationErrors).some(Boolean)) {
+      setValidationErrors(newValidationErrors);
+      return;
     }
-  ];
+    setValidationErrors({});
+    const value = { ...values };
+    delete value.createdAt;
+    delete value.updatedAt;
+    await createEmployee(value).unwrap();
+    table.setCreatingRow(null);
+  };
+
+  // UPDATE
+  const handleSaveEmployee: MRT_TableOptions<Employee>['onEditingRowSave'] = async ({ values, table }) => {
+    const newValidationErrors = validateEmployee(values);
+    if (Object.values(newValidationErrors).some(Boolean)) {
+      setValidationErrors(newValidationErrors);
+      return;
+    }
+    updateReset();
+    setValidationErrors({});
+    const value = { ...values };
+    delete value.createdAt;
+    delete value.updatedAt;
+    await updateEmployee(value);
+    table.setEditingRow(null);
+  };
+
+  // DELETE
+  const openDeleteConfirmModal = (row: MRT_Row<Employee>) => {
+    if (window.confirm('Are you sure you want to delete this employee?')) {
+      deleteEmployee(row.original.id);
+    }
+  };
 
   const table = useMaterialReactTable({
-    ...defaultMRTOptions,
     columns,
-    data: employees,
-    enableEditing: false, // just a list, not editable
-    getRowId: (row) => row.id, // unique id
+    data: employees ?? [],
+    createDisplayMode: 'modal',
+    editDisplayMode: 'row',
+    enableEditing: true,
+    getRowId: (row) => row.id,
+    muiToolbarAlertBannerProps:
+      isError || isUpdatingError
+        ? {
+            color: 'error',
+            children: updateError?.message
+          }
+        : undefined,
+    muiTableContainerProps: { sx: { minHeight: '500px' } },
+    onCreatingRowCancel: () => setValidationErrors({}),
+    onCreatingRowSave: handleCreateEmployee,
+    onEditingRowCancel: () => setValidationErrors({}),
+    onEditingRowSave: handleSaveEmployee,
+
+    // custom modals
+    renderCreateRowDialogContent: ({ table, row, internalEditComponents }) => (
+      <>
+        <DialogTitle variant="h6">Create Employee</DialogTitle>
+        <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>{internalEditComponents}</DialogContent>
+        <DialogActions>
+          <MRT_EditActionButtons table={table} row={row} />
+        </DialogActions>
+      </>
+    ),
+    renderEditRowDialogContent: ({ table, row, internalEditComponents }) => (
+      <>
+        <DialogTitle variant="h6">Edit Employee</DialogTitle>
+        <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>{internalEditComponents}</DialogContent>
+        <DialogActions>
+          <MRT_EditActionButtons table={table} row={row} />
+        </DialogActions>
+      </>
+    ),
+
+    renderRowActions: ({ row, table }) => (
+      <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+        <Tooltip title="Edit">
+          <IconButton onClick={() => table.setEditingRow(row)}>
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Delete">
+          <IconButton color="error" onClick={() => openDeleteConfirmModal(row)}>
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      </Box>
+    ),
+
+    renderTopToolbarCustomActions: ({ table }) => (
+      <Button variant="contained" onClick={() => table.setCreatingRow(true)}>
+        Add Employee
+      </Button>
+    ),
+
     state: {
-      isLoading
-    },
-    initialState: {
-      ...defaultMRTOptions.initialState,
-      showColumnFilters: true
+      isLoading,
+      isSaving: isCreating || isUpdating || isDeleting,
+      showAlertBanner: isError || isUpdatingError,
+      showProgressBars: isFetching
     }
   });
 
@@ -79,6 +235,88 @@ export default function EmployeesTable() {
     </div>
   );
 }
+
+// import { MaterialReactTable, useMaterialReactTable, type MRT_ColumnDef } from 'material-react-table';
+// import { useGetEmployeesQuery } from '@core/redux/api/inventory-api';
+
+// import { getDefaultMRTOptions } from '@components/material-react-data-table';
+// import type { Employee } from '../interface/features-interface';
+
+// const defaultMRTOptions = getDefaultMRTOptions<Employee>();
+
+// export default function EmployeesTable() {
+//   const { data, isLoading } = useGetEmployeesQuery();
+
+//   const employees = data?.data ?? [];
+
+//   const columns: MRT_ColumnDef<Employee>[] = [
+//     {
+//       accessorKey: 'firstName',
+//       header: 'First Name',
+//       enableEditing: false
+//     },
+//     {
+//       accessorKey: 'lastName',
+//       header: 'Last Name',
+//       enableEditing: false
+//     },
+//     {
+//       accessorKey: 'email',
+//       header: 'Email',
+//       enableEditing: false
+//     },
+//     {
+//       accessorKey: 'phone',
+//       header: 'Phone',
+//       enableEditing: false
+//     },
+//     {
+//       accessorKey: 'department',
+//       header: 'Department',
+//       enableEditing: false
+//     },
+//     {
+//       accessorKey: 'position',
+//       header: 'Position',
+//       enableEditing: false
+//     },
+//     {
+//       accessorKey: 'createdAt',
+//       header: 'Created At',
+//       enableEditing: false,
+//       Cell: ({ cell }) => cell.getValue<string>() && new Date(cell.getValue<string>()).toLocaleDateString()
+//     },
+//     {
+//       accessorKey: 'updatedAt',
+//       header: 'Updated At',
+//       enableEditing: false,
+//       Cell: ({ cell }) => cell.getValue<string>() && new Date(cell.getValue<string>()).toLocaleDateString()
+//     }
+//   ];
+
+//   const table = useMaterialReactTable({
+//     ...defaultMRTOptions,
+//     columns,
+//     data: employees,
+//     enableEditing: false, // just a list, not editable
+//     getRowId: (row) => row.id, // unique id
+//     state: {
+//       isLoading
+//     },
+//     initialState: {
+//       ...defaultMRTOptions.initialState,
+//       showColumnFilters: true
+//     }
+//   });
+
+//   return (
+//     <div className="page-wrapper">
+//       <div className="content">
+//         <MaterialReactTable table={table} />
+//       </div>
+//     </div>
+//   );
+// }
 
 // import { all_routes } from '../../routes/all_routes';
 

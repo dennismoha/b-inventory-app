@@ -1290,11 +1290,11 @@ export const EmployeesApi = InventoryApi.injectEndpoints({
     }),
 
     // Update employee
-    updateEmployee: build.mutation<Employee, { id: string; data: Partial<NewEmployeePayload> }>({
-      query: ({ id, data }) => ({
+    updateEmployee: build.mutation<Employee, Pick<Employee, 'id'>>({
+      query: ({ id, ...patch }) => ({
         url: `/employees/${id}`,
         method: 'PUT',
-        body: data
+        body: patch
       }),
       invalidatesTags: ['Employees']
     }),
