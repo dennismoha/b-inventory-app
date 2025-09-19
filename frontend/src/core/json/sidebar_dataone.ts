@@ -242,71 +242,71 @@ export const SidebarData1 = [
             subRoutes: []
           }
         ]
-      },
-      {
-        tittle: 'Layouts',
-        hasSubRoute: true,
-        icon: 'layout-sidebar-right-collapse',
-        showSubRoute: false,
-        subRoutes: [
-          {
-            tittle: 'Horizontal',
-            hasSubRoute: false,
-            showSubRoute: false,
-            route: '/layout-horizontal',
-            subRoutes: []
-          },
-          {
-            tittle: 'Detached',
-            hasSubRoute: false,
-            showSubRoute: false,
-            route: '/layout-detached',
-            subRoutes: []
-          },
-          {
-            tittle: 'Modern',
-            hasSubRoute: false,
-            showSubRoute: false,
-            route: '/layout-modern',
-            subRoutes: []
-          },
-          {
-            tittle: 'Two Column',
-            hasSubRoute: false,
-            showSubRoute: false,
-            route: '/layout-two-column',
-            subRoutes: []
-          },
-          {
-            tittle: 'Hovered',
-            hasSubRoute: false,
-            showSubRoute: false,
-            route: '/layout-hovered',
-            subRoutes: []
-          },
-          {
-            tittle: 'Boxed',
-            hasSubRoute: false,
-            showSubRoute: false,
-            route: '/layout-boxed',
-            subRoutes: []
-          },
-          {
-            tittle: 'RTL',
-            hasSubRoute: false,
-            showSubRoute: false,
-            route: '/layout-rtl',
-            subRoutes: []
-          },
-          {
-            tittle: 'Dark',
-            hasSubRoute: false,
-            showSubRoute: false,
-            route: '/layout-dark',
-            subRoutes: []
-          }
-        ]
       }
+      // {
+      //   tittle: 'Layouts',
+      //   hasSubRoute: true,
+      //   icon: 'layout-sidebar-right-collapse',
+      //   showSubRoute: false,
+      //   subRoutes: [
+      //     {
+      //       tittle: 'Horizontal',
+      //       hasSubRoute: false,
+      //       showSubRoute: false,
+      //       route: '/layout-horizontal',
+      //       subRoutes: []
+      //     },
+      //     {
+      //       tittle: 'Detached',
+      //       hasSubRoute: false,
+      //       showSubRoute: false,
+      //       route: '/layout-detached',
+      //       subRoutes: []
+      //     },
+      //     {
+      //       tittle: 'Modern',
+      //       hasSubRoute: false,
+      //       showSubRoute: false,
+      //       route: '/layout-modern',
+      //       subRoutes: []
+      //     },
+      //     {
+      //       tittle: 'Two Column',
+      //       hasSubRoute: false,
+      //       showSubRoute: false,
+      //       route: '/layout-two-column',
+      //       subRoutes: []
+      //     },
+      //     {
+      //       tittle: 'Hovered',
+      //       hasSubRoute: false,
+      //       showSubRoute: false,
+      //       route: '/layout-hovered',
+      //       subRoutes: []
+      //     },
+      //     {
+      //       tittle: 'Boxed',
+      //       hasSubRoute: false,
+      //       showSubRoute: false,
+      //       route: '/layout-boxed',
+      //       subRoutes: []
+      //     },
+      //     {
+      //       tittle: 'RTL',
+      //       hasSubRoute: false,
+      //       showSubRoute: false,
+      //       route: '/layout-rtl',
+      //       subRoutes: []
+      //     },
+      //     {
+      //       tittle: 'Dark',
+      //       hasSubRoute: false,
+      //       showSubRoute: false,
+      //       route: '/layout-dark',
+      //       subRoutes: []
+      //     }
+      //   ]
+      // }
     ]
   },
 
@@ -331,13 +331,13 @@ export const SidebarData1 = [
         route: '/add-product',
         subRoutes: []
       },
-      {
-        tittle: 'Expired Products',
-        hasSubRoute: false,
-        showSubRoute: false,
-        route: '/expired-products',
-        subRoutes: []
-      },
+      // {
+      //   tittle: 'Expired Products',
+      //   hasSubRoute: false,
+      //   showSubRoute: false,
+      //   route: '/expired-products',
+      //   subRoutes: []
+      // },
       {
         tittle: 'Low Stocks',
         hasSubRoute: false,
@@ -669,13 +669,13 @@ export const SidebarData1 = [
         route: '/account-list',
         subRoutes: []
       },
-      {
-        tittle: 'Money Transfer',
-        hasSubRoute: false,
-        showSubRoute: false,
-        route: '/money-transfer',
-        subRoutes: []
-      },
+      // {
+      //   tittle: 'Money Transfer',
+      //   hasSubRoute: false,
+      //   showSubRoute: false,
+      //   route: '/money-transfer',
+      //   subRoutes: []
+      // },
       {
         tittle: 'Balance Sheet',
         hasSubRoute: false,

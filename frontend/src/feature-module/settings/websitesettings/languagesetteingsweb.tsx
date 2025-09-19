@@ -1,21 +1,21 @@
-import { useState } from "react";
-import CommonFooter from "../../../components/footer/commonFooter";
-import RefreshIcon from "../../../components/tooltip-content/refresh";
-import CollapesIcon from "../../../components/tooltip-content/collapes";
-import SettingsSideBar from "../settingssidebar";
-import { Link } from "react-router-dom";
-import { all_routes } from "../../../routes/all_routes";
-import { flag03Icon } from "../../../utils/imagepath";
-import CommonSelect from "../../../components/select/common-select";
+import { useState } from 'react';
+import CommonFooter from '../../../components/footer/commonFooter';
+import RefreshIcon from '../../../components/tooltip-content/refresh';
+import CollapesIcon from '../../../components/tooltip-content/collapes';
+import SettingsSideBar from '../settingssidebar';
+import { Link } from 'react-router-dom';
+import { all_routes } from '../../../routes/all_routes';
+import { flag03Icon } from '../../../utils/imagepath';
+import CommonSelect from '../../../components/select/common-select';
 
 const Languagesetteingsweb = () => {
   const route = all_routes;
   const [selectedLanguage, setSelectedLanguage] = useState(null);
   const languageOptions = [
-    { value: "selectLanguage", label: "Select Language" },
-    { value: "english", label: "English" },
-    { value: "arabic", label: "Arabic" },
-    { value: "chinese", label: "Chinese" },
+    { value: 'selectLanguage', label: 'Select Language' },
+    { value: 'english', label: 'English' },
+    { value: 'arabic', label: 'Arabic' },
+    { value: 'chinese', label: 'Chinese' }
   ];
   return (
     <div>
@@ -50,12 +50,7 @@ const Languagesetteingsweb = () => {
                           placeholder="Choose"
                         />
                       </div>
-                      <Link
-                        to="#"
-                        className="btn btn-primary ms-3"
-                        data-bs-toggle="modal"
-                        data-bs-target="#add-language"
-                      >
+                      <Link to="#" className="btn btn-primary ms-3" data-bs-toggle="modal" data-bs-target="#add-language">
                         Add Translation
                       </Link>
                     </div>
@@ -75,24 +70,14 @@ const Languagesetteingsweb = () => {
                               </div>
                               <div className="d-flex align-items-center">
                                 <div className="back-btn">
-                                  <Link
-                                    to={route.languagesettings}
-                                    className="btn btn-secondary me-3"
-                                  >
+                                  <Link to={route.languagesettings} className="btn btn-secondary me-3">
                                     <i className="feather icon-arrow-left filter-icon me-2" />
-                                    Back to Translations{" "}
+                                    Back to Translations{' '}
                                   </Link>
                                 </div>
                                 <div className="page-btn">
-                                  <Link
-                                    to="#"
-                                    className="d-flex align-items-center selected-language"
-                                  >
-                                    <img
-                                      src={flag03Icon}
-                                      className="me-2"
-                                      alt="Img"
-                                    />
+                                  <Link to="#" className="d-flex align-items-center selected-language">
+                                    <img src={flag03Icon} className="me-2" alt="Img" />
                                     Arabic
                                   </Link>
                                 </div>
@@ -104,10 +89,7 @@ const Languagesetteingsweb = () => {
                                   <tr>
                                     <th className="no-sort">
                                       <label className="checkboxs">
-                                        <input
-                                          type="checkbox"
-                                          id="select-all"
-                                        />
+                                        <input type="checkbox" id="select-all" />
                                         <span className="checkmarks" />
                                       </label>
                                     </th>
@@ -131,22 +113,17 @@ const Languagesetteingsweb = () => {
                                     <td>1296</td>
                                     <td>
                                       <div className="d-flex align-items-center">
-                                        <div
-                                          className="progress progress-xs"
-                                          style={{ width: 120 }}
-                                        >
+                                        <div className="progress progress-xs" style={{ width: 120 }}>
                                           <div
                                             className="progress-bar bg-success rounded"
                                             role="progressbar"
-                                            style={{ width: "100%" }}
+                                            style={{ width: '100%' }}
                                             aria-valuenow={100}
                                             aria-valuemin={0}
                                             aria-valuemax={100}
                                           />
                                         </div>
-                                        <span className="d-inline-flex fs-12 ms-2">
-                                          100%
-                                        </span>
+                                        <span className="d-inline-flex fs-12 ms-2">100%</span>
                                       </div>
                                     </td>
                                     <td className="action-table-data">
@@ -172,22 +149,17 @@ const Languagesetteingsweb = () => {
                                     <td>972</td>
                                     <td>
                                       <div className="d-flex align-items-center">
-                                        <div
-                                          className="progress progress-xs"
-                                          style={{ width: 120 }}
-                                        >
+                                        <div className="progress progress-xs" style={{ width: 120 }}>
                                           <div
                                             className="progress-bar bg-pink rounded"
                                             role="progressbar"
-                                            style={{ width: "70%" }}
+                                            style={{ width: '70%' }}
                                             aria-valuenow={70}
                                             aria-valuemin={0}
                                             aria-valuemax={100}
                                           />
                                         </div>
-                                        <span className="d-inline-flex fs-12 ms-2">
-                                          70%
-                                        </span>
+                                        <span className="d-inline-flex fs-12 ms-2">70%</span>
                                       </div>
                                     </td>
                                     <td className="action-table-data">
@@ -213,22 +185,17 @@ const Languagesetteingsweb = () => {
                                     <td>810</td>
                                     <td>
                                       <div className="d-flex align-items-center">
-                                        <div
-                                          className="progress progress-xs"
-                                          style={{ width: 120 }}
-                                        >
+                                        <div className="progress progress-xs" style={{ width: 120 }}>
                                           <div
                                             className="progress-bar bg-warning rounded"
                                             role="progressbar"
-                                            style={{ width: "40%" }}
+                                            style={{ width: '40%' }}
                                             aria-valuenow={70}
                                             aria-valuemin={0}
                                             aria-valuemax={100}
                                           />
                                         </div>
-                                        <span className="d-inline-flex fs-12 ms-2">
-                                          40%
-                                        </span>
+                                        <span className="d-inline-flex fs-12 ms-2">40%</span>
                                       </div>
                                     </td>
                                     <td className="action-table-data">
@@ -254,22 +221,17 @@ const Languagesetteingsweb = () => {
                                     <td>324</td>
                                     <td>
                                       <div className="d-flex align-items-center">
-                                        <div
-                                          className="progress progress-xs"
-                                          style={{ width: 120 }}
-                                        >
+                                        <div className="progress progress-xs" style={{ width: 120 }}>
                                           <div
                                             className="progress-bar bg-orange rounded"
                                             role="progressbar"
-                                            style={{ width: "80%" }}
+                                            style={{ width: '80%' }}
                                             aria-valuenow={70}
                                             aria-valuemin={0}
                                             aria-valuemax={100}
                                           />
                                         </div>
-                                        <span className="d-inline-flex fs-12 ms-2">
-                                          80%
-                                        </span>
+                                        <span className="d-inline-flex fs-12 ms-2">80%</span>
                                       </div>
                                     </td>
                                     <td className="action-table-data">
@@ -307,12 +269,7 @@ const Languagesetteingsweb = () => {
               <div className="page-title">
                 <h4>Language Setup</h4>
               </div>
-              <button
-                type="button"
-                className="close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
+              <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
             </div>
@@ -330,19 +287,13 @@ const Languagesetteingsweb = () => {
                       </div>
                       <div className="d-flex align-items-center">
                         <div className="back-btn">
-                          <Link
-                            to={route.languagesettings}
-                            className="btn btn-secondary me-3"
-                          >
+                          <Link to={route.languagesettings} className="btn btn-secondary me-3">
                             <i className="feather icon-arrow-left filter-icon me-2" />
-                            Back to Translations{" "}
+                            Back to Translations{' '}
                           </Link>
                         </div>
                         <div className="page-btn me-2">
-                          <Link
-                            to="#"
-                            className="d-flex align-items-center selected-language"
-                          >
+                          <Link to="#" className="d-flex align-items-center selected-language">
                             <img src={flag03Icon} className="me-2" alt="Img" />
                             Arabic
                           </Link>
@@ -350,22 +301,17 @@ const Languagesetteingsweb = () => {
                         <div>
                           <span className="d-block fs-10">Progress</span>
                           <div className="d-flex align-items-center">
-                            <div
-                              className="progress progress-xs"
-                              style={{ width: 90 }}
-                            >
+                            <div className="progress progress-xs" style={{ width: 90 }}>
                               <div
                                 className="progress-bar bg-orange rounded"
                                 role="progressbar"
-                                style={{ width: "80%" }}
+                                style={{ width: '80%' }}
                                 aria-valuenow={100}
                                 aria-valuemin={0}
                                 aria-valuemax={100}
                               />
                             </div>
-                            <span className="d-inline-flex fs-12 ms-2">
-                              80%
-                            </span>
+                            <span className="d-inline-flex fs-12 ms-2">80%</span>
                           </div>
                         </div>
                       </div>
@@ -383,11 +329,7 @@ const Languagesetteingsweb = () => {
                             <td>Products</td>
                             <td>
                               <div>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  defaultValue="منتجات"
-                                />
+                                <input type="text" className="form-control" defaultValue="منتجات" />
                               </div>
                             </td>
                           </tr>
@@ -395,11 +337,7 @@ const Languagesetteingsweb = () => {
                             <td>Expired Products</td>
                             <td>
                               <div>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  defaultValue="المنتجات منتهية الصلاحية"
-                                />
+                                <input type="text" className="form-control" defaultValue="المنتجات منتهية الصلاحية" />
                               </div>
                             </td>
                           </tr>
@@ -407,11 +345,7 @@ const Languagesetteingsweb = () => {
                             <td>Low Stocks</td>
                             <td>
                               <div>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  defaultValue="مخزونات منخفضة"
-                                />
+                                <input type="text" className="form-control" defaultValue="مخزونات منخفضة" />
                               </div>
                             </td>
                           </tr>
@@ -419,11 +353,7 @@ const Languagesetteingsweb = () => {
                             <td>Category</td>
                             <td>
                               <div>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  defaultValue="فئة"
-                                />
+                                <input type="text" className="form-control" defaultValue="فئة" />
                               </div>
                             </td>
                           </tr>
@@ -431,11 +361,7 @@ const Languagesetteingsweb = () => {
                             <td>Sub Category</td>
                             <td>
                               <div>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  defaultValue="الفئة الفرعية"
-                                />
+                                <input type="text" className="form-control" defaultValue="الفئة الفرعية" />
                               </div>
                             </td>
                           </tr>
@@ -443,11 +369,7 @@ const Languagesetteingsweb = () => {
                             <td>Brand</td>
                             <td>
                               <div>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  defaultValue="ماركة"
-                                />
+                                <input type="text" className="form-control" defaultValue="ماركة" />
                               </div>
                             </td>
                           </tr>
@@ -455,11 +377,7 @@ const Languagesetteingsweb = () => {
                             <td>Unit</td>
                             <td>
                               <div>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  defaultValue="وحدة"
-                                />
+                                <input type="text" className="form-control" defaultValue="وحدة" />
                               </div>
                             </td>
                           </tr>
@@ -467,11 +385,7 @@ const Languagesetteingsweb = () => {
                             <td>Warranties</td>
                             <td>
                               <div>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  defaultValue="الضمانات"
-                                />
+                                <input type="text" className="form-control" defaultValue="الضمانات" />
                               </div>
                             </td>
                           </tr>
@@ -479,11 +393,7 @@ const Languagesetteingsweb = () => {
                             <td>Print Barcode</td>
                             <td>
                               <div>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  defaultValue="طباعة الباركود"
-                                />
+                                <input type="text" className="form-control" defaultValue="طباعة الباركود" />
                               </div>
                             </td>
                           </tr>
@@ -491,11 +401,7 @@ const Languagesetteingsweb = () => {
                             <td>Print QR Code</td>
                             <td>
                               <div>
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  defaultValue="طباعة رمز الاستجابة السريعة"
-                                />
+                                <input type="text" className="form-control" defaultValue="طباعة رمز الاستجابة السريعة" />
                               </div>
                             </td>
                           </tr>

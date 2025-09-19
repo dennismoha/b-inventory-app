@@ -136,7 +136,7 @@ export default function AccountsTable() {
         header: 'Account Type',
         editVariant: 'select',
         editSelectOptions: ['ASSET', 'LIABILITY', 'EQUITY', 'INCOME', 'EXPENSE'],
-        muiEditTextFieldProps: ({ row }) => ({
+        muiEditTextFieldProps: () => ({
           select: true,
           error: !!validationErrors?.type,
           helperText: validationErrors?.type,

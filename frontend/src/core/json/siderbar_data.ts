@@ -120,13 +120,13 @@ export const SidebarData = [
         showSubRoute: false,
         submenu: false
       },
-      {
-        label: 'Expired Products',
-        link: '/expired-products',
-        icon: 'progress-alert',
-        showSubRoute: false,
-        submenu: false
-      },
+      // {
+      //   label: 'Expired Products',
+      //   link: '/expired-products',
+      //   icon: 'progress-alert',
+      //   showSubRoute: false,
+      //   submenu: false
+      // },
       {
         label: 'Low Stocks',
         link: '/low-stocks',
@@ -161,14 +161,14 @@ export const SidebarData = [
         icon: 'brand-unity',
         showSubRoute: false,
         submenu: false
-      },
-      {
-        label: 'Variant Attributes',
-        link: '/variant-attributes',
-        icon: 'checklist',
-        showSubRoute: false,
-        submenu: false
       }
+      // {
+      //   label: 'Variant Attributes',
+      //   link: '/variant-attributes',
+      //   icon: 'checklist',
+      //   showSubRoute: false,
+      //   submenu: false
+      // }
       // {
       //   label: "Warranties",
       //   link: "/warranty",
@@ -243,16 +243,16 @@ export const SidebarData = [
     submenu: false,
     showSubRoute: false,
     submenuItems: [
-      {
-        label: 'Sales',
-        icon: 'layout-grid',
-        showSubRoute: false,
-        submenu: true,
-        submenuItems: [
-          // { label: "Online Orders", link: route.onlineorder, showSubRoute: false },
-          { label: 'POS Orders', link: route.posorder, showSubRoute: false }
-        ]
-      }
+      // {
+      //   label: 'Sales',
+      //   icon: 'layout-grid',
+      //   showSubRoute: false,
+      //   submenu: true,
+      //   submenuItems: [
+      //     // { label: "Online Orders", link: route.onlineorder, showSubRoute: false },
+      //     { label: 'POS Orders', link: route.posorder, showSubRoute: false }
+      //   ]
+      // }
       // {
       //   label: 'Invoices',
       //   link: route.invoice,
@@ -354,21 +354,21 @@ export const SidebarData = [
         icon: 'file-unknown',
         showSubRoute: false,
         submenu: false
-      },
-      {
-        label: 'Purchase Order',
-        link: '/purchase-order-report',
-        icon: 'file-unknown',
-        showSubRoute: false,
-        submenu: false
-      },
-      {
-        label: 'Purchase Return',
-        link: '/purchase-returns',
-        icon: 'file-upload',
-        showSubRoute: false,
-        submenu: false
       }
+      // {
+      //   label: 'Purchase Order',
+      //   link: '/purchase-order-report',
+      //   icon: 'file-unknown',
+      //   showSubRoute: false,
+      //   submenu: false
+      // },
+      // {
+      //   label: 'Purchase Return',
+      //   link: '/purchase-returns',
+      //   icon: 'file-upload',
+      //   showSubRoute: false,
+      //   submenu: false
+      // }
     ]
   },
 
