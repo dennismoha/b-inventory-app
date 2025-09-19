@@ -1,124 +1,83 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { all_routes } from "../../routes/all_routes";
-import Addunits from "../../core/modals/inventory/addunits";
-import AddCategory from "../../core/modals/inventory/addcategory";
-import AddBrand from "../../core/modals/addbrand";
-import CounterThree from "../../components/counter/counterThree";
-import RefreshIcon from "../../components/tooltip-content/refresh";
-import CollapesIcon from "../../components/tooltip-content/collapes";
-import AddVariant from "../../core/modals/inventory/addvariant";
-import AddVarientNew from "../../core/modals/inventory/addVarientNew";
-import { phoneAdd1, phoneAdd2 } from "../../utils/imagepath";
-import CommonChipsInput from "../../components/chip";
-import CommonDatePicker from "../../components/date-picker/common-date-picker";
-import CommonSelect from "../../components/select/common-select";
-import DeleteModal from "../../components/delete-modal";
-import { Editor } from "primereact/editor";
+// import ProductForm from './addproductcomponent';
+import SupplierProductsTable from './addproductssupplierproductstable';
+// import { stockTransferData } from '../../core/json/stock-transfer-data';
+// import PrimeDataTable from '../../components/data-table';
+// import SearchFromApi from '../../components/data-table/search';
+// import DeleteModal from '../../components/delete-modal';
+// import CommonSelect from '../../components/select/common-select';
+import TableTopHead from '../../components/table-top-head';
+import CommonFooter from '../../components/footer/commonFooter';
+// import { downloadImg, stockImg02 } from '../../utils/imagepath';
 
-const AddProduct = () => {
-  const route = all_routes;
-  const [tags, setTags] = useState(["Red", "Black"]);
-  const [product, setProduct] = useState(false);
-  const [product2, setProduct2] = useState(true);
-  const [date1, setDate1] = useState<Date | null>(new Date());
-  const [date2, setDate2] = useState<Date | null>(new Date());
-  const [selectedStore, setSelectedStore] = useState<string | null>(null);
-  const [selectedWarehouse, setSelectedWarehouse] = useState<string | null>(
-    null
-  );
-  const [selectedSellingType, setSelectedSellingType] = useState<string | null>(
-    null
-  );
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
-    null
-  );
-  const [selectedBrand, setSelectedBrand] = useState<string | null>(null);
-  const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
-  const [selectedBarcodeSymbol, setSelectedBarcodeSymbol] = useState<
-    string | null
-  >(null);
-  const [selectedTaxType, setSelectedTaxType] = useState<string | null>(null);
-  const [selectedDiscountType, setSelectedDiscountType] = useState<
-    string | null
-  >(null);
-  const [selectedWarranty, setSelectedWarranty] = useState<string | null>(null);
-  const [text, setText] = useState("");
+import { useCreateSupplierProductMutation, useGetProductsQuery } from '@core/redux/api/inventory-api';
+import React, { useState } from 'react';
+import type { Product, Supplier } from '../interface/features-interface';
 
-  const store = [
-    { value: "choose", label: "Choose" },
-    { value: "thomas", label: "Thomas" },
-    { value: "rasmussen", label: "Rasmussen" },
-    { value: "fredJohn", label: "Fred John" },
-  ];
-  const warehouse = [
-    { value: "choose", label: "Choose" },
-    { value: "legendary", label: "Legendary" },
-    { value: "determined", label: "Determined" },
-    { value: "sincere", label: "Sincere" },
-  ];
-  const category = [
-    { value: "choose", label: "Choose" },
-    { value: "lenovo", label: "Lenovo" },
-    { value: "electronics", label: "Electronics" },
-  ];
-  const subcategory = [
-    { value: "choose", label: "Choose" },
-    { value: "lenovo", label: "Lenovo" },
-    { value: "electronics", label: "Electronics" },
-  ];
+import { Link } from 'react-router';
 
-  const brand = [
-    { value: "choose", label: "Choose" },
-    { value: "nike", label: "Nike" },
-    { value: "bolt", label: "Bolt" },
-  ];
-  const unit = [
-    { value: "choose", label: "Choose" },
-    { value: "kg", label: "Kg" },
-    { value: "pc", label: "Pc" },
-  ];
-  const sellingtype = [
-    { value: "choose", label: "Choose" },
-    { value: "transactionalSelling", label: "Transactional selling" },
-    { value: "solutionSelling", label: "Solution selling" },
-  ];
-  const barcodesymbol = [
-    { value: "choose", label: "Choose" },
-    { value: "code34", label: "Code34" },
-    { value: "code35", label: "Code35" },
-    { value: "code36", label: "Code36" },
-  ];
-  const taxtype = [
-    { value: "exclusive", label: "Exclusive" },
-    { value: "salesTax", label: "Sales Tax" },
-  ];
-  const discounttype = [
-    { value: "choose", label: "Choose" },
-    { value: "percentage", label: "Percentage" },
-    { value: "cash", label: "Cash" },
-  ];
+// import { useGetSuppliersQuery } from '@/app/redux/api/inventory-api';
+// import { Supplier } from '@/app/(admin)/admin/suppliers/interface/supplier-interface';
+import { useGetSuppliersQuery } from '@core/redux/api/inventory-api';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
+// import type { Supplier } from '../interface/features-interface';
 
-  const warrenty = [
-    { value: "choose", label: "Choose" },
-    { value: "Replacement Warranty", label: "Replacement Warranty" },
-    { value: "On-Site Warranty", label: "On-Site Warranty" },
-    {
-      value: "Accidental Protection Plan",
-      label: "Accidental Protection Plan",
-    },
-  ];
-  const [isImageVisible, setIsImageVisible] = useState(true);
+const SupplierProducts: React.FC = () => {
+  // const { data: SuppliersData, isLoading: getSuppliersLoading, isError: getSuppliersError } = useGetSuppliersQuery();
 
-  const handleRemoveProduct = () => {
-    setIsImageVisible(false);
+  //   const {
+  //     data: SuppliersData,
+  //     isLoading: getSuppliersLoading,
+  //     isError: getSuppliersError,
+  //     error: getSuppliersErrorData
+  //   } = useGetSuppliersQuery();
+
+  const [selectedSupplier, setSelectedSupplier] = useState<string>('');
+  const [selectedProduct, setSelectedProduct] = useState<string>('');
+
+  // RTK Query Mutation Hook
+  const [createSupplierProduct, { isLoading, isSuccess, isError, error }] = useCreateSupplierProductMutation();
+
+  // Queries
+  const { data: ProductsData, isLoading: getProductsLoading, isError: getProductsError } = useGetProductsQuery();
+  const {
+    data: SuppliersData,
+    isLoading: getSuppliersLoading,
+    isError: getSuppliersError,
+    error: getSuppliersErrorData
+  } = useGetSuppliersQuery();
+
+  const suppliersData: Supplier[] = SuppliersData?.data ?? [];
+  const productsData: Product[] = ProductsData?.data ?? [];
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedSupplier || !selectedProduct) return;
+
+    createSupplierProduct({
+      supplier_id: selectedSupplier,
+      product_id: selectedProduct
+    });
   };
-  const [isImageVisible1, setIsImageVisible1] = useState(true);
 
-  const handleRemoveProduct1 = () => {
-    setIsImageVisible1(false);
-  };
+  useEffect(() => {
+    // Handling fetch state for suppliers data
+    if (getSuppliersLoading) {
+      toast.info('Fetching suppliers...');
+    }
+
+    if (getSuppliersError) {
+      toast.error(`Error fetching suppliers: ${JSON.stringify(getSuppliersErrorData)}`);
+    }
+  }, [getSuppliersLoading, getSuppliersError, getSuppliersErrorData]);
+
+  //   let suppliersData: Supplier[] = SuppliersData?.data || [];
+
+  //   if (suppliersData === undefined) {
+  //     console.log('supplier is undefined');
+  //     suppliersData = [];
+  //   }
+
   return (
     <>
       <div className="page-wrapper">
@@ -126,904 +85,824 @@ const AddProduct = () => {
           <div className="page-header">
             <div className="add-item d-flex">
               <div className="page-title">
-                <h4>Create Product</h4>
-                <h6>Create new product</h6>
+                <h4>Stock Transfer</h4>
+                <h6>Manage your stock transfer</h6>
               </div>
             </div>
-            <ul className="table-top-head">
-              <RefreshIcon />
-              <CollapesIcon />
-              <li>
-                <div className="page-btn">
-                  <Link to={route.productlist} className="btn btn-secondary">
-                    <i className="feather icon-arrow-left me-2" />
-                    Back to Product
-                  </Link>
-                </div>
-              </li>
-            </ul>
+            <TableTopHead />
+            <div className="page-btn">
+              <Link to="#" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-stock-transfer">
+                <i className="ti ti-circle-plus me-1" />
+                Add New
+              </Link>
+            </div>
+            <div className="page-btn import">
+              <Link to="#" className="btn btn-secondary color" data-bs-toggle="modal" data-bs-target="#view-notes">
+                <i className="feather icon-download me-1" />
+                Import Transfer
+              </Link>
+            </div>
           </div>
-          {/* /add */}
-          <form className="add-product-form">
-            <div className="add-product">
-              <div
-                className="accordions-items-seperate"
-                id="accordionSpacingExample"
-              >
-                <div className="accordion-item border mb-4">
-                  <h2 className="accordion-header" id="headingSpacingOne">
-                    <div
-                      className="accordion-button collapsed bg-white"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#SpacingOne"
-                      aria-expanded="true"
-                      aria-controls="SpacingOne"
-                    >
-                      <div className="d-flex align-items-center justify-content-between flex-fill">
-                        <h5 className="d-flex align-items-center">
-                          <i className="feather icon-info text-primary me-2" />
-                          <span>Product Information</span>
-                        </h5>
-                      </div>
-                    </div>
-                  </h2>
-                  <div
-                    id="SpacingOne"
-                    className="accordion-collapse collapse show"
-                    aria-labelledby="headingSpacingOne"
-                  >
-                    <div className="accordion-body border-top">
-                      <div className="row">
-                        <div className="col-sm-6 col-12">
-                          <div className="mb-3">
-                            <label className="form-label">
-                              Store<span className="text-danger ms-1">*</span>
-                            </label>
-                            <CommonSelect
-                              className="w-100"
-                              options={store}
-                              value={selectedStore}
-                              onChange={(e) => setSelectedStore(e.value)}
-                              placeholder="Choose"
-                              filter={false}
-                            />
-                          </div>
-                        </div>
-                        <div className="col-sm-6 col-12">
-                          <div className="mb-3">
-                            <label className="form-label">
-                              Warehouse
-                              <span className="text-danger ms-1">*</span>
-                            </label>
-                            <CommonSelect
-                              className="w-100"
-                              options={warehouse}
-                              value={selectedWarehouse}
-                              onChange={(e) => setSelectedWarehouse(e.value)}
-                              placeholder="Choose"
-                              filter={false}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-sm-6 col-12">
-                          <div className="mb-3">
-                            <label className="form-label">
-                              Product Name
-                              <span className="text-danger ms-1">*</span>
-                            </label>
-                            <input type="text" className="form-control" />
-                          </div>
-                        </div>
-                        <div className="col-sm-6 col-12">
-                          <div className="mb-3">
-                            <label className="form-label">
-                              Slug<span className="text-danger ms-1">*</span>
-                            </label>
-                            <input type="text" className="form-control" />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-sm-6 col-12">
-                          <div className="mb-3 list position-relative">
-                            <label className="form-label">
-                              SKU<span className="text-danger ms-1">*</span>
-                            </label>
-                            <input type="text" className="form-control list" />
-                            <button
-                              type="button"
-                              className="btn btn-primaryadd"
-                            >
-                              Generate
-                            </button>
-                          </div>
-                        </div>
-                        <div className="col-sm-6 col-12">
-                          <div className="mb-3">
-                            <label className="form-label">
-                              Selling Type
-                              <span className="text-danger ms-1">*</span>
-                            </label>
-                            <CommonSelect
-                              className="w-100"
-                              options={sellingtype}
-                              value={selectedSellingType}
-                              onChange={(e) => setSelectedSellingType(e.value)}
-                              placeholder="Choose"
-                              filter={false}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="addservice-info">
-                        <div className="row">
-                          <div className="col-sm-6 col-12">
-                            <div className="mb-3">
-                              <div className="add-newplus">
-                                <label className="form-label">
-                                  Category
-                                  <span className="text-danger ms-1">*</span>
-                                </label>
-                                <Link
-                                  to="#"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#add-units-category"
-                                >
-                                  <i className="feather icon-plus-circle plus-down-add" />
-                                  <span>Add New</span>
-                                </Link>
-                              </div>
-                              <CommonSelect
-                                className="w-100"
-                                options={category}
-                                value={selectedCategory}
-                                onChange={(e) => setSelectedCategory(e.value)}
-                                placeholder="Choose"
-                                filter={false}
-                              />
-                            </div>
-                          </div>
-                          <div className="col-sm-6 col-12">
-                            <div className="mb-3">
-                              <label className="form-label">
-                                Sub Category
-                                <span className="text-danger ms-1">*</span>
-                              </label>
-                              <CommonSelect
-                                className="w-100"
-                                options={subcategory}
-                                value={selectedSubCategory}
-                                onChange={(e) =>
-                                  setSelectedSubCategory(e.value)
-                                }
-                                placeholder="Choose"
-                                filter={false}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="add-product-new">
-                        <div className="row">
-                          <div className="col-sm-6 col-12">
-                            <div className="mb-3">
-                              <div className="add-newplus">
-                                <label className="form-label">
-                                  Brand
-                                  <span className="text-danger ms-1">*</span>
-                                </label>
-                              </div>
-                              <CommonSelect
-                                className="w-100"
-                                options={brand}
-                                value={selectedBrand}
-                                onChange={(e) => setSelectedBrand(e.value)}
-                                placeholder="Choose"
-                                filter={false}
-                              />
-                            </div>
-                          </div>
-                          <div className="col-sm-6 col-12">
-                            <div className="mb-3">
-                              <div className="add-newplus">
-                                <label className="form-label">
-                                  Unit
-                                  <span className="text-danger ms-1">*</span>
-                                </label>
-                              </div>
-                              <CommonSelect
-                                className="w-100"
-                                options={unit}
-                                value={selectedUnit}
-                                onChange={(e) => setSelectedUnit(e.value)}
-                                placeholder="Choose"
-                                filter={false}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-lg-6 col-sm-6 col-12">
-                          <div className="mb-3">
-                            <label className="form-label">
-                              Barcode Symbology
-                              <span className="text-danger ms-1">*</span>
-                            </label>
-                            <CommonSelect
-                              className="w-100"
-                              options={barcodesymbol}
-                              value={selectedBarcodeSymbol}
-                              onChange={(e) =>
-                                setSelectedBarcodeSymbol(e.value)
-                              }
-                              placeholder="Choose"
-                              filter={false}
-                            />
-                          </div>
-                        </div>
-                        <div className="col-lg-6 col-sm-6 col-12">
-                          <div className="mb-3 list position-relative">
-                            <label className="form-label">
-                              Item Code
-                              <span className="text-danger ms-1">*</span>
-                            </label>
-                            <input type="text" className="form-control list" />
-                            <button
-                              type="submit"
-                              className="btn btn-primaryadd"
-                            >
-                              Generate
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      {/* Editor */}
-                      <div className="col-lg-12">
-                        <div className="summer-description-box">
-                          <label className="form-label">Description</label>
-                          <Editor
-                            value={text}
-                            onTextChange={(e: any) => setText(e.htmlValue)}
-                            style={{ height: "200px" }}
-                          />
-                          <p className="fs-14 mt-1">Maximum 60 Words</p>
-                        </div>
-                      </div>
-                      {/* /Editor */}
-                    </div>
-                  </div>
+          {/* /product list */}
+          <div className="card">
+            {/* <div className="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+              <SearchFromApi callback={handleSearch} rows={rows} setRows={setRows} />
+              <div className="d-flex table-dropdown my-xl-auto right-content align-items-center flex-wrap row-gap-3">
+                <div className="dropdown me-2">
+                  <Link to="#" className="dropdown-toggle btn btn-white btn-md d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                    From Warehouse
+                  </Link>
+                  <ul className="dropdown-menu  dropdown-menu-end p-3">
+                    <li>
+                      <Link to="#" className="dropdown-item rounded-1">
+                        Lavish Warehouse
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#" className="dropdown-item rounded-1">
+                        Quaint Warehouse
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#" className="dropdown-item rounded-1">
+                        Traditional Warehouse
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#" className="dropdown-item rounded-1">
+                        Cool Warehouse
+                      </Link>
+                    </li>
+                  </ul>
                 </div>
-                <div className="accordion-item border mb-4">
-                  <h2 className="accordion-header" id="headingSpacingTwo">
-                    <div
-                      className="accordion-button collapsed bg-white"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#SpacingTwo"
-                      aria-expanded="true"
-                      aria-controls="SpacingTwo"
-                    >
-                      <div className="d-flex align-items-center justify-content-between flex-fill">
-                        <h5 className="d-flex align-items-center">
-                          <i className="feather icon-life-buoy text-primary me-2" />
-                          <span>Pricing &amp; Stocks</span>
-                        </h5>
-                      </div>
-                    </div>
-                  </h2>
-                  <div
-                    id="SpacingTwo"
-                    className="accordion-collapse collapse show"
-                    aria-labelledby="headingSpacingTwo"
-                  >
-                    <div className="accordion-body border-top">
-                      <div className="mb-3s">
-                        <label className="form-label">
-                          Product Type
-                          <span className="text-danger ms-1">*</span>
-                        </label>
-                        <div className="single-pill-product mb-3">
-                          <ul
-                            className="nav nav-pills"
-                            id="pills-tab1"
-                            role="tablist"
-                          >
-                            <li className="nav-item" role="presentation">
-                              <span
-                                className="custom_radio me-4 mb-0 active"
-                                id="pills-home-tab"
-                                data-bs-toggle="pill"
-                                data-bs-target="#pills-home"
-                                role="tab"
-                                aria-controls="pills-home"
-                                aria-selected="true"
-                              >
-                                <input
-                                  type="radio"
-                                  className="form-control"
-                                  name="payment"
-                                />
-                                <span className="checkmark" /> Single Product
-                              </span>
-                            </li>
-                            <li className="nav-item" role="presentation">
-                              <span
-                                className="custom_radio me-2 mb-0"
-                                id="pills-profile-tab"
-                                data-bs-toggle="pill"
-                                data-bs-target="#pills-profile"
-                                role="tab"
-                                aria-controls="pills-profile"
-                                aria-selected="false"
-                              >
-                                <input
-                                  type="radio"
-                                  className="form-control"
-                                  name="sign"
-                                />
-                                <span className="checkmark" /> Variable Product
-                              </span>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                      <div className="tab-content" id="pills-tabContent">
-                        <div
-                          className="tab-pane fade show active"
-                          id="pills-home"
-                          role="tabpanel"
-                          aria-labelledby="pills-home-tab"
-                        >
-                          <div className="single-product">
-                            <div className="row">
-                              <div className="col-lg-4 col-sm-6 col-12">
-                                <div className="mb-3">
-                                  <label className="form-label">
-                                    Quantity
-                                    <span className="text-danger ms-1">*</span>
-                                  </label>
-                                  <input type="text" className="form-control" />
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-sm-6 col-12">
-                                <div className="mb-3">
-                                  <label className="form-label">
-                                    Price
-                                    <span className="text-danger ms-1">*</span>
-                                  </label>
-                                  <input type="text" className="form-control" />
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-sm-6 col-12">
-                                <div className="mb-3">
-                                  <label className="form-label">
-                                    Tax Type
-                                    <span className="text-danger ms-1">*</span>
-                                  </label>
-                                  <CommonSelect
-                                    className="w-100"
-                                    options={taxtype}
-                                    value={selectedTaxType}
-                                    onChange={(e) =>
-                                      setSelectedTaxType(e.value)
-                                    }
-                                    placeholder="Select Option"
-                                    filter={false}
-                                  />
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-sm-6 col-12">
-                                <div className="mb-3">
-                                  <label className="form-label">
-                                    Discount Type
-                                    <span className="text-danger ms-1">*</span>
-                                  </label>
-                                  <CommonSelect
-                                    className="w-100"
-                                    options={discounttype}
-                                    value={selectedDiscountType}
-                                    onChange={(e) =>
-                                      setSelectedDiscountType(e.value)
-                                    }
-                                    placeholder="Choose"
-                                    filter={false}
-                                  />
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-sm-6 col-12">
-                                <div className="mb-3">
-                                  <label className="form-label">
-                                    Discount Value
-                                    <span className="text-danger ms-1">*</span>
-                                  </label>
-                                  <input className="form-control" type="text" />
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-sm-6 col-12">
-                                <div className="mb-3">
-                                  <label className="form-label">
-                                    Quantity Alert
-                                    <span className="text-danger ms-1">*</span>
-                                  </label>
-                                  <input type="text" className="form-control" />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          className="tab-pane fade"
-                          id="pills-profile"
-                          role="tabpanel"
-                          aria-labelledby="pills-profile-tab"
-                        >
-                          <div className="row select-color-add">
-                            <div className="col-lg-6 col-sm-6 col-12">
-                              <div className="mb-3">
-                                <label className="form-label">
-                                  Variant Attribute{" "}
-                                  <span className="text-danger ms-1">*</span>
-                                </label>
-                                <div className="row">
-                                  <div className="col-lg-10 col-sm-10 col-10">
-                                    <select
-                                      className="form-control variant-select select-option"
-                                      id="colorSelect"
-                                      onChange={() => setProduct(true)}
-                                    >
-                                      <option>Choose</option>
-                                      <option>Color</option>
-                                      <option value="red">Red</option>
-                                      <option value="black">Black</option>
-                                    </select>
-                                  </div>
-                                  <div className="col-lg-2 col-sm-2 col-2 ps-0">
-                                    <div className="add-icon tab">
-                                      <Link
-                                        to="#"
-                                        className="btn btn-filter"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#add-units"
-                                      >
-                                        <i className="feather feather-plus-circle" />
-                                      </Link>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              {product && (
-                                <div
-                                  className={`selected-hide-color ${product2 ? "d-block" : ""} `}
-                                  id="input-show"
-                                >
-                                  <label className="form-label">
-                                    Variant Attribute{" "}
-                                    <span className="text-danger ms-1">*</span>
-                                  </label>
-                                  <div className="row align-items-center">
-                                    <div className="col-lg-10 col-sm-10 col-10">
-                                      <div className="mb-3">
-                                        <CommonChipsInput
-                                          value={tags}
-                                          onChange={setTags}
-                                          placeholder="Add new"
-                                          className="input-tags form-control" // Optional custom class
-                                        />
-                                      </div>
-                                    </div>
-                                    <div className="col-lg-2 col-sm-2 col-2 ps-0">
-                                      <div className="mb-3 ">
-                                        <Link
-                                          to="#"
-                                          className="remove-color"
-                                          onClick={() => setProduct2(false)}
-                                        >
-                                          <i className="far fa-trash-alt" />
-                                        </Link>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                          {product && (
-                            <div
-                              className="modal-body-table variant-table d-block"
-                              id="variant-table"
-                            >
-                              <div className="table-responsive">
-                                <table className="table">
-                                  <thead>
-                                    <tr>
-                                      <th>Variantion</th>
-                                      <th>Variant Value</th>
-                                      <th>SKU</th>
-                                      <th>Quantity</th>
-                                      <th>Price</th>
-                                      <th className="no-sort" />
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr>
-                                      <td>
-                                        <div className="add-product">
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                            defaultValue="color"
-                                          />
-                                        </div>
-                                      </td>
-                                      <td>
-                                        <div className="add-product">
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                            defaultValue="red"
-                                          />
-                                        </div>
-                                      </td>
-                                      <td>
-                                        <div className="add-product">
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                            defaultValue={1234}
-                                          />
-                                        </div>
-                                      </td>
-                                      <td>
-                                        <CounterThree  />
-                                      </td>
-                                      <td>
-                                        <div className="add-product">
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                            defaultValue={50000}
-                                          />
-                                        </div>
-                                      </td>
-                                      <td className="action-table-data">
-                                        <div className="edit-delete-action">
-                                          <div className="input-block add-lists">
-                                            <label className="checkboxs">
-                                              <input type="checkbox" />
-                                              <span className="checkmarks" />
-                                            </label>
-                                          </div>
-                                          <Link
-                                            className="me-2 p-2"
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#add-variation"
-                                          >
-                                            <i className="feather icon-plus feather-edit" />
-                                          </Link>
-                                          <Link
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#delete-modal"
-                                            className="p-2"
-                                            to="#"
-                                          >
-                                            <i className="feather icon-trash-2" />
-                                          </Link>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td>
-                                        <div className="add-product">
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                            defaultValue="color"
-                                          />
-                                        </div>
-                                      </td>
-                                      <td>
-                                        <div className="add-product">
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                            defaultValue="black"
-                                          />
-                                        </div>
-                                      </td>
-                                      <td>
-                                        <div className="add-product">
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                            defaultValue={2345}
-                                          />
-                                        </div>
-                                      </td>
-                                      <td>
-                                        <CounterThree  />
-                                      </td>
-                                      <td>
-                                        <div className="add-product">
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                            defaultValue={50000}
-                                          />
-                                        </div>
-                                      </td>
-                                      <td className="action-table-data">
-                                        <div className="edit-delete-action">
-                                          <div className="input-block add-lists">
-                                            <label className="checkboxs">
-                                              <input type="checkbox" />
-                                              <span className="checkmarks" />
-                                            </label>
-                                          </div>
-                                          <Link
-                                            className="me-2 p-2"
-                                            to="#"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#edit-units"
-                                          >
-                                            <i className="feather icon-plus feather-edit" />
-                                          </Link>
-                                          <Link
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#delete-modal"
-                                            className="p-2"
-                                            to="#"
-                                          >
-                                            <i className="feather icon-trash-2" />
-                                          </Link>
-                                        </div>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <div className="dropdown me-2">
+                  <Link to="#" className="dropdown-toggle btn btn-white btn-md d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                    To Warehouse
+                  </Link>
+                  <ul className="dropdown-menu  dropdown-menu-end p-3">
+                    <li>
+                      <Link to="#" className="dropdown-item rounded-1">
+                        North Zone Warehouse
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#" className="dropdown-item rounded-1">
+                        Nova Storage Hub
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#" className="dropdown-item rounded-1">
+                        Cool Warehouse
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#" className="dropdown-item rounded-1">
+                        Retail Supply Hub
+                      </Link>
+                    </li>
+                  </ul>
                 </div>
-                <div className="accordion-item border mb-4">
-                  <h2 className="accordion-header" id="headingSpacingThree">
-                    <div
-                      className="accordion-button collapsed bg-white"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#SpacingThree"
-                      aria-expanded="true"
-                      aria-controls="SpacingThree"
-                    >
-                      <div className="d-flex align-items-center justify-content-between flex-fill">
-                        <h5 className="d-flex align-items-center">
-                          <i className="feather icon-image text-primary me-2" />
-                          <span>Images</span>
-                        </h5>
-                      </div>
-                    </div>
-                  </h2>
-                  <div
-                    id="SpacingThree"
-                    className="accordion-collapse collapse show"
-                    aria-labelledby="headingSpacingThree"
-                  >
-                    <div className="accordion-body border-top">
-                      <div className="text-editor add-list add">
-                        <div className="col-lg-12">
-                          <div className="add-choosen">
-                            <div className="mb-3">
-                              <div className="image-upload">
-                                <input type="file" />
-                                <div className="image-uploads">
-                                  <i className="feather icon-plus-circle plus-down-add me-0" />
-                                  <h4>Add Images</h4>
-                                </div>
-                              </div>
-                            </div>
-                            {isImageVisible1 && (
-                              <div className="phone-img">
-                                <img src={phoneAdd2} alt="image" />
-                                <Link to="#">
-                                  <i
-                                    className="feather icon-x x-square-add remove-product"
-                                    onClick={handleRemoveProduct1}
-                                  />
-                                </Link>
-                              </div>
-                            )}
-                            {isImageVisible && (
-                              <div className="phone-img">
-                                <img src={phoneAdd1} alt="image" />
-                                <Link to="#">
-                                  <i
-                                    className="feather icon-x x-square-add remove-product"
-                                    onClick={handleRemoveProduct}
-                                  />
-                                </Link>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="accordion-item border mb-4">
-                  <h2 className="accordion-header" id="headingSpacingFour">
-                    <div
-                      className="accordion-button collapsed bg-white"
-                      data-bs-toggle="collapse"
-                      data-bs-target="#SpacingFour"
-                      aria-expanded="true"
-                      aria-controls="SpacingFour"
-                    >
-                      <div className="d-flex align-items-center justify-content-between flex-fill">
-                        <h5 className="d-flex align-items-center">
-                          <i className="feather icon-list text-primary me-2" />
-                          <span>Custom Fields</span>
-                        </h5>
-                      </div>
-                    </div>
-                  </h2>
-                  <div
-                    id="SpacingFour"
-                    className="accordion-collapse collapse show"
-                    aria-labelledby="headingSpacingFour"
-                  >
-                    <div className="accordion-body border-top">
-                      <div>
-                        <div className="p-3 bg-light rounded d-flex align-items-center border mb-3">
-                          <div className=" d-flex align-items-center">
-                            <div className="form-check form-check-inline">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="warranties"
-                                defaultValue="option1"
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="warranties"
-                              >
-                                Warranties
-                              </label>
-                            </div>
-                            <div className="form-check form-check-inline">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="manufacturer"
-                                defaultValue="option2"
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="manufacturer"
-                              >
-                                Manufacturer
-                              </label>
-                            </div>
-                            <div className="form-check form-check-inline">
-                              <input
-                                className="form-check-input"
-                                type="checkbox"
-                                id="expiry"
-                                defaultValue="option2"
-                              />
-                              <label
-                                className="form-check-label"
-                                htmlFor="expiry"
-                              >
-                                Expiry
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="row">
-                          <div className="col-sm-6 col-12">
-                            <div className="mb-3">
-                              <label className="form-label">
-                                Warranty
-                                <span className="text-danger ms-1">*</span>
-                              </label>
-                              <CommonSelect
-                                className="w-100"
-                                options={warrenty}
-                                value={selectedWarranty}
-                                onChange={(e) => setSelectedWarranty(e.value)}
-                                placeholder="Choose"
-                                filter={false}
-                              />
-                            </div>
-                          </div>
-                          <div className="col-sm-6 col-12">
-                            <div className="mb-3 add-product">
-                              <label className="form-label">
-                                Manufacturer
-                                <span className="text-danger ms-1">*</span>
-                              </label>
-                              <input type="text" className="form-control" />
-                            </div>
-                          </div>
-                        </div>
-                        <div className="row">
-                          <div className="col-sm-6 col-12">
-                            <div className="mb-3">
-                              <label className="form-label">
-                                Manufactured Date
-                                <span className="text-danger ms-1">*</span>
-                              </label>
-                              <div className="input-groupicon calender-input">
-                                <i className="feather icon-calendar info-img" />
-                                <CommonDatePicker
-                                  value={date1}
-                                  onChange={setDate1}
-                                  className="w-100"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-sm-6 col-12">
-                            <div className="mb-3">
-                              <label className="form-label">
-                                Expiry On
-                                <span className="text-danger ms-1">*</span>
-                              </label>
-                              <div className="input-groupicon calender-input">
-                                <i className="feather icon-calendar info-img" />
-                                <CommonDatePicker
-                                  value={date2}
-                                  onChange={setDate2}
-                                  className="w-100"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <div className="dropdown">
+                  <Link to="#" className="dropdown-toggle btn btn-white btn-md d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                    Sort By : Last 7 Days
+                  </Link>
+                  <ul className="dropdown-menu  dropdown-menu-end p-3">
+                    <li>
+                      <Link to="#" className="dropdown-item rounded-1">
+                        Recently Added
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#" className="dropdown-item rounded-1">
+                        Ascending
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#" className="dropdown-item rounded-1">
+                        Desending
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#" className="dropdown-item rounded-1">
+                        Last Month
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#" className="dropdown-item rounded-1">
+                        Last 7 Days
+                      </Link>
+                    </li>
+                  </ul>
                 </div>
               </div>
+            </div> */}
+            <div className="card-body p-0">
+              {/* <PrimeDataTable
+                    column={columns}
+                    data={listData}
+                    rows={rows}
+                    setRows={setRows}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalRecords={totalRecords}
+                  /> */}
+              <SupplierProductsTable data={suppliersData} />
             </div>
-            <div className="col-lg-12">
-              <div className="d-flex align-items-center justify-content-end mb-4">
-                <button type="button" className="btn btn-secondary me-2">
+          </div>
+          {/* /product list */}
+        </div>
+        <CommonFooter />
+      </div>
+
+      {/* Add Stock */}
+      <div className="modal fade" id="add-stock-transfer">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <div className="page-title">
+                <h4>Add Transfer</h4>
+              </div>
+              <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <form onSubmit={handleSubmit}>
+              <div className="modal-body">
+                {/* Supplier Dropdown */}
+                <div className="mb-3">
+                  <label className="form-label">
+                    Supplier <span className="text-danger">*</span>
+                  </label>
+                  <select className="form-control" value={selectedSupplier} onChange={(e) => setSelectedSupplier(e.target.value)}>
+                    <option value="" disabled>
+                      Select Supplier
+                    </option>
+                    {suppliersData.map((supplier) => (
+                      <option key={supplier.supplier_id} value={supplier.supplier_id}>
+                        {supplier.name}
+                      </option>
+                    ))}
+                  </select>
+                  {getSuppliersLoading && <small>Loading suppliers...</small>}
+                  {getSuppliersError && <small className="text-danger">Error fetching suppliers</small>}
+                </div>
+
+                {/* Product Dropdown */}
+                <div className="mb-3">
+                  <label className="form-label">
+                    Product <span className="text-danger">*</span>
+                  </label>
+                  <select className="form-control" value={selectedProduct} onChange={(e) => setSelectedProduct(e.target.value)}>
+                    <option value="" disabled>
+                      Select Product
+                    </option>
+                    {productsData.map((product) => (
+                      <option key={product.product_id} value={product.product_id}>
+                        {product.name}
+                      </option>
+                    ))}
+                  </select>
+                  {getProductsLoading && <small>Loading products...</small>}
+                  {getProductsError && <small className="text-danger">Error fetching products</small>}
+                </div>
+
+                {/* Success / Error feedback */}
+                {isSuccess && !isLoading && <div className="text-success">Successfully created!</div>}
+                {isError && !isLoading && <div className="text-danger">{error?.message || 'Something went wrong'}</div>}
+              </div>
+
+              {/* Footer */}
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
                   Cancel
                 </button>
-                <button type="submit" className="btn btn-primary">
-                  Add Product
+                <button type="submit" className="btn btn-primary" disabled={isLoading}>
+                  {isLoading ? 'Submitting...' : 'Create'}
                 </button>
               </div>
-            </div>
-          </form>
-          {/* /add */}
-        </div>
-        <div className="footer d-sm-flex align-items-center justify-content-between border-top bg-white p-3">
-          <p className="mb-0 text-gray-9">
-            2014 - 2025 © DreamsPOS. All Right Reserved
-          </p>
-          <p>
-            Designed &amp; Developed by{" "}
-            <Link to="#" className="text-primary">
-              Dreams
-            </Link>
-          </p>
+            </form>
+          </div>
         </div>
       </div>
-      <Addunits />
-      <AddCategory />
-      <AddVariant />
-      <AddBrand />
-      <AddVarientNew />
-      <DeleteModal />
     </>
+
+    // <div className="p-6 space-y-8">
+    //   {/* Form Section */}
+    //   <div className="p-6 space-y-8">
+    //     <ProductForm />
+    //   </div>
+
+    //   {/* Table Section */}
+    //   <div className="sm:w-100 p-0 space-y-0">
+    //     <SupplierProductsTable data={suppliersData} />
+    //   </div>
+    // </div>
   );
 };
 
-export default AddProduct;
+export default SupplierProducts;
+
+// import { stockTransferData } from '../../core/json/stock-transfer-data';
+// import PrimeDataTable from '../../components/data-table';
+// import SearchFromApi from '../../components/data-table/search';
+// import DeleteModal from '../../components/delete-modal';
+// import CommonSelect from '../../components/select/common-select';
+// import TableTopHead from '../../components/table-top-head';
+// import CommonFooter from '../../components/footer/commonFooter';
+// import { downloadImg, stockImg02 } from '../../utils/imagepath';
+// import { useState } from 'react';
+// import { Link } from 'react-router';
+
+// const StockTransfer = () => {
+//   const [listData, _setListData] = useState<any[]>(stockTransferData);
+//   const [currentPage, setCurrentPage] = useState<number>(1);
+//   const [totalRecords, _setTotalRecords] = useState<any>(5);
+//   const [rows, setRows] = useState<number>(10);
+//   const [_searchQuery, setSearchQuery] = useState<string | undefined>(undefined);
+//   const [selectedWarehouseFrom, setSelectedWarehouseFrom] = useState('');
+//   const [selectedWarehouseTo, setSelectedWarehouseTo] = useState('');
+//   const [selectedImportFrom, setSelectedImportFrom] = useState('');
+//   const [selectedImportTo, setSelectedImportTo] = useState('');
+//   const [selectedStatus, setSelectedStatus] = useState('');
+
+//   const warehouseFromOptions = [
+//     { label: 'Select', value: '' },
+//     { label: 'Lobar Handy', value: 'lobar' },
+//     { label: 'Quaint Warehouse', value: 'quaint' }
+//   ];
+
+//   const warehouseToOptions = [
+//     { label: 'Select', value: '' },
+//     { label: 'Selosy', value: 'selosy' },
+//     { label: 'Logerro', value: 'logerro' }
+//   ];
+
+//   const importFromOptions = [
+//     { label: 'select', value: '' },
+//     { label: 'Lavish Warehouse', value: 'lavish' },
+//     { label: 'Lobar Handy', value: 'lobar' },
+//     { label: 'Quaint Warehouse', value: 'quaint' }
+//   ];
+
+//   const importToOptions = [
+//     { label: 'Select', value: '' },
+//     { label: 'North Zone Warehouse', value: 'north' },
+//     { label: 'Nova Storage Hub', value: 'nova' },
+//     { label: 'Cool Warehouse', value: 'cool' }
+//   ];
+
+//   const statusOptions = [
+//     { label: 'Select', value: '' },
+//     { label: 'Sent', value: 'sent' },
+//     { label: 'Pending', value: 'pending' }
+//   ];
+
+//   const columns = [
+//     {
+//       header: (
+//         <label className="checkboxs">
+//           <input type="checkbox" id="select-all" />
+//           <span className="checkmarks" />
+//         </label>
+//       ),
+//       body: () => (
+//         <label className="checkboxs">
+//           <input type="checkbox" />
+//           <span className="checkmarks" />
+//         </label>
+//       ),
+//       sortable: false,
+//       key: 'checked'
+//     },
+//     { header: 'From Warehouse', field: 'fromWarehouse', key: 'fromWarehouse' },
+//     { header: 'To Warehouse', field: 'toWarehouse', key: 'toWarehouse' },
+//     { header: 'No of Products', field: 'noOfProducts', key: 'noOfProducts' },
+//     {
+//       header: 'Quantity Transfered',
+//       field: 'quantityTransferred',
+//       key: 'quantityTransferred'
+//     },
+//     { header: 'Ref Number', field: 'refNumber', key: 'refNumber' },
+//     { header: 'Date', field: 'date', key: 'date' },
+//     {
+//       header: '',
+//       field: 'actions',
+//       key: 'actions',
+//       sortable: false,
+//       body: () => (
+//         <div className="edit-delete-action d-flex align-items-center justify-content-center">
+//           <Link
+//             className="me-2 p-2 d-flex align-items-center justify-content-between border rounded"
+//             to="#"
+//             data-bs-toggle="modal"
+//             data-bs-target="#edit-stock-transfer"
+//           >
+//             <i className="feather icon-edit" />
+//           </Link>
+//           <Link
+//             className="p-2 d-flex align-items-center justify-content-between border rounded"
+//             to="#"
+//             data-bs-toggle="modal"
+//             data-bs-target="#delete-modal"
+//           >
+//             <i className="feather icon-trash-2" />
+//           </Link>
+//         </div>
+//       )
+//     }
+//   ];
+
+//   const handleSearch = (value: any) => {
+//     setSearchQuery(value);
+//   };
+
+//   return (
+//     <>
+//       {' '}
+//       <div className="page-wrapper">
+//         <div className="content">
+//           <div className="page-header">
+//             <div className="add-item d-flex">
+//               <div className="page-title">
+//                 <h4>Stock Transfer</h4>
+//                 <h6>Manage your stock transfer</h6>
+//               </div>
+//             </div>
+//             <TableTopHead />
+//             <div className="page-btn">
+//               <Link to="#" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-stock-transfer">
+//                 <i className="ti ti-circle-plus me-1" />
+//                 Add New
+//               </Link>
+//             </div>
+//             <div className="page-btn import">
+//               <Link to="#" className="btn btn-secondary color" data-bs-toggle="modal" data-bs-target="#view-notes">
+//                 <i className="feather icon-download me-1" />
+//                 Import Transfer
+//               </Link>
+//             </div>
+//           </div>
+//           {/* /product list */}
+//           <div className="card">
+//             <div className="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
+//               <SearchFromApi callback={handleSearch} rows={rows} setRows={setRows} />
+//               <div className="d-flex table-dropdown my-xl-auto right-content align-items-center flex-wrap row-gap-3">
+//                 <div className="dropdown me-2">
+//                   <Link to="#" className="dropdown-toggle btn btn-white btn-md d-inline-flex align-items-center" data-bs-toggle="dropdown">
+//                     From Warehouse
+//                   </Link>
+//                   <ul className="dropdown-menu  dropdown-menu-end p-3">
+//                     <li>
+//                       <Link to="#" className="dropdown-item rounded-1">
+//                         Lavish Warehouse
+//                       </Link>
+//                     </li>
+//                     <li>
+//                       <Link to="#" className="dropdown-item rounded-1">
+//                         Quaint Warehouse
+//                       </Link>
+//                     </li>
+//                     <li>
+//                       <Link to="#" className="dropdown-item rounded-1">
+//                         Traditional Warehouse
+//                       </Link>
+//                     </li>
+//                     <li>
+//                       <Link to="#" className="dropdown-item rounded-1">
+//                         Cool Warehouse
+//                       </Link>
+//                     </li>
+//                   </ul>
+//                 </div>
+//                 <div className="dropdown me-2">
+//                   <Link to="#" className="dropdown-toggle btn btn-white btn-md d-inline-flex align-items-center" data-bs-toggle="dropdown">
+//                     To Warehouse
+//                   </Link>
+//                   <ul className="dropdown-menu  dropdown-menu-end p-3">
+//                     <li>
+//                       <Link to="#" className="dropdown-item rounded-1">
+//                         North Zone Warehouse
+//                       </Link>
+//                     </li>
+//                     <li>
+//                       <Link to="#" className="dropdown-item rounded-1">
+//                         Nova Storage Hub
+//                       </Link>
+//                     </li>
+//                     <li>
+//                       <Link to="#" className="dropdown-item rounded-1">
+//                         Cool Warehouse
+//                       </Link>
+//                     </li>
+//                     <li>
+//                       <Link to="#" className="dropdown-item rounded-1">
+//                         Retail Supply Hub
+//                       </Link>
+//                     </li>
+//                   </ul>
+//                 </div>
+//                 <div className="dropdown">
+//                   <Link to="#" className="dropdown-toggle btn btn-white btn-md d-inline-flex align-items-center" data-bs-toggle="dropdown">
+//                     Sort By : Last 7 Days
+//                   </Link>
+//                   <ul className="dropdown-menu  dropdown-menu-end p-3">
+//                     <li>
+//                       <Link to="#" className="dropdown-item rounded-1">
+//                         Recently Added
+//                       </Link>
+//                     </li>
+//                     <li>
+//                       <Link to="#" className="dropdown-item rounded-1">
+//                         Ascending
+//                       </Link>
+//                     </li>
+//                     <li>
+//                       <Link to="#" className="dropdown-item rounded-1">
+//                         Desending
+//                       </Link>
+//                     </li>
+//                     <li>
+//                       <Link to="#" className="dropdown-item rounded-1">
+//                         Last Month
+//                       </Link>
+//                     </li>
+//                     <li>
+//                       <Link to="#" className="dropdown-item rounded-1">
+//                         Last 7 Days
+//                       </Link>
+//                     </li>
+//                   </ul>
+//                 </div>
+//               </div>
+//             </div>
+//             <div className="card-body p-0">
+//               <PrimeDataTable
+//                 column={columns}
+//                 data={listData}
+//                 rows={rows}
+//                 setRows={setRows}
+//                 currentPage={currentPage}
+//                 setCurrentPage={setCurrentPage}
+//                 totalRecords={totalRecords}
+//               />
+//             </div>
+//           </div>
+//           {/* /product list */}
+//         </div>
+//         <CommonFooter />
+//       </div>
+//       {/* Add Stock */}
+//       <div className="modal fade" id="add-stock-transfer">
+//         <div className="modal-dialog">
+//           <div className="modal-content">
+//             <div className="modal-header">
+//               <div className="page-title">
+//                 <h4>Add Transfer</h4>
+//               </div>
+//               <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
+//                 <span aria-hidden="true">×</span>
+//               </button>
+//             </div>
+//             <form>
+//               <div className="modal-body">
+//                 <div className="row">
+//                   <div className="col-lg-6">
+//                     <div className="mb-3">
+//                       <label className="form-label">
+//                         Warehouse From <span className="text-danger ms-1">*</span>
+//                       </label>
+//                       <CommonSelect
+//                         className="w-100"
+//                         options={warehouseFromOptions}
+//                         value={selectedWarehouseFrom}
+//                         onChange={(e) => setSelectedWarehouseFrom(e.value)}
+//                         placeholder="Warehouse From"
+//                         filter={false}
+//                       />
+//                     </div>
+//                   </div>
+//                   <div className="col-lg-6">
+//                     <div className="mb-3">
+//                       <label className="form-label">
+//                         Warehouse To <span className="text-danger ms-1">*</span>
+//                       </label>
+//                       <CommonSelect
+//                         className="w-100"
+//                         options={warehouseToOptions}
+//                         value={selectedWarehouseTo}
+//                         onChange={(e) => setSelectedWarehouseTo(e.value)}
+//                         placeholder="Warehouse To"
+//                         filter={false}
+//                       />
+//                     </div>
+//                   </div>
+//                   <div className="col-lg-12">
+//                     <div className="mb-3">
+//                       <label className="form-label">
+//                         Reference Number <span className="text-danger ms-1">*</span>
+//                       </label>
+//                       <input type="text" className="form-control" />
+//                     </div>
+//                   </div>
+//                   <div className="col-lg-12">
+//                     <div className="search-form mb-3">
+//                       <label className="form-label">
+//                         Product<span className="text-danger ms-1">*</span>
+//                       </label>
+//                       <div className="position-relative">
+//                         <input type="text" className="form-control" placeholder="Search Product" />
+//                         <i className="feather icon-search feather-search" />
+//                       </div>
+//                     </div>
+//                   </div>
+//                   <div className="col-lg-12">
+//                     <div className="search-form mb-0">
+//                       <label className="form-label">
+//                         Notes <span className="text-danger ms-1">*</span>
+//                       </label>
+//                       <textarea className="form-control" defaultValue={''} />
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+//               <div className="modal-footer">
+//                 <button type="button" className="btn btn-secondary me-2" data-bs-dismiss="modal">
+//                   Cancel
+//                 </button>
+//                 <button type="submit" className="btn btn-primary">
+//                   Create
+//                 </button>
+//               </div>
+//             </form>
+//           </div>
+//         </div>
+//       </div>
+//       {/* /Add Stock */}
+//       {/* Edit Stock */}
+//       <div className="modal fade" id="edit-stock-transfer">
+//         <div className="modal-dialog">
+//           <div className="modal-content">
+//             <div className="modal-header">
+//               <div className="page-title">
+//                 <h4>Edit Transfer</h4>
+//               </div>
+//               <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
+//                 <span aria-hidden="true">×</span>
+//               </button>
+//             </div>
+//             <form>
+//               <div className="modal-body">
+//                 <div className="row">
+//                   <div className="col-lg-6">
+//                     <div className="mb-3">
+//                       <label className="form-label">
+//                         Warehouse From
+//                         <span className="text-danger ms-1">*</span>
+//                       </label>
+//                       <CommonSelect
+//                         className="w-100"
+//                         options={warehouseFromOptions}
+//                         value={selectedWarehouseFrom}
+//                         onChange={(e) => setSelectedWarehouseFrom(e.value)}
+//                         placeholder="Warehouse From"
+//                         filter={false}
+//                       />
+//                     </div>
+//                   </div>
+//                   <div className="col-lg-6">
+//                     <div className="mb-3">
+//                       <label className="form-label">
+//                         Warehouse To<span className="text-danger ms-1">*</span>
+//                       </label>
+//                       <CommonSelect
+//                         className="w-100"
+//                         options={warehouseToOptions}
+//                         value={selectedWarehouseTo}
+//                         onChange={(e) => setSelectedWarehouseTo(e.value)}
+//                         placeholder="Warehouse To"
+//                         filter={false}
+//                       />
+//                     </div>
+//                   </div>
+//                   <div className="col-lg-12">
+//                     <div className="mb-3">
+//                       <label className="form-label">
+//                         Reference No<span className="text-danger ms-1">*</span>
+//                       </label>
+//                       <input type="text" className="form-control" defaultValue={32434545} />
+//                     </div>
+//                   </div>
+//                   <div className="col-lg-12">
+//                     <div className="mb-3 search-form">
+//                       <label className="form-label">
+//                         Product<span className="text-danger ms-1">*</span>
+//                       </label>
+//                       <div className="position-relative">
+//                         <input type="text" className="form-control" defaultValue="Nike Jordan" />
+//                         <i className="feather icon-search feather-search" />
+//                       </div>
+//                     </div>
+//                   </div>
+//                   <div className="col-lg-12">
+//                     <div className="modal-body-table">
+//                       <div className="table-responsive">
+//                         <table className="table  datanew">
+//                           <thead>
+//                             <tr>
+//                               <th>Product</th>
+//                               <th>SKU</th>
+//                               <th>Category</th>
+//                               <th>Qty</th>
+//                               <th>Action</th>
+//                             </tr>
+//                           </thead>
+//                           <tbody>
+//                             <tr>
+//                               <td>
+//                                 <div className="d-flex align-items-center">
+//                                   <Link to="#" className="avatar avatar-md me-2">
+//                                     <img src={stockImg02} alt="product" />
+//                                   </Link>
+//                                   <Link to="#">Nike Jordan</Link>
+//                                 </div>
+//                               </td>
+//                               <td>PT002</td>
+//                               <td>Nike</td>
+//                               <td>
+//                                 <div className="product-quantity bg-gray-transparent border-0">
+//                                   <span className="quantity-btn">
+//                                     <i className="feather icon-minus-circle feather-search" />
+//                                   </span>
+//                                   <input type="text" className="quntity-input bg-transparent" defaultValue={2} />
+//                                   <span className="quantity-btn">
+//                                     +
+//                                     <i className="feather icon-plus-circle plus-circle" />
+//                                   </span>
+//                                 </div>
+//                               </td>
+//                               <td>
+//                                 <div className="edit-delete-action d-flex align-items-center justify-content-center">
+//                                   <Link
+//                                     className="p-2 d-flex align-items-center justify-content-center border rounded"
+//                                     to="#"
+//                                     data-bs-toggle="modal"
+//                                     data-bs-target="#delete"
+//                                   >
+//                                     <i className="feather icon-trash-2" />
+//                                   </Link>
+//                                 </div>
+//                               </td>
+//                             </tr>
+//                           </tbody>
+//                         </table>
+//                       </div>
+//                     </div>
+//                   </div>
+//                   <div className="col-lg-12">
+//                     <div className="mb-3 search-form mb-0">
+//                       <label className="form-label">
+//                         Notes<span className="text-danger ms-1">*</span>
+//                       </label>
+//                       <textarea
+//                         className="form-control"
+//                         defaultValue={
+//                           'The Jordan brand is owned by Nike (owned by the Knight family), as, at the time, the company was building its strategy to work with athletes to launch shows that could inspire consumers.Although Jordan preferred Converse and Adidas, they simply could not match the offer Nike made. '
+//                         }
+//                       />
+//                     </div>
+//                   </div>
+//                 </div>
+//               </div>
+//               <div className="modal-footer">
+//                 <button type="button" className="btn btn-secondary me-2" data-bs-dismiss="modal">
+//                   Cancel
+//                 </button>
+//                 <button type="submit" className="btn btn-primary">
+//                   Save Changes
+//                 </button>
+//               </div>
+//             </form>
+//           </div>
+//         </div>
+//       </div>
+//       {/* /Edit Stock */}
+//       {/* Import Transfer */}
+//       <div className="modal fade" id="view-notes">
+//         <div className="modal-dialog modal-dialog-centered">
+//           <div className="modal-content">
+//             <div className="modal-header">
+//               <div className="page-title">
+//                 <h4>Import Transfer</h4>
+//               </div>
+//               <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
+//                 <span aria-hidden="true">×</span>
+//               </button>
+//             </div>
+//             <form>
+//               <div className="modal-body">
+//                 <div className="row">
+//                   <div className="col-lg-4 col-sm-6 col-12">
+//                     <div className="mb-3">
+//                       <label className="form-label">
+//                         From<span className="text-danger ms-1">*</span>
+//                       </label>
+//                       <CommonSelect
+//                         className="w-100"
+//                         options={importFromOptions}
+//                         value={selectedImportFrom}
+//                         onChange={(e) => setSelectedImportFrom(e.value)}
+//                         placeholder="From"
+//                         filter={false}
+//                       />
+//                     </div>
+//                   </div>
+//                   <div className="col-lg-4 col-sm-6 col-12">
+//                     <div className="mb-3">
+//                       <label className="form-label">
+//                         To<span className="text-danger ms-1">*</span>
+//                       </label>
+//                       <CommonSelect
+//                         className="w-100"
+//                         options={importToOptions}
+//                         value={selectedImportTo}
+//                         onChange={(e) => setSelectedImportTo(e.value)}
+//                         placeholder="To"
+//                         filter={false}
+//                       />
+//                     </div>
+//                   </div>
+//                   <div className="col-lg-4 col-sm-6 col-12">
+//                     <div className="mb-3">
+//                       <label className="form-label">
+//                         Status<span className="text-danger ms-1">*</span>
+//                       </label>
+//                       <CommonSelect
+//                         className="w-100"
+//                         options={statusOptions}
+//                         value={selectedStatus}
+//                         onChange={(e) => setSelectedStatus(e.value)}
+//                         placeholder="Status"
+//                         filter={false}
+//                       />
+//                     </div>
+//                   </div>
+//                   <div className="col-lg-12 col-sm-6 col-12">
+//                     <div className="row">
+//                       <div>
+//                         <div className="modal-footer-btn download-file">
+//                           <Link to="#" className="btn btn-submit">
+//                             Download Sample File
+//                           </Link>
+//                         </div>
+//                       </div>
+//                     </div>
+//                   </div>
+//                   <div className="col-lg-12">
+//                     <div className="mb-3 image-upload-down">
+//                       <label className="form-label"> Upload CSV File</label>
+//                       <div className="image-upload download">
+//                         <input type="file" />
+//                         <div className="image-uploads">
+//                           <img src={downloadImg} alt="img" />
+//                           <h4>
+//                             Drag and drop a <span>file to upload</span>
+//                           </h4>
+//                         </div>
+//                       </div>
+//                     </div>
+//                   </div>
+//                   <div className="col-lg-12 col-sm-6 col-12">
+//                     <div className="mb-3">
+//                       <label className="form-label">
+//                         Shipping<span className="text-danger ms-1">*</span>
+//                       </label>
+//                       <input type="text" className="form-control" />
+//                     </div>
+//                   </div>
+//                 </div>
+//                 <div className="col-lg-12">
+//                   <div className="mb-3">
+//                     <label className="form-label">Description</label>
+//                     <textarea className="form-control" rows={3} defaultValue={''} />
+//                   </div>
+//                 </div>
+//               </div>
+//               <div className="modal-footer">
+//                 <button type="button" className="btn btn-secondary me-2" data-bs-dismiss="modal">
+//                   Cancel
+//                 </button>
+//                 <button type="submit" className="btn btn-primary">
+//                   Submit
+//                 </button>
+//               </div>
+//             </form>
+//           </div>
+//         </div>
+//       </div>
+//       {/* /Import Transfer */}
+//       <DeleteModal />
+//     </>
+//   );
+// };
+
+// export default StockTransfer;
