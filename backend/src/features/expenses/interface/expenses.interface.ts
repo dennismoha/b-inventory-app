@@ -10,3 +10,13 @@ export interface Expense {
   createdAt: Date;
   updatedAt: Date;
 }
+
+// export interface ExpenseCreateDTO {
+//    purchaseId?: string;
+//       description: string;
+//       amount: Decimal;
+//       category: 'RENT' | 'UTILITIES' | 'SALARIES' | 'TRANSPORT' | 'TRAVEL' | 'MAINTENANCE' | 'OTHER' | 'PURCHASE' | 'TRAVEL';
+//       accountId: string;
+//       batch?: string;
+//       isGeneral?: boolean;
+// }

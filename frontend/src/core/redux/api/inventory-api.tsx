@@ -404,7 +404,7 @@ const BatchInventoriesApi = InventoryApi.injectEndpoints({
 export const AccountsAPI = InventoryApi.injectEndpoints({
   endpoints: (build) => ({
     // Create new account
-    createAccount: build.mutation<ApiResponse<Account[]>, Partial<Account>>({
+    createAccount: build.mutation<ApiResponse<Account>, Partial<Account>>({
       query: (newAccount) => ({
         url: '/accounts',
         method: 'POST',
@@ -451,8 +451,8 @@ export const AccountsAPI = InventoryApi.injectEndpoints({
 
     // Update account
     updateAccount: build.mutation({
-      query: ({ accountId, ...update }) => ({
-        url: `/accounts/${accountId}`,
+      query: ({ account_id, ...update }) => ({
+        url: `/accounts/${account_id}`,
         method: 'PUT',
         body: update
       })
@@ -1559,7 +1559,13 @@ export const { useLoginMutation, useGetCurrentUserQuery, useLazyLogoutQuery } = 
 //   useGetOrderProductByOrderIdQuery
 // } = OrderProductApi;
 
-export const { useGetAccountsQuery, useCreateAccountMutation, useGetAccountsTrialBalanceQuery } = AccountsAPI;
+export const {
+  useGetAccountsQuery,
+  useUpdateAccountMutation,
+  useDeleteAccountMutation,
+  useCreateAccountMutation,
+  useGetAccountsTrialBalanceQuery
+} = AccountsAPI;
 
 export const {
   // Generated hooks for supplier products

@@ -1,3 +1,340 @@
+import { useMemo, useState } from 'react';
+import {
+  MRT_EditActionButtons,
+  MaterialReactTable,
+  type MRT_ColumnDef,
+  type MRT_TableOptions,
+  useMaterialReactTable
+} from 'material-react-table';
+import { Box, Button, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+
+import {
+  useGetAccountsQuery,
+  useCreateAccountMutation,
+  useUpdateAccountMutation,
+  useDeleteAccountMutation
+} from '@core/redux/api/inventory-api';
+import type { Account } from '@features/interface/features-interface';
+
+export default function AccountsTable() {
+  const { data, isLoading, isFetching, isError } = useGetAccountsQuery();
+
+  const [createAccount, { isLoading: isCreating, reset: createReset, isError: isCreatingError, error: createError }] =
+    useCreateAccountMutation();
+  const [updateAccount, { isLoading: isUpdating, reset: updateReset, isError: isUpdatingError, error: updateError }] =
+    useUpdateAccountMutation();
+  const [deleteAccount, { isLoading: isDeleting, isError: isDeletingError, error: deleteError }] = useDeleteAccountMutation();
+
+  const accounts = data?.data ?? [];
+
+  const [validationErrors, setValidationErrors] = useState<Record<string, string | undefined>>({});
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  // validation helpers
+  const validateRequired = (val: string) => !!val?.length;
+
+  function validateAccount(acc: Partial<Account>) {
+    return {
+      name: !validateRequired(acc.name ?? '') ? 'Name is Required' : undefined,
+      type: !validateRequired(acc.type ?? '') ? 'Type is Required' : undefined,
+      account_number: !validateRequired(acc.account_number ?? '') ? 'Account Number is Required' : undefined
+    };
+  }
+
+  // const columns = useMemo<MRT_ColumnDef<Account>[]>(
+  //   () => [
+  //     {
+  //       accessorKey: 'name',
+  //       header: 'Account Holder Name',
+  //       muiEditTextFieldProps: {
+  //         required: true,
+  //         error: !!validationErrors?.name,
+  //         helperText: validationErrors?.name,
+  //         onFocus: () => setValidationErrors((prev) => ({ ...prev, name: undefined }))
+  //       }
+  //     },
+  //     {
+  //       accessorKey: 'account_number',
+  //       header: 'Account No',
+  //       muiEditTextFieldProps: {
+  //         required: true,
+  //         error: !!validationErrors?.account_number,
+  //         helperText: validationErrors?.account_number,
+  //         onFocus: () => setValidationErrors((prev) => ({ ...prev, account_number: undefined }))
+  //       }
+  //     },
+  //     {
+  //       accessorKey: 'type',
+  //       header: 'Type',
+  //       muiEditTextFieldProps: {
+  //         required: true,
+  //         error: !!validationErrors?.type,
+  //         helperText: validationErrors?.type,
+  //         onFocus: () => setValidationErrors((prev) => ({ ...prev, type: undefined }))
+  //       }
+  //     },
+  //     {
+  //       accessorKey: 'balance',
+  //       header: 'Opening Balance',
+  //       enableEditing: false,
+  //       Cell: ({ cell }) => `KES ${Number(cell.getValue()).toFixed(2)}`
+  //     },
+  //     {
+  //       accessorKey: 'running_balance',
+  //       header: 'Running Balance',
+  //       enableEditing: false,
+  //       Cell: ({ cell }) => `KES ${Number(cell.getValue()).toFixed(2)}`
+  //     },
+  //     { accessorKey: 'description', header: 'Notes' },
+  //     {
+  //       accessorKey: 'account_status',
+  //       header: 'Status',
+  //       enableEditing: false,
+  //       Cell: ({ cell }) => {
+  //         const status = cell.getValue<'ACTIVE' | 'INACTIVE' | 'CLOSED'>();
+  //         if (status === 'ACTIVE') return <span className="badge bg-success">{status}</span>;
+  //         if (status === 'CLOSED') return <span className="badge bg-danger">{status}</span>;
+  //         if (status === 'INACTIVE') return <span className="badge bg-warning">{status}</span>;
+  //         return status;
+  //       }
+  //     }
+  //   ],
+  //   [validationErrors]
+  // );
+
+  // CREATE
+
+  const columns = useMemo<MRT_ColumnDef<Account>[]>(
+    () => [
+      {
+        accessorKey: 'account_id',
+        header: 'ID',
+        enableEditing: false
+      },
+      {
+        accessorKey: 'name',
+        header: 'Account Name',
+        muiEditTextFieldProps: {
+          required: true,
+          error: !!validationErrors?.name,
+          helperText: validationErrors?.name,
+          onFocus: () => setValidationErrors((prev) => ({ ...prev, name: undefined }))
+        }
+      },
+      {
+        accessorKey: 'account_number',
+        header: 'Account Number',
+        muiEditTextFieldProps: {
+          required: true,
+          error: !!validationErrors?.account_number,
+          helperText: validationErrors?.account_number,
+          onFocus: () => setValidationErrors((prev) => ({ ...prev, account_number: undefined }))
+        }
+      },
+      {
+        accessorKey: 'type',
+        header: 'Account Type',
+        editVariant: 'select',
+        editSelectOptions: ['ASSET', 'LIABILITY', 'EQUITY', 'INCOME', 'EXPENSE'],
+        muiEditTextFieldProps: ({ row }) => ({
+          select: true,
+          error: !!validationErrors?.type,
+          helperText: validationErrors?.type,
+          onFocus: () => setValidationErrors((prev) => ({ ...prev, type: undefined }))
+          // onChange: (e) => {row?.getIsEditing() && row?.setEditingCellValue({ id: 'type', value: e.target.value })
+        })
+        // muiEditTextFieldProps: {
+        //   select: true, // turn into dropdown
+        //   children: ['ASSET', 'LIABILITY', 'EQUITY', 'INCOME', 'EXPENSE'].map((option) => (
+        //     <option key={option} value={option}>
+        //       {option}
+        //     </option>
+        //   )),
+        //   required: true,
+        //   error: !!validationErrors?.type,
+        //   helperText: validationErrors?.type,
+        //   onFocus: () => setValidationErrors((prev) => ({ ...prev, type: undefined }))
+        // }
+      },
+      {
+        accessorKey: 'opening_balance',
+        header: 'Opening Balance',
+        Cell: ({ cell }) => `KES ${Number(cell.getValue() ?? 0).toFixed(2)}`
+      },
+      {
+        accessorKey: 'running_balance',
+        header: 'Running Balance',
+        enableEditing: false,
+        Cell: ({ cell }) => `KES ${Number(cell.getValue() ?? 0).toFixed(2)}`
+      },
+      {
+        accessorKey: 'account_status',
+        header: 'Status',
+        enableEditing: false,
+        muiEditTextFieldProps: {
+          select: true,
+          children: ['ACTIVE', 'INACTIVE', 'CLOSED'].map((status) => (
+            <option key={status} value={status}>
+              {status}
+            </option>
+          ))
+        },
+        Cell: ({ cell }) => {
+          const status = cell.getValue<'ACTIVE' | 'INACTIVE' | 'CLOSED'>();
+          if (status === 'ACTIVE') return <span className="badge bg-success">{status}</span>;
+          if (status === 'CLOSED') return <span className="badge bg-danger">{status}</span>;
+          if (status === 'INACTIVE') return <span className="badge bg-warning">{status}</span>;
+          return status;
+        }
+      }
+    ],
+    [validationErrors]
+  );
+
+  const handleCreateAccount: MRT_TableOptions<Account>['onCreatingRowSave'] = async ({ values, table }) => {
+    const newValidationErrors = validateAccount(values);
+    if (Object.values(newValidationErrors).some(Boolean)) {
+      setValidationErrors(newValidationErrors);
+      return;
+    }
+    setValidationErrors({});
+    createReset();
+    const value = { ...values };
+    delete value.account_status;
+    delete value.running_balance;
+    delete value.account_id;
+
+    await createAccount(value);
+    table.setCreatingRow(null);
+  };
+
+  // UPDATE
+  const handleSaveAccount: MRT_TableOptions<Account>['onEditingRowSave'] = async ({ values, table }) => {
+    const newValidationErrors = validateAccount(values);
+    if (Object.values(newValidationErrors).some(Boolean)) {
+      setValidationErrors(newValidationErrors);
+      return;
+    }
+    updateReset();
+    setValidationErrors({});
+    const value = { ...values };
+    delete value.running_balance;
+    delete value.account_status;
+
+    await updateAccount(value);
+    table.setEditingRow(null);
+  };
+
+  const table = useMaterialReactTable({
+    columns,
+    data: accounts,
+    createDisplayMode: 'row',
+    editDisplayMode: 'row',
+    enableEditing: true,
+    getRowId: (row) => row.account_id,
+    muiToolbarAlertBannerProps:
+      isError || isCreatingError || isUpdatingError || isDeletingError
+        ? { color: 'error', children: updateError?.message || createError?.message || deleteError?.message }
+        : undefined,
+    muiTableContainerProps: { sx: { minHeight: '500px' } },
+    onCreatingRowCancel: () => setValidationErrors({}),
+    onCreatingRowSave: handleCreateAccount,
+    onEditingRowCancel: () => setValidationErrors({}),
+    onEditingRowSave: handleSaveAccount,
+
+    renderCreateRowDialogContent: ({ table, row, internalEditComponents }) => (
+      <>
+        <DialogTitle variant="h6">Create Account</DialogTitle>
+        <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>{internalEditComponents}</DialogContent>
+        <DialogActions>
+          <MRT_EditActionButtons table={table} row={row} />
+        </DialogActions>
+      </>
+    ),
+    renderEditRowDialogContent: ({ table, row, internalEditComponents }) => (
+      <>
+        <DialogTitle variant="h6">Edit Account</DialogTitle>
+        <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>{internalEditComponents}</DialogContent>
+        <DialogActions>
+          <MRT_EditActionButtons table={table} row={row} />
+        </DialogActions>
+      </>
+    ),
+
+    renderRowActions: ({ row, table }) => (
+      <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+        <Button size="small" variant="outlined" onClick={() => table.setEditingRow(row)}>
+          Edit
+        </Button>
+        <Button
+          size="small"
+          color="error"
+          variant="outlined"
+          data-bs-toggle="modal"
+          data-bs-target="#delete-modal"
+          onClick={() => setDeleteId(row.original.account_id)}
+        >
+          Delete
+        </Button>
+      </Box>
+    ),
+
+    renderTopToolbarCustomActions: ({ table }) => (
+      <Button variant="contained" onClick={() => table.setCreatingRow(true)}>
+        Add Account
+      </Button>
+    ),
+
+    state: {
+      isLoading,
+      isSaving: isCreating || isUpdating || isDeleting,
+      showAlertBanner: isError || isUpdatingError || isCreatingError || isDeletingError,
+      showProgressBars: isFetching
+    }
+  });
+
+  return (
+    <div className="page-wrapper">
+      <div className="content">
+        <MaterialReactTable table={table} />
+      </div>
+
+      {/* Delete Modal */}
+      <div className="modal fade" id="delete-modal">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="p-5 text-center">
+              <span className="rounded-circle d-inline-flex p-2 bg-danger-transparent mb-2">
+                <i className="ti ti-trash fs-24 text-danger" />
+              </span>
+              <h4 className="fs-20 fw-bold mb-2 mt-1">Delete Account</h4>
+              <p className="mb-0 fs-16">Are you sure you want to delete this account?</p>
+              <div className="d-flex justify-content-center gap-2 mt-3">
+                <button type="button" className="btn btn-secondary px-3" data-bs-dismiss="modal">
+                  Cancel
+                </button>
+                <button
+                  onClick={async () => {
+                    if (deleteId) {
+                      await deleteAccount(deleteId);
+                      setDeleteId(null);
+                    }
+                  }}
+                  type="button"
+                  className="btn btn-danger px-3"
+                  data-bs-dismiss="modal"
+                >
+                  Yes Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // // import RefreshIcon from '../../../components/tooltip-content/refresh';
 // import CollapesIcon from '../../../components/tooltip-content/collapes';
 // import PrimeDataTable from '../../../components/data-table';
@@ -15,149 +352,149 @@
 // import CreateAccountModal from './create-account-modal';
 // import type { Account } from '@features/interface/features-interface';
 
-import { useMemo, useState } from 'react';
-import { MaterialReactTable, useMaterialReactTable, type MRT_ColumnDef, type MRT_TableOptions } from 'material-react-table';
-import {
-  useGetAccountsQuery,
-  useCreateAccountMutation
-  // useUpdateAccountMutation,
-  // useDeleteAccountMutation
-} from '@core/redux/api/inventory-api';
-import { getDefaultMRTOptions } from '@components/material-react-data-table';
-import type { Account } from '@features/interface/features-interface';
+// import { useMemo, useState } from 'react';
+// import { MaterialReactTable, useMaterialReactTable, type MRT_ColumnDef, type MRT_TableOptions } from 'material-react-table';
+// import {
+//   useGetAccountsQuery,
+//   useCreateAccountMutation
+//   // useUpdateAccountMutation,
+//   // useDeleteAccountMutation
+// } from '@core/redux/api/inventory-api';
+// import { getDefaultMRTOptions } from '@components/material-react-data-table';
+// import type { Account } from '@features/interface/features-interface';
 
-const defaultMRTOptions = getDefaultMRTOptions<Account>();
+// const defaultMRTOptions = getDefaultMRTOptions<Account>();
 
-// Validation helpers
-const validateRequired = (value: string) => !!value?.length;
+// // Validation helpers
+// const validateRequired = (value: string) => !!value?.length;
 
-function validateAccount(account: Partial<Account>) {
-  return {
-    name: !validateRequired(account.name ?? '') ? 'Name is Required' : '',
-    type: !validateRequired(account.type ?? '') ? 'Type is Required' : '',
-    account_number: !validateRequired(account.account_number ?? '') ? 'Account Number is Required' : ''
-  };
-}
+// function validateAccount(account: Partial<Account>) {
+//   return {
+//     name: !validateRequired(account.name ?? '') ? 'Name is Required' : '',
+//     type: !validateRequired(account.type ?? '') ? 'Type is Required' : '',
+//     account_number: !validateRequired(account.account_number ?? '') ? 'Account Number is Required' : ''
+//   };
+// }
 
-export default function AccountsTable() {
-  const { data, isLoading, isError } = useGetAccountsQuery();
-  const [createAccount] = useCreateAccountMutation();
-  // const [updateAccount] = useUpdateAccountMutation();
-  // const [deleteAccount] = useDeleteAccountMutation();
+// export default function AccountsTable() {
+//   const { data, isLoading, isError } = useGetAccountsQuery();
+//   const [createAccount] = useCreateAccountMutation();
+//   // const [updateAccount] = useUpdateAccountMutation();
+//   // const [deleteAccount] = useDeleteAccountMutation();
 
-  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+//   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
-  const accounts = data?.data ?? [];
+//   const accounts = data?.data ?? [];
 
-  //  CREATE action
-  const handleCreateAccount: MRT_TableOptions<Account>['onCreatingRowSave'] = async ({ values, table }) => {
-    const newValidationErrors = validateAccount(values);
-    if (Object.values(newValidationErrors).some((e) => e)) {
-      setValidationErrors(newValidationErrors);
-      return;
-    }
-    setValidationErrors({});
-    await createAccount(values);
-    table.setCreatingRow(null);
-  };
+//   //  CREATE action
+//   const handleCreateAccount: MRT_TableOptions<Account>['onCreatingRowSave'] = async ({ values, table }) => {
+//     const newValidationErrors = validateAccount(values);
+//     if (Object.values(newValidationErrors).some((e) => e)) {
+//       setValidationErrors(newValidationErrors);
+//       return;
+//     }
+//     setValidationErrors({});
+//     await createAccount(values);
+//     table.setCreatingRow(null);
+//   };
 
-  //  UPDATE action
-  const handleSaveAccount: MRT_TableOptions<Account>['onEditingRowSave'] = async ({ values, table }) => {
-    const newValidationErrors = validateAccount(values);
-    if (Object.values(newValidationErrors).some((e) => e)) {
-      setValidationErrors(newValidationErrors);
-      return;
-    }
-    setValidationErrors({});
-    alert('Saved successfully (not really, this is a demo).');
-    // await updateAccount({ id: row.original.account_id, ...values });
-    table.setEditingRow(null);
-  };
+//   //  UPDATE action
+//   const handleSaveAccount: MRT_TableOptions<Account>['onEditingRowSave'] = async ({ values, table }) => {
+//     const newValidationErrors = validateAccount(values);
+//     if (Object.values(newValidationErrors).some((e) => e)) {
+//       setValidationErrors(newValidationErrors);
+//       return;
+//     }
+//     setValidationErrors({});
+//     alert('Saved successfully (not really, this is a demo).');
+//     // await updateAccount({ id: row.original.account_id, ...values });
+//     table.setEditingRow(null);
+//   };
 
-  //  DELETE action
-  // const openDeleteConfirmModal = (row: MRT_Row<Account>) => {
-  const openDeleteConfirmModal = () => {
-    if (window.confirm('Are you sure you want to delete this account?')) {
-      // deleteAccount({ id: row.original.account_id });
-      alert('Deleted successfully (not really, this is a demo).');
-    }
-  };
+//   //  DELETE action
+//   // const openDeleteConfirmModal = (row: MRT_Row<Account>) => {
+//   const openDeleteConfirmModal = () => {
+//     if (window.confirm('Are you sure you want to delete this account?')) {
+//       // deleteAccount({ id: row.original.account_id });
+//       alert('Deleted successfully (not really, this is a demo).');
+//     }
+//   };
 
-  const columns = useMemo<MRT_ColumnDef<Account>[]>(
-    () => [
-      { accessorKey: 'name', header: 'Account Holder Name' },
-      { accessorKey: 'account_number', header: 'Account No' },
-      { accessorKey: 'type', header: 'Type' },
-      {
-        accessorKey: 'balance',
-        header: 'Opening Balance',
-        Cell: ({ cell }) => `KES ${Number(cell.getValue()).toFixed(2)}`
-      },
-      {
-        accessorKey: 'running_balance',
-        header: 'Running Balance',
-        muiEditTextFieldProps: {
-          error: !!validationErrors['running_balance'],
-          helperText: validationErrors['running_balance']
-        },
-        Cell: ({ cell }) => `KES ${Number(cell.getValue()).toFixed(2)}`
-      },
-      { accessorKey: 'description', header: 'Notes' },
-      {
-        accessorKey: 'account_status',
-        header: 'Status',
-        Cell: ({ cell }) => {
-          const status = cell.getValue<'ACTIVE' | 'INACTIVE' | 'CLOSED'>();
-          if (status === 'ACTIVE') {
-            return <span className="badge table-badge bg-success fw-medium fs-10">{status}</span>;
-          }
-          if (status === 'CLOSED') {
-            return <span className="badge table-badge bg-danger fw-medium fs-10">{status}</span>;
-          }
-          if (status === 'INACTIVE') {
-            return <span className="badge table-badge bg-warning fw-medium fs-10">{status}</span>;
-          }
-          return status;
-        }
-      }
-    ],
-    []
-  );
+//   const columns = useMemo<MRT_ColumnDef<Account>[]>(
+//     () => [
+//       { accessorKey: 'name', header: 'Account Holder Name' },
+//       { accessorKey: 'account_number', header: 'Account No' },
+//       { accessorKey: 'type', header: 'Type' },
+//       {
+//         accessorKey: 'balance',
+//         header: 'Opening Balance',
+//         Cell: ({ cell }) => `KES ${Number(cell.getValue()).toFixed(2)}`
+//       },
+//       {
+//         accessorKey: 'running_balance',
+//         header: 'Running Balance',
+//         muiEditTextFieldProps: {
+//           error: !!validationErrors['running_balance'],
+//           helperText: validationErrors['running_balance']
+//         },
+//         Cell: ({ cell }) => `KES ${Number(cell.getValue()).toFixed(2)}`
+//       },
+//       { accessorKey: 'description', header: 'Notes' },
+//       {
+//         accessorKey: 'account_status',
+//         header: 'Status',
+//         Cell: ({ cell }) => {
+//           const status = cell.getValue<'ACTIVE' | 'INACTIVE' | 'CLOSED'>();
+//           if (status === 'ACTIVE') {
+//             return <span className="badge table-badge bg-success fw-medium fs-10">{status}</span>;
+//           }
+//           if (status === 'CLOSED') {
+//             return <span className="badge table-badge bg-danger fw-medium fs-10">{status}</span>;
+//           }
+//           if (status === 'INACTIVE') {
+//             return <span className="badge table-badge bg-warning fw-medium fs-10">{status}</span>;
+//           }
+//           return status;
+//         }
+//       }
+//     ],
+//     []
+//   );
 
-  const table = useMaterialReactTable({
-    ...defaultMRTOptions,
-    columns,
-    data: accounts,
-    enableEditing: true,
-    state: { isLoading },
-    getRowId: (row) => row.account_id,
-    //  Hook in handlers
-    onCreatingRowCancel: () => setValidationErrors({}),
-    onCreatingRowSave: handleCreateAccount,
-    onEditingRowCancel: () => setValidationErrors({}),
-    onEditingRowSave: handleSaveAccount,
-    renderRowActions: () => (
-      <button onClick={() => openDeleteConfirmModal()} className="text-red-600 hover:underline">
-        Delete
-      </button>
-    ),
-    initialState: {
-      ...defaultMRTOptions.initialState,
-      showColumnFilters: false
-    }
-  });
+//   const table = useMaterialReactTable({
+//     ...defaultMRTOptions,
+//     columns,
+//     data: accounts,
+//     enableEditing: true,
+//     state: { isLoading },
+//     getRowId: (row) => row.account_id,
+//     //  Hook in handlers
+//     onCreatingRowCancel: () => setValidationErrors({}),
+//     onCreatingRowSave: handleCreateAccount,
+//     onEditingRowCancel: () => setValidationErrors({}),
+//     onEditingRowSave: handleSaveAccount,
+//     renderRowActions: () => (
+//       <button onClick={() => openDeleteConfirmModal()} className="text-red-600 hover:underline">
+//         Delete
+//       </button>
+//     ),
+//     initialState: {
+//       ...defaultMRTOptions.initialState,
+//       showColumnFilters: false
+//     }
+//   });
 
-  if (isLoading) return <div>Loading accounts…</div>;
-  if (isError) return <div>Error fetching accounts.</div>;
+//   if (isLoading) return <div>Loading accounts…</div>;
+//   if (isError) return <div>Error fetching accounts.</div>;
 
-  return (
-    <div className="page-wrapper">
-      <div className="content">
-        <MaterialReactTable table={table} />
-      </div>
-    </div>
-  );
-}
+//   return (
+//     <div className="page-wrapper">
+//       <div className="content">
+//         <MaterialReactTable table={table} />
+//       </div>
+//     </div>
+//   );
+// }
 
 // const Accountlist = () => {
 //   const { data, isLoading, isError, error } = useGetAccountsQuery();

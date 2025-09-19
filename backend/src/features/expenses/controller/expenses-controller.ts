@@ -7,7 +7,7 @@ import GetSuccessMessage from '@src/shared/globals/helpers/success-messages';
 import { expenseCreateSchema, expenseUpdateSchema } from '@src/features/expenses/schema/expenses-schema';
 import { Expense } from '@src/features/expenses/interface/expenses.interface';
 import { JournalService } from '@src/features/accounting/controller/journals-controller';
-import { Decimal } from '@prisma/client/runtime/library';
+// import { Decimal } from '@prisma/client/runtime/library';
 
 export class ExpensesController {
   /**
@@ -41,23 +41,8 @@ export class ExpensesController {
    */
   @joiValidation(expenseCreateSchema)
   public async createExpense(req: Request, res: Response): Promise<void> {
-    const {
-      purchaseId,
-      description,
-      amount,
-      category,
-      accountId,
-      batch,
-      isGeneral
-    }: {
-      purchaseId?: string;
-      description: string;
-      amount: Decimal;
-      category: string;
-      accountId: string;
-      batch?: string;
-      isGeneral?: boolean;
-    } = req.body;
+    const { purchaseId, description, amount, category, expenseDate, accountId, paymentMethod, referenceNo, vendor, batch, isGeneral } =
+      req.body;
 
     const expense = await prisma.$transaction(async (tx) => {
       //  If tied to a purchase, validate purchase existence
@@ -77,6 +62,10 @@ export class ExpensesController {
           amount: Number(amount),
           category,
           accountId,
+          expenseDate,
+          paymentMethod,
+          referenceNo,
+          vendor,
           purchaseId,
           batch,
           isGeneral: isGeneral ?? !purchaseId // if no purchase, mark as general

@@ -496,13 +496,15 @@ model Expense {
   id              String    @id @default(uuid())
   description     String
   amount          Float
-  category        String    // e.g., "Transport", "Import Duty", "General", etc.
+  category        ExpenseCategory    // e.g., "Transport", "Import Duty", "General", etc.
   expenseDate     DateTime  @default(now())
   accountId       String @db.Uuid
   // Link to Purchase (optional)
   purchaseId      String?   @db.Uuid
   purchase        Purchase? @relation(fields: [purchaseId], references: [purchase_id], onDelete: Cascade)
-
+  paymentMethod PaymentMethod
+  referenceNo   String?   // e.g., receipt number, invoice number
+  vendor        String?   // who you paid
   // Link to batch (if tied to purchase, redundancy for reporting)
   batch           String?
 
@@ -513,6 +515,27 @@ model Expense {
   updatedAt       DateTime  @updatedAt
   ExpenseAccounts Account @relation(fields: [accountId], references: [account_id])
 }
+
+// model Expense {
+//   id              String    @id @default(uuid())
+//   description     String
+//   amount         Decimal  @db.Decimal(14,2)
+//   category        ExpenseCategory    // e.g., "Transport", "Import Duty", "General", etc.
+//   expenseDate     DateTime  @default(now())
+//   paymentMethod PaymentMethod
+//   accountId       String @db.Uuid
+//   referenceNo   String?   // e.g., receipt number, invoice number
+//   vendor        String?   // who you paid
+//   // Link to Purchase (optional)
+//   purchaseId      String?   @db.Uuid
+//   // purchase        Purchase? @relation(fields: [purchaseId], references: [purchase_id], onDelete: Cascade)
+
+
+//   createdAt       DateTime  @default(now())
+//   updatedAt       DateTime  @updatedAt
+//   ExpenseAccounts Account @relation(fields: [accountId], references: [account_id])
+// }
+
 
 
 //all products in our system from purchase , total will be stored here. 
@@ -698,7 +721,8 @@ model Account {
   account_status  AccountStatus @default(ACTIVE) // ACTIVE, INACTIVE, CLOSED
   created_at      DateTime      @default(now())
   updated_at      DateTime      @updatedAt
-
+  
+  AssetRegister   AssetRegister[]
   Purchase         Purchase[] // Purchases made through this account
   // Relations
   AccountInfo      CashBookLedger[]
@@ -788,27 +812,32 @@ model Employee {
   assets AssetRegister[]
 }
 
+
+
+
 model AssetRegister {
-  id              String   @id @default(uuid())
-  assetTag        String   @unique
+  id              String       @id @default(uuid())
+  assetTag        String       @unique
   name            String
-  category        String
   description     String?
   purchaseDate    DateTime
   purchaseCost    Float
   supplier        String?
   location        String?
-  status          String   @default("active") // active, under_maintenance, disposed
+  status          String       @default("active") // active, under_maintenance, disposed
   depreciation    Float?
   usefulLifeYears Int?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  accountId      String?        @db.Uuid
+  account        Account?      @relation(fields: [accountId], references: [account_id])
+ category        AssetCategory
 
   // Relation: optional custodian
   custodianId String?
   custodian   Employee? @relation(fields: [custodianId], references: [id])
 }
-
 
 
 // Enums for your new tables
@@ -1035,4 +1064,23 @@ enum AccountStatus {
   INACTIVE // Account is inactive, cannot be used for transactions.
   CLOSED // Account is closed and cannot be used for any transactions.
   CREATED
+}
+
+enum AssetCategory {
+  CURRENT
+  NON_CURRENT
+  OTHER
+}
+
+enum ExpenseCategory {
+  RENT
+  UTILITIES
+  SALARIES
+  SUPPLIES
+  MAINTENANCE
+  TRAVEL
+  MARKETING
+  OTHER
+  TRANSPORT
+  PURCHASE
 }

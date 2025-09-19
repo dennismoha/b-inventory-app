@@ -57,7 +57,7 @@ export class AssetsController {
     }: {
       assetTag: string;
       name: string;
-      category: string;
+      category: 'CURRENT' | 'NON_CURRENT' | 'OTHER';
       description?: string | null;
       purchaseDate: Date;
       purchaseCost: Decimal;
@@ -77,6 +77,8 @@ export class AssetsController {
       if (existingAsset) {
         throw new ConflictError('Asset with this tag already exists');
       }
+      const UsefulLifeYears = usefulLifeYears ? Number(usefulLifeYears) : null;
+      const Depreciation = depreciation ? Number(depreciation) : null;
 
       //  Create Asset record
       const createdAsset = await tx.assetRegister.create({
@@ -90,8 +92,9 @@ export class AssetsController {
           supplier: supplier ?? null,
           location: location ?? null,
           status: status ?? 'active',
-          depreciation: depreciation ?? null,
-          usefulLifeYears: usefulLifeYears ?? null
+          depreciation: Depreciation,
+          usefulLifeYears: UsefulLifeYears,
+          accountId: accountId ?? null
         }
       });
 

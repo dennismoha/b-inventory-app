@@ -160,10 +160,12 @@ export class AccountController {
     //   }
     // });
 
-    return res.status(StatusCodes.CREATED).json({
-      message: 'Account created successfully',
-      data: account
-    });
+    return res.status(StatusCodes.CREATED).send(GetSuccessMessage(201, account, 'account created succesfully'));
+
+    // json({
+    //   message: 'Account created successfully',
+    //   data: account
+    // });
   }
 
   /**

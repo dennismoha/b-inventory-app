@@ -10,31 +10,71 @@ export const accountSchema: ObjectSchema = Joi.object().keys({
     'string.empty': 'Account name is required'
   }),
 
-  type: Joi.string()
-    .valid('cash', 'bank', 'credit_card', 'other') // Adjust to match your AccountType enum
-    .required()
-    .messages({
-      'any.only': 'Invalid account type',
-      'string.empty': 'Account type is required'
-    }),
-
-  description: Joi.string().allow(null, '').max(255).messages({
-    'string.base': 'Description should be a string',
-    'string.max': 'Description should not exceed 255 characters'
-  }),
-
   account_number: Joi.string().min(5).max(20).required().messages({
     'string.base': 'Account number must be a string',
-    'string.max': 'Account number must be a string with a maximum length of 20 characters',
-
+    'string.min': 'Account number must be at least 5 characters',
+    'string.max': 'Account number must not exceed 20 characters',
     'any.required': 'Account number is required'
   }),
 
-  balance: Joi.number().precision(2).min(0.0).default(0.0).messages({
-    'number.base': 'Balance must be a number',
-    'number.precision': 'Balance can only have up to 2 decimal places'
+  type: Joi.string().valid('ASSET', 'LIABILITY', 'EQUITY', 'INCOME', 'EXPENSE').required().messages({
+    'any.only': 'Invalid account type',
+    'string.empty': 'Account type is required'
+  }),
+
+  opening_balance: Joi.number().precision(2).min(0.0).default(0.0).messages({
+    'number.base': 'Opening balance must be a number',
+    'number.precision': 'Opening balance can only have up to 2 decimal places',
+    'number.min': 'Opening balance cannot be negative'
   })
+
+  // running_balance: Joi.number().precision(2).min(0.0).default(0.0).messages({
+  //   'number.base': 'Running balance must be a number',
+  //   'number.precision': 'Running balance can only have up to 2 decimal places',
+  //   'number.min': 'Running balance cannot be negative',
+  // }),
+
+  // account_status: Joi.string()
+  //   .valid('ACTIVE', 'INACTIVE', 'CLOSED')
+  //   .default('ACTIVE')
+  //   .messages({
+  //     'any.only': 'Invalid account status',
+  //   }),
 });
+
+// export const accountSchema: ObjectSchema = Joi.object().keys({
+//   name: Joi.string().min(3).max(100).required().messages({
+//     'string.base': 'Account name should be a string',
+//     'string.min': 'Account name should be at least 3 characters long',
+//     'string.max': 'Account name should not exceed 100 characters',
+//     'string.empty': 'Account name is required'
+//   }),
+
+//   type: Joi.string()
+//     .valid('cash', 'bank', 'credit_card', 'other') // Adjust to match your AccountType enum
+//     .required()
+//     .messages({
+//       'any.only': 'Invalid account type',
+//       'string.empty': 'Account type is required'
+//     }),
+
+//   description: Joi.string().allow(null, '').max(255).messages({
+//     'string.base': 'Description should be a string',
+//     'string.max': 'Description should not exceed 255 characters'
+//   }),
+
+//   account_number: Joi.string().min(5).max(20).required().messages({
+//     'string.base': 'Account number must be a string',
+//     'string.max': 'Account number must be a string with a maximum length of 20 characters',
+
+//     'any.required': 'Account number is required'
+//   }),
+
+//   balance: Joi.number().precision(2).min(0.0).default(0.0).messages({
+//     'number.base': 'Balance must be a number',
+//     'number.precision': 'Balance can only have up to 2 decimal places'
+//   })
+// });
 
 //  amount, description, reference_id, accountId
 
