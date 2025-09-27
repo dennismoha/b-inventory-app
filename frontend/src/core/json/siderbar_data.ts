@@ -378,20 +378,20 @@ export const SidebarData = [
     showSubRoute: false,
     submenuHdr: 'Finance & Accounts',
     submenuItems: [
-      // {
-      //   label: 'Expenses',
-      //   submenu: true,
-      //   showSubRoute: false,
-      //   icon: 'file-stack',
-      //   submenuItems: [
-      //     { label: 'Expenses', link: '/expense-list', showSubRoute: false },
-      //     {
-      //       label: 'Expense Category',
-      //       link: '/expense-category',
-      //       showSubRoute: false
-      //     }
-      //   ]
-      // },
+      {
+        label: 'Expenses',
+        submenu: true,
+        showSubRoute: false,
+        icon: 'file-stack',
+        submenuItems: [
+          { label: 'Expenses', link: '/expense-list', showSubRoute: false },
+          // {
+          //   label: 'Expense Category',
+          //   link: '/expense-category',
+          //   showSubRoute: false
+          // }
+        ]
+      },
       // {
       //   label: 'Income',
       //   submenu: true,

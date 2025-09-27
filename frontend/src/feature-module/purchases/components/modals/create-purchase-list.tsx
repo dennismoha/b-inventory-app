@@ -1,4 +1,4 @@
-import type { Unit } from '@features/interface/features-interface';
+import type { Account, Unit } from '@features/interface/features-interface';
 import CommonDatePicker from '@components/date-picker/common-date-picker';
 import CommonSelect from '@components/select/common-select';
 import { useCreatePurchaseMutation } from '@core/redux/api/inventory-api';
@@ -6,19 +6,19 @@ import { useCreatePurchaseMutation } from '@core/redux/api/inventory-api';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export interface Account {
-  account_id: string;
-  name: string;
-  account_number?: string | null;
-  type: 'cash' | 'bank' | 'credit_card' | 'other';
-  description?: string | null;
-  balance: string; // Prisma Decimal handled as string
-  current_balance: string;
-  deleted: boolean;
-  account_status: 'ACTIVE' | 'INACTIVE' | 'CLOSED';
-  created_at: Date;
-  updated_at: Date;
-}
+// export interface Account {
+//   account_id: string;
+//   name: string;
+//   account_number?: string | null;
+//   type: 'cash' | 'bank' | 'credit_card' | 'other';
+//   description?: string | null;
+//   balance: string; // Prisma Decimal handled as string
+//   current_balance: string;
+//   deleted: boolean;
+//   account_status: 'ACTIVE' | 'INACTIVE' | 'CLOSED';
+//   created_at: Date;
+//   updated_at: Date;
+// }
 
 export interface PurchasePayload {
   batch: string;
@@ -45,7 +45,7 @@ interface CreatePurchaseListProps {
 
 const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOptions, Accounts, unitsData }) => {
   const activeAccounts = Accounts.filter((a) => a.account_status === 'ACTIVE');
-  const [createPurchase] = useCreatePurchaseMutation();
+  const [createPurchase, { isSuccess, isError, error, reset }] = useCreatePurchaseMutation();
 
   const [selectedSupplier, setSelectedSupplier] = useState('');
   const [date, setDate] = useState<Date | null>(new Date());
@@ -122,6 +122,7 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
   // Handle submit
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    reset();
 
     let paymentStatus: string = 'unpaid';
     let errors: string[] = [];
@@ -404,7 +405,7 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                       <option value="">Select Account</option>
                       {activeAccounts.map((acc) => (
                         <option key={acc.account_id} value={acc.account_id}>
-                          {acc.name} (Bal: {acc.current_balance})
+                          {acc.name} (Bal: {acc.running_balance})
                         </option>
                       ))}
                     </select>
@@ -554,11 +555,13 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
               {/* Description */}{' '}
               <div className="col-lg-12 mt-3">
                 {' '}
-                <div className="mb-3 summer-description-box">
+                {isSuccess && <div className="alert alert-success">Purchase created successfully!</div>}
+                {isError && <div className="alert alert-danger">Error creating purchase: {error.message}</div>}
+                {/* <div className="mb-3 summer-description-box">
                   <label className="form-label">Description</label>
                   <div id="summernote" />
                   <p className="mt-1">Maximum 60 Words</p>{' '}
-                </div>{' '}
+                </div>{' '} */}
               </div>
             </div>
 

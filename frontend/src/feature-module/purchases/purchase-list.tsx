@@ -4,7 +4,7 @@ import PrimeDataTable from './components/data-table/index';
 import CommonDatePicker from '../../components/date-picker/common-date-picker';
 import DeleteModal from '../../components/delete-modal';
 import CommonSelect from '../../components/select/common-select';
-import TableTopHead from '../../components/table-top-head';
+// import TableTopHead from '../../components/table-top-head';
 import CommonFooter from '../../components/footer/commonFooter';
 import { downloadImg, stockImg02 } from '../../utils/imagepath';
 import { useState } from 'react';
@@ -308,7 +308,7 @@ const PurchasesList = () => {
                 <h6>Manage your purchases</h6>
               </div>
             </div>
-            <TableTopHead />
+            {/* <TableTopHead /> */}
             <div className="d-flex purchase-pg-btn">
               <div className="page-btn">
                 <Link to="#" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-purchase">
@@ -316,18 +316,18 @@ const PurchasesList = () => {
                   Add Purchase
                 </Link>
               </div>
-              <div className="page-btn import">
+              {/* <div className="page-btn import">
                 <Link to="#" className="btn btn-secondary color" data-bs-toggle="modal" data-bs-target="#view-notes">
                   <i className="feather icon-download me-2" />
                   Import Purchase
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="card">
             <div className="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
               {/* <SearchFromApi callback={handleSearch} rows={rows} setRows={setRows} /> */}
-              <div className="d-flex table-dropdown my-xl-auto right-content align-items-center flex-wrap row-gap-3">
+              {/* <div className="d-flex table-dropdown my-xl-auto right-content align-items-center flex-wrap row-gap-3">
                 <div className="dropdown">
                   <Link to="#" className="dropdown-toggle btn btn-white btn-md d-inline-flex align-items-center" data-bs-toggle="dropdown">
                     Payment Status
@@ -350,7 +350,7 @@ const PurchasesList = () => {
                     </li>
                   </ul>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="card-body p-0">
               <div className="table-responsive">
