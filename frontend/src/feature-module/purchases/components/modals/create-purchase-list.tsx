@@ -293,12 +293,11 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                   <div className="mb-3">
                     <label className="form-label">Quantity</label>
                     <input
-                      type="number"
+                      type="text"
                       className="form-control"
                       name="quantity"
                       value={quantity}
-                      step={5}
-                      onChange={(e) => setQuantity(Number(e.target.value))}
+                      onChange={(e) => (!Number(e.target.value) ? alert('only numbers accepted') : setQuantity(Number(e.target.value)))}
                     />
                   </div>
                 </div>
@@ -306,11 +305,10 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                   <div className="mb-3">
                     <label className="form-label">Damaged Units</label>
                     <input
-                      type="number"
+                      type="text"
                       className="form-control"
                       value={damagedUnits}
-                      step={1}
-                      onChange={(e) => setDamagedUnits(Number(e.target.value))}
+                      onChange={(e) => (!Number(e.target.value) ? alert('only numbers accepted') : setDamagedUnits(Number(e.target.value)))}
                       name="damaged_units"
                     />
                   </div>
@@ -337,11 +335,12 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                   <div className="mb-3">
                     <label className="form-label">Purchase Cost per Unit</label>
                     <input
-                      type="number"
-                      step="100"
+                      type="text"
                       className="form-control"
                       value={purchaseCostPerUnit}
-                      onChange={(e) => setPurchaseCostPerUnit(Number(e.target.value))}
+                      onChange={(e) =>
+                        !Number(e.target.value) ? alert('only numbers accepted') : setPurchaseCostPerUnit(Number(e.target.value))
+                      }
                       name="purchase_cost_per_unit"
                     />
                   </div>
@@ -356,11 +355,10 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                   <div className="mb-3">
                     <label className="form-label">Discounts</label>
                     <input
-                      type="number"
-                      step="1"
+                      type="text"
                       className="form-control"
                       value={discounts}
-                      onChange={(e) => setDiscounts(Number(e.target.value))}
+                      onChange={(e) => (!Number(e.target.value) ? alert('only numbers accepted') : setDiscounts(Number(e.target.value)))}
                       name="discounts"
                     />
                   </div>
@@ -368,7 +366,13 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                 <div className="col-lg-3 col-sm-12">
                   <div className="mb-3">
                     <label className="form-label">Tax</label>
-                    <input type="number" className="form-control" value={tax} onChange={(e) => setTax(Number(e.target.value))} name="tax" />
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={tax}
+                      onChange={(e) => (!Number(e.target.value) ? alert('only numbers accepted') : setTax(Number(e.target.value)))}
+                      name="tax"
+                    />
                   </div>
                 </div>
               </div>
@@ -393,10 +397,10 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                   <div className="col-lg-4">
                     <label>Total Purchase Cost</label>
                     <input
-                      type="number"
+                      type="text"
                       className="form-control"
                       value={totalCost}
-                      onChange={(e) => setTotalCost(Number(e.target.value))}
+                      onChange={(e) => (!Number(e.target.value) ? alert('only numbers accepted') : setTotalCost(Number(e.target.value)))}
                     />
                   </div>
                   <div className="col-lg-4">
@@ -427,12 +431,7 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                 <div className="row">
                   <div className="col-lg-4">
                     <label>Total Purchase Cost</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      value={totalCost}
-                      onChange={(e) => setTotalCost(Number(e.target.value))}
-                    />
+                    <input type="text" className="form-control" value={totalCost} onChange={(e) => setTotalCost(Number(e.target.value))} />
                   </div>
                   <div className="col-lg-4">
                     <label>Initial Payment</label>
@@ -466,7 +465,7 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                   </div>
                   <div className="col-lg-4 mt-2">
                     <label>Remaining Balance</label>
-                    <input type="number" className="form-control" value={Math.max(totalCost - initialPayment, 0)} readOnly />
+                    <input type="text" className="form-control" value={Math.max(totalCost - initialPayment, 0)} readOnly />
                   </div>
                 </div>
               )}
@@ -475,12 +474,7 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                 <div className="row">
                   <div className="col-lg-4">
                     <label>Credit Amount</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      value={totalCost}
-                      onChange={(e) => setTotalCost(Number(e.target.value))}
-                    />
+                    <input type="text" className="form-control" value={totalCost} onChange={(e) => setTotalCost(Number(e.target.value))} />
                   </div>
                 </div>
               )}
@@ -491,7 +485,7 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                     <div className="col-lg-4">
                       <label>Total Cost</label>
                       <input
-                        type="number"
+                        type="text"
                         className="form-control"
                         value={totalCost}
                         onChange={(e) => setTotalCost(Number(e.target.value))}
