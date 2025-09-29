@@ -145,7 +145,7 @@ export class PurchasePayablesController {
       }
       // create a journal entry
       const journalEntry = await JournalService.createJournalEntry(tx, {
-        transactionId: 'purchase_payment',
+        transactionId: 'batchpayablepayment',
         description: 'purchase payment',
         lines: [
           {
@@ -176,6 +176,32 @@ export class PurchasePayablesController {
         }
       });
 
+      // if balance due is 0 update purchase payment status to settled
+      const updatedPurchase =
+        Number(updateBatchPayable.balance_due) === 0
+          ? await tx.batchPayables.update({
+              where: {
+                purchase_id: id
+              },
+              data: {
+                status: 'settled',
+                settlement_date: new Date()
+              }
+            })
+          : null;
+
+      // update purchase payment status to paid
+      if (Number(updateBatchPayable.balance_due) === 0) {
+        await tx.purchase.update({
+          where: {
+            purchase_id: id
+          },
+          data: {
+            payment_status: 'paid'
+          }
+        });
+      }
+      console.log('updated purchase is ', updatedPurchase);
       return updateBatchPayable;
     });
 
