@@ -689,26 +689,6 @@ model CashBookLedger {
   // TerminalSessionId Int? // Nullable if not linked to a terminal session
 }
 
-// model Account {
-//   account_id      String        @id @default(uuid()) @db.Uuid
-//   name            String
-//   account_number  String?       @unique
-//   type            AccountType
-//   description     String?
-//   opening_balance         Decimal       @default(0.00) @db.Decimal(14, 2)
-//   running_balance Decimal       @default(0.00) @db.Decimal(14, 2)
-//   deleted         Boolean       @default(false) // Soft delete flag
-//   account_status  AccountStatus @default(ACTIVE) // ACTIVE, INACTIVE, CLOSED
-//   created_at      DateTime      @default(now())
-//   updated_at      DateTime      @updatedAt
-
-//   Purchase         Purchase[] // Purchases made through this account
-//   // Relations
-//   AccountInfo      CashBookLedger[]
-//   AccountBalances  AccountBalanceSnapshot[]
-//   AccountStatusLog AccountStatusLog[]
-//   // OpeningClosingBalance OpeningClosingBalance[]
-// }
 
 model Account {
   account_id      String   @id @default(uuid()) @db.Uuid()

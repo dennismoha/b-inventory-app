@@ -2,7 +2,13 @@ import { Request, Response } from 'express';
 import prisma from '@src/shared/prisma/prisma-client';
 import GetSuccessMessage from '@src/shared/globals/helpers/success-messages';
 import { StatusCodes } from 'http-status-codes';
-import { BatchPayableResult } from '@src/features/purchase/interface/purchase.interface';
+import { BatchPayableResult, PurchasePayable } from '@src/features/purchase/interface/purchase.interface';
+import { JournalService } from '@src/features/accounting/controller/journals-controller';
+import { AccountController } from '@src/features/accounting/controller/accounts-controller';
+import { Account_Inventory } from '@src/constants';
+import { BadRequestError } from '@src/shared/globals/helpers/error-handler';
+import { joiValidation } from '@src/shared/globals/decorators/joi-validation-decorators';
+import { updateBatchPayableSchema } from '../schema/purchase-schema';
 
 export class PurchasePayablesController {
   /**
@@ -59,4 +65,133 @@ export class PurchasePayablesController {
 
     // res.status(200).json(batchPayables);
   }
+
+  public async getPartialPurchasePayablesById(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const batchPayables = await prisma.partialPurchasePayment.findMany({
+      where: {
+        purchase_id: id
+      },
+      select: {
+        partial_purchase_id: true,
+        purchase_id: true,
+        full_amount: true,
+        initial_payment: true,
+        balance: true,
+        payment_method: true,
+        payment_date: true
+      }
+    });
+
+    // transform the result so supplier & product names
+    const formatted: PurchasePayable[] = batchPayables.map((item) => ({
+      partial_payment_id: item.partial_purchase_id,
+      purchase_id: item.purchase_id,
+      amount_paid: item.full_amount,
+      initial_payment: item.initial_payment,
+      balance: item.balance,
+      payment_method: item.payment_method,
+      payment_date: item.payment_date
+    }));
+
+    // res.json(batchPayables2);
+
+    res.status(StatusCodes.ACCEPTED).send(GetSuccessMessage(StatusCodes.ACCEPTED, formatted, 'payables returned succesfully'));
+  }
+
+  /**
+   *  I'll have to divide the lgic below to add that for partial payments too
+   *  if paymenttype is credit we just create a batchpayable record else we update the partialPaymentslogic
+
+   * 
+   */
+
+  @joiValidation(updateBatchPayableSchema)
+  public async createPartialPurchasePayableById(req: Request, res: Response) {
+    const { id } = req.params;
+    const { account_id, amount } = req.body;
+
+    const result = await prisma.$transaction(async (tx) => {
+      const purchase = await tx.purchase.findUnique({
+        where: {
+          purchase_id: id
+        }
+      });
+
+      if (!purchase) {
+        throw new BadRequestError('Invalid purchase ID');
+      }
+
+      if (purchase.payment_type === 'full') {
+        throw new BadRequestError('This purchase was made as full payment, no outstanding balance exists');
+      }
+
+      if (purchase.payment_type === 'partial' && purchase.payment_status === 'paid') {
+        throw new BadRequestError('This purchase has already been fully paid');
+      }
+
+      if (purchase.payment_type === 'credit' && purchase.payment_status === 'paid') {
+        throw new BadRequestError('This purchase has already been fully paid');
+      }
+
+      if (amount > purchase.total_purchase_cost) {
+        throw new BadRequestError('Payment amount exceeds total purchase cost');
+      }
+
+      const inventoryAccount = await AccountController.findAccount({ tx, name: Account_Inventory.name, type: Account_Inventory.acc_type });
+      if (inventoryAccount.account_id === account_id) {
+        throw new BadRequestError('credit account cannot be equal to debit account');
+      }
+      // create a journal entry
+      const journalEntry = await JournalService.createJournalEntry(tx, {
+        transactionId: 'purchase_payment',
+        description: 'purchase payment',
+        lines: [
+          {
+            account_id: account_id!,
+            credit: amount
+          },
+          {
+            account_id: inventoryAccount.account_id,
+            debit: amount
+          }
+        ]
+      });
+
+      console.log('journal entry is ', journalEntry);
+
+      // update batch payables table
+      const updateBatchPayable = await tx.batchPayables.update({
+        where: {
+          purchase_id: id
+        },
+        data: {
+          total_paid: {
+            increment: amount
+          },
+          balance_due: {
+            decrement: amount
+          }
+        }
+      });
+
+      return updateBatchPayable;
+    });
+
+    // const newPartialPayable = await prisma.partialPurchasePayment.create({
+    //   data: {
+    //     purchase_id: id,
+    //     full_amount: new prisma.Decimal(full_amount),
+    //     initial_payment: new prisma.Decimal(initial_payment),
+    //     balance: new prisma.Decimal(balance),
+    //     payment_method,
+    //     payment_date: new Date(payment_date)
+    //   }
+    // });
+    res.json({ message: result, m: 'created' });
+    // res.status(StatusCodes.CREATED).send(GetSuccessMessage(StatusCodes.CREATED, newPartialPayable, 'Partial payable created successfully'));
+  }
 }
+
+// type PurchasePayable = {partial_payment_id: string, purchase_id: string, amount_paid: number, initial_payment:number, balance:number, payment_method:string,payment_date:string}

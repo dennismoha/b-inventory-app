@@ -25,6 +25,12 @@ const paymentSchema = Joi.object({
   payment_method: Joi.string().valid('CASH', 'BANK_TRANSFER', 'MOBILE_MONEY').required()
 });
 
+export const updateBatchPayableSchema = Joi.object({
+  amount: Joi.number().positive().required(),
+  account_id: Joi.string().uuid().required(),
+  payment_date: Joi.date().optional()
+});
+
 export const createPurchaseSchema: ObjectSchema = Joi.object().keys({
   batch: Joi.string().required(),
   supplier_products_id: Joi.string().uuid().required(),

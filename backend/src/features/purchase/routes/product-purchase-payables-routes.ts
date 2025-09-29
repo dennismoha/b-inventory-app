@@ -13,6 +13,16 @@ class PurchasePayablesRoutes {
   public routes(): Router {
     // Create new purchase
     this.router.get('/purchase-payables', authMiddleware.checkAuthentication, PurchasePayablesController.prototype.getAll);
+    this.router.get(
+      '/purchase-payables/:id',
+      authMiddleware.checkAuthentication,
+      PurchasePayablesController.prototype.getPartialPurchasePayablesById
+    );
+    this.router.put(
+      '/purchase-payables/purchase/:id',
+      authMiddleware.checkAuthentication,
+      PurchasePayablesController.prototype.createPartialPurchasePayableById
+    );
 
     return this.router;
   }

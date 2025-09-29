@@ -94,3 +94,13 @@ export type FormattedBatchInventory = {
   supplierName: string;
   productName: string;
 };
+
+export type PurchasePayable = {
+  partial_payment_id: string;
+  purchase_id: string;
+  amount_paid: Decimal;
+  initial_payment: Decimal;
+  balance: Decimal;
+  payment_method: PaymentMethod;
+  payment_date: Date;
+};

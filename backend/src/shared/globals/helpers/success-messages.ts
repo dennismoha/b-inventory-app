@@ -19,7 +19,7 @@ import { Transaction } from '@src/features/transactions/interfaces/transaction.i
 import { TotalSalesResponse, TransactionProductsBetweenDates } from '@src/features/analysis/interfaces/analysis.interface';
 import { CustomerSales } from '@src/features/analysis/interfaces/analysis.interface';
 import { Account, TrialBalance } from '@src/features/accounting/interfaces/accounts.interface';
-import { BatchPayableResult, FormattedBatchInventory } from '@src/features/purchase/interface/purchase.interface';
+import { BatchPayableResult, FormattedBatchInventory, PurchasePayable } from '@src/features/purchase/interface/purchase.interface';
 import { CashbookLedgerRecords } from '@src/features/accounting/interfaces/cashbook-ledger.interface';
 import { Asset } from '@src/features/hrm/assets/interface/assets.interface';
 import { Employee } from '@src/features/hrm/employees/interfaces/employee.interface';
@@ -70,6 +70,7 @@ type success_data =
   | WithArray<StockResponseItem>
   | WithArray<TrialBalance>
   | WithArray<pos_session_header>
+  | WithArray<PurchasePayable>
   | null;
 
 // GetSuccessMessage function
