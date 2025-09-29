@@ -51,6 +51,8 @@ import type {
   StockResponseItem,
   TrialBalance,
   pos_session_header
+  // PurchasePayableResponse,
+  // purchasePayable
 } from '@/feature-module/interface/features-interface';
 
 import type { ApiResponse } from '@/utils/api';
@@ -314,16 +316,17 @@ const PurchaseBatchPayablesApi = InventoryApi.injectEndpoints({
     getPurchaseBatchPayables: build.query<ApiResponse<BatchPayableResult[]>, void>({
       query: () => '/purchase-payables',
       providesTags: ['Purchases']
-    })
+    }),
     // Create a new purchase batch payable
-    // createPurchaseBatchPayable: build.mutation<ApiResponse<any>, any>({
-    //   query: (payload) => ({
-    //     url: '/purchase-batch-payables',
-    //     method: 'POST',
-    //     body: payload
-    //   }),
-    //   invalidatesTags: ['Purchases']
-    // }),
+    createPurchaseBatchPayable: build.mutation({
+      query: ({ purchase_id, ...patch }) => ({
+        url: `/purchase-payables/purchase/${purchase_id}`,
+        method: 'PUT',
+        body: patch,
+        invalidatesTags: ['Purchases']
+      })
+    })
+
     // // Update a purchase batch payable
     // updatePurchaseBatchPayable: build.mutation<ApiResponse<any>, { id: string; patch: Partial<any> }>({
     //   query: ({ id, patch }) => ({
@@ -1578,8 +1581,8 @@ export const {
 // export const { useGetOrdersQuery, useCreateOrderMutation, useDeleteOrderMutation, useGetOrderByIdQuery, useUpdateOrderMutation } = OrderApi;
 
 export const {
-  useGetPurchaseBatchPayablesQuery
-  // useCreatePurchaseBatchPayableMutation,
+  useGetPurchaseBatchPayablesQuery,
+  useCreatePurchaseBatchPayableMutation
   // useUpdatePurchaseBatchPayableMutation,
   // useDeletePurchaseBatchPayableMutation
 } = PurchaseBatchPayablesApi;

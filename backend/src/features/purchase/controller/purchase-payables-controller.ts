@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import prisma from '@src/shared/prisma/prisma-client';
 import GetSuccessMessage from '@src/shared/globals/helpers/success-messages';
 import { StatusCodes } from 'http-status-codes';
-import { BatchPayableResult, PurchasePayable } from '@src/features/purchase/interface/purchase.interface';
+import { BatchPayableResult, PurchasePayable, PurchasePayableResponse } from '@src/features/purchase/interface/purchase.interface';
 import { JournalService } from '@src/features/accounting/controller/journals-controller';
 import { AccountController } from '@src/features/accounting/controller/accounts-controller';
 import { Account_Inventory } from '@src/constants';
@@ -112,7 +112,7 @@ export class PurchasePayablesController {
     const { id } = req.params;
     const { account_id, amount } = req.body;
 
-    const result = await prisma.$transaction(async (tx) => {
+    const result: PurchasePayableResponse = await prisma.$transaction(async (tx) => {
       const purchase = await tx.purchase.findUnique({
         where: {
           purchase_id: id
@@ -135,8 +135,8 @@ export class PurchasePayablesController {
         throw new BadRequestError('This purchase has already been fully paid');
       }
 
-      if (amount > purchase.total_purchase_cost) {
-        throw new BadRequestError('Payment amount exceeds total purchase cost');
+      if (Number(amount) > Number(purchase.total_purchase_cost)) {
+        throw new BadRequestError(`Payment ${300} amount exceeds total purchase cost ${purchase.total_purchase_cost}`);
       }
 
       const inventoryAccount = await AccountController.findAccount({ tx, name: Account_Inventory.name, type: Account_Inventory.acc_type });
@@ -202,21 +202,10 @@ export class PurchasePayablesController {
         });
       }
       console.log('updated purchase is ', updatedPurchase);
-      return updateBatchPayable;
+      return { balance_due: updateBatchPayable.balance_due };
     });
 
-    // const newPartialPayable = await prisma.partialPurchasePayment.create({
-    //   data: {
-    //     purchase_id: id,
-    //     full_amount: new prisma.Decimal(full_amount),
-    //     initial_payment: new prisma.Decimal(initial_payment),
-    //     balance: new prisma.Decimal(balance),
-    //     payment_method,
-    //     payment_date: new Date(payment_date)
-    //   }
-    // });
-    res.json({ message: result, m: 'created' });
-    // res.status(StatusCodes.CREATED).send(GetSuccessMessage(StatusCodes.CREATED, newPartialPayable, 'Partial payable created successfully'));
+    res.status(StatusCodes.CREATED).send(GetSuccessMessage(StatusCodes.CREATED, result, 'Partial payable created successfully'));
   }
 }
 

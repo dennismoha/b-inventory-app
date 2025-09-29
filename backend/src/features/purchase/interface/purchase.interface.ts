@@ -104,3 +104,7 @@ export type PurchasePayable = {
   payment_method: PaymentMethod;
   payment_date: Date;
 };
+
+export type PurchasePayableResponse = {
+  balance_due: Decimal;
+};

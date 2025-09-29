@@ -417,6 +417,16 @@ export interface CreatePurchaseRequest {
   arrival_date: Date; // ISO date
 }
 
+export type PurchasePayableResponse = {
+  balance_due: number;
+};
+
+export type purchasePayable = {
+  amount: string;
+  account_id: string;
+  purchase_id: string;
+};
+
 export interface PartialPurchasePayment {
   partial_purchase_id: string;
   purchase_id: string;

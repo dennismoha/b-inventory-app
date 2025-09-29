@@ -6,10 +6,11 @@ import {
   type MRT_TableOptions,
   useMaterialReactTable
 } from 'material-react-table';
-import { Box, Button, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Box, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import { Link } from 'react-router';
 
 import {
+  useCreatePurchaseBatchPayableMutation,
   useGetAccountsQuery,
   useGetPurchaseBatchPayablesQuery
   // useUpdatePurchaseBatchPayableMutation,
@@ -19,7 +20,7 @@ import {
 import type { Account } from '@/feature-module/interface/features-interface';
 
 type PurchasePayable = {
-  id: string;
+  payable_id: string;
   batch: string;
   supplier_name: string;
   product_name: string;
@@ -54,7 +55,7 @@ export default function PurchasePayablesReport() {
 
   const columns = useMemo<MRT_ColumnDef<PurchasePayable>[]>(
     () => [
-      { accessorKey: 'id', header: 'ID', enableEditing: false },
+      { accessorKey: 'payable_id', header: 'ID', enableEditing: false },
       { accessorKey: 'batch', header: 'Batch' },
       { accessorKey: 'supplier_name', header: 'Supplier' },
       { accessorKey: 'product_name', header: 'Product' },
@@ -125,7 +126,7 @@ export default function PurchasePayablesReport() {
     createDisplayMode: 'row',
     editDisplayMode: 'row',
     enableEditing: true,
-    getRowId: (row) => row.id,
+    getRowId: (row) => row.payable_id,
     muiTableContainerProps: { sx: { minHeight: '500px' } },
     onCreatingRowCancel: () => setValidationErrors({}),
     onCreatingRowSave: handleCreatePayable,
@@ -159,7 +160,7 @@ export default function PurchasePayablesReport() {
         <Link
           data-bs-toggle="modal"
           data-bs-target="#settle-payable-modal"
-          onClick={() => setDeleteId(row.original.id)}
+          onClick={() => setDeleteId(row.original.purchase_id)}
           className="me-2 p-2 d-flex align-items-center border rounded error"
           to="#"
         >
@@ -231,11 +232,22 @@ type SettlePayableModalProps = {
 
 function SettlePayableModal({ payableId, onClose }: SettlePayableModalProps) {
   const { data: Accounts } = useGetAccountsQuery();
+  console.log('payable id is ', payableId);
+  const [
+    settlePayable,
+    {
+      isLoading: isCreatingPurchase,
+      reset,
+      isError: isCreatingPurchaseError,
+      error: createPurchaseError,
+      isSuccess: iscreatepurchasesuccess
+    }
+  ] = useCreatePurchaseBatchPayableMutation();
   const accounts = Accounts?.data ?? [];
   // const [settlePayable, { isLoading }] = useSettlePurchaseBatchPayableMutation();
-  const settlePayable = async (args: { id: string; data: { account_id: string; amount: number } }) => {
-    console.log('settling payable with args: ', args);
-  };
+  // const settlePayable = async (args: { id: string; data: { account_id: string; amount: number } }) => {
+  //   console.log('settling payable with args: ', args);
+  // };
 
   const isLoading = false;
 
@@ -243,14 +255,21 @@ function SettlePayableModal({ payableId, onClose }: SettlePayableModalProps) {
   const [amount, setAmount] = useState('');
 
   const handleSubmit = async () => {
-    if (!payableId || !accountId || !amount) return;
+    if (!payableId || !accountId || !amount) alert('please fill all missing fields');
+    reset();
+    console.log('settling');
     await settlePayable({
-      id: payableId,
-      data: {
-        account_id: accountId,
-        amount: parseFloat(amount)
-      }
+      purchase_id: payableId,
+      account_id: accountId,
+      amount
     });
+    // await settlePayable({
+    //   id: payableId,
+    //   data: {
+    //     account_id: accountId,
+    //     amount: parseFloat(amount)
+    //   }
+    // });
     // onClose();
     setAccountId('');
     setAmount('');
@@ -303,12 +322,14 @@ function SettlePayableModal({ payableId, onClose }: SettlePayableModalProps) {
                   onClick={handleSubmit}
                   disabled={isLoading}
                   type="button"
-                  data-bs-dismiss="modal"
+                  // data-bs-dismiss="modal"
                   className="btn btn-submit fs-13 fw-medium p-2 px-3"
                 >
-                  {isLoading ? 'Settling...' : 'Settle'}
+                  {isCreatingPurchase ? 'Settling...' : 'Settle'}
                 </button>
               </div>
+              {isCreatingPurchaseError ? <div>{createPurchaseError.message} </div> : null}
+              {iscreatepurchasesuccess ? <div> successfully settled payment </div> : null}
             </div>
           </div>
         </div>
