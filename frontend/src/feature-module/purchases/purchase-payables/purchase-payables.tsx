@@ -21,6 +21,7 @@ import type { Account } from '@/feature-module/interface/features-interface';
 
 type PurchasePayable = {
   payable_id: string;
+  purchase_id: string;
   batch: string;
   supplier_name: string;
   product_name: string;
@@ -112,7 +113,7 @@ export default function PurchasePayablesReport() {
       return;
     }
     setValidationErrors({});
-    const { id, ...data } = values;
+    const { ...data } = values;
     if (data.settlement_date) {
       data['settlement_date'] = new Date(data['settlement_date']).toISOString();
     }
@@ -122,7 +123,12 @@ export default function PurchasePayablesReport() {
 
   const table = useMaterialReactTable({
     columns,
-    data: payables ?? [],
+    data: payables
+      ? payables.map((p) => ({
+          ...p,
+          settlement_date: p.settlement_date instanceof Date ? p.settlement_date.toISOString() : p.settlement_date
+        }))
+      : [],
     createDisplayMode: 'row',
     editDisplayMode: 'row',
     enableEditing: true,

@@ -59,6 +59,10 @@ const checkoutSlice = createSlice({
       if (indexProductId >= 0) {
         // Update its quantity
         state.cartProducts[indexProductId].quantity += quantity;
+        state.cartProducts[indexProductId].needsBatchLoad =
+          state.cartProducts[indexProductId].quantity > stock_quantity && state.cartProducts[indexProductId].quantity < total_stock_quantity
+            ? true
+            : false;
       } else {
         // Add new product
         state.cartProducts.push({

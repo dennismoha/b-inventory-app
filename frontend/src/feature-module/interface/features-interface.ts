@@ -847,10 +847,10 @@ export type BatchPayableResult = {
   total_paid: number;
   balance_due: number;
   payment_type: string;
-  settlement_date: Date | null;
-  batch: string | null;
-  supplier_name: string | null;
-  product_name: string | null;
+  settlement_date: Date;
+  batch: string;
+  supplier_name: string;
+  product_name: string;
 };
 
 export type FormattedBatchInventory = {

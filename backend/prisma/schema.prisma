@@ -140,7 +140,7 @@ model SupplierProducts {
 
   // batchInventories BatchInventory[]
 
-  Purchases Purchase[]
+  Purchases      Purchase[]
   ProductSummary ProductSummary[]
 
   @@unique([supplier_id, product_id]) // Enforcing uniqueness on supplier_id and product_id combination
@@ -268,7 +268,7 @@ model Inventory {
 
   supplierProduct        SupplierProducts         @relation(fields: [supplier_products_id], references: [supplier_products_id])
   unit                   Units                    @relation(fields: [unit_id], references: [unit_id])
-  Sales     Sales[]
+  Sales                  Sales[]
   // InventoryRestock       InventoryRestock[]
   InventorySalesTracking InventorySalesTracking[]
   inventory              BatchInventory           @relation(fields: [batch_inventory_id], references: [batch_inventory_id])
@@ -355,39 +355,40 @@ model InventoryTracking {
 }
 
 model Customer {
-  customerId  String  @id @default(uuid()) 
-  firstName   String 
-  lastName    String 
-  email       String  @unique 
-  phoneNumber String  @unique 
-  address     String? 
+  customerId  String  @id @default(uuid())
+  firstName   String
+  lastName    String
+  email       String  @unique
+  phoneNumber String  @unique
+  address     String?
 
-  country                String? 
+  country                String?
   createdAt              DateTime @default(now()) // Date when the customer was added
-  updatedAt              DateTime @updatedAt 
+  updatedAt              DateTime @updatedAt
   status                 String? // Customer status: "active", "inactive", etc.
-  loyaltyPoints          Int    ?  @default(0) // Optional: Loyalty points, if applicable
-  totalSpent             Float   ? @default(0) // Total amount the customer has spent 
+  loyaltyPoints          Int?     @default(0) // Optional: Loyalty points, if applicable
+  totalSpent             Float?   @default(0) // Total amount the customer has spent 
   deleted                Boolean  @default(false)
   notes                  String? // Optional: Any special notes or preferences about the customer
   preferredPaymentMethod String? // Optional: Preferred payment method (e.g., Credit card, PayPal)
 
   // Relationship with transactions
-  transactions Transaction[] // A customer can have many transactions
+  transactions       Transaction[] // A customer can have many transactions
   CustomerReceivable CustomerReceivable[]
+
   @@index([email], name: "customer_email_idx") // Index for email for quick searches
 }
 
 model CustomerReceivable {
-  customer_receivable_id              String   @id @default(cuid())
-  customer_id     String   
-  total_Amount Decimal
-  transaction_id String  @unique
-  status          AccountStatus @default(ACTIVE)
+  customer_receivable_id String        @id @default(cuid())
+  customer_id            String
+  total_Amount           Decimal
+  transaction_id         String        @unique
+  status                 AccountStatus @default(ACTIVE)
 
   // Relations
-  customer        Customer           @relation(fields: [customer_id], references: [customerId])
-  Transactions    Transaction     @relation(fields: [transaction_id], references: [transactionId])
+  customer     Customer    @relation(fields: [customer_id], references: [customerId])
+  Transactions Transaction @relation(fields: [transaction_id], references: [transactionId])
 }
 
 model Transaction {
@@ -402,16 +403,16 @@ model Transaction {
 
   // Relationships
 
-  customer Customer? @relation(fields: [customerId], references: [customerId]) // Link to the customer (nullable)
+  customer           Customer?           @relation(fields: [customerId], references: [customerId]) // Link to the customer (nullable)
   CustomerReceivable CustomerReceivable?
   // Optional: Indexes for faster querying
-  Sales Sales[]
+  Sales              Sales[]
 
   @@index([customerId])
 }
 
 model Sales {
-  SalesId String           @id @default(uuid())
+  SalesId              String           @id @default(uuid())
   supplier_products_id String           @db.Uuid
   inventoryId          String
   // unit String
@@ -425,7 +426,7 @@ model Sales {
   productSubTotalCost  Float
   productTotalCost     Float
   transactionId        String
-  BatchInventoryId      String
+  BatchInventoryId     String
   createdAt            DateTime         @default(now()) // Date when the customer was added
   InventoryItemID      Inventory?       @relation(fields: [inventoryId], references: [inventoryId])
   supplierProduct      SupplierProducts @relation(fields: [supplier_products_id], references: [supplier_products_id]) // Link to supplier product
@@ -486,34 +487,33 @@ model Purchase {
   PurchaseDamage         PurchaseDamage[]
   BatchInventory         BatchInventory?
   BatchPayables          BatchPayables?
+  expenses               Expense[]
 
   @@map("Purchase")
-  expenses Expense[]
-
 }
 
 model Expense {
-  id              String    @id @default(uuid())
-  description     String
-  amount          Float
-  category        ExpenseCategory    // e.g., "Transport", "Import Duty", "General", etc.
-  expenseDate     DateTime  @default(now())
-  accountId       String @db.Uuid
+  id            String          @id @default(uuid())
+  description   String
+  amount        Float
+  category      ExpenseCategory // e.g., "Transport", "Import Duty", "General", etc.
+  expenseDate   DateTime        @default(now())
+  accountId     String          @db.Uuid
   // Link to Purchase (optional)
-  purchaseId      String?   @db.Uuid
-  purchase        Purchase? @relation(fields: [purchaseId], references: [purchase_id], onDelete: Cascade)
+  purchaseId    String?         @db.Uuid
+  purchase      Purchase?       @relation(fields: [purchaseId], references: [purchase_id], onDelete: Cascade)
   paymentMethod PaymentMethod
-  referenceNo   String?   // e.g., receipt number, invoice number
-  vendor        String?   // who you paid
+  referenceNo   String? // e.g., receipt number, invoice number
+  vendor        String? // who you paid
   // Link to batch (if tied to purchase, redundancy for reporting)
-  batch           String?
+  batch         String?
 
   // General expense (if no purchaseId)
-  isGeneral       Boolean   @default(false)
+  isGeneral Boolean @default(false)
 
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  ExpenseAccounts Account @relation(fields: [accountId], references: [account_id])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  ExpenseAccounts Account  @relation(fields: [accountId], references: [account_id])
 }
 
 // model Expense {
@@ -530,24 +530,20 @@ model Expense {
 //   purchaseId      String?   @db.Uuid
 //   // purchase        Purchase? @relation(fields: [purchaseId], references: [purchase_id], onDelete: Cascade)
 
-
 //   createdAt       DateTime  @default(now())
 //   updatedAt       DateTime  @updatedAt
 //   ExpenseAccounts Account @relation(fields: [accountId], references: [account_id])
 // }
 
-
-
 //all products in our system from purchase , total will be stored here. 
-model  ProductSummary {
-  product_summary_id  String @id @default(uuid())
-  supplier_products_id String @db.Uuid @unique
-  total_received Int @default(0)
-  total_sold Int @default(0)
-  reorder_level  Int @default(0)
-  total_cost_value Decimal
-  supplierProduct        SupplierProducts         @relation(fields: [supplier_products_id], references: [supplier_products_id])  
-
+model ProductSummary {
+  product_summary_id   String           @id @default(uuid())
+  supplier_products_id String           @unique @db.Uuid
+  total_received       Int              @default(0)
+  total_sold           Int              @default(0)
+  reorder_level        Int              @default(0)
+  total_cost_value     Decimal
+  supplierProduct      SupplierProducts @relation(fields: [supplier_products_id], references: [supplier_products_id])
 }
 
 model PartialPurchasePayment {
@@ -613,18 +609,18 @@ model PurchaseDamage {
 
 // 5. Batch Inventory Table - Available stock after damages and sales
 model BatchInventory {
-  batch_inventory_id String          @id @default(uuid()) @db.Uuid
+  batch_inventory_id   String               @id @default(uuid()) @db.Uuid
   // batch_id           String   @unique @db.Uuid
-  purchase_id        String          @unique @db.Uuid
-  total_units        Int
-  batch_name         String          @unique
+  purchase_id          String               @unique @db.Uuid
+  total_units          Int
+  batch_name           String               @unique
   // damaged_units      Int
-  status             BatchInventoryStatus @default(PENDING) // ACTIVE,PENDING, INACTIVE, DISCONTINUED
-  supplier_products_id   String        @db.Uuid
+  status               BatchInventoryStatus @default(PENDING) // ACTIVE,PENDING, INACTIVE, DISCONTINUED
+  supplier_products_id String               @db.Uuid
   // units_sold         Int
   // available_units    Int      // calculated as total_units - damaged_units - units_sold
-  updated_at DateTime @updatedAt
-  created_at DateTime @default(now())
+  updated_at           DateTime             @updatedAt
+  created_at           DateTime             @default(now())
 
   // batch              Batch    @relation(fields: [batch_id], references: [batch_id])
   purchase Purchase @relation(fields: [purchase_id], references: [purchase_id])
@@ -636,16 +632,14 @@ model BatchInventory {
 }
 
 model BatchLifecycle {
-  id         String   @id @default(uuid())
-  batch_id   String   @db.Uuid @unique
-  started_at DateTime @default(now())
+  id         String    @id @default(uuid())
+  batch_id   String    @unique @db.Uuid
+  started_at DateTime  @default(now())
   ended_at   DateTime?
 
   // Relations
   batch BatchInventory @relation(fields: [batch_id], references: [batch_inventory_id])
 }
-
-
 
 // 6. Batch Payables Table - Credit purchase tracking per batch
 model BatchPayables {
@@ -689,59 +683,58 @@ model CashBookLedger {
   // TerminalSessionId Int? // Nullable if not linked to a terminal session
 }
 
-
 model Account {
-  account_id      String   @id @default(uuid()) @db.Uuid()
-  name            String 
-  account_number  String  @unique
-  type            AccountType   // Asset, Liability, Equity, Income, Expense
-  opening_balance Decimal @default(0.00) @db.Decimal(14,2)
-  running_balance Decimal @default(0.00) @db.Decimal(14,2) 
+  account_id      String        @id @default(uuid()) @db.Uuid()
+  name            String
+  account_number  String        @unique
+  type            AccountType // Asset, Liability, Equity, Income, Expense
+  opening_balance Decimal       @default(0.00) @db.Decimal(14, 2)
+  running_balance Decimal       @default(0.00) @db.Decimal(14, 2)
   deleted         Boolean       @default(false) // Soft delete flag
   account_status  AccountStatus @default(ACTIVE) // ACTIVE, INACTIVE, CLOSED
   created_at      DateTime      @default(now())
   updated_at      DateTime      @updatedAt
-  
-  AssetRegister   AssetRegister[]
+
+  AssetRegister    AssetRegister[]
   Purchase         Purchase[] // Purchases made through this account
   // Relations
   AccountInfo      CashBookLedger[]
   AccountBalances  AccountBalanceSnapshot[]
   AccountStatusLog AccountStatusLog[]
-  ExpenseAccounts Expense[]
+  ExpenseAccounts  Expense[]
   // OpeningClosingBalance OpeningClosingBalance[]
   // @@unique([name, type])
-  journalLines    JournalLine[]
+  journalLines     JournalLine[]
 }
 
 model JournalEntry {
-  entry_id     String   @id @default(uuid())
+  entry_id      String        @id @default(uuid())
   transactionId String
-  date         DateTime @default(now())
-  description  String
-  lines        JournalLine[]
+  date          DateTime      @default(now())
+  description   String
+  lines         JournalLine[]
 }
 
 model JournalLine {
-  line_id   String  @id @default(uuid())
-  entry_id  String
-  account_id String @db.Uuid
-  debit     Decimal @default(0.00) @db.Decimal(14,2)
-  credit    Decimal @default(0.00) @db.Decimal(14,2)
+  line_id    String  @id @default(uuid())
+  entry_id   String
+  account_id String  @db.Uuid
+  debit      Decimal @default(0.00) @db.Decimal(14, 2)
+  credit     Decimal @default(0.00) @db.Decimal(14, 2)
 
-  account   Account @relation(fields: [account_id], references: [account_id])
-  journal   JournalEntry @relation(fields: [entry_id], references: [entry_id])
+  account Account      @relation(fields: [account_id], references: [account_id])
+  journal JournalEntry @relation(fields: [entry_id], references: [entry_id])
 }
 
 //Log Account status change for each account. from Active, inActive etc created
 model AccountStatusLog {
-  id         String   @id @default(uuid())
-  account_id String   @db.Uuid
-  old_status AccountStatus? // old status can be empty before it gets created
-  new_status AccountStatus
+  id             String         @id @default(uuid())
+  account_id     String         @db.Uuid
+  old_status     AccountStatus? // old status can be empty before it gets created
+  new_status     AccountStatus
   pos_session_id String
-  changed_by String
-  changed_at DateTime @default(now())
+  changed_by     String
+  changed_at     DateTime       @default(now())
 
   // Relations
   account Account @relation(fields: [account_id], references: [account_id], onDelete: Cascade)
@@ -764,21 +757,21 @@ model AccountSessionLog {
 
 // for each activity done to the acccount, debit or credit it is recorded here.
 model AccountsLog {
-  accounts_log_id  String   @id @default(cuid())
-  account_id       String
-  action           String // 'debit' | 'credit'
-  opening_balance  Decimal
-  old_running_balance  Decimal
-  new_running_balance      Decimal
-  pos_session_id   String
-  user             String
-  created_at       DateTime @default(now())
+  accounts_log_id     String   @id @default(cuid())
+  account_id          String
+  action              String // 'debit' | 'credit'
+  opening_balance     Decimal
+  old_running_balance Decimal
+  new_running_balance Decimal
+  pos_session_id      String
+  user                String
+  created_at          DateTime @default(now())
 
   @@map("accounts_log") // Optional: use this if your table name in DB is different
 }
 
 model Employee {
-  id         String          @id @default(uuid())
+  id         String   @id @default(uuid())
   firstName  String
   lastName   String
   email      String   @unique
@@ -792,33 +785,29 @@ model Employee {
   assets AssetRegister[]
 }
 
-
-
-
 model AssetRegister {
-  id              String       @id @default(uuid())
-  assetTag        String       @unique
+  id              String   @id @default(uuid())
+  assetTag        String   @unique
   name            String
   description     String?
   purchaseDate    DateTime
   purchaseCost    Float
   supplier        String?
   location        String?
-  status          String       @default("active") // active, under_maintenance, disposed
+  status          String   @default("active") // active, under_maintenance, disposed
   depreciation    Float?
   usefulLifeYears Int?
-  createdAt       DateTime     @default(now())
-  updatedAt       DateTime     @updatedAt
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
-  accountId      String?        @db.Uuid
-  account        Account?      @relation(fields: [accountId], references: [account_id])
- category        AssetCategory
+  accountId String?       @db.Uuid
+  account   Account?      @relation(fields: [accountId], references: [account_id])
+  category  AssetCategory
 
   // Relation: optional custodian
   custodianId String?
   custodian   Employee? @relation(fields: [custodianId], references: [id])
 }
-
 
 // Enums for your new tables
 enum PaymentType {
@@ -1029,6 +1018,7 @@ enum InventoryStatus {
   ACTIVE // Item is available for sale and can be interacted with.
   INACTIVE // Item is temporarily unavailable for sale, could be out of stock or on hold.
   DISCONTINUED // Item is no longer available for sale and will not be restocked.
+  FINISHED
 }
 
 enum BatchInventoryStatus {
