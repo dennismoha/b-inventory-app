@@ -131,6 +131,104 @@ export class TransactionsController {
             productTotalCost,
             transactionId
           });
+
+          const inventoryUpdates = await tx.inventory.findUnique({
+            where: { supplier_products_id: item.supplier_products_id, status: 'ACTIVE', batch_inventory_id: item.batch_inventory_id }
+          });
+
+          if (!inventoryUpdates) {
+            throw new BadRequestError('item not found in inventory');
+          }
+
+          console.log('inventory updaes', inventoryUpdates.stock_quantity);
+          console.log('item stock', item.stock_quantity);
+          console.log('item quantity', item.quantity);
+
+          await tx.productSummary.update({
+            where: { supplier_products_id: item.supplier_products_id },
+            data: {
+              total_sold: { increment: totalAllocated }
+            }
+          });
+
+          if (Number(inventoryUpdates.stock_quantity) - Number(item.quantity) === 0) {
+            console.log(
+              ' we are here ',
+              Number(inventoryUpdates.stock_quantity) - Number(item.stock_quantity) === 0,
+              'asnwer is ',
+              Number(inventoryUpdates.stock_quantity) - Number(item.stock_quantity)
+            );
+            await tx.batchInventory.update({
+              where: { batch_inventory_id: item.batch_inventory_id },
+              data: { status: 'FINISHED' }
+            });
+
+            await tx.inventory.update({
+              where: { supplier_products_id: item.supplier_products_id },
+              data: { stock_quantity: 0 }
+            });
+
+            const nextBatchItem = await tx.batchInventory.findFirst({
+              where: { supplier_products_id: item.supplier_products_id, status: 'PENDING' },
+              orderBy: {
+                created_at: 'desc'
+              },
+              select: {
+                total_units: true,
+                supplier_products_id: true,
+                batch_inventory_id: true,
+                purchase: {
+                  select: {
+                    unit_id: true
+                  }
+                }
+              }
+            });
+
+            if (!nextBatchItem) {
+              await tx.inventory.update({
+                where: { supplier_products_id: item.supplier_products_id, status: 'ACTIVE' },
+                data: {
+                  status: 'FINISHED'
+                }
+              });
+
+              await tx.batchLifecycle.update({
+                where: { batch_id: item.batch_inventory_id },
+                data: {
+                  ended_at: new Date()
+                }
+              });
+            } else {
+              await tx.inventory.upsert({
+                where: { supplier_products_id: item.supplier_products_id, status: 'ACTIVE' },
+                create: {
+                  supplier_products_id: nextBatchItem.supplier_products_id,
+                  batch_inventory_id: nextBatchItem.batch_inventory_id,
+                  stock_quantity: nextBatchItem.total_units,
+                  unit_id: nextBatchItem.purchase.unit_id,
+                  status: 'ACTIVE'
+                },
+                update: {
+                  batch_inventory_id: nextBatchItem.batch_inventory_id,
+                  stock_quantity: nextBatchItem.total_units,
+                  status: 'ACTIVE'
+                }
+              });
+
+              await tx.batchLifecycle.create({
+                data: {
+                  batch_id: nextBatchItem.batch_inventory_id
+                }
+              });
+            }
+          } else {
+            console.log('nuuuuuuuuuuuuuuuuuuuuuuuuuuuuuumber');
+            await tx.inventory.update({
+              where: { supplier_products_id: item.supplier_products_id },
+              data: { stock_quantity: { decrement: totalAllocated } }
+            });
+          }
         }
 
         // Update inventory & product summary
@@ -138,104 +236,6 @@ export class TransactionsController {
         //   where: { supplier_products_id: item.supplier_products_id },
         //   data: { stock_quantity: { decrement: totalAllocated } }
         // });
-
-        const inventoryUpdates = await tx.inventory.findUnique({
-          where: { supplier_products_id: item.supplier_products_id, status: 'ACTIVE', batch_inventory_id: item.batch_inventory_id }
-        });
-
-        if (!inventoryUpdates) {
-          throw new BadRequestError('item not found in inventory');
-        }
-
-        console.log('inventory updaes', inventoryUpdates.stock_quantity);
-        console.log('item stock', item.stock_quantity);
-        console.log('item quantity', item.quantity);
-
-        await tx.productSummary.update({
-          where: { supplier_products_id: item.supplier_products_id },
-          data: {
-            total_sold: { increment: totalAllocated }
-          }
-        });
-
-        if (Number(inventoryUpdates.stock_quantity) - Number(item.quantity) === 0) {
-          console.log(
-            ' we are here ',
-            Number(inventoryUpdates.stock_quantity) - Number(item.stock_quantity) === 0,
-            'asnwer is ',
-            Number(inventoryUpdates.stock_quantity) - Number(item.stock_quantity)
-          );
-          await tx.batchInventory.update({
-            where: { batch_inventory_id: item.batch_inventory_id },
-            data: { status: 'FINISHED' }
-          });
-
-          await tx.inventory.update({
-            where: { supplier_products_id: item.supplier_products_id },
-            data: { stock_quantity: 0 }
-          });
-
-          const nextBatchItem = await tx.batchInventory.findFirst({
-            where: { supplier_products_id: item.supplier_products_id, status: 'PENDING' },
-            orderBy: {
-              created_at: 'desc'
-            },
-            select: {
-              total_units: true,
-              supplier_products_id: true,
-              batch_inventory_id: true,
-              purchase: {
-                select: {
-                  unit_id: true
-                }
-              }
-            }
-          });
-
-          if (!nextBatchItem) {
-            await tx.inventory.update({
-              where: { supplier_products_id: item.supplier_products_id, status: 'ACTIVE' },
-              data: {
-                status: 'FINISHED'
-              }
-            });
-
-            await tx.batchLifecycle.update({
-              where: { batch_id: item.batch_inventory_id },
-              data: {
-                ended_at: new Date()
-              }
-            });
-          } else {
-            await tx.inventory.upsert({
-              where: { supplier_products_id: item.supplier_products_id, status: 'ACTIVE' },
-              create: {
-                supplier_products_id: nextBatchItem.supplier_products_id,
-                batch_inventory_id: nextBatchItem.batch_inventory_id,
-                stock_quantity: nextBatchItem.total_units,
-                unit_id: nextBatchItem.purchase.unit_id,
-                status: 'ACTIVE'
-              },
-              update: {
-                batch_inventory_id: nextBatchItem.batch_inventory_id,
-                stock_quantity: nextBatchItem.total_units,
-                status: 'ACTIVE'
-              }
-            });
-
-            await tx.batchLifecycle.create({
-              data: {
-                batch_id: nextBatchItem.batch_inventory_id
-              }
-            });
-          }
-        } else {
-          console.log('nuuuuuuuuuuuuuuuuuuuuuuuuuuuuuumber');
-          await tx.inventory.update({
-            where: { supplier_products_id: item.supplier_products_id },
-            data: { stock_quantity: { decrement: totalAllocated } }
-          });
-        }
       }
 
       // Insert all product lines
