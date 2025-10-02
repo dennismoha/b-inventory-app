@@ -50,7 +50,8 @@ import type {
   LowStockResponseItem,
   StockResponseItem,
   TrialBalance,
-  pos_session_header
+  pos_session_header,
+  TransactionProductsBetweenDates
   // PurchasePayableResponse,
   // purchasePayable
 } from '@/feature-module/interface/features-interface';
@@ -1160,16 +1161,16 @@ const TransactionApi = InventoryApi.injectEndpoints({
         body: newTransaction
       }),
       invalidatesTags: ['Transactions', 'InventoryItems', 'TotalSales', 'CustomerSales', 'salesBetweenproductsdates']
-    })
+    }),
 
-    // getTransactionsInsights: build.query<ApiResponse<TransactionProductsBetweenDates>, { startDate: string; endDate: string }>({
-    //   query: ({ startDate, endDate }) => ({
-    //     url: '/get-sales-products-between-dates',
-    //     params: { startDate, endDate } // Send start and end date as query params
-    //   }),
-    //   providesTags: ['salesBetweenproductsdates'],
-    //   keepUnusedDataFor: 300000
-    // })
+    getTransactionsInsights: build.query<ApiResponse<TransactionProductsBetweenDates>, { startDate: string; endDate: string }>({
+      query: ({ startDate, endDate }) => ({
+        url: '/get-sales-products-between-dates',
+        params: { startDate, endDate } // Send start and end date as query params
+      }),
+      providesTags: ['salesBetweenproductsdates'],
+      keepUnusedDataFor: 300000
+    })
 
     // Update an existing transaction
     // updateTransaction: build.mutation<Transaction, { transactionId: string; patch: Partial<Transaction> }>({
@@ -1508,8 +1509,8 @@ export const {
   useGetTransactionsQuery,
   // useGetTransactionsByCustomerQuery,
   // useGetTransactionQuery,
-  useCreateTransactionMutation
-  // useGetTransactionsInsightsQuery
+  useCreateTransactionMutation,
+  useGetTransactionsInsightsQuery
   // useUpdateTransactionMutation,
   // useDeleteTransactionMutation,
 } = TransactionApi;

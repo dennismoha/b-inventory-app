@@ -306,7 +306,7 @@ export interface Transaction {
   customer: Customer | null;
   transactionDateCreated: Date;
 
-  TransactionProduct: TransactionProduct[];
+  Sales: TransactionProduct[];
   // List of related transaction products
 }
 
@@ -1057,3 +1057,8 @@ export interface StockResponseItem {
 }
 
 export type pos_session_header = { pos_session_id: string };
+
+export interface TransactionProductsBetweenDates {
+  totalSales: number;
+  transactions: Transaction[];
+}

@@ -33,7 +33,8 @@ import { employeeRoutes } from './features/hrm/employees/routes/employees.routes
 import { expenseRoutes } from './features/expenses/routes/expenses-routes';
 import { reportRoutes } from './features/accounting/routes/report-routes';
 import { productSummaryRoutes } from './features/inventory/routes/manage-inventory-routes';
-
+// import { salesRoutes } from './features/dashboard/routes/dashboard-routes';
+import { salesRoutes } from './features/analysis/routes/analysis-routes';
 // import { verifyRoles } from '@src/shared/globals/helpers/verify-roles';
 
 // import { authMiddleware } from './shared/globals/helpers/auth-middleware';
@@ -75,6 +76,7 @@ export default (app: Application) => {
     app.use(BASE_PATH, purchasePayablesRoutes.routes());
     app.use(BASE_PATH, batchInventoryRoutes.routes());
     app.use(BASE_PATH, productSummaryRoutes.routes());
+    app.use(BASE_PATH, salesRoutes.routes());
   };
 
   routes();

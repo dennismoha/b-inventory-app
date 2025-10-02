@@ -243,16 +243,16 @@ export const SidebarData = [
     submenu: false,
     showSubRoute: false,
     submenuItems: [
-      // {
-      //   label: 'Sales',
-      //   icon: 'layout-grid',
-      //   showSubRoute: false,
-      //   submenu: true,
-      //   submenuItems: [
-      //     // { label: "Online Orders", link: route.onlineorder, showSubRoute: false },
-      //     { label: 'POS Orders', link: route.posorder, showSubRoute: false }
-      //   ]
-      // }
+      {
+        label: 'Sales',
+        icon: 'layout-grid',
+        showSubRoute: false,
+        submenu: true,
+        submenuItems: [
+          { label: 'sales-dashboard', link: route.onlineorder, showSubRoute: false }
+          // { label: 'POS Orders', link: route.posorder, showSubRoute: false }
+        ]
+      }
       // {
       //   label: 'Invoices',
       //   link: route.invoice,
@@ -384,7 +384,7 @@ export const SidebarData = [
         showSubRoute: false,
         icon: 'file-stack',
         submenuItems: [
-          { label: 'Expenses', link: '/expense-list', showSubRoute: false },
+          { label: 'Expenses', link: '/expense-list', showSubRoute: false }
           // {
           //   label: 'Expense Category',
           //   link: '/expense-category',
@@ -679,7 +679,7 @@ export const SidebarData = [
         link: '/profit-loss-report',
         icon: 'chart-donut',
         showSubRoute: false
-      },
+      }
       // {
       //   label: 'Annual Report',
       //   link: '/annual-report',
@@ -769,7 +769,7 @@ export const SidebarData = [
         showSubRoute: false
       }
     ]
-  },
+  }
   // {
   //   label: "Pages",
   //   submenuOpen: true,
