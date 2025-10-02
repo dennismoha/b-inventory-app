@@ -1,11 +1,8 @@
-@use "../utils/mixins";
-@use "../utils/variables";
-
 .page-header {
     .page-btn {
         &.import {
           margin-left: 8px;
-          @include mixins.respond-below(custom575){
+          @include respond-below(custom575){
             margin-left: 0;
           }
         }
@@ -14,8 +11,8 @@
 .summer-description-box.transfer{
     margin-bottom: 0;
     p {
-        color: variables.$text-color;
-        font-size: variables.$font-size-14;
+        color: $text-color;
+        font-size: $font-size-14;
     }
 }
 .summer-description-box.transfer .note-editor {
@@ -25,7 +22,7 @@
     margin-bottom: 0;
 }
 .image-upload .image-uploads h4 span {
-    color: variables.$primary;
+    color: $primary;
 }
 .modal-dialog{
     &.payment{
@@ -38,7 +35,7 @@
 	}
 }
 .badges.status-badge.ordered{
-   background-color: variables.$warning;
+   background-color: $warning;
 }
 .input-blocks.leave-table{
     margin-bottom: 0;
@@ -49,11 +46,11 @@
 }
 .page-header{
     &.transfer{
-        @include mixins.respond-below(custom767){
+        @include respond-below(custom767){
             display: block;
         }
         .table-top-head{
-            @include mixins.respond-below(custom767){
+            @include respond-below(custom767){
                 justify-content: flex-start;
                 margin-top: 24px;
                 margin-bottom: 24px;
@@ -62,13 +59,13 @@
     .purchase-pg-btn {
         .page-btn {
             &:first-child {
-                @include mixins.respond-below(custom767){
+                @include respond-below(custom767){
                     margin-left: 0;
                     margin-top: 0;
                 }
             }
         }
-        @include mixins.respond-below(custom575){
+        @include respond-below(custom575){
             flex-direction: column;
             align-items: self-start;
         }

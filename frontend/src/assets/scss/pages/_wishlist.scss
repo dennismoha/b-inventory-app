@@ -1,6 +1,3 @@
-@use "../utils/mixins";
-@use "../utils/variables";
-
 // wishlist style
 
 .wishlist-products {    
@@ -10,20 +7,20 @@
         margin-right: 7px;
         input {
             padding: 1px 9px;   
-            @include mixins.rounded(8px);
+            @include rounded(8px);
             height: 28px;
             width: 71px;
             text-align: center;
-            font-size: variables.$font-size-base;
+            font-size: $font-size-base;
         }
         .dec, .inc {
             position: absolute;
             top: 50%;
-            @include mixins.transform(translateY(-50%));
-            color: variables.$secondary;
-            @include mixins.transition(all 0.5s ease);
+            @include transform(translateY(-50%));
+            color: $secondary;
+            @include transition(all 0.5s ease);
             &:hover {
-                color: variables.$primary;
+                color: $primary;
             }
         }
         .dec {
@@ -35,12 +32,12 @@
     }
     .product-info {
         padding: 15px;
-        color:  variables.$sub-title;
+        color:  $sub-title;
         border: 1px solid #E6EAED;
-        @include mixins.transition(all 0.5s ease);
+        @include transition(all 0.5s ease);
         .img-bg {
-            background-color: variables.$light;
-            @include mixins.rounded(10px);
+            background-color: $light;
+            @include rounded(10px);
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
@@ -54,16 +51,16 @@
             position: relative;
             padding: 10px;
             img {
-                @include mixins.transition(all 0.5s ease);
+                @include transition(all 0.5s ease);
             }
             span {
-                @include mixins.transition(all 0.5s ease);
-                background: variables.$pink;
+                @include transition(all 0.5s ease);
+                background: $pink;
                 position: absolute;
                 top: -5px;
                 right: -5px;
-                @include mixins.rounded(100%);
-                color: variables.$success;
+                @include rounded(100%);
+                color: $success;
                 display: -webkit-box;
                 display: -ms-flexbox;
                 display: flex;
@@ -74,24 +71,24 @@
                 -webkit-justify-content: center;
                 -ms-flex-pack: center;
                 display: none;
-                font-size: variables.$font-size-18;
+                font-size: $font-size-18;
                 &:hover {
-                    background: variables.$secondary;
+                    background: $secondary;
                 }
             }
         }
         h6 {
-            font-weight: variables.$font-weight-bold;
+            font-weight: $font-weight-bold;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             &.cat-name {
                 margin-bottom: 4px;
-                font-weight: variables.$font-weight-normal;
+                font-weight: $font-weight-normal;
                 a {
-                    color: variables.$gray-600;
+                    color: $gray-600;
                     &:hover {
-                        color: variables.$primary;
+                        color: $primary;
                     }
                 }
             }
@@ -99,13 +96,13 @@
         .price {
             margin-top: 8px;
             padding-top: 8px;
-            border-top: 1px dashed variables.$border-color;
+            border-top: 1px dashed $border-color;
             span {
-                color:  variables.$pink;
+                color:  $pink;
             }
             p {
-                color: variables.$teal;
-                font-weight: variables.$font-weight-bold;
+                color: $teal;
+                font-weight: $font-weight-bold;
             }
 
         }

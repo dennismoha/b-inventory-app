@@ -1,18 +1,15 @@
-@use "../utils/mixins";
-@use "../utils/variables";
-
 .barcode-content-list {
     border-radius: 8px;
     border: 1px solid rgba(145, 158, 171, 0.30);
-    background:  variables.$white;
+    background:  $white;
     padding: 24px;
-    @include mixins.respond-below(custom575) {
+    @include respond-below(custom575) {
        padding-left: 15px;
     }
     .seacrh-barcode-item {
         margin-bottom: 24px;
         .seacrh-barcode-item-one {
-            @include mixins.respond-below(custom575) {
+            @include respond-below(custom575) {
                 margin-bottom: 15px;
              }
         }
@@ -43,7 +40,7 @@
         padding-bottom: 24px;
         border-bottom: 1px solid rgba(145, 158, 171, 0.30);
         .search-toggle-list {
-            @include mixins.respond-below(custom575) {
+            @include respond-below(custom575) {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
@@ -51,14 +48,14 @@
              }
             p {
                 margin-bottom: 5px;
-                color: variables.$secondary;
-                font-size: variables.$font-size-14;
-                font-weight: variables.$font-weight-medium;
+                color: $secondary;
+                font-size: $font-size-14;
+                font-weight: $font-weight-medium;
                 display: -webkit-box;
                 -webkit-line-clamp: 1;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
-                @include mixins.respond-below(custom575) {
+                @include respond-below(custom575) {
                     margin-bottom: 0px;
                  }
     }
@@ -69,11 +66,11 @@
         display: flex;
         align-items: center;
         justify-content: end;
-        @include mixins.respond-below(custom575) {
+        @include respond-below(custom575) {
             display: block;
         }
         a {
-            @include mixins.respond-below(custom575) {
+            @include respond-below(custom575) {
                 width: 100%;
                 margin-bottom: 14px;
             }
@@ -88,13 +85,13 @@
     margin-right: 8px;
 }
 .close-btn {
-    background: variables.$danger;
+    background: $danger;
     &:hover {
-        background: variables.$danger-hover;
+        background: $danger-hover;
     }
 } 
 .seacrh-barcode-item .searchInput{
-    background: variables.$white;
+    background: $white;
     width: 100%;
     border-radius: 5px;
     position: relative;
@@ -105,8 +102,8 @@
     outline: none;
     border-radius: 5px;
     padding: 0 20px 0 38px;
-    font-size: variables.$font-size-18;
-    color: variables.$gray-300;
+    font-size: $font-size-18;
+    color: $gray-300;
 }  
 .searchInput.active input{
     border-radius: 5px 5px 0 0;
@@ -122,7 +119,7 @@
     padding: 10px 8px;
     opacity: 1;
     pointer-events: auto;
-    border: 1px solid variables.$warning;
+    border: 1px solid $warning;
 }  
 .resultBox li{
     list-style: none;
@@ -136,8 +133,8 @@
     display: block;
 }
 .resultBox li:hover{
-    background: variables.$warning;
-    color: variables.$white;
+    background: $warning;
+    color: $white;
 }  
 .searchInput .icon{
     position: absolute;
@@ -147,33 +144,33 @@
     width: 15px;
     text-align: center;
     line-height: 55px;
-    color: variables.$text-color;
+    color: $text-color;
     cursor: pointer;
 }
 .barcode-scan-header {
     margin-bottom: 15px;
     h5 {
-        font-size: variables.$font-size-18;
-        font-weight: variables.$font-weight-bold;
-        color: variables.$secondary;
+        font-size: $font-size-18;
+        font-weight: $font-weight-bold;
+        color: $secondary;
     }
 }
 .barcode-scanner-link {
     padding: 10px 5px;
     border-radius: 10px;
     border: 1px solid  rgba(145, 158, 171, 0.30);
-    background:  variables.$white;
+    background:  $white;
     margin-bottom: 30px;
     h6 {
-        font-size: variables.$font-size-14;
-        font-weight: variables.$font-weight-bold;
-        color: variables.$secondary;
+        font-size: $font-size-14;
+        font-weight: $font-weight-bold;
+        color: $secondary;
         margin-bottom: 5px;
     }
     p {
-        font-size: variables.$font-size-15;
-        font-weight: variables.$font-weight-normal;
-        color: variables.$text-color;
+        font-size: $font-size-15;
+        font-weight: $font-weight-normal;
+        color: $text-color;
         margin-bottom: 5px;
     }
   }

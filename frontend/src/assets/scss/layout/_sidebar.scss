@@ -1,34 +1,31 @@
-@use "../utils/mixins";
-@use "../utils/variables";
-
 .sidebar,.settings-sidebar {
     display: block;
-    background-color: variables.$white;
+    background-color: $white;
     margin-top: 0;
     z-index: 1001;
     position: fixed;
     top: 65px;
     bottom: 0;
     left: 0;
-    @include mixins.transition(all 0.5s ease);
-    border-right: 1px solid variables.$border-color;
+    @include transition(all 0.5s ease);
+    border-right: 1px solid $border-color;
     width: 252px;
-    @include mixins.respond-below(custom991) {
+    @include respond-below(custom991) {
         margin-left: -575px;
-        @include mixins.transition(all 0.4s ease);
+        @include transition(all 0.4s ease);
         z-index: 1041;
-        background: variables.$white;
+        background: $white;
     }
-    @include mixins.respond-below(custom575) {
+    @include respond-below(custom575) {
         width: 100%;
     }
     .slimScrollDiv {
-        @include mixins.respond-below(custom575) {
+        @include respond-below(custom575) {
             width: 100% !important;
         }
     }
     .sidebar-menu{
-        @include mixins.margin-padding(null, 24px);
+        @include margin-padding(null, 24px);
     }
     .sidebar-menu{
         > ul{
@@ -36,7 +33,7 @@
                 margin-bottom: 16px;
                 &.active{
                     a{
-                        color: variables.$white;
+                        color: $white;
                     }
                     svg {
                         color: #FE9F43
@@ -47,7 +44,7 @@
                     width:  16px;
                     height:  16px;
                     margin-right: 10px;
-                    color: variables.$gray-600;
+                    color: $gray-600;
                 }
                 > a{
                     display: -webkit-box;
@@ -56,9 +53,9 @@
                     align-items: center;
                     -webkit-box-align: center;
                     -ms-flex-align: center;
-                    @include mixins.margin-padding(null, 10px 15px);
+                    @include margin-padding(null, 10px 15px);
                     position: relative;
-                    color: variables.$secondary;
+                    color: $secondary;
                     svg{
                         color: #637381;
                     }
@@ -68,42 +65,42 @@
                     }
                     &:hover{
                         background: rgba(254, 159, 67, 0.08);
-                        color: variables.$primary;
+                        color: $primary;
                         border-radius: 5px;
                         img {
                             filter: invert(72%) sepia(76%) saturate(1430%) hue-rotate(327deg) brightness(103%) contrast(101%);
                         }
                         span{
-                            color: variables.$primary;
+                            color: $primary;
                         }
                         svg{
-                            color: variables.$primary;
+                            color: $primary;
                         }
                     }
                     &.active{
                         background: rgba(254, 159, 67, 0.08);
-                        color: variables.$primary;
+                        color: $primary;
                         border-radius: 5px;
                         svg{
-                            color: variables.$white;
+                            color: $white;
                         }
                         img {
                             filter: invert(72%) sepia(76%) saturate(1430%) hue-rotate(327deg) brightness(103%) contrast(101%);
                         }
                         span{
-                            color: variables.$primary;
+                            color: $primary;
                         }
                         .menu-arrow{
                             background: #FFEDDC;
                             &::before{
-                                border-color: variables.$primary;
+                                border-color: $primary;
                             }
                         }
                     }
                     span{
-                        font-size: variables.$font-size-15;
-                        font-weight: variables.$font-weight-medium;
-                        color: variables.$gray-600;
+                        font-size: $font-size-15;
+                        font-weight: $font-weight-medium;
+                        color: $gray-600;
                     }
                     
                 }
@@ -115,27 +112,27 @@
                             filter: invert(72%) sepia(76%) saturate(1430%) hue-rotate(327deg) brightness(103%) contrast(101%);
                         }
                         span{
-                            color: variables.$primary;
+                            color: $primary;
                         }
                     }
                 }
                 &.submenu{
                     ul{
                         border-bottom: 1px solid rgba(222, 226, 230, 0.5);
-                        @include mixins.margin-padding(null, 10px 0);
+                        @include margin-padding(null, 10px 0);
                         display: none;
                        li{
                             a{
-                               font-weight: variables.$font-weight-medium;
-                               font-size: variables.$font-size-base;
-                               color: variables.$secondary;
+                               font-weight: $font-weight-medium;
+                               font-size: $font-size-base;
+                               color: $secondary;
                                position: relative;
                                display: block;
-                               @include mixins.margin-padding(null, 8px 8px 8px 40px);
+                               @include margin-padding(null, 8px 8px 8px 40px);
                                &.active{
-                                   color: variables.$secondary;
+                                   color: $secondary;
                                    &:after{
-                                    background: variables.$primary;
+                                    background: $primary;
                                     border: 2px solid #FDB;
                                    }
                                }
@@ -144,14 +141,14 @@
                                 background: rgba(50, 71, 92, 0.38);
                                 width: 8px;
                                 height: 8px;
-                                border: 2px solid variables.$white;
-                                @include mixins.rounded(50px);
-                                @include mixins.position(absolute,16px,null,null,16px);
+                                border: 2px solid $white;
+                                @include rounded(50px);
+                                @include position(absolute,16px,null,null,16px);
                                }
                                &:hover{
-                                   color:variables.$primary;
+                                   color:$primary;
                                    &:after{
-                                    background: variables.$primary;
+                                    background: $primary;
                                     border: 2px solid #FDB;
                                    }
                                }
@@ -161,7 +158,7 @@
                 }
                 &.submenu-open{
                     ul{
-                        border-bottom: 1px solid variables.$border-color;
+                        border-bottom: 1px solid $border-color;
                         padding-bottom: 16px;
                         display: block;
                        li{
@@ -172,41 +169,41 @@
                                 align-items: center;
                                 -webkit-box-align: center;
                                 -ms-flex-align: center;
-                                font-weight: variables.$font-weight-medium;
-                                font-size: variables.$font-size-14;
+                                font-weight: $font-weight-medium;
+                                font-size: $font-size-14;
                                 position: relative;
                                 width: 100%;
                                 padding: 8px 12px;
                                 border-radius: 5px;
                                span {
                                 white-space: nowrap;
-                                font-size: variables.$font-size-base;
-                                color: variables.$title-color;
+                                font-size: $font-size-base;
+                                color: $title-color;
                                }
                                i {
-                                color: variables.$gray-600;
+                                color: $gray-600;
                                }
                                &.active{
-                                   color: variables.$primary;
+                                   color: $primary;
                                    a {
                                        span {
-                                            color: variables.$primary;
+                                            color: $primary;
                                        }
                                    }
                                    &:after{
-                                    background: variables.$primary;
+                                    background: $primary;
                                     border: 2px solid #FDB;
                                    }
                                }
                                &:hover{
-                                   color:variables.$title-color;
-                                   background-color: variables.$light-900;
+                                   color:$title-color;
+                                   background-color: $light-900;
                                    &:after{
-                                    background: variables.$primary;
+                                    background: $primary;
                                     border: 2px solid #FDB;
                                    }
                                    span, i {
-                                        color:variables.$title-color;
+                                        color:$title-color;
                                    }
                                }
                            }  
@@ -216,17 +213,17 @@
                         &.active a{
                             background: rgba(254, 159, 67, 0.08);
                             border-radius: 5px;
-                            color: variables.$primary;
+                            color: $primary;
                             span, i {
-                                color: variables.$primary;
+                                color: $primary;
                             }
                         }
                        }
                     }
                     .submenu-hdr {
-                        font-weight: variables.$font-weight-bold;
-                        font-size: variables.$font-size-12;
-                        color: variables.$secondary;
+                        font-weight: $font-weight-bold;
+                        font-size: $font-size-12;
+                        color: $secondary;
                         margin: 0 0 8px 0;
                     }
                     &:first-child {
@@ -247,16 +244,16 @@
                         &.submenu {
                             & > a {
                                 &.subdrop{
-                                    background: variables.$primary-100;
-                                    color: variables.$primary;
+                                    background: $primary-100;
+                                    color: $primary;
                                     border-radius: 8px;
                                     span, i {
-                                        color: variables.$primary;
+                                        color: $primary;
                                     }
                                     .menu-arrow{
-                                        background: variables.$primary-200;
+                                        background: $primary-200;
                                         &::before{
-                                            border-color: variables.$primary;
+                                            border-color: $primary;
                                         }
                                     }
                                 }
@@ -268,25 +265,25 @@
             li {
                 &.active{
                     a{
-                        color: variables.$primary;
+                        color: $primary;
                     }
                     svg {
-                        color: variables.$primary;
+                        color: $primary;
                     }
                 }
                 .submenu > {
                     a {
                         &.active{
-                            background: variables.$primary-100;
-                            color: variables.$primary;
+                            background: $primary-100;
+                            color: $primary;
                             border-radius: 8px;
                             span, i{
-                                color: variables.$primary;
+                                color: $primary;
                             }
                             .menu-arrow{
-                                background: variables.$primary-200;
+                                background: $primary-200;
                                 &::before{
-                                    border-color: variables.$primary;
+                                    border-color: $primary;
                                 }
                             }
                         }
@@ -295,12 +292,12 @@
                 .submenu .submenu-two > {
                     a {
                         &.active{
-                            background: variables.$light-900;
+                            background: $light-900;
                         }
                         &.subdrop {
-                            color: variables.$primary;
+                            color: $primary;
                             &::after {
-                                background: variables.$primary;
+                                background: $primary;
                             }
                         }
                     }
@@ -344,26 +341,26 @@
                     li {
                         a {
                         padding-bottom: 4px;
-                        font-size: variables.$font-size-13;
-                        font-weight: variables.$font-weight-normal;
-                        color: variables.$gray-600;
+                        font-size: $font-size-13;
+                        font-weight: $font-weight-normal;
+                        color: $gray-600;
                         padding: 8px 10px 8px 30px;
                         &::after{
                             content: "";
-                            background: variables.$gray-600;
+                            background: $gray-600;
                             width: 8px;
                             height: 8px;
-                            border: 2px solid variables.$white;
-                            @include mixins.rounded(50px);
-                            @include mixins.position(absolute,50%,null,null,0);
-                            @include mixins.transform(translateY(-50%));
+                            border: 2px solid $white;
+                            @include rounded(50px);
+                            @include position(absolute,50%,null,null,0);
+                            @include transform(translateY(-50%));
                             left: 15px;
                             }
                             &:hover{
-                                color:variables.$primary;
+                                color:$primary;
                                 &:after{
-                                background: variables.$primary;
-                                border: 2px solid variables.$primary-200;
+                                background: $primary;
+                                border: 2px solid $primary-200;
                                 }
                             }
                         }
@@ -383,25 +380,25 @@
             -ms-flex-pack: center;
             text-rendering: auto;
             line-height: 40px;
-            font-size: variables.$font-size-18;
+            font-size: $font-size-18;
             line-height: 16px;
-            background: variables.$light-900;
+            background: $light-900;
             width: 16px;
             height: 16px;
             border-radius: 50%;
             position: absolute;
             top: 10px;
             right: 12px;
-            @include mixins.transform(translate(0, 0));
-            @include mixins.transition(all 0.2s ease);
+            @include transform(translate(0, 0));
+            @include transition(all 0.2s ease);
             &::before {
                 height: 5px;
                 width: 5px;
                 border-top: 0;
                 content: "";
                 border-left: 0;
-                border-right: 1px solid variables.$text-color;
-                border-bottom: 1px solid variables.$text-color;
+                border-right: 1px solid $text-color;
+                border-bottom: 1px solid $text-color;
                 transform: rotate(-45deg);
                 position: absolute;
                 left: 5px;
@@ -416,7 +413,7 @@
         }
         &.subdrop{
             .menu-arrow {
-                @include mixins.transform(rotate(90deg));                            
+                @include transform(rotate(90deg));                            
                 background: #FFEDDC;
             }
         }
@@ -431,11 +428,11 @@
         justify-content: center;
         -webkit-justify-content: center;
         -ms-flex-pack: center;
-        @include mixins.margin-padding(null, 10px);
-        color: variables.$secondary;
+        @include margin-padding(null, 10px);
+        color: $secondary;
         position: relative;
         &.active{
-            color: variables.$primary;
+            color: $primary;
             background: transparent;
             position: relative;
         }
@@ -443,25 +440,25 @@
     }
     .sidebar-left {
         width: 100px;
-        @include mixins.box-shadow(null, 5px, 0px, 15px, null, rgba(0, 0, 0, .05));
+        @include box-shadow(null, 5px, 0px, 15px, null, rgba(0, 0, 0, .05));
     }
     .sidebar-right {
         width: 250px;
         height: 100%;
-        @include mixins.transition(all 0.2s ease);
-        @include mixins.respond-below(custom991) {
+        @include transition(all 0.2s ease);
+        @include respond-below(custom991) {
             width: calc(100% - 70px);
         }
         .slimScrollDiv {
             width: 250px !important;
             overflow: visible !important;
-            @include mixins.respond-below(custom991) {
+            @include respond-below(custom991) {
                 width: 100% !important;
             }
         }
         p {
-            font-size: variables.$font-size-10;
-            color: variables.$gray-500;
+            font-size: $font-size-10;
+            color: $gray-500;
             text-transform: uppercase;
             margin-bottom: 10px;
         }
@@ -472,16 +469,16 @@
             li {
                 &.active{
                     a{
-                        background: linear-gradient(46.62deg, variables.$primary 0%, variables.$violet 93.64%);
-                        color: variables.$white;
+                        background: linear-gradient(46.62deg, $primary 0%, $violet 93.64%);
+                        color: $white;
                     }
                 }
                 a {
-                    font-weight: variables.$font-weight-normal;
-                    font-size: variables.$font-size-base;
-                    color: variables.$secondary;
+                    font-weight: $font-weight-normal;
+                    font-size: $font-size-base;
+                    color: $secondary;
                     &.active {
-                        color: variables.$primary;
+                        color: $primary;
                     }
                 }
             }
@@ -494,14 +491,14 @@
             font-family: 'Font Awesome 5 Free';
             text-rendering: auto;
             line-height: 40px;
-            font-size: variables.$font-size-18;
+            font-size: $font-size-18;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             line-height: 18px;
             top: 0px;
             position: relative;
-            font-weight: variables.$font-weight-bold;
-            @include mixins.transform(translate(0, 0));
+            font-weight: $font-weight-bold;
+            @include transform(translate(0, 0));
             &:before {
                 content: "\f105";
                 
@@ -522,7 +519,7 @@
     li {
         a.subdrop {
             .menu-arrow {
-                @include mixins.transform(rotate(90deg));
+                @include transform(rotate(90deg));
             }
         }
     }
@@ -533,17 +530,17 @@
             display: flex;
             -ms-flex-direction: column;
             flex-direction: column;
-            @include mixins.rounded(0);
-            border-bottom: 1px solid variables.$gray-400;
-            @include mixins.margin-padding(null, 20px 0);
-            @include mixins.transition(all 0.4s ease);
+            @include rounded(0);
+            border-bottom: 1px solid $gray-400;
+            @include margin-padding(null, 20px 0);
+            @include transition(all 0.4s ease);
             &:hover{
-                box-shadow: 0  0 0 150px variables.$violet inset;
-                color: variables.$white;
+                box-shadow: 0  0 0 150px $violet inset;
+                color: $white;
             }  
             span{
                 margin-top: 15px;
-                font-weight:variables.$font-weight-medium;
+                font-weight:$font-weight-medium;
             }
         }
        
@@ -551,15 +548,15 @@
     .sidemenu {
         a {
             width: 100%;
-            font-weight: variables.$font-weight-medium;
+            font-weight: $font-weight-medium;
             display: block;
-            @include mixins.rounded(5px);
-            @include mixins.margin-padding( 0 0 10px, 10px);
+            @include rounded(5px);
+            @include margin-padding( 0 0 10px, 10px);
             &:hover{
-                background: linear-gradient(46.62deg, variables.$primary 0%, variables.$violet 93.64%);
-                color: variables.$white;
+                background: linear-gradient(46.62deg, $primary 0%, $violet 93.64%);
+                color: $white;
                 svg{
-                    color:variables.$white;
+                    color:$white;
                 }
             }
             svg {
@@ -582,18 +579,18 @@
             -ms-flex-pack: center;
             position: absolute;
             opacity: 1;
-            background: variables.$primary;
+            background: $primary;
             right: -13px;
             border-radius: 50%;
             width: 25px;
             height: 25px;
-            color: variables.$white;
+            color: $white;
             cursor: pointer;
             svg {
                 transform: rotate(180deg);
             }    
             &:hover {
-                background: variables.$primary-hover;
+                background: $primary-hover;
             }       
         }
         &.active svg {
@@ -602,7 +599,7 @@
       
 }
 
-@include mixins.respond-above(custom991) {
+@include respond-above(custom991) {
     .mini-sidebar {
         .page-wrapper {
             margin-left: 86px;
@@ -674,7 +671,7 @@
     .expand-menu{
         .sidebar-right {
             display: block;
-            @include mixins.transition(all 0.2s ease);
+            @include transition(all 0.2s ease);
         }
         .sidebar {
             width: 252px;
@@ -682,7 +679,7 @@
                ul{
                    > li{
                         > a {
-                            @include mixins.margin-padding(null, 10px 15px);
+                            @include margin-padding(null, 10px 15px);
                             span{
                                 display:inline-block;
                             }
@@ -766,7 +763,7 @@ body.mini-sidebar{
     width: 100%;
     z-index: 99;
     background-color: rgba(0, 0, 0, 0.6);
-    @include mixins.position(fixed,60px,null,null,0);
+    @include position(fixed,60px,null,null,0);
     &.opened {
         display: block;
     }
@@ -780,7 +777,7 @@ body.mini-sidebar{
     }
     #toggle_btn{
         svg{
-            @include mixins.transform(rotate(180deg));
+            @include transform(rotate(180deg));
         }
     }
 }
@@ -804,7 +801,7 @@ body.mini-sidebar{
         &.sidebar-one {
             .submenu {
                 ul {
-                    background: variables.$body-bg;
+                    background: $body-bg;
                 }
             }
         }
@@ -816,7 +813,7 @@ body.mini-sidebar{
         align-items: center;
         padding: 0 24px;
         height: 65px;
-        border-bottom: 1px solid variables.$border-color;
+        border-bottom: 1px solid $border-color;
         .logo {
             img {
                 width: 130px;
@@ -837,18 +834,18 @@ body.mini-sidebar{
             -ms-flex-pack: center;
             position: absolute;
             opacity: 1;
-            background: variables.$primary;
+            background: $primary;
             right: -13px;
             border-radius: 50%;
             width: 25px;
             height: 25px;
-            color: variables.$white;
+            color: $white;
             cursor: pointer;
             svg {
                 transform: rotate(0);
             }    
             &:hover {
-                background: variables.$primary-hover;
+                background: $primary-hover;
             }    
             &.active svg {
                 transform: rotate(180deg) !important;
@@ -857,7 +854,7 @@ body.mini-sidebar{
        
     }
 }
-@include mixins.respond-above(custom992) {
+@include respond-above(custom992) {
     .header {
         left: 252px;
     }
@@ -904,6 +901,7 @@ body.mini-sidebar{
     }
     .header .header-left {
         float: left;
+        height: 50px;
         position: relative;
         text-align: center;
         z-index: 1;
@@ -913,12 +911,12 @@ body.mini-sidebar{
 .sidebar .sidebar-menu .menu-arrow::before, .settings-sidebar .sidebar-menu .menu-arrow::before {
     left: 4px;
 }
-@include mixins.respond-below(custom991) {
+@include respond-below(custom991) {
     .sidebar-logo {
         display: none !important;
     }
 }
-@include mixins.respond-above(custom991) {
+@include respond-above(custom991) {
     body.mini-sidebar.expand-menu {
         .sidebar .sidebar-menu {
             .submenu-open .submenu ul li a {

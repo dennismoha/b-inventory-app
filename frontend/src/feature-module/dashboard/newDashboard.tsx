@@ -1,11 +1,10 @@
-
-import { Link } from "react-router-dom";
-import "bootstrap-daterangepicker/daterangepicker.css";
-import Chart from "react-apexcharts";
-import ReactApexChart from "react-apexcharts";
-import { Doughnut } from "react-chartjs-2";
-import ApexCharts from "react-apexcharts";
-import type { ApexOptions } from "apexcharts";
+import { Link } from 'react-router-dom';
+import 'bootstrap-daterangepicker/daterangepicker.css';
+import Chart from 'react-apexcharts';
+import ReactApexChart from 'react-apexcharts';
+import { Doughnut } from 'react-chartjs-2';
+import ApexCharts from 'react-apexcharts';
+import type { ApexOptions } from 'apexcharts';
 
 import {
   Chart as ChartJS,
@@ -17,9 +16,9 @@ import {
   ArcElement,
   Title,
   Tooltip,
-  Legend,
-} from "chart.js";
-import { all_routes } from "../../routes/all_routes";
+  Legend
+} from 'chart.js';
+import { all_routes } from '../../routes/all_routes';
 import {
   customer11,
   customer12,
@@ -43,162 +42,140 @@ import {
   product6,
   product7,
   product8,
-  product9,
-} from "../../utils/imagepath";
-import CommonDateRangePicker from "../../components/date-range-picker/common-date-range-picker";
+  product9
+} from '../../utils/imagepath';
+import CommonDateRangePicker from '../../components/date-range-picker/common-date-range-picker';
+import { useAppSelector } from '@core/redux/store';
 
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  ArcElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend);
 const NewDashboard = () => {
   const route: any = all_routes;
+  const userName = useAppSelector((state) => state.auth.user.username);
 
   const salesDayChart: any = {
     chart: {
       height: 245,
-      type: "bar" as const,
+      type: 'bar' as const,
       stacked: true,
       toolbar: {
-        show: false,
-      },
+        show: false
+      }
     },
-    colors: ["#FE9F43", "#FFE3CB"],
+    colors: ['#FE9F43', '#FFE3CB'],
     responsive: [
       {
         breakpoint: 480,
         options: {
           legend: {
-            position: "bottom",
+            position: 'bottom',
             offsetX: -10,
-            offsetY: 0,
-          },
-        },
-      },
+            offsetY: 0
+          }
+        }
+      }
     ],
     plotOptions: {
       bar: {
         borderRadius: 8,
-        borderRadiusWhenStacked: "all",
+        borderRadiusWhenStacked: 'all',
         horizontal: false,
-        endingShape: "rounded",
-      },
+        endingShape: 'rounded'
+      }
     },
     series: [
       {
-        name: "Sales",
-        data: [18, 20, 10, 18, 25, 18, 10, 20, 40, 8, 30, 20],
+        name: 'Sales',
+        data: [18, 20, 10, 18, 25, 18, 10, 20, 40, 8, 30, 20]
       },
       {
-        name: "Purchase",
-        data: [40, 30, 30, 50, 40, 50, 30, 30, 50, 30, 40, 30],
-      },
+        name: 'Purchase',
+        data: [40, 30, 30, 50, 40, 50, 30, 30, 50, 30, 40, 30]
+      }
     ],
     xaxis: {
-      categories: [
-        "2 am",
-        "4 am",
-        "6 am",
-        "8 am",
-        "10 am",
-        "12 am",
-        "14 pm",
-        "16 pm",
-        "18 pm",
-        "20 pm",
-        "22 pm",
-        "24 pm",
-      ],
+      categories: ['2 am', '4 am', '6 am', '8 am', '10 am', '12 am', '14 pm', '16 pm', '18 pm', '20 pm', '22 pm', '24 pm'],
       labels: {
         style: {
-          colors: "#6B7280",
-          fontSize: "13px",
-        },
-      },
+          colors: '#6B7280',
+          fontSize: '13px'
+        }
+      }
     },
     yaxis: {
       labels: {
         formatter: (val: any) => `${val}K`,
         offsetX: -15,
         style: {
-          colors: "#6B7280",
-          fontSize: "13px",
-        },
-      },
+          colors: '#6B7280',
+          fontSize: '13px'
+        }
+      }
     },
     grid: {
-      borderColor: "#E5E7EB",
+      borderColor: '#E5E7EB',
       strokeDashArray: 5,
       padding: {
         left: -16,
         top: 0,
         bottom: 0,
-        right: 0,
-      },
+        right: 0
+      }
     },
     legend: {
-      show: false,
+      show: false
     },
     dataLabels: {
-      enabled: false,
+      enabled: false
     },
     fill: {
-      opacity: 1,
-    },
+      opacity: 1
+    }
   };
 
   const customerChart: ApexOptions = {
     chart: {
-      type: "radialBar",
+      type: 'radialBar',
       height: 130,
-      width: "100%",
+      width: '100%',
       parentHeightOffset: 0,
       toolbar: {
-        show: false,
-      },
+        show: false
+      }
     },
     plotOptions: {
       radialBar: {
         hollow: {
           margin: 10,
-          size: "30%",
+          size: '30%'
         },
         track: {
-          background: "#E6EAED",
-          strokeWidth: "100%",
-          margin: 5,
+          background: '#E6EAED',
+          strokeWidth: '100%',
+          margin: 5
         },
         dataLabels: {
           name: {
-            offsetY: -5,
+            offsetY: -5
           },
           value: {
-            offsetY: 5,
-          },
-        },
-      },
+            offsetY: 5
+          }
+        }
+      }
     },
     grid: {
       padding: {
         top: 0,
         bottom: 0,
         left: 0,
-        right: 0,
-      },
+        right: 0
+      }
     },
     stroke: {
-      lineCap: "round",
+      lineCap: 'round'
     },
-    colors: ["#E04F16", "#0E9384"],
-    labels: ["First Time", "Return"],
+    colors: ['#E04F16', '#0E9384'],
+    labels: ['First Time', 'Return']
   };
 
   const series = [70, 70];
@@ -206,99 +183,86 @@ const NewDashboard = () => {
   const options: ApexOptions = {
     series: [
       {
-        name: "Revenue",
-        data: [9, 25, 25, 20, 20, 18, 25, 15, 20, 12, 8, 20],
+        name: 'Revenue',
+        data: [9, 25, 25, 20, 20, 18, 25, 15, 20, 12, 8, 20]
       },
       {
-        name: "Expenses",
-        data: [-10, -18, -9, -20, -20, -10, -20, -20, -8, -15, -18, -20],
-      },
+        name: 'Expenses',
+        data: [-10, -18, -9, -20, -20, -10, -20, -20, -8, -15, -18, -20]
+      }
     ],
     grid: {
       padding: {
         top: 5,
-        right: 5,
-      },
+        right: 5
+      }
     },
-    colors: ["#0E9384", "#E04F16"],
+    colors: ['#0E9384', '#E04F16'],
     chart: {
-      type: "bar",
+      type: 'bar',
       height: 290,
       stacked: true,
       zoom: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
     responsive: [
       {
         breakpoint: 280,
         options: {
           legend: {
-            position: "bottom",
-            offsetY: 0,
-          },
-        },
-      },
+            position: 'bottom',
+            offsetY: 0
+          }
+        }
+      }
     ],
     plotOptions: {
       bar: {
         horizontal: false,
         borderRadius: 4,
-        borderRadiusApplication: "around",
-        borderRadiusWhenStacked: "all",
-        columnWidth: "20%",
-      },
+        borderRadiusApplication: 'around',
+        borderRadiusWhenStacked: 'all',
+        columnWidth: '20%'
+      }
     },
     dataLabels: {
-      enabled: false,
+      enabled: false
     },
     yaxis: {
       labels: {
         offsetX: -15,
         formatter: (val: any) => {
-          return val / 1 + "K";
-        },
+          return val / 1 + 'K';
+        }
       },
       min: -30,
       max: 30,
-      tickAmount: 6,
+      tickAmount: 6
     },
     xaxis: {
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     },
     legend: {
-      show: false,
+      show: false
     },
     fill: {
-      opacity: 1,
-    },
+      opacity: 1
+    }
   };
 
   const data: any = {
     datasets: [
       {
-        label: ["Lifestyles", "Sports", "Electronics"],
+        label: ['Lifestyles', 'Sports', 'Electronics'],
         data: [16, 24, 50],
-        backgroundColor: ["#092C4C", "#E04F16", "#FE9F43"],
+        backgroundColor: ['#092C4C', '#E04F16', '#FE9F43'],
         borderWidth: 5,
         borderRadius: 10,
         hoverBorderWidth: 0,
-        cutout: "50%",
-      },
-    ],
+        cutout: '50%'
+      }
+    ]
   };
   const option = {
     responsive: true,
@@ -306,20 +270,20 @@ const NewDashboard = () => {
     layout: {
       padding: {
         top: -20,
-        bottom: -20,
-      },
+        bottom: -20
+      }
     },
     plugins: {
       legend: {
-        display: false,
-      },
-    },
+        display: false
+      }
+    }
   };
 
   const heat_chart = {
     chart: {
-      type: "heatmap" as const,
-      height: 370,
+      type: 'heatmap' as const,
+      height: 370
     },
     plotOptions: {
       heatmap: {
@@ -330,194 +294,177 @@ const NewDashboard = () => {
             {
               from: 0,
               to: 99,
-              color: "#FFE3CB",
+              color: '#FFE3CB'
             },
             {
               from: 100,
               to: 200,
-              color: "#FE9F43",
-            },
-          ],
-        },
-      },
+              color: '#FE9F43'
+            }
+          ]
+        }
+      }
     },
     legend: {
-      show: false,
+      show: false
     },
     dataLabels: {
-      enabled: false,
+      enabled: false
     },
     grid: {
       padding: {
         top: -20,
         bottom: 0,
         left: 0,
-        right: 0,
-      },
+        right: 0
+      }
     },
     yaxis: {
       labels: {
-        offsetX: -15,
-      },
+        offsetX: -15
+      }
     },
     series: [
       {
-        name: "2 Am",
+        name: '2 Am',
         data: [
-          { x: "Mon", y: 100 },
-          { x: "Tue", y: 100 },
-          { x: "Wed", y: 100 },
-          { x: "Thu", y: 32 },
-          { x: "Fri", y: 32 },
-          { x: "Sat", y: 32 },
-          { x: "Sun", y: 32 },
-        ],
+          { x: 'Mon', y: 100 },
+          { x: 'Tue', y: 100 },
+          { x: 'Wed', y: 100 },
+          { x: 'Thu', y: 32 },
+          { x: 'Fri', y: 32 },
+          { x: 'Sat', y: 32 },
+          { x: 'Sun', y: 32 }
+        ]
       },
       {
-        name: "4 Am",
+        name: '4 Am',
         data: [
-          { x: "Mon", y: 100, color: "#ff5722" },
-          { x: "Tue", y: 100 },
-          { x: "Wed", y: 100 },
-          { x: "Thu", y: 120 },
-          { x: "Fri", y: 32 },
-          { x: "Sat", y: 50 },
-          { x: "Sun", y: 40 },
-        ],
+          { x: 'Mon', y: 100, color: '#ff5722' },
+          { x: 'Tue', y: 100 },
+          { x: 'Wed', y: 100 },
+          { x: 'Thu', y: 120 },
+          { x: 'Fri', y: 32 },
+          { x: 'Sat', y: 50 },
+          { x: 'Sun', y: 40 }
+        ]
       },
       {
-        name: "6 Am",
+        name: '6 Am',
         data: [
-          { x: "Mon", y: 22 },
-          { x: "Tue", y: 29 },
-          { x: "Wed", y: 13 },
-          { x: "Thu", y: 32 },
-          { x: "Fri", y: 32 },
-          { x: "Sat", y: 32 },
-          { x: "Sun", y: 32 },
-        ],
+          { x: 'Mon', y: 22 },
+          { x: 'Tue', y: 29 },
+          { x: 'Wed', y: 13 },
+          { x: 'Thu', y: 32 },
+          { x: 'Fri', y: 32 },
+          { x: 'Sat', y: 32 },
+          { x: 'Sun', y: 32 }
+        ]
       },
       {
-        name: "8 Am",
+        name: '8 Am',
         data: [
-          { x: "Mon", y: 0 },
-          { x: "Tue", y: 29 },
-          { x: "Wed", y: 13 },
-          { x: "Thu", y: 32 },
-          { x: "Fri", y: 30 },
-          { x: "Sat", y: 100 },
-          { x: "Sun", y: 100 },
-        ],
+          { x: 'Mon', y: 0 },
+          { x: 'Tue', y: 29 },
+          { x: 'Wed', y: 13 },
+          { x: 'Thu', y: 32 },
+          { x: 'Fri', y: 30 },
+          { x: 'Sat', y: 100 },
+          { x: 'Sun', y: 100 }
+        ]
       },
       {
-        name: "10 Am",
+        name: '10 Am',
         data: [
-          { x: "Mon", y: 200 },
-          { x: "Tue", y: 200 },
-          { x: "Wed", y: 200 },
-          { x: "Thu", y: 32 },
-          { x: "Fri", y: 0 },
-          { x: "Sat", y: 0 },
-          { x: "Sun", y: 32 },
-        ],
+          { x: 'Mon', y: 200 },
+          { x: 'Tue', y: 200 },
+          { x: 'Wed', y: 200 },
+          { x: 'Thu', y: 32 },
+          { x: 'Fri', y: 0 },
+          { x: 'Sat', y: 0 },
+          { x: 'Sun', y: 32 }
+        ]
       },
       {
-        name: "12 Am",
+        name: '12 Am',
         data: [
-          { x: "Mon", y: 0 },
-          { x: "Tue", y: 0 },
-          { x: "Wed", y: 75 },
-          { x: "Thu", y: 0 },
-          { x: "Fri", y: 0 },
-          { x: "Sat", y: 0 },
-          { x: "Sun", y: 0 },
-        ],
+          { x: 'Mon', y: 0 },
+          { x: 'Tue', y: 0 },
+          { x: 'Wed', y: 75 },
+          { x: 'Thu', y: 0 },
+          { x: 'Fri', y: 0 },
+          { x: 'Sat', y: 0 },
+          { x: 'Sun', y: 0 }
+        ]
       },
       {
-        name: "14 Pm",
+        name: '14 Pm',
         data: [
-          { x: "Mon", y: 0 },
-          { x: "Tue", y: 20 },
-          { x: "Wed", y: 13 },
-          { x: "Thu", y: 32 },
-          { x: "Fri", y: 0 },
-          { x: "Sat", y: 0 },
-          { x: "Sun", y: 32 },
-        ],
+          { x: 'Mon', y: 0 },
+          { x: 'Tue', y: 20 },
+          { x: 'Wed', y: 13 },
+          { x: 'Thu', y: 32 },
+          { x: 'Fri', y: 0 },
+          { x: 'Sat', y: 0 },
+          { x: 'Sun', y: 32 }
+        ]
       },
       {
-        name: "16 Pm",
+        name: '16 Pm',
         data: [
-          { x: "Mon", y: 13 },
-          { x: "Tue", y: 20 },
-          { x: "Wed", y: 13 },
-          { x: "Thu", y: 32 },
-          { x: "Fri", y: 200 },
-          { x: "Sat", y: 13 },
-          { x: "Sun", y: 32 },
-        ],
+          { x: 'Mon', y: 13 },
+          { x: 'Tue', y: 20 },
+          { x: 'Wed', y: 13 },
+          { x: 'Thu', y: 32 },
+          { x: 'Fri', y: 200 },
+          { x: 'Sat', y: 13 },
+          { x: 'Sun', y: 32 }
+        ]
       },
       {
-        name: "18 Am",
+        name: '18 Am',
         data: [
-          { x: "Mon", y: 0 },
-          { x: "Tue", y: 20 },
-          { x: "Wed", y: 13 },
-          { x: "Thu", y: 32 },
-          { x: "Fri", y: 0 },
-          { x: "Sat", y: 200 },
-          { x: "Sun", y: 200 },
-        ],
-      },
-    ],
+          { x: 'Mon', y: 0 },
+          { x: 'Tue', y: 20 },
+          { x: 'Wed', y: 13 },
+          { x: 'Thu', y: 32 },
+          { x: 'Fri', y: 0 },
+          { x: 'Sat', y: 200 },
+          { x: 'Sun', y: 200 }
+        ]
+      }
+    ]
   };
-
 
   return (
     <div className="page-wrapper">
       <div className="content">
         <div className="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-2">
           <div className="mb-3">
-            <h1 className="mb-1">Welcome, Admin</h1>
+            <h1 className="mb-1">Welcome, {userName}</h1>
             <p className="fw-medium">
-              You have <span className="text-primary fw-bold">200+</span>{" "}
-              Orders, Today
+              You have <span className="text-primary fw-bold">200+</span> Orders, Today
             </p>
           </div>
           <div className="input-icon-start position-relative mb-3">
             <span className="input-icon-addon fs-16 text-gray-9">
               <i className="ti ti-calendar" />
             </span>
-           <CommonDateRangePicker/>
+            <CommonDateRangePicker />
           </div>
         </div>
         <div className="alert bg-orange-transparent alert-dismissible fade show mb-4">
           <div>
             <span>
-              {" "}
-              <i className="ti ti-info-circle fs-14 text-orange me-2" /> Your
-              Product{" "}
+              {' '}
+              <i className="ti ti-info-circle fs-14 text-orange me-2" /> Your Product{' '}
             </span>
-            <span className="text-orange fw-semibold">
-              {" "}
-              Apple Iphone 15 is running Low,{" "}
-            </span>{" "}
-            already below 5 Pcs.,
-            <Link
-              to="#"
-              className="link-orange text-decoration-underline fw-semibold"
-              data-bs-toggle="modal"
-              data-bs-target="#add-stock"
-            >
+            <span className="text-orange fw-semibold"> Apple Iphone 15 is running Low, </span> already below 5 Pcs.,
+            <Link to="#" className="link-orange text-decoration-underline fw-semibold" data-bs-toggle="modal" data-bs-target="#add-stock">
               Add Stock
             </Link>
           </div>
-          <button
-            type="button"
-            className="btn-close text-gray-9 fs-14"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          >
+          <button type="button" className="btn-close text-gray-9 fs-14" data-bs-dismiss="alert" aria-label="Close">
             <i className="ti ti-x" />
           </button>
         </div>
@@ -615,13 +562,9 @@ const NewDashboard = () => {
                 </div>
                 <div className="d-flex align-items-center justify-content-between">
                   <p className="mb-0">
-                    <span className="fs-13 fw-bold text-success">+35%</span> vs
-                    Last Month
+                    <span className="fs-13 fw-bold text-success">+35%</span> vs Last Month
                   </p>
-                  <Link
-                    to="profit-and-loss.html"
-                    className="text-decoration-underline fs-13 fw-medium"
-                  >
+                  <Link to="profit-and-loss.html" className="text-decoration-underline fs-13 fw-medium">
                     View All
                   </Link>
                 </div>
@@ -644,13 +587,9 @@ const NewDashboard = () => {
                 </div>
                 <div className="d-flex align-items-center justify-content-between">
                   <p className="mb-0">
-                    <span className="fs-13 fw-bold text-success">+35%</span> vs
-                    Last Month
+                    <span className="fs-13 fw-bold text-success">+35%</span> vs Last Month
                   </p>
-                  <Link
-                    to={route.invoicereport}
-                    className="text-decoration-underline fs-13 fw-medium"
-                  >
+                  <Link to={route.invoicereport} className="text-decoration-underline fs-13 fw-medium">
                     View All
                   </Link>
                 </div>
@@ -673,13 +612,9 @@ const NewDashboard = () => {
                 </div>
                 <div className="d-flex align-items-center justify-content-between">
                   <p className="mb-0">
-                    <span className="fs-13 fw-bold text-success">+41%</span> vs
-                    Last Month
+                    <span className="fs-13 fw-bold text-success">+41%</span> vs Last Month
                   </p>
-                  <Link
-                    to={route.expenselist}
-                    className="text-decoration-underline fs-13 fw-medium"
-                  >
+                  <Link to={route.expenselist} className="text-decoration-underline fs-13 fw-medium">
                     View All
                   </Link>
                 </div>
@@ -702,13 +637,9 @@ const NewDashboard = () => {
                 </div>
                 <div className="d-flex align-items-center justify-content-between">
                   <p className="mb-0">
-                    <span className="fs-13 fw-bold text-danger">-20%</span> vs
-                    Last Month
+                    <span className="fs-13 fw-bold text-danger">-20%</span> vs Last Month
                   </p>
-                  <Link
-                    to={route.salesreport}
-                    className="text-decoration-underline fs-13 fw-medium"
-                  >
+                  <Link to={route.salesreport} className="text-decoration-underline fs-13 fw-medium">
                     View All
                   </Link>
                 </div>
@@ -769,12 +700,7 @@ const NewDashboard = () => {
                       </div>
                     </div>
                     <div id="sales-daychart">
-                      <Chart
-                        options={salesDayChart}
-                        series={salesDayChart.series}
-                        type="bar"
-                        height={245}
-                      />
+                      <Chart options={salesDayChart} series={salesDayChart.series} type="bar" height={245} />
                     </div>
                   </div>
                 </div>
@@ -829,12 +755,7 @@ const NewDashboard = () => {
                 <div className="d-flex align-items-center justify-content-between flex-wrap gap-3">
                   <h6>Customers Overview</h6>
                   <div className="dropdown dropdown-wraper">
-                    <Link
-                      to="#"
-                      className="dropdown-toggle btn btn-sm"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
+                    <Link to="#" className="dropdown-toggle btn btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
                       <i className="ti ti-calendar me-1" />
                       Today
                     </Link>
@@ -860,12 +781,7 @@ const NewDashboard = () => {
                 <div className="row align-items-center">
                   <div className="col-sm-5">
                     <div id="customer-chart">
-                      <Chart
-                        options={customerChart}
-                        series={series}
-                        type="radialBar"
-                        height={130}
-                      />
+                      <Chart options={customerChart} series={series} type="radialBar" height={130} />
                     </div>
                   </div>
                   <div className="col-sm-7">
@@ -909,12 +825,7 @@ const NewDashboard = () => {
                   <h5 className="card-title mb-0">Top Selling Products</h5>
                 </div>
                 <div className="dropdown">
-                  <Link
-                    to="#"
-                    className="dropdown-toggle btn btn-sm btn-white"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
+                  <Link to="#" className="dropdown-toggle btn btn-sm btn-white" data-bs-toggle="dropdown" aria-expanded="false">
                     <i className="ti ti-calendar me-1" />
                     Today
                   </Link>
@@ -1052,10 +963,7 @@ const NewDashboard = () => {
                   </span>
                   <h5 className="card-title mb-0">Low Stock Products</h5>
                 </div>
-                <Link
-                  to={route.lowstock}
-                  className="fs-13 fw-bold text-decoration-underline"
-                >
+                <Link to={route.lowstock} className="fs-13 fw-bold text-decoration-underline">
                   View All
                 </Link>
               </div>
@@ -1160,12 +1068,7 @@ const NewDashboard = () => {
                   <h5 className="card-title mb-0">Recent Sales</h5>
                 </div>
                 <div className="dropdown">
-                  <Link
-                    to="#"
-                    className="dropdown-toggle btn btn-sm btn-white"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
+                  <Link to="#" className="dropdown-toggle btn btn-sm btn-white" data-bs-toggle="dropdown" aria-expanded="false">
                     <i className="ti ti-calendar me-1" />
                     Weekly
                   </Link>
@@ -1321,12 +1224,7 @@ const NewDashboard = () => {
                   <h5 className="card-title mb-0">Sales Statics</h5>
                 </div>
                 <div className="dropdown">
-                  <Link
-                    to="#"
-                    className="dropdown-toggle btn btn-sm btn-white"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
+                  <Link to="#" className="dropdown-toggle btn btn-sm btn-white" data-bs-toggle="dropdown" aria-expanded="false">
                     <i className="ti ti-calendar me-1" />
                     2025
                   </Link>
@@ -1373,12 +1271,7 @@ const NewDashboard = () => {
                   </div>
                 </div>
                 <div id="sales-statistics">
-                  <ReactApexChart
-                    options={options}
-                    series={options.series}
-                    type="bar"
-                    height={290}
-                  />
+                  <ReactApexChart options={options} series={options.series} type="bar" height={290} />
                 </div>
               </div>
             </div>
@@ -1394,57 +1287,34 @@ const NewDashboard = () => {
                   </span>
                   <h5 className="card-title mb-0">Recent Transactions</h5>
                 </div>
-                <Link
-                  to={route.onlineorder}
-                  className="fs-13 fw-medium text-decoration-underline"
-                >
+                <Link to={route.onlineorder} className="fs-13 fw-medium text-decoration-underline">
                   View All
                 </Link>
               </div>
               <div className="card-body p-0">
                 <ul className="nav nav-tabs nav-justified transaction-tab">
                   <li className="nav-item">
-                    <Link
-                      className="nav-link active"
-                      to="#sale"
-                      data-bs-toggle="tab"
-                    >
+                    <Link className="nav-link active" to="#sale" data-bs-toggle="tab">
                       Sale
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link
-                      className="nav-link"
-                      to="#purchase-transaction"
-                      data-bs-toggle="tab"
-                    >
+                    <Link className="nav-link" to="#purchase-transaction" data-bs-toggle="tab">
                       Purchase
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link
-                      className="nav-link"
-                      to="#quotation"
-                      data-bs-toggle="tab"
-                    >
+                    <Link className="nav-link" to="#quotation" data-bs-toggle="tab">
                       Quotation
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link
-                      className="nav-link"
-                      to="#expenses"
-                      data-bs-toggle="tab"
-                    >
+                    <Link className="nav-link" to="#expenses" data-bs-toggle="tab">
                       Expenses
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link
-                      className="nav-link"
-                      to="#invoices"
-                      data-bs-toggle="tab"
-                    >
+                    <Link className="nav-link" to="#invoices" data-bs-toggle="tab">
                       Invoices
                     </Link>
                   </li>
@@ -1467,19 +1337,13 @@ const NewDashboard = () => {
                             <td>
                               <div className="d-flex align-items-center file-name-icon">
                                 <Link to="#" className="avatar avatar-md">
-                                  <img
-                                    src={customer16}
-                                    className="img-fluid"
-                                    alt="img"
-                                  />
+                                  <img src={customer16} className="img-fluid" alt="img" />
                                 </Link>
                                 <div className="ms-2">
                                   <h6 className="fw-medium">
                                     <Link to="#">Andrea Willer</Link>
                                   </h6>
-                                  <span className="fs-13 text-orange">
-                                    #114589
-                                  </span>
+                                  <span className="fs-13 text-orange">#114589</span>
                                 </div>
                               </div>
                             </td>
@@ -1489,28 +1353,20 @@ const NewDashboard = () => {
                                 Completed
                               </span>
                             </td>
-                            <td className="fs-16 fw-bold text-gray-9">
-                              $4,560
-                            </td>
+                            <td className="fs-16 fw-bold text-gray-9">$4,560</td>
                           </tr>
                           <tr>
                             <td>23 May 2025</td>
                             <td>
                               <div className="d-flex align-items-center file-name-icon">
                                 <Link to="#" className="avatar avatar-md">
-                                  <img
-                                    src={customer17}
-                                    className="img-fluid"
-                                    alt="img"
-                                  />
+                                  <img src={customer17} className="img-fluid" alt="img" />
                                 </Link>
                                 <div className="ms-2">
                                   <h6 className="fw-medium">
                                     <Link to="#">Timothy Sandsr</Link>
                                   </h6>
-                                  <span className="fs-13 text-orange">
-                                    #114589
-                                  </span>
+                                  <span className="fs-13 text-orange">#114589</span>
                                 </div>
                               </div>
                             </td>
@@ -1520,28 +1376,20 @@ const NewDashboard = () => {
                                 Completed
                               </span>
                             </td>
-                            <td className="fs-16 fw-bold text-gray-9">
-                              $3,569
-                            </td>
+                            <td className="fs-16 fw-bold text-gray-9">$3,569</td>
                           </tr>
                           <tr>
                             <td>22 May 2025</td>
                             <td>
                               <div className="d-flex align-items-center file-name-icon">
                                 <Link to="#" className="avatar avatar-md">
-                                  <img
-                                    src={customer18}
-                                    className="img-fluid"
-                                    alt="img"
-                                  />
+                                  <img src={customer18} className="img-fluid" alt="img" />
                                 </Link>
                                 <div className="ms-2">
                                   <h6 className="fw-medium">
                                     <Link to="#">Bonnie Rodrigues</Link>
                                   </h6>
-                                  <span className="fs-13 text-orange">
-                                    #114589
-                                  </span>
+                                  <span className="fs-13 text-orange">#114589</span>
                                 </div>
                               </div>
                             </td>
@@ -1551,28 +1399,20 @@ const NewDashboard = () => {
                                 Draft
                               </span>
                             </td>
-                            <td className="fs-16 fw-bold text-gray-9">
-                              $4,560
-                            </td>
+                            <td className="fs-16 fw-bold text-gray-9">$4,560</td>
                           </tr>
                           <tr>
                             <td>21 May 2025</td>
                             <td>
                               <div className="d-flex align-items-center file-name-icon">
                                 <Link to="#" className="avatar avatar-md">
-                                  <img
-                                    src={customer15}
-                                    className="img-fluid"
-                                    alt="img"
-                                  />
+                                  <img src={customer15} className="img-fluid" alt="img" />
                                 </Link>
                                 <div className="ms-2">
                                   <h6 className="fw-medium">
                                     <Link to="#">Randy McCree</Link>
                                   </h6>
-                                  <span className="fs-13 text-orange">
-                                    #114589
-                                  </span>
+                                  <span className="fs-13 text-orange">#114589</span>
                                 </div>
                               </div>
                             </td>
@@ -1582,28 +1422,20 @@ const NewDashboard = () => {
                                 Completed
                               </span>
                             </td>
-                            <td className="fs-16 fw-bold text-gray-9">
-                              $2,155
-                            </td>
+                            <td className="fs-16 fw-bold text-gray-9">$2,155</td>
                           </tr>
                           <tr>
                             <td>21 May 2025</td>
                             <td>
                               <div className="d-flex align-items-center file-name-icon">
                                 <Link to="#" className="avatar avatar-md">
-                                  <img
-                                    src={customer13}
-                                    className="img-fluid"
-                                    alt="img"
-                                  />
+                                  <img src={customer13} className="img-fluid" alt="img" />
                                 </Link>
                                 <div className="ms-2">
                                   <h6 className="fw-medium">
                                     <Link to="#">Dennis Anderson</Link>
                                   </h6>
-                                  <span className="fs-13 text-orange">
-                                    #114589
-                                  </span>
+                                  <span className="fs-13 text-orange">#114589</span>
                                 </div>
                               </div>
                             </td>
@@ -1613,9 +1445,7 @@ const NewDashboard = () => {
                                 Completed
                               </span>
                             </td>
-                            <td className="fs-16 fw-bold text-gray-9">
-                              $5,123
-                            </td>
+                            <td className="fs-16 fw-bold text-gray-9">$5,123</td>
                           </tr>
                         </tbody>
                       </table>
@@ -1759,19 +1589,13 @@ const NewDashboard = () => {
                             <td>
                               <div className="d-flex align-items-center file-name-icon">
                                 <Link to="#" className="avatar avatar-md">
-                                  <img
-                                    src={customer16}
-                                    className="img-fluid"
-                                    alt="img"
-                                  />
+                                  <img src={customer16} className="img-fluid" alt="img" />
                                 </Link>
                                 <div className="ms-2">
                                   <h6 className="fw-medium">
                                     <Link to="#">Andrea Willer</Link>
                                   </h6>
-                                  <span className="fs-13 text-orange">
-                                    #114589
-                                  </span>
+                                  <span className="fs-13 text-orange">#114589</span>
                                 </div>
                               </div>
                             </td>
@@ -1788,19 +1612,13 @@ const NewDashboard = () => {
                             <td>
                               <div className="d-flex align-items-center file-name-icon">
                                 <Link to="#" className="avatar avatar-md">
-                                  <img
-                                    src={customer17}
-                                    className="img-fluid"
-                                    alt="img"
-                                  />
+                                  <img src={customer17} className="img-fluid" alt="img" />
                                 </Link>
                                 <div className="ms-2">
                                   <h6 className="fw-medium">
                                     <Link to="#">Timothy Sandsr</Link>
                                   </h6>
-                                  <span className="fs-13 text-orange">
-                                    #114589
-                                  </span>
+                                  <span className="fs-13 text-orange">#114589</span>
                                 </div>
                               </div>
                             </td>
@@ -1817,19 +1635,13 @@ const NewDashboard = () => {
                             <td>
                               <div className="d-flex align-items-center file-name-icon">
                                 <Link to="#" className="avatar avatar-md">
-                                  <img
-                                    src={customer18}
-                                    className="img-fluid"
-                                    alt="img"
-                                  />
+                                  <img src={customer18} className="img-fluid" alt="img" />
                                 </Link>
                                 <div className="ms-2">
                                   <h6 className="fw-medium">
                                     <Link to="#">Bonnie Rodrigues</Link>
                                   </h6>
-                                  <span className="fs-13 text-orange">
-                                    #114589
-                                  </span>
+                                  <span className="fs-13 text-orange">#114589</span>
                                 </div>
                               </div>
                             </td>
@@ -1846,19 +1658,13 @@ const NewDashboard = () => {
                             <td>
                               <div className="d-flex align-items-center file-name-icon">
                                 <Link to="#" className="avatar avatar-md">
-                                  <img
-                                    src={customer15}
-                                    className="img-fluid"
-                                    alt="img"
-                                  />
+                                  <img src={customer15} className="img-fluid" alt="img" />
                                 </Link>
                                 <div className="ms-2">
                                   <h6 className="fw-medium">
                                     <Link to="#">Randy McCree</Link>
                                   </h6>
-                                  <span className="fs-13 text-orange">
-                                    #114589
-                                  </span>
+                                  <span className="fs-13 text-orange">#114589</span>
                                 </div>
                               </div>
                             </td>
@@ -1875,19 +1681,13 @@ const NewDashboard = () => {
                             <td>
                               <div className="d-flex align-items-center file-name-icon">
                                 <Link to="#" className="avatar avatar-md">
-                                  <img
-                                    src={customer13}
-                                    className="img-fluid"
-                                    alt="img"
-                                  />
+                                  <img src={customer13} className="img-fluid" alt="img" />
                                 </Link>
                                 <div className="ms-2">
                                   <h6 className="fw-medium">
                                     <Link to="#">Dennis Anderson</Link>
                                   </h6>
-                                  <span className="fs-13 text-orange">
-                                    #114589
-                                  </span>
+                                  <span className="fs-13 text-orange">#114589</span>
                                 </div>
                               </div>
                             </td>
@@ -2015,19 +1815,13 @@ const NewDashboard = () => {
                             <td>
                               <div className="d-flex align-items-center file-name-icon">
                                 <Link to="#" className="avatar avatar-md">
-                                  <img
-                                    src={customer16}
-                                    className="img-fluid"
-                                    alt="img"
-                                  />
+                                  <img src={customer16} className="img-fluid" alt="img" />
                                 </Link>
                                 <div className="ms-2">
                                   <h6 className="fw-medium">
                                     <Link to="#">Andrea Willer</Link>
                                   </h6>
-                                  <span className="fs-13 text-orange">
-                                    #INV005
-                                  </span>
+                                  <span className="fs-13 text-orange">#INV005</span>
                                 </div>
                               </div>
                             </td>
@@ -2044,19 +1838,13 @@ const NewDashboard = () => {
                             <td>
                               <div className="d-flex align-items-center file-name-icon">
                                 <Link to="#" className="avatar avatar-md">
-                                  <img
-                                    src={customer17}
-                                    className="img-fluid"
-                                    alt="img"
-                                  />
+                                  <img src={customer17} className="img-fluid" alt="img" />
                                 </Link>
                                 <div className="ms-2">
                                   <h6 className="fw-medium">
                                     <Link to="#">Timothy Sandsr</Link>
                                   </h6>
-                                  <span className="fs-13 text-orange">
-                                    #INV004
-                                  </span>
+                                  <span className="fs-13 text-orange">#INV004</span>
                                 </div>
                               </div>
                             </td>
@@ -2073,19 +1861,13 @@ const NewDashboard = () => {
                             <td>
                               <div className="d-flex align-items-center file-name-icon">
                                 <Link to="#" className="avatar avatar-md">
-                                  <img
-                                    src={customer18}
-                                    className="img-fluid"
-                                    alt="img"
-                                  />
+                                  <img src={customer18} className="img-fluid" alt="img" />
                                 </Link>
                                 <div className="ms-2">
                                   <h6 className="fw-medium">
                                     <Link to="#">Bonnie Rodrigues</Link>
                                   </h6>
-                                  <span className="fs-13 text-orange">
-                                    #INV003
-                                  </span>
+                                  <span className="fs-13 text-orange">#INV003</span>
                                 </div>
                               </div>
                             </td>
@@ -2102,19 +1884,13 @@ const NewDashboard = () => {
                             <td>
                               <div className="d-flex align-items-center file-name-icon">
                                 <Link to="#" className="avatar avatar-md">
-                                  <img
-                                    src={customer15}
-                                    className="img-fluid"
-                                    alt="img"
-                                  />
+                                  <img src={customer15} className="img-fluid" alt="img" />
                                 </Link>
                                 <div className="ms-2">
                                   <h6 className="fw-medium">
                                     <Link to="#">Randy McCree</Link>
                                   </h6>
-                                  <span className="fs-13 text-orange">
-                                    #INV002
-                                  </span>
+                                  <span className="fs-13 text-orange">#INV002</span>
                                 </div>
                               </div>
                             </td>
@@ -2131,19 +1907,13 @@ const NewDashboard = () => {
                             <td>
                               <div className="d-flex align-items-center file-name-icon">
                                 <Link to="#" className="avatar avatar-md">
-                                  <img
-                                    src={customer13}
-                                    className="img-fluid"
-                                    alt="img"
-                                  />
+                                  <img src={customer13} className="img-fluid" alt="img" />
                                 </Link>
                                 <div className="ms-2">
                                   <h6 className="fw-medium">
                                     <Link to="#">Dennis Anderson</Link>
                                   </h6>
-                                  <span className="fs-13 text-orange">
-                                    #INV001
-                                  </span>
+                                  <span className="fs-13 text-orange">#INV001</span>
                                 </div>
                               </div>
                             </td>
@@ -2177,10 +1947,7 @@ const NewDashboard = () => {
                   </span>
                   <h5 className="card-title mb-0">Top Customers</h5>
                 </div>
-                <Link
-                  to={route.customer}
-                  className="fs-13 fw-medium text-decoration-underline"
-                >
+                <Link to={route.customer} className="fs-13 fw-medium text-decoration-underline">
                   View All
                 </Link>
               </div>
@@ -2345,9 +2112,9 @@ const NewDashboard = () => {
                       data={data}
                       options={option}
                       style={{
-                        boxSizing: "border-box",
-                        height: "230px",
-                        width: "200px",
+                        boxSizing: 'border-box',
+                        height: '230px',
+                        width: '200px'
                       }}
                     />
                   </div>
@@ -2356,27 +2123,21 @@ const NewDashboard = () => {
                       <p className="fs-13 mb-1">Electronics</p>
                       <h2 className="d-flex align-items-center">
                         698
-                        <span className="fs-13 fw-normal text-default ms-1">
-                          Sales
-                        </span>
+                        <span className="fs-13 fw-normal text-default ms-1">Sales</span>
                       </h2>
                     </div>
                     <div className="category-item category-orange">
                       <p className="fs-13 mb-1">Sports</p>
                       <h2 className="d-flex align-items-center">
                         545
-                        <span className="fs-13 fw-normal text-default ms-1">
-                          Sales
-                        </span>
+                        <span className="fs-13 fw-normal text-default ms-1">Sales</span>
                       </h2>
                     </div>
                     <div className="category-item category-secondary">
                       <p className="fs-13 mb-1">Lifestyles</p>
                       <h2 className="d-flex align-items-center">
                         456
-                        <span className="fs-13 fw-normal text-default ms-1">
-                          Sales
-                        </span>
+                        <span className="fs-13 fw-normal text-default ms-1">Sales</span>
                       </h2>
                     </div>
                   </div>
@@ -2413,12 +2174,7 @@ const NewDashboard = () => {
                   <h5 className="card-title mb-0">Order Statistics</h5>
                 </div>
                 <div className="dropdown">
-                  <Link
-                    to="#"
-                    className="dropdown-toggle btn btn-sm btn-white"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
+                  <Link to="#" className="dropdown-toggle btn btn-sm btn-white" data-bs-toggle="dropdown" aria-expanded="false">
                     <i className="ti ti-calendar me-1" />
                     Weekly
                   </Link>
@@ -2443,12 +2199,7 @@ const NewDashboard = () => {
               </div>
               <div className="card-body pb-0">
                 <div id="heat_chart">
-                  <ApexCharts
-                    options={heat_chart}
-                    series={heat_chart.series}
-                    type="heatmap"
-                    height={370}
-                  />
+                  <ApexCharts options={heat_chart} series={heat_chart.series} type="heatmap" height={370} />
                 </div>
               </div>
             </div>
@@ -2457,11 +2208,9 @@ const NewDashboard = () => {
         </div>
       </div>
       <div className="copyright-footer d-flex align-items-center justify-content-between border-top bg-white gap-3 flex-wrap">
-        <p className="fs-13 text-gray-9 mb-0">
-          2014-2025 © DreamsPOS. All Right Reserved
-        </p>
+        <p className="fs-13 text-gray-9 mb-0">2014-2025 © DreamsPOS. All Right Reserved</p>
         <p>
-          Designed &amp; Developed By Dreams{" "}
+          Designed &amp; Developed By Dreams{' '}
           <Link to="#" className="link-primary">
             Dreams
           </Link>

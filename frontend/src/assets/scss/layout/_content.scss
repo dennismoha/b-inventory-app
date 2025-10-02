@@ -1,20 +1,17 @@
-@use "../utils/mixins";
-@use "../utils/variables";
-
 .page-wrapper {
-    @include mixins.transition(all 0.5s ease);
-    @include mixins.margin-padding( 0 0 0 252px, 65px 0 0);
-    @include mixins.position(relative,null,null,null,0);
-    @include mixins.transition(all 0.2s ease);
-    @include mixins.respond-below(custom991) {
-        @include mixins.margin-padding( 0 , 65px 0 0);
+    @include transition(all 0.5s ease);
+    @include margin-padding( 0 0 0 252px, 65px 0 0);
+    @include position(relative,null,null,null,0);
+    @include transition(all 0.2s ease);
+    @include respond-below(custom991) {
+        @include margin-padding( 0 , 65px 0 0);
     }
     .content {
-        @include mixins.margin-padding(null, 24px);
+        @include margin-padding(null, 24px);
         padding-bottom: 0;
         min-height: calc(100vh - 105px);
-        @include mixins.respond-below(custom991) {
-            @include mixins.margin-padding(null, 15px);
+        @include respond-below(custom991) {
+            @include margin-padding(null, 15px);
         }
         .add-item.new-sale-items {
             align-items: center;
@@ -33,19 +30,19 @@
     margin: 0;
 }
 .page-wrapper-new {
-    background: variables.$white;
+    background: $white;
     padding: 24px;
     border-radius: 8px;
     .card {
         border: none;
         .card-body {
-            border-top: 1px solid variables.$gray-100;
+            border-top: 1px solid $gray-100;
         }
     }
     .page-header {
         margin-bottom: 40px;
         h4 {
-            font-size: variables.$font-size-20;
+            font-size: $font-size-20;
         }
         .page-btn {
             .btn-added {
@@ -56,17 +53,17 @@
 }
 .sidebarrightmenu{
     .page-wrapper {
-        @include mixins.margin-padding(0 0 0 350px, null);
-        @include mixins.respond-below(custom991) {
-            @include mixins.margin-padding(0, null);
+        @include margin-padding(0 0 0 350px, null);
+        @include respond-below(custom991) {
+            @include margin-padding(0, null);
         }
     }
 }
 .card{
     .card-header{
         .dropset {
-            color: variables.$gray-600;
-            @include mixins.margin-padding(null, 0 10px);
+            color: $gray-600;
+            @include margin-padding(null, 0 10px);
         }
     }
     .card-body{
@@ -77,60 +74,60 @@
             .input-groupicon {
                 margin-right: 10px;
             }
-            @include mixins.respond-below(custom575) {
+            @include respond-below(custom575) {
                 display: block;
             }
         }
         .input-blocks {
             label {
                 span {
-                    color: variables.$danger;
+                    color: $danger;
                 }
             }
         }
         .text-title {
             margin-bottom: 20px;
             p {
-                font-size: variables.$font-size-16;
-                font-weight: variables.$font-weight-semibold;
-                color: variables.$secondary;
+                font-size: $font-size-16;
+                font-weight: $font-weight-semibold;
+                color: $secondary;
             }
         }
         .payroll-info {
-            border-bottom: 1px solid variables.$gray-100;
+            border-bottom: 1px solid $gray-100;
             .status-updates {
                 margin-left: 25%;
             }
             .status-updates {
                 .form-check-input:checked {
-                    background-color: variables.$primary;
-                    border-color: variables.$primary;
+                    background-color: $primary;
+                    border-color: $primary;
                 }
                 .form-check-input:focus {
                     box-shadow: none;
-                    border-color: variables.$gray-100;
+                    border-color: $gray-100;
                 }
             }
         }
         .payroll-title {
             margin: 20px 0 20px 0;
             p {
-                font-size: variables.$font-size-16;
-                font-weight: variables.$font-weight-semibold;
-                color: variables.$secondary;
+                font-size: $font-size-16;
+                font-weight: $font-weight-semibold;
+                color: $secondary;
             }
         }
         .sub-form {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid variables.$gray-100;
+            border-bottom: 1px solid $gray-100;
             .subadd-btn {
                 .btn-add {
                     border-radius: 8px;
                     border: 1px solid var(--Stroke, rgba(145, 158, 171, 0.30));
-                    background: variables.$secondary;
-                    color: variables.$white;
+                    background: $secondary;
+                    color: $white;
                     padding: 7px 9px;
                     margin-left: 20px;
                     margin-bottom: -11px;
@@ -143,9 +140,9 @@
         .summary-blk {
             margin-bottom: 15px;
             p {
-                font-size: variables.$font-size-14;
-                font-weight: variables.$font-weight-semibold;
-                color: variables.$secondary;
+                font-size: $font-size-14;
+                font-weight: $font-weight-semibold;
+                color: $secondary;
             }
         }
         .details {
@@ -166,7 +163,7 @@
                     .feather-trash-2 {
                         width: 14px;
                         height: 14px;
-                        color: variables.$danger;
+                        color: $danger;
                     }
                 }
             }
@@ -176,7 +173,7 @@
             align-items: center;
             .month-of-slip {
                 h4 {
-                    font-weight: variables.$font-weight-bold;
+                    font-weight: $font-weight-bold;
                 }
             }
         }
@@ -187,23 +184,23 @@
              padding: 10px;
             .emp-name-id {
                 h6 {
-                    font-size: variables.$font-size-15;
-                    font-weight: variables.$font-weight-semibold;
+                    font-size: $font-size-15;
+                    font-weight: $font-weight-semibold;
                     span {
-                        font-size: variables.$font-size-15;
-                        font-weight: variables.$font-weight-normal;
-                        color: variables.$text-color;
+                        font-size: $font-size-15;
+                        font-weight: $font-weight-normal;
+                        color: $text-color;
                     }
                 }
             }
             .emp-location-info {
                 h6 {
-                    font-size: variables.$font-size-15;
-                    font-weight: variables.$font-weight-semibold;
+                    font-size: $font-size-15;
+                    font-weight: $font-weight-semibold;
                     span {
-                        font-size: variables.$font-size-15;
-                        font-weight: variables.$font-weight-normal;
-                        color: variables.$text-color;
+                        font-size: $font-size-15;
+                        font-weight: $font-weight-normal;
+                        color: $text-color;
                     }
                 }
             }
@@ -218,14 +215,14 @@
     align-items: center;
     -webkit-box-align: center;
     -ms-flex-align: center;
-    background-color: variables.$white;
-    border: 1px solid variables.$border-color;
-    color: variables.$gray-900;
-    @include mixins.rounded(5px);
+    background-color: $white;
+    border: 1px solid $border-color;
+    color: $gray-900;
+    @include rounded(5px);
     &:hover {
-        border: 1px solid variables.$primary;
-        background: variables.$primary;
-        color: variables.$white;
+        border: 1px solid $primary;
+        background: $primary;
+        color: $white;
     }
 }
 .mail-search {
@@ -238,11 +235,11 @@
     position: relative;
     padding-left: 25px;
     cursor: pointer;
-    color: variables.$black;;
-    font-weight: variables.$font-weight-medium;
-    font-size: variables.$font-size-base;
+    color: $black;;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-base;
     input {
-        @include mixins.position(absolute,null,null,null,null);
+        @include position(absolute,null,null,null,null);
         opacity: 0;
         cursor: pointer;
         height: 0;
@@ -254,30 +251,30 @@
         }
       }
       .checkmark {
-        @include mixins.position(absolute,0,null,null,0);
+        @include position(absolute,0,null,null,0);
         height: 20px;
         width: 20px;
-        border:1px solid variables.$gray-300;
-        background: variables.$light;
-        @include mixins.rounded(5px);
+        border:1px solid $gray-300;
+        background: $light;
+        @include rounded(5px);
         &:after {
             content: "";
             position: absolute;
             display: none;
         }
         &:after {
-            @include mixins.position(absolute,3px,null,null,6px);
+            @include position(absolute,3px,null,null,6px);
             width: 5px;
             height: 10px;
-            border: solid variables.$primary;
+            border: solid $primary;
             border-width: 0 2px 2px 0;
-            @include mixins.transform(rotate(45deg));
+            @include transform(rotate(45deg));
         }
       }
      
     input {
         &:checked ~ .checkmark {
-            border:1px solid variables.$primary;
+            border:1px solid $primary;
         }
      }
 }
@@ -293,7 +290,7 @@
 }
 .footer {
     p {
-        color: variables.$gray-900;
+        color: $gray-900;
     }
 }
 #collapse-header {
@@ -310,8 +307,8 @@
         .page-display{
             a{
                 padding: 7px;
-                background-color: variables.$secondary;
-                color: variables.$white;
+                background-color: $secondary;
+                color: $white;
                 display: flex;
                 align-items: center;
                 gap: 8px;

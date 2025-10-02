@@ -35,6 +35,7 @@ import {
   ProfitAndLossResponse
 } from '@src/features/accounting/interfaces/financial-reports.interface';
 import { pos_session_header } from '@src/features/pos/interface/pos.interface';
+import { AdminDashboardResponse } from '@src/features/dashboard/interfaces/dashboard.interfaces';
 // Utility type to handle both singular and array types
 type WithArray<T> = T | T[];
 
@@ -77,6 +78,7 @@ type success_data =
   | WithArray<pos_session_header>
   | WithArray<PurchasePayable>
   | WithArray<PurchasePayableResponse>
+  | WithArray<AdminDashboardResponse>
   | null;
 
 // GetSuccessMessage function

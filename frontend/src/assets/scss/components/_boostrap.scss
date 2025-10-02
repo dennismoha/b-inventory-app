@@ -1,12 +1,10 @@
-@use "../utils/variables";
-
 .bootstrap-datetimepicker-widget table td.active,
 .bootstrap-datetimepicker-widget table td.active:hover {
-	background-color: variables.$warning;
+	background-color: $warning;
 	text-shadow: unset;
 }
 .bootstrap-datetimepicker-widget table td.today:before {
-	border-bottom-color: variables.$warning;
+	border-bottom-color: $warning;
 }
 .bootstrap-datetimepicker-widget {
 	z-index: 9999999;
@@ -15,11 +13,11 @@
 	}
 } 
 .bor-b1{
-    border-bottom: 1px solid variables.$gray-300;
+    border-bottom: 1px solid $gray-300;
 }
 .dropdown-xl {
 	width: 600px;
 }
 .shadow-primary {
-	box-shadow: variables.$box-shadow-primary;
+	box-shadow: $box-shadow-primary;
 }

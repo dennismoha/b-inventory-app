@@ -1,19 +1,16 @@
-@use "../utils/mixins";
-@use "../utils/variables";
-
 .form-control {
-  border-color: variables.$input-border;
-  color: variables.$title-color;
-  background-color: variables.$form-control-bg;
+  border-color: $input-border;
+  color: $title-color;
+  background-color: $form-control-bg;
   font-size: 0.875rem;
-  font-weight: variables.$font-weight-normal;
+  font-weight: $font-weight-normal;
   line-height: 1.6;
   border-radius: 0.35rem;
   padding: 0.45rem 0.85rem;
   &:focus {
     box-shadow: none;
-    border-color: variables.$input-border;
-    background-color: variables.$white;
+    border-color: $input-border;
+    background-color: $white;
     box-shadow: 0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.05);
   }
 }
@@ -27,37 +24,37 @@
   }
 }
 .form-label {
-  font-size: variables.$font-size-14;
-  font-weight: variables.$font-weight-medium;
-  color: variables.$title-color;
+  font-size: $font-size-14;
+  font-weight: $font-weight-medium;
+  color: $title-color;
 }
 
 .form-text {
-  color: variables.$text-muted;
+  color: $text-muted;
 }
 
 .form-control-light {
-  background-color: variables.$light;
+  background-color: $light;
   border: 0;
 
   &:focus {
-    background-color: variables.$light;
+    background-color: $light;
   }
 }
 .form-control-primary {
-  background-color: rgba(variables.$primary, 0.1);
+  background-color: rgba($primary, 0.1);
   border: 0;
-  color: variables.$primary;
+  color: $primary;
 
   &:focus {
-    background-color: rgba(variables.$primary, 0.1);
-    color: variables.$primary;
+    background-color: rgba($primary, 0.1);
+    color: $primary;
   }
 }
 .form-input-color {
   height: 2.25rem;
   width: 2.25rem;
-  border-radius: variables.$border-radius;
+  border-radius: $border-radius;
   overflow: hidden;
   padding: 0;
 }
@@ -65,20 +62,20 @@
 .form-floating > .form-control:focus ~ label,
 .form-floating > .form-control:not(:placeholder-shown) ~ label,
 .form-floating > .form-select ~ label {
-  color: variables.$text-muted;
+  color: $text-muted;
 }
 .form-floating > .form-control:not(:placeholder-shown) ~ label::after {
   background-color: transparent;
 }
 .form-select {
-  background-color: variables.$form-control-bg;
-  border: 1px solid variables.$input-border;
-  color: variables.$text-color;
-  font-size: variables.$font-size-base;
+  background-color: $form-control-bg;
+  border: 1px solid $input-border;
+  color: $text-color;
+  font-size: $font-size-base;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
   background-size: 1.25rem;
   option {
-    background-color: variables.$white;
+    background-color: $white;
     padding: 0.35rem 0.75rem;
     border-radius: 0.25rem;
     margin-block-end: 0.25rem;
@@ -87,77 +84,77 @@
     }
   }
   option:checked {
-    background-color: rgba(var(variables.$primary), 0.2);
-    color: variables.$primary;
+    background-color: rgba(var($primary), 0.2);
+    color: $primary;
   }
   option:select {
-    background-color: rgba(var(variables.$primary), 0.2);
-    color: variables.$primary;
+    background-color: rgba(var($primary), 0.2);
+    color: $primary;
   }
   option:hover {
-    background-color: rgba(var(variables.$primary), 0.2);
-    color: variables.$primary;
+    background-color: rgba(var($primary), 0.2);
+    color: $primary;
   }
   option:focus {
-    background-color: rgba(var(variables.$primary), 0.2);
-    color: variables.$primary;
+    background-color: rgba(var($primary), 0.2);
+    color: $primary;
   }
 }
 .form-check-input {
   width: 0.9rem;
   height: 0.9rem;
-  background-color: variables.$white;
-  border: 1px solid variables.$input-border;
+  background-color: $white;
+  border: 1px solid $input-border;
   &:checked {
-    background-color: variables.$primary;
-    border-color: variables.$primary;
+    background-color: $primary;
+    border-color: $primary;
   }
   &.form-checked-outline {
     &:checked {
       background-color: transparent;
-      border-color: variables.$primary;
+      border-color: $primary;
     }
   }
   &.form-checked-secondary {
     &:checked {
-      background-color: variables.$secondary;
-      border-color: variables.$secondary;
+      background-color: $secondary;
+      border-color: $secondary;
     }
   }
   &.form-checked-warning {
     &:checked {
-      background-color: variables.$warning;
-      border-color: variables.$warning;
+      background-color: $warning;
+      border-color: $warning;
     }
   }
   &.form-checked-info {
     &:checked {
-      background-color: variables.$info;
-      border-color: variables.$info;
+      background-color: $info;
+      border-color: $info;
     }
   }
   &.form-checked-success {
     &:checked {
-      background-color: variables.$success;
-      border-color: variables.$success;
+      background-color: $success;
+      border-color: $success;
     }
   }
   &.form-checked-danger {
     &:checked {
-      background-color: variables.$danger;
-      border-color: variables.$danger;
+      background-color: $danger;
+      border-color: $danger;
     }
   }
   &.form-checked-light {
     &:checked {
-      background-color: variables.$light;
-      border-color: variables.$light;
+      background-color: $light;
+      border-color: $light;
     }
   }
   &.form-checked-dark {
     &:checked {
-      background-color: variables.$dark;
-      border-color: variables.$dark;
+      background-color: $dark;
+      border-color: $dark;
     }
   }
   &:focus {
@@ -173,7 +170,7 @@
     content: "\F633";
     font-family: bootstrap-icons !important;
     position: absolute;
-    color: variables.$primary;
+    color: $primary;
     width: 0.625rem;
     height: 0.625rem;
     inset-block-start: -1px;
@@ -183,43 +180,43 @@
 
   &.form-checked-secondary {
     &:before {
-      color: variables.$secondary;
+      color: $secondary;
     }
   }
 
   &.form-checked-warning {
     &:before {
-      color: variables.$warning;
+      color: $warning;
     }
   }
 
   &.form-checked-info {
     &:before {
-      color: variables.$info;
+      color: $info;
     }
   }
 
   &.form-checked-success {
     &:before {
-      color: variables.$success;
+      color: $success;
     }
   }
 
   &.form-checked-danger {
     &:before {
-      color: variables.$danger;
+      color: $danger;
     }
   }
 
   &.form-checked-light {
     &:before {
-      color: variables.$light;
+      color: $light;
     }
   }
 
   &.form-checked-dark {
     &:before {
-      color: variables.$dark;
+      color: $dark;
     }
   }
 }
@@ -232,7 +229,7 @@
     content: "\F309";
     font-family: bootstrap-icons !important;
     position: absolute;
-    color: variables.$primary;
+    color: $primary;
     width: 0.625rem;
     height: 0.625rem;
     inset-block-start: -1.13rem;
@@ -242,53 +239,53 @@
 
   &.form-checked-secondary {
     &:before {
-      color: variables.$secondary;
+      color: $secondary;
     }
   }
 
   &.form-checked-warning {
     &:before {
-      color: variables.$warning;
+      color: $warning;
     }
   }
 
   &.form-checked-info {
     &:before {
-      color: variables.$info;
+      color: $info;
     }
   }
 
   &.form-checked-success {
     &:before {
-      color: variables.$success;
+      color: $success;
     }
   }
 
   &.form-checked-danger {
     &:before {
-      color: variables.$danger;
+      color: $danger;
     }
   }
 
   &.form-checked-light {
     &:before {
-      color: variables.$light;
+      color: $light;
     }
   }
 
   &.form-checked-dark {
     &:before {
-      color: variables.$dark;
+      color: $dark;
     }
   }
 }
 fieldset:disabled .btn {
-  color: variables.$white;
-  background-color: variables.$primary;
-  border-color: variables.$primary;
+  color: $white;
+  background-color: $primary;
+  border-color: $primary;
 }
 .form-select:focus {
-  border-color: rgba(var(variables.$primary), 0.5);
+  border-color: rgba(var($primary), 0.5);
   outline: 0;
   box-shadow: none;
 }
@@ -308,19 +305,19 @@ fieldset:disabled .btn {
 .form-control,
 .form-select {
   &:disabled {
-    background-color: variables.$light;
-    color: variables.$text-color;
+    background-color: $light;
+    color: $text-color;
   }
 }
 .form-control-plaintext {
-  color: variables.$text-color;
+  color: $text-color;
 }
 .form-control::-webkit-file-upload-button {
-  color: variables.$text-color;
-  background-color: variables.$default-background;
+  color: $text-color;
+  background-color: $default-background;
 }
 .form-control:hover:not(:disabled):not([readonly])::-webkit-file-upload-button {
-  background-color: variables.$default-background;
+  background-color: $default-background;
 }
 .form-control {
   &:focus {
@@ -332,29 +329,29 @@ fieldset:disabled .btn {
   }
   &::-webkit-input-placeholder {
     font-size: 0.8rem;
-    font-weight: variables.$font-weight-medium;
+    font-weight: $font-weight-medium;
     opacity: 0.7;
-    color: variables.$gray-300;
+    color: $gray-300;
     padding-inline-start: 0px;
     transition: padding-inline-start 0.1s ease-in;
   }
   &:-moz-placeholder {
     font-size: 0.8rem;
-    font-weight: variables.$font-weight-medium;
+    font-weight: $font-weight-medium;
     opacity: 0.4;
-    color: variables.$gray-300;
+    color: $gray-300;
   }
   &::-moz-placeholder {
     font-size: 0.8rem;
-    font-weight: variables.$font-weight-medium;
+    font-weight: $font-weight-medium;
     opacity: 0.4;
-    color: variables.$gray-300;
+    color: $gray-300;
   }
   &:-ms-input-placeholder {
     font-size: 0.8rem;
-    font-weight: variables.$font-weight-medium;
+    font-weight: $font-weight-medium;
     opacity: 0.4;
-    color: variables.$gray-300;
+    color: $gray-300;
   }
 }
 .form-control-sm {
@@ -406,7 +403,7 @@ fieldset:disabled .btn {
 .toggle {
   width: 3.75rem;
   height: 1.563rem;
-  background-color: variables.$light;
+  background-color: $light;
   margin-inline-start: 0.625rem;
   margin-block-end: 0.313rem;
   padding: 0.125rem;
@@ -423,7 +420,7 @@ fieldset:disabled .btn {
     display: block;
     width: 1.25rem;
     border-radius: 0.125rem;
-    background-color: variables.$white;
+    background-color: $white;
     box-shadow: 0 0.125rem 0.125rem 0 rgba(0, 0, 0, 0.45);
     cursor: pointer;
     transition: all 0.2s ease;
@@ -436,14 +433,14 @@ fieldset:disabled .btn {
     &::after {
       content: "off";
       inset-inline-end: -1.813rem;
-      color: variables.$text-muted;
+      color: $text-muted;
     }
 
     &::before,
     &::after {
       position: absolute;
       font-size: 0.625rem;
-      font-weight: variables.$font-weight-medium;
+      font-weight: $font-weight-medium;
       letter-spacing: 0.5px;
       text-transform: uppercase;
       inset-block-start: 0.188rem;
@@ -453,97 +450,97 @@ fieldset:disabled .btn {
   }
 
   &.on {
-    background-color: rgba(var(variables.$primary), 0.3);
+    background-color: rgba(var($primary), 0.3);
 
     span {
-      background-color: variables.$primary;
+      background-color: $primary;
 
       &::before {
-        color: variables.$primary;
+        color: $primary;
       }
     }
 
     &.toggle-secondary {
-      background-color: rgba(variables.$secondary, 0.4);
+      background-color: rgba($secondary, 0.4);
 
       span {
-        background-color: variables.$secondary;
+        background-color: $secondary;
 
         &::before {
-          color: variables.$secondary;
+          color: $secondary;
         }
       }
     }
 
     &.toggle-warning {
-      background-color: rgba(variables.$warning, 0.4);
+      background-color: rgba($warning, 0.4);
 
       span {
-        background-color: variables.$warning;
+        background-color: $warning;
 
         &::before {
-          color: variables.$warning;
+          color: $warning;
         }
       }
     }
 
     &.toggle-info {
-      background-color: rgba(variables.$info, 0.4);
+      background-color: rgba($info, 0.4);
 
       span {
-        background-color: variables.$info;
+        background-color: $info;
 
         &::before {
-          color: variables.$info;
+          color: $info;
         }
       }
     }
 
     &.toggle-success {
-      background-color: rgba(variables.$success, 0.4);
+      background-color: rgba($success, 0.4);
 
       span {
-        background-color: variables.$success;
+        background-color: $success;
 
         &::before {
-          color: variables.$success;
+          color: $success;
         }
       }
     }
 
     &.toggle-danger {
-      background-color: rgba(variables.$danger, 0.4);
+      background-color: rgba($danger, 0.4);
 
       span {
-        background-color: variables.$danger;
+        background-color: $danger;
 
         &::before {
-          color: variables.$danger;
+          color: $danger;
         }
       }
     }
 
     &.toggle-light {
-      background-color: rgba(variables.$light, 0.4);
+      background-color: rgba($light, 0.4);
 
       span {
-        background-color: variables.$light;
+        background-color: $light;
 
         &::before,
         &::after {
-          color: variables.$text-muted;
+          color: $text-muted;
         }
       }
     }
 
     &.toggle-dark {
-      background-color: rgba(variables.$dark, 0.4);
+      background-color: rgba($dark, 0.4);
 
       span {
-        background-color: variables.$dark;
+        background-color: $dark;
 
         &::before {
-          color: variables.$white;
+          color: $white;
         }
       }
     }
@@ -611,43 +608,43 @@ fieldset:disabled .btn {
 }
 
 .label-primary {
-  background: variables.$primary;
-  color: variables.$white;
+  background: $primary;
+  color: $white;
 }
 
 .label-secondary {
-  background: variables.$secondary;
-  color: variables.$white;
+  background: $secondary;
+  color: $white;
 }
 
 .label-warning {
-  background: variables.$warning;
-  color: variables.$white;
+  background: $warning;
+  color: $white;
 }
 
 .label-info {
-  background: variables.$info;
-  color: variables.$white;
+  background: $info;
+  color: $white;
 }
 
 .label-success {
-  background: variables.$success;
-  color: variables.$white;
+  background: $success;
+  color: $white;
 }
 
 .label-danger {
-  background: variables.$danger;
-  color: variables.$white;
+  background: $danger;
+  color: $white;
 }
 
 .label-light {
-  background: variables.$light;
-  color: variables.$white;
+  background: $light;
+  color: $white;
 }
 
 .label-dark {
-  background: variables.$dark;
-  color: variables.$white;
+  background: $dark;
+  color: $white;
 }
 
 .custom-toggle-switch > input[type="checkbox"]:checked + label::before {
@@ -656,7 +653,7 @@ fieldset:disabled .btn {
 }
 .custom-toggle-switch > label {
   &::before {
-    background: variables.$text-muted;
+    background: $text-muted;
     box-shadow: inset 0px 0px 0.625rem rgba(255,255,255, 0.5);
     border-radius: 0.5rem;
     content: "";
@@ -669,7 +666,7 @@ fieldset:disabled .btn {
   }
 
   &::after {
-    background: variables.$white;
+    background: $white;
     border-radius: 1rem;
     box-shadow: 0 0 0.313rem rgba(228, 229, 237, 0.8);
     content: "";
@@ -735,85 +732,85 @@ fieldset:disabled .btn {
 .form-floating {
   &.floating-primary {
     label {
-      color: variables.$primary;
+      color: $primary;
       opacity: 1;
     }
 
     input {
-      border: 1px solid variables.$primary;
+      border: 1px solid $primary;
     }
     & > .form-control:focus ~ label {
-      color: variables.$primary !important;
+      color: $primary !important;
     }
   }
 
   &.floating-secondary {
     label {
-      color: variables.$secondary;
+      color: $secondary;
       opacity: 1;
     }
 
     input {
-      border: 1px solid variables.$secondary;
+      border: 1px solid $secondary;
     }
     & > .form-control:focus ~ label {
-      color: variables.$secondary !important;
+      color: $secondary !important;
     }
   }
 
   &.floating-warning {
     label {
-      color: variables.$warning;
+      color: $warning;
       opacity: 1;
     }
 
     input {
-      border: 1px solid variables.$warning;
+      border: 1px solid $warning;
     }
     & > .form-control:focus ~ label {
-      color: variables.$warning !important;
+      color: $warning !important;
     }
   }
 
   &.floating-info {
     label {
-      color: variables.$info;
+      color: $info;
       opacity: 1;
     }
 
     input {
-      border: 1px solid variables.$info;
+      border: 1px solid $info;
     }
     & > .form-control:focus ~ label {
-      color: variables.$info !important;
+      color: $info !important;
     }
   }
 
   &.floating-success {
     label {
-      color: variables.$success;
+      color: $success;
       opacity: 1;
     }
 
     input {
-      border: 1px solid variables.$success;
+      border: 1px solid $success;
     }
     & > .form-control:focus ~ label {
-      color: variables.$success !important;
+      color: $success !important;
     }
   }
 
   &.floating-danger {
     label {
-      color: variables.$danger;
+      color: $danger;
       opacity: 1;
     }
 
     input {
-      border: 1px solid variables.$danger;
+      border: 1px solid $danger;
     }
     & > .form-control:focus ~ label {
-      color: variables.$danger !important;
+      color: $danger !important;
     }
   }
 }
@@ -821,8 +818,8 @@ fieldset:disabled .btn {
 .form-floating > .form-control:focus ~ label::after,
 .form-floating > .form-control:not(:placeholder-shown) ~ label::after,
 .form-floating > .form-select ~ label::after {
-  background-color: variables.$white;
-  border-radius: variables.$border-radius;
+  background-color: $white;
+  border-radius: $border-radius;
 }
 .form-wizard-1 {
   border-bottom: 0;
@@ -840,7 +837,7 @@ fieldset:disabled .btn {
 
     .nav-link {
       padding: 0.25rem 0.4rem;
-      color: variables.$text-muted;
+      color: $text-muted;
       display: flex;
       align-items: center;
       border-radius: 50px;
@@ -851,7 +848,7 @@ fieldset:disabled .btn {
         padding: 4px;
         line-height: 1;
         border-radius: 50px;
-        border: 2px solid variables.$default-border;
+        border: 2px solid $default-border;
       }
 
       &:focus,
@@ -860,13 +857,13 @@ fieldset:disabled .btn {
       }
 
       &.active {
-        border: 2px solid variables.$primary;
+        border: 2px solid $primary;
         border-radius: 50px;
-        color: variables.$primary;
+        color: $primary;
         background-color: transparent;
 
         i {
-          border: 2px solid variables.$primary;
+          border: 2px solid $primary;
         }
       }
     }
@@ -878,12 +875,12 @@ fieldset:disabled .btn {
 }
 .form-control.is-valid:focus,
 .was-validated .form-control:valid:focus {
-  border-color: variables.$success;
+  border-color: $success;
   box-shadow: none;
 }
 .form-control.is-valid,
 .was-validated .form-control:valid {
-  border-color: variables.$success;
+  border-color: $success;
 }
 .form-control-color {
   width: 1.75rem;
@@ -898,18 +895,18 @@ fieldset:disabled .btn {
   }
 }
 .input-group-text {
-    background-color: variables.$white;
+    background-color: $white;
     padding: 2px 10px;
-    border-color: variables.$border-color;
+    border-color: $border-color;
 }
 kbd {
-  background-color: variables.$secondary-transparent;
-  font-size: variables.$font-size-10;
-  font-weight: variables.$font-weight-medium;
+  background-color: $secondary-transparent;
+  font-size: $font-size-10;
+  font-weight: $font-weight-medium;
   padding: 4px;
-  color: variables.$secondary;
+  color: $secondary;
   padding: 2px 3px;
-  @include mixins.rounded(5px);
+  @include rounded(5px);
 }
 [dir="rtl"] {
   [type="email"],
@@ -931,7 +928,7 @@ kbd {
   margin-left: 0;
 }
 input[type="range"]::-webkit-slider-runnable-track {
-  background-color: variables.$light;
+  background-color: $light;
 }
 [dir="rtl"] {
   .form-checked-outline:checked[type="checkbox"]:before {
@@ -944,7 +941,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 .col-form-label-lg,
 .col-form-label-sm,
 .col-form-label {
-  font-weight: variables.$font-weight-semibold;
+  font-weight: $font-weight-semibold;
 }
 #exampleColorInput::-webkit-color-swatch-wrapper {
   direction: rtl; 
@@ -974,14 +971,14 @@ input[type="range"]::-webkit-slider-runnable-track {
   }
 }
 .custom_radio, .custom_radio_one {
-  color: variables.$text-color;
+  color: $text-color;
   position: relative;
-  font-size: variables.$font-size-14;
+  font-size: $font-size-14;
   padding-left: 25px;
   margin-bottom: 10px;
   cursor: pointer;
   user-select: none;
-  font-weight: variables.$font-weight-normal;
+  font-weight: $font-weight-normal;
 }
 .custom_radio input, .custom_radio_one input {
   position: absolute;
@@ -995,7 +992,7 @@ input[type="range"]::-webkit-slider-runnable-track {
   height: 16px;
   width: 16px;
   background-color: transparent;
-  background-color: variables.$secondary-transparent;
+  background-color: $secondary-transparent;
   border-radius: 50%;
   -webkit-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
@@ -1010,7 +1007,7 @@ input[type="range"]::-webkit-slider-runnable-track {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: variables.$white;
+  background: $white;
   visibility: visible;
   transform: scale(1);
   -webkit-transform: scale(1);
@@ -1028,10 +1025,10 @@ input[type="range"]::-webkit-slider-runnable-track {
   visibility: visible;
 }
 .custom_radio.active input ~ .checkmark {
-  background-color: variables.$primary;
+  background-color: $primary;
 }
 .edit-add {
-  font-size: variables.$font-size-15;
+  font-size: $font-size-15;
 &.card {
       border: none;
       margin: 0;

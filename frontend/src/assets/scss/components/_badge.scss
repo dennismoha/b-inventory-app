@@ -1,19 +1,17 @@
-@use "../utils/variables";
-
 .badge {
     &.badge-primary {
-        background: rgba(variables.$primary, 0.1);
-        box-shadow: 0 1px 1px rgba(variables.$primary, 0.5);
-        color: variables.$primary;
+        background: rgba($primary, 0.1);
+        box-shadow: 0 1px 1px rgba($primary, 0.5);
+        color: $primary;
         
     }
 }
-@each $color, $value in variables.$theme-colors {
+@each $color, $value in $theme-colors {
     .badge {
         &.badge-#{$color} {
             background: #{$value};
             box-shadow: 0 1px 1px rgba($value, 0.5);
-            color: variables.$white;
+            color: $white;
         }
         &.badge-soft-#{$color} {
             background: rgba($value, 0.1);
@@ -21,40 +19,40 @@
             color: $value;
         }
         &.badge-soft-primary {
-            background: variables.$primary-100 !important;
+            background: $primary-100 !important;
         }
         &.badge-soft-secondary {
-            background: variables.$secondary-transparent !important;
+            background: $secondary-transparent !important;
         }
         &.badge-soft-success {
-            background: variables.$success-100 !important;
+            background: $success-100 !important;
         }
         &.badge-soft-warning {
-            background: variables.$warning-100 !important;
+            background: $warning-100 !important;
         }
         &.badge-soft-danger {
-            background: variables.$danger-100 !important;
+            background: $danger-100 !important;
         }
         &.badge-soft-info {
-            background: variables.$info-transparent !important;
+            background: $info-transparent !important;
         }
         &.badge-soft-cyan {
-            background: variables.$cyan-100 !important;
+            background: $cyan-100 !important;
         }
         &.badge-soft-pink {
-            background: variables.$pink-100 !important;
+            background: $pink-100 !important;
         }
         &.badge-soft-skyblue {
-            background: variables.$purple-100 !important;
+            background: $purple-100 !important;
         }
     }
 }
 .badge{
     padding: .35rem .45rem;
     text-transform:capitalize;
-    font-weight: variables.$font-weight-medium;
+    font-weight: $font-weight-medium;
     letter-spacing: 0.5px;
-    border-radius: variables.$border-radius-lg;
+    border-radius: $border-radius-lg;
     &.badge-xs {
         font-size: 10px;
         padding: 0px 5px;
@@ -71,31 +69,31 @@
         line-height: 1.5;
     }
     &.badge-lg {
-        font-size: variables.$font-size-14;
+        font-size: $font-size-14;
         padding: 0px 10px;
         line-height: 30px;
     }
     &.badge-xl {
-        font-size: variables.$font-size-16;
+        font-size: $font-size-16;
         padding: 0px 15px;
         line-height: 35px;
     }
 }
 .badges-warning {
-    color: variables.$warning;
+    color: $warning;
     padding: 2px 10px;
     border-radius: 8px;
-    border: 1px solid variables.$warning;
-    font-size: variables.$font-size-14;
-    font-weight: variables.$font-weight-semibold;
+    border: 1px solid $warning;
+    font-size: $font-size-14;
+    font-weight: $font-weight-semibold;
     min-width: 80px;
 }
 .badge.badge-linedangered{
-    color: variables.$danger;
+    color: $danger;
     padding: 2px 10px;
     border-radius: 8px;
-    border: 1px solid variables.$danger;
-    font-size: variables.$font-size-14;
-    font-weight: variables.$font-weight-semibold;
+    border: 1px solid $danger;
+    font-size: $font-size-14;
+    font-weight: $font-weight-semibold;
     min-width: 80px;
 }

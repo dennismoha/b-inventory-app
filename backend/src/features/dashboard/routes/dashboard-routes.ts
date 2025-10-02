@@ -1,8 +1,8 @@
-// routes/salesRoutes.ts
+// routes/AdminDashboardRoutes.ts
 import express, { Router } from 'express';
-import { SalesController } from '@src/features/dashboard/controller/sales-dashboard';
+import { SalesController } from '@src/features/dashboard/controller/admin-dashboard';
 
-class SalesRoutes {
+class AdminDashboardRoutes {
   private router: Router;
 
   constructor() {
@@ -12,6 +12,7 @@ class SalesRoutes {
   public routes(): Router {
     // Sales dashboard summary
     this.router.get('/sales/dashboard', SalesController.prototype.getSalesDashboard);
+    this.router.get('/sales/admin/dashboard', SalesController.prototype.adminDashboard);
 
     // (Optional extra endpoints if needed later)
     // this.router.get('/sales/top-products', SalesController.prototype.getTopSellingProducts);
@@ -24,4 +25,4 @@ class SalesRoutes {
   }
 }
 
-export const salesRoutes = new SalesRoutes();
+export const adminDashboardRoutes = new AdminDashboardRoutes();

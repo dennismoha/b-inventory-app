@@ -507,7 +507,7 @@ model Expense {
   vendor        String? // who you paid
   // Link to batch (if tied to purchase, redundancy for reporting)
   batch         String?
-
+  status ExpenseStatus @default(PENDING)
   // General expense (if no purchaseId)
   isGeneral Boolean @default(false)
 
@@ -1053,4 +1053,10 @@ enum ExpenseCategory {
   OTHER
   TRANSPORT
   PURCHASE
+}
+
+
+enum ExpenseStatus {
+  PAID
+  PENDING
 }

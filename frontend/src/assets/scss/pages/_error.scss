@@ -1,6 +1,3 @@
-@use "../utils/mixins";
-@use "../utils/variables";
-
 .error-box {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -15,7 +12,7 @@
     flex-direction: column;
 }
 .comming-soon-pg {
-    background-image: url(/chicksfeeds/src/assets/img/coming-soon.png);
+    background-image: url(/src/assets/img/coming-soon.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -29,7 +26,7 @@
     justify-content: center;
     -webkit-justify-content: center;
     -ms-flex-pack: center;
-    @include mixins.respond-below(custom991) {
+    @include respond-below(custom991) {
         height: 100%;
     }
     .coming-soon-box {
@@ -38,60 +35,60 @@
         border-radius: 10px;
         padding: 40px;
         text-align: center;
-        @include mixins.respond-below(custom1199) {
+        @include respond-below(custom1199) {
             padding: 20px 40px;
             max-width: 800px;
         }
-        @include mixins.respond-below(custom991) {
+        @include respond-below(custom991) {
             width: auto;
             padding: 30px;
             margin: 20px;
         }
-        @include mixins.respond-below(custom575) {
+        @include respond-below(custom575) {
             padding: 15px;
             margin: 10px;
         }
         .pos-logo {
             width: 100px;
             margin: 0 auto 30px;
-            @include mixins.respond-below(custom1199) {
+            @include respond-below(custom1199) {
                 margin-bottom: 20px;
             }
         }
         span {
-            font-size: variables.$font-size-24;
-            color: variables.$gray-600;
-            font-weight: variables.$font-weight-bold;
+            font-size: $font-size-24;
+            color: $gray-600;
+            font-weight: $font-weight-bold;
         }
         h1 {
-            font-size: variables.$font-size-60;
-            font-weight: variables.$font-weight-bold;
+            font-size: $font-size-60;
+            font-weight: $font-weight-bold;
             line-height: normal;
-            @include mixins.respond-below(custom1199) {
-                font-size: variables.$font-size-50;
+            @include respond-below(custom1199) {
+                font-size: $font-size-50;
             }
-            @include mixins.respond-below(custom991) {
-                font-size: variables.$font-size-40;
+            @include respond-below(custom991) {
+                font-size: $font-size-40;
             }
-            @include mixins.respond-below(custom575) {
-                font-size: variables.$font-size-28;
+            @include respond-below(custom575) {
+                font-size: $font-size-28;
             }
             span {
-                font-size: variables.$font-size-60;
-                color: variables.$primary;
-                @include mixins.respond-below(custom1199) {
-                    font-size: variables.$font-size-50;
+                font-size: $font-size-60;
+                color: $primary;
+                @include respond-below(custom1199) {
+                    font-size: $font-size-50;
                 }
-                @include mixins.respond-below(custom991) {
-                    font-size: variables.$font-size-40;
+                @include respond-below(custom991) {
+                    font-size: $font-size-40;
                 }
-                @include mixins.respond-below(custom575) {
-                    font-size: variables.$font-size-28;
+                @include respond-below(custom575) {
+                    font-size: $font-size-28;
                 }
             }
         }
         p {
-            font-size: variables.$font-size-15;
+            font-size: $font-size-15;
             max-width: 400px;
             text-align: center; 
             margin: auto;
@@ -107,13 +104,13 @@
             -webkit-justify-content: center;
             -ms-flex-pack: center;
             margin: 30px 0;
-            @include mixins.respond-below(custom1199) {
+            @include respond-below(custom1199) {
                 margin: 20px 0;
             }
             li {
-                border: 1px solid variables.$gray-200;
-                background-color: variables.$white;
-                font-size: variables.$font-size-16;
+                border: 1px solid $gray-200;
+                background-color: $white;
+                font-size: $font-size-16;
                 width: 85px;
                 height: 85px;
                 border-radius: 8px;
@@ -126,26 +123,26 @@
                 justify-content: center;
                 -webkit-justify-content: center;
                 -ms-flex-pack: center;
-                font-size: variables.$font-size-16;
-                font-weight: variables.$font-weight-medium;
+                font-size: $font-size-16;
+                font-weight: $font-weight-medium;
                 flex-direction: column;
                 margin-right: 14px;
-                color: variables.$gray-600;
-                @include mixins.respond-below(custom575) {
+                color: $gray-600;
+                @include respond-below(custom575) {
                     width: 50px;
                     height: 50px;
                     margin-right: 5px;
                 }
                 span {
-                    color: variables.$secondary;
-                    font-size: variables.$font-size-32;
+                    color: $secondary;
+                    font-size: $font-size-32;
                     line-height: normal;
-                    @include mixins.respond-below(custom575) {
-                        font-size: variables.$font-size-20;
+                    @include respond-below(custom575) {
+                        font-size: $font-size-20;
                     }
                 }
                 &.seperate-dot {
-                    color: variables.$secondary;
+                    color: $secondary;
                     width: auto;
                     height: auto;
                     border: 0;
@@ -169,8 +166,8 @@
                 padding-right: 130px;
             }
             label {
-                color: variables.$secondary;
-                font-weight: variables.$font-weight-semibold;
+                color: $secondary;
+                font-weight: $font-weight-semibold;
             }
         }
         .social-media-icons {
@@ -184,7 +181,7 @@
             -webkit-justify-content: center;
             -ms-flex-pack: center;
             margin-top: 30px;
-            @include mixins.respond-below(custom1199) {
+            @include respond-below(custom1199) {
                 margin-top: 20px;
             }
             li {
@@ -204,13 +201,13 @@
                     -ms-flex-pack: center;
                     width: 32px;
                     height: 32px;
-                    background-color: variables.$secondary;
+                    background-color: $secondary;
                     border-radius: 5px;
                     &:hover {
-                        background-color: variables.$primary;
+                        background-color: $primary;
                     }
                     i {
-                        color: variables.$white;
+                        color: $white;
                     }
                 }
             }

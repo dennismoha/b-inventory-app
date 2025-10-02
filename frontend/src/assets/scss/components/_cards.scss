@@ -1,25 +1,23 @@
-@use "../utils/variables";
-
 .card {
     margin-bottom: 1.5rem;
-    background-color: variables.$white;
+    background-color: $white;
     transition: all .5s ease-in-out;
     position: relative;
     border-radius: 8px;
-    border:1px solid variables.$border-color;
+    border:1px solid $border-color;
     box-shadow: none;
     color: inherit;
     .card-body {
         padding: 1.25rem;
     }
     .card-title {
-        font-size: variables.$font-size-18;
-        font-weight: variables.$font-weight-bold;
+        font-size: $font-size-18;
+        font-weight: $font-weight-bold;
         text-transform: capitalize;
-        color: variables.$title-color;
+        color: $title-color;
     }
     .card-header {
-        border-color: variables.$border-color;
+        border-color: $border-color;
         position: relative;
         background: transparent;
         padding: 1rem 1.25rem 1rem;
@@ -33,7 +31,7 @@
         }
     }
     .card-footer {
-        border-color: variables.$border-color;
+        border-color: $border-color;
         background: transparent;
         padding: 1rem 1.25rem 1rem;
     }    
@@ -45,16 +43,16 @@
 }
 .card {
   &.custom-card {
-  border-radius: variables.$border-radius;
+  border-radius: $border-radius;
   border: 0;
-  background-color: variables.$white;
+  background-color: $white;
   position: relative;
   margin-block-end: 1.5rem;
   width: 100%;
   .card-header {
     padding: 1rem 1.25rem;
     background-color: transparent !important;
-    border-block-end: 1px solid variables.$secondary-transparent;
+    border-block-end: 1px solid $secondary-transparent;
     display: flex;
     align-items: center;
     position: relative;
@@ -67,7 +65,7 @@
       position: relative;
       margin-block-end: 0;
       font-size: 0.9375rem;
-      font-weight: variables.$font-weight-bold;
+      font-weight: $font-weight-bold;
       text-transform: capitalize;
       .subtitle {
         margin-block-end: 0;
@@ -77,13 +75,13 @@
   }
   .card-footer {
     background-color: transparent !important;
-    border-block-start: 1px solid variables.$default-border;
+    border-block-start: 1px solid $default-border;
     padding: 1rem 1.5rem;
-    font-size: variables.$font-size-base;
+    font-size: $font-size-base;
   }
   .card-body {
     padding: 1.5rem;
-    color: variables.$text-color;
+    color: $text-color;
   }
   .card-link {
     font-size: 0.75rem;
@@ -120,159 +118,159 @@
     }
   }
   &.card-bg-primary {
-    background-color: variables.$primary;
-    color: variables.$white;
+    background-color: $primary;
+    color: $white;
     .card-header {
       background-color: rgba(255, 255, 255, 0.1) !important;
-      color: variables.$white;
+      color: $white;
       border-block-end: 1px solid rgba(255, 255, 255, 0.2);
       &:before {
-        background-color: variables.$white;
+        background-color: $white;
       }
     }
     .card-body {
-      color: variables.$white;
+      color: $white;
     }
     .card-footer {
       background-color: rgba(255, 255, 255, 0.1) !important;
-      color: variables.$white;
+      color: $white;
       border-block-start: 1px solid rgba(255, 255, 255, 0.2);
     }
   }
   &.card-bg-secondary {
-    background-color: variables.$secondary;
-    color: variables.$white;
+    background-color: $secondary;
+    color: $white;
     .card-header {
       background-color: rgba(255, 255, 255, 0.1) !important;
-      color: variables.$white;
+      color: $white;
       border-block-end: 1px solid rgba(255, 255, 255, 0.2);
       &:before {
-        background-color: variables.$white;
+        background-color: $white;
       }
     }
     .card-body {
-      color: variables.$white;
+      color: $white;
     }
     .card-footer {
       background-color: rgba(255, 255, 255, 0.1) !important;
-      color: variables.$white;
+      color: $white;
       border-block-start: 1px solid rgba(255, 255, 255, 0.2);
     }
   }
   &.card-bg-warning {
-    background-color: variables.$warning;
-    color: variables.$white;
+    background-color: $warning;
+    color: $white;
     .card-header {
       background-color: rgba(255, 255, 255, 0.1) !important;
-      color: variables.$white;
+      color: $white;
       border-block-end: 1px solid rgba(255, 255, 255, 0.2);
       &:before {
-        background-color: variables.$white;
+        background-color: $white;
       }
     }
     .card-body {
-      color: variables.$white;
+      color: $white;
     }
     .card-footer {
       background-color: rgba(255, 255, 255, 0.1) !important;
-      color: variables.$white;
+      color: $white;
       border-block-start: 1px solid rgba(255, 255, 255, 0.2);
     }
   }
   &.card-bg-info {
-    background-color: variables.$info;
-    color: variables.$white;
+    background-color: $info;
+    color: $white;
     .card-header {
       background-color: rgba(255, 255, 255, 0.1) !important;
-      color: variables.$white;
+      color: $white;
       border-block-end: 1px solid rgba(255, 255, 255, 0.2);
       &:before {
-        background-color: variables.$white;
+        background-color: $white;
       }
     }
     .card-body {
-      color: variables.$white;
+      color: $white;
     }
     .card-footer {
       background-color: rgba(255, 255, 255, 0.1) !important;
-      color: variables.$white;
+      color: $white;
       border-block-start: 1px solid rgba(255, 255, 255, 0.2);
     }
   }
   &.card-bg-success {
-    background-color: variables.$success;
-    color: variables.$white;
+    background-color: $success;
+    color: $white;
     .card-header {
       background-color: rgba(255, 255, 255, 0.1) !important;
-      color: variables.$white;
+      color: $white;
       border-block-end: 1px solid rgba(255, 255, 255, 0.2);
       &:before {
-        background-color: variables.$white;
+        background-color: $white;
       }
     }
     .card-body {
-      color: variables.$white;
+      color: $white;
     }
     .card-footer {
       background-color: rgba(255, 255, 255, 0.1) !important;
-      color: variables.$white;
+      color: $white;
       border-block-start: 1px solid rgba(255, 255, 255, 0.2);
     }
   }
   &.card-bg-danger {
-    background-color: variables.$danger;
-    color: variables.$white;
+    background-color: $danger;
+    color: $white;
     .card-header {
       background-color: rgba(255, 255, 255, 0.1) !important;
-      color: variables.$white;
+      color: $white;
       border-block-end: 1px solid rgba(255, 255, 255, 0.2);
       &:before {
-        background-color: variables.$white;
+        background-color: $white;
       }
     }
     .card-body {
-      color: variables.$white;
+      color: $white;
     }
     .card-footer {
       background-color: rgba(255, 255, 255, 0.1) !important;
-      color: variables.$white;
+      color: $white;
       border-block-start: 1px solid rgba(255, 255, 255, 0.2);
     }
   }
   &.card-bg-light {
-    background-color: variables.$light;
-    color: variables.$text-color;
+    background-color: $light;
+    color: $text-color;
     .card-header {
       background-color: rgba(0, 0, 0, 0.05) !important;
-      color: variables.$text-color;
-      border-block-end: variables.$default-border;
+      color: $text-color;
+      border-block-end: $default-border;
     }
     .card-body {
-      color: variables.$text-color;
+      color: $text-color;
     }
     .card-footer {
       background-color: rgba(0, 0, 0, 0.05) !important;
-      color: variables.$text-color;
-      border-block-start: variables.$default-border;
+      color: $text-color;
+      border-block-start: $default-border;
     }
   }
   &.card-bg-dark {
-    background-color: variables.$dark;
-    color: variables.$white;
+    background-color: $dark;
+    color: $white;
     .card-header {
       background-color: rgba(255, 255, 255, 0.1) !important;
-      color: variables.$white;
+      color: $white;
       border-block-end: 1px solid rgba(255, 255, 255, 0.2);
       &:before {
-        background-color: variables.$white;
+        background-color: $white;
       }
     }
     .card-body {
-      color: variables.$white;
+      color: $white;
     }
     .card-footer {
       background-color: rgba(255, 255, 255, 0.1) !important;
-      color: variables.$white;
+      color: $white;
       border-block-start: 1px solid rgba(255, 255, 255, 0.2);
     }
   }
@@ -308,38 +306,38 @@
   }
 }
 .cals-icon {
-    font-size: variables.$font-size-50;
-    color: variables.$gray-500;
+    font-size: $font-size-50;
+    color: $gray-500;
 }
 .callout {
   padding: 1.25rem;
   margin-block-start: 1.25rem;
   margin-block-end: 1.25rem;
-  background-color: variables.$light;
-  border-inline-start: 0.25rem solid variables.$default-border;
+  background-color: $light;
+  border-inline-start: 0.25rem solid $default-border;
 }
 .callout-info {
-  background-color: rgba(variables.$info, 0.075);
-  border-color: rgba(variables.$info, 0.5);
+  background-color: rgba($info, 0.075);
+  border-color: rgba($info, 0.5);
 }
 .callout-warning {
-  background-color: rgba(variables.$warning, 0.075);
-  border-color: rgba(variables.$warning, 0.5);
+  background-color: rgba($warning, 0.075);
+  border-color: rgba($warning, 0.5);
 }
 .callout-danger {
-  background-color: rgba(variables.$danger, 0.075);
-  border-color: rgba(variables.$danger, 0.5);
+  background-color: rgba($danger, 0.075);
+  border-color: rgba($danger, 0.5);
 }
 .btn-facebook {
-  background-color: variables.$facebook;
-  color: variables.$white;
-  border: 1px solid variables.$facebook;
+  background-color: $facebook;
+  color: $white;
+  border: 1px solid $facebook;
   &:hover,
   &:focus,
   &:active {
-    background-color: variables.$facebook !important;
-    color: variables.$white !important;
-    border: 1px solid variables.$facebook !important;
+    background-color: $facebook !important;
+    color: $white !important;
+    border: 1px solid $facebook !important;
   }
 }
 .btn-instagram {
@@ -369,25 +367,25 @@
     #bc1888 100%
   );
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
-  color: variables.$white;
+  color: $white;
   border: 1px solid transparent;
   &:hover,
   &:focus,
   &:active {
-    color: variables.$white;
+    color: $white;
     border: 1px solid transparent;
   }
 }
 .btn-twitter {
-  background-color: variables.$twitter;
-  color: variables.$white;
-  border: 1px solid variables.$twitter;
+  background-color: $twitter;
+  color: $white;
+  border: 1px solid $twitter;
   &:hover,
   &:focus,
   &:active {
-    background-color: variables.$twitter !important;
-    color: variables.$white !important;
-    border: 1px solid variables.$twitter !important;
+    background-color: $twitter !important;
+    color: $white !important;
+    border: 1px solid $twitter !important;
   }
 }
 .btn-icon {

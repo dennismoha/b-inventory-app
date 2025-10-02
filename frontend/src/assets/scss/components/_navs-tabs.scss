@@ -1,6 +1,3 @@
-@use "../utils/mixins";
-@use "../utils/variables";
-
 .nav-item {
     margin-inline-end: 0.5rem;
     &:last-child {
@@ -8,51 +5,51 @@
     }
   }
   .nav-link {
-    color: variables.$text-color;
-    border-radius: variables.$border-radius;
-    font-weight: variables.$font-weight-semibold;
+    color: $text-color;
+    border-radius: $border-radius;
+    font-weight: $font-weight-semibold;
     &.active {
-      background-color: rgba(variables.$primary,0.1);
-      color: variables.$primary;
+      background-color: rgba($primary,0.1);
+      color: $primary;
     }
   }
   .navbar-brand {
-    color: variables.$text-color;
+    color: $text-color;
     &:focus ,&:hover {
-      color: variables.$text-color;
+      color: $text-color;
       opacity: 0.9;
     }
   }
   .navbar-nav .nav-link.active,
   .navbar-nav .show > .nav-link {
-    color: variables.$primary;
+    color: $primary;
   }
   .nav-link.disabled {
-    color: variables.$text-color;
+    color: $text-color;
     opacity: 0.3;
   }
   .nav-tabs .nav-link.disabled, .nav-tabs .nav-link:disabled {
-    color: rgba(variables.$dark,0.5);
+    color: rgba($dark,0.5);
   }
   .navbar-text {
-    color: variables.$text-color;
+    color: $text-color;
   }
   .navbar-dark {
     &.bg-dark {
       .nav-link,
       .navbar-brand {
-        color: variables.$white;
+        color: $white;
       }
     }
     .navbar-nav .nav-link.active,
     .navbar-nav .show > .nav-link {
-      color: variables.$white;
+      color: $white;
     }
   }
   .nav-pills .nav-link.active,
   .nav-pills .show > .nav-link {
-    color: variables.$primary;
-    background: variables.$primary-100;
+    color: $primary;
+    background: $primary-100;
   }
 
 .nav.nav-style-1 {
@@ -65,15 +62,15 @@
   }
   .nav-link {
     &.active {
-        background-color: rgba(variables.$primary, 0.1);
-        color: variables.$primary;
+        background-color: rgba($primary, 0.1);
+        color: $primary;
         &:hover {        
-          background: rgba(variables.$primary, 0.1);
+          background: rgba($primary, 0.1);
         }
     }
     &:hover {        
         background: transparent;
-        color: variables.$primary;
+        color: $primary;
     }
   }
 }
@@ -81,9 +78,9 @@
   .nav-item .nav-link {
     border-block-start: 3px solid transparent;
     &.active {
-      background-color: rgba(variables.$primary, 0.1);
-      border-block-start: 3px solid variables.$primary;
-      color: variables.$primary;
+      background-color: rgba($primary, 0.1);
+      border-block-start: 3px solid $primary;
+      color: $primary;
     }
   }
 }
@@ -96,21 +93,21 @@
   }
   .nav-link.active {
     background-color: transparent;
-    border-block-end: 3px solid variables.$primary;
-    color: variables.$primary;
+    border-block-end: 3px solid $primary;
+    color: $primary;
   }
 }
 .nav.nav-style-4 {
   border: 0;
   .nav-link {
-    color: variables.$text-muted;
+    color: $text-muted;
     border: 0;
   }
   .nav-link {
     margin-bottom: 3px;
     &.active {
-      background-color: variables.$light;
-      color: variables.$text-color;
+      background-color: $light;
+      color: $text-color;
       border: 0;
     }
     &:hover,
@@ -118,29 +115,29 @@
       border: 0;
     }
     &:hover {
-        background-color: variables.$light;
-        color: variables.$text-color;   
+        background-color: $light;
+        color: $text-color;   
     }
   }
 }
 .nav-tabs.nav-style-5 {
   border: 0;
   .nav-link {
-    color: variables.$text-muted;
+    color: $text-muted;
     border: 0;
     margin-bottom: 3px;
   }
   .nav-link {
     &.active {
-      background-color: variables.$primary;
-      color: variables.$white;
+      background-color: $primary;
+      color: $white;
       border: 0;
     }
     &:hover,
     &:focus {
       border: 0;
-      background-color: variables.$primary;
-      color: variables.$white;
+      background-color: $primary;
+      color: $white;
     }
   }
 }
@@ -148,10 +145,10 @@
   border: 0;
   &.nav-pills .nav-link {
     &.active {
-      border: 1px solid variables.$primary;
-      border-block-end: 2px solid variables.$primary;
+      border: 1px solid $primary;
+      border-block-end: 2px solid $primary;
       background-color: transparent;
-      color: variables.$primary;
+      color: $primary;
     }
   }
 }
@@ -166,16 +163,16 @@
       border: 1px solid transparent;
       font-size: 0.8rem;
       padding: 0.4rem 0.5rem;
-      font-weight: variables.$font-weight-medium;
+      font-weight: $font-weight-medium;
       &.active {
-        background: rgba(variables.$primary, 0.1);
-        color: variables.$primary;
+        background: rgba($primary, 0.1);
+        color: $primary;
         border: 1px solid transparent;
       }
       &:hover,&:focus {
         border: 1px solid transparent;
         background-color: transparent;
-        color: variables.$primary;
+        color: $primary;
       } 
     }
   }
@@ -189,18 +186,18 @@
     }
     .nav-link {
       background-color: transparent;
-      color: variables.$primary;
-      border: 1px solid variables.$primary;
+      color: $primary;
+      border: 1px solid $primary;
       font-size: 0.8rem;
       &.active {
-        background: variables.$primary;
-        color: variables.$white;
-        border: 1px solid variables.$primary;
+        background: $primary;
+        color: $white;
+        border: 1px solid $primary;
       }
       &:hover,&:focus {
-        border: 1px solid variables.$primary;
+        border: 1px solid $primary;
         background-color: transparent;
-         color: variables.$primary;
+         color: $primary;
       } 
     }
   }
@@ -216,16 +213,16 @@
       min-width: 7.5rem;
       max-width: 7.5rem;
       text-align: center;
-      border: 1px solid variables.$default-border;
+      border: 1px solid $default-border;
       margin-bottom: 0.5rem;
-      color: variables.$text-muted;
-      background-color: variables.$light;
+      color: $text-muted;
+      background-color: $light;
       i {
         font-size: 1rem;
       }
       &.active {
-        background-color: variables.$primary;
-        color: variables.$white;
+        background-color: $primary;
+        color: $white;
         position: relative;
         &:before {
           content: "";
@@ -235,14 +232,14 @@
           transform: rotate(45deg);
           width: 1rem;
           height: 1rem;
-          background-color: variables.$primary;
+          background-color: $primary;
         }
         &:hover {
-          color: variables.$white;
+          color: $white;
         }
       }
       &:hover {
-        color: variables.$primary;
+        color: $primary;
       }
     }
   }
@@ -258,7 +255,7 @@
     .nav-link {
       min-width: 160px;
       max-width: 160px;
-      border: 1px solid variables.$primary;
+      border: 1px solid $primary;
       padding: 1.3rem;
       margin-block-end: 0.5rem;
       i {
@@ -267,28 +264,28 @@
         line-height: 2rem;
         text-align: center;
         font-size: 1rem;
-        background: variables.$primary;
-        color: variables.$white;
+        background: $primary;
+        color: $white;
         border-radius: 3.125rem;
-        font-weight: variables.$font-weight-medium;
+        font-weight: $font-weight-medium;
       }
       &.active {
-        background: variables.$primary;
-        border: 1px solid variables.$primary;
-        color: variables.$white;
+        background: $primary;
+        border: 1px solid $primary;
+        color: $white;
         &:hover {
-          background: variables.$primary;
-          border: 1px solid variables.$primary;
-          color: variables.$white;          
+          background: $primary;
+          border: 1px solid $primary;
+          color: $white;          
         }
         i {
-          background: variables.$white;
-          color: variables.$primary;
+          background: $white;
+          color: $primary;
         }
       }
       &:hover,&:focus {
-        border: 1px solid variables.$primary;
-        color: variables.$primary;
+        border: 1px solid $primary;
+        color: $primary;
           background: transparent;
       }
     }
@@ -297,7 +294,7 @@
 .nav.tab-style-1 {
   border-block-end: 0;
   padding: 0.65rem;
-  background-color: variables.$light;
+  background-color: $light;
   border-radius: 7px;
   margin-block-end: 1rem;
   .nav-item {
@@ -310,9 +307,9 @@
     border-radius: 7px;
     padding: 0.35rem 1rem;
     &.active {
-      background-color: variables.$primary !important;
-      color: variables.$white !important;
-      box-shadow: variables.$box-shadow;
+      background-color: $primary !important;
+      color: $white !important;
+      box-shadow: $box-shadow;
       transition: color 0.15s ease-in;
     }
   }
@@ -321,7 +318,7 @@
     .nav-link {
         &:hover {
         background: transparent;
-        color: variables.$primary;
+        color: $primary;
       }  
 
     }
@@ -341,26 +338,26 @@
         height: 1.875rem;
         padding: 0.4rem;
         border-radius: 50px;
-        background-color: variables.$light;
-        color: variables.$text-color;
+        background-color: $light;
+        color: $text-color;
         display: inline-block;
       }
       &:hover {
         border: 0;
         background: transparent;
-        color: variables.$primary;
+        color: $primary;
         i {
-          color: variables.$primary;          
+          color: $primary;          
         }
       }
       &.active {
         background-color: transparent;
         position: relative;
         border: 0;
-        color: variables.$primary;
+        color: $primary;
         i { 
-          background-color: rgba(variables.$primary, 0.1);
-          color: variables.$primary;
+          background-color: rgba($primary, 0.1);
+          color: $primary;
         }
         &:before {
           content: "";
@@ -370,7 +367,7 @@
           inset-block-end: 0;
           width: 100%;
           height: 0.175rem;
-          background-color: variables.$primary;
+          background-color: $primary;
           border-radius: 50px;
         }
       }
@@ -397,7 +394,7 @@
         inset-inline-start: 0;
         width: 100%;
         height: 0.1rem;
-        background-color: variables.$light;
+        background-color: $light;
         border-radius: 50%;
       }
       &:after {
@@ -412,9 +409,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: variables.$white;
+        background-color: $white;
         border-radius: 50%;
-        border: 2px solid variables.$default-border;
+        border: 2px solid $default-border;
       }
       &.home:after {
         content: "1";
@@ -428,18 +425,18 @@
       &:hover {
         border: 0;
         background: transparent;
-        color: variables.$primary;
+        color: $primary;
       }
       &.active {
         background-color: transparent;
         border: 0;
-        color: variables.$primary;
+        color: $primary;
         &:before {
-          background-color: variables.$primary;
+          background-color: $primary;
         }
         &:after {
-          border-color: variables.$primary;
-          color: variables.$primary;
+          border-color: $primary;
+          color: $primary;
         }
       }
     }
@@ -459,12 +456,12 @@
       &:hover {
         border: 0;
         background: transparent;
-        color: variables.$primary;
+        color: $primary;
       }
       &.active {
         background-color: transparent;
         border: 0;
-        color: variables.$primary;
+        color: $primary;
         position: relative;
         overflow: hidden;
         &::before {
@@ -477,8 +474,8 @@
           overflow: hidden;
           z-index: 1;
           height: 0.75rem;
-          background-color: variables.$primary;
-          border: 1px solid variables.$primary;
+          background-color: $primary;
+          border: 1px solid $primary;
         }
         &:after {
           position: absolute;
@@ -487,16 +484,16 @@
           height: 1px;
           inset-inline-start: 30%;
           inset-block-end: 0;
-          background-color: variables.$primary;
+          background-color: $primary;
         }
       }
     }
   }
 }
 #tab-style-4 .tab-pane.active {
-  border: 1px solid variables.$primary;
-  background-color: variables.$primary;
-  color: variables.$white;
+  border: 1px solid $primary;
+  background-color: $primary;
+  color: $white;
   padding: 16px;
     border-radius: 7px;
 }
@@ -507,15 +504,15 @@
       margin-inline-end: 0;
     }
     .nav-link.active {
-      background: variables.$primary;
+      background: $primary;
     }
   }
 }
 .tab-style-6 {
   border: 0;
-  background-color: variables.$white;
+  background-color: $white;
   border-radius: 7px;
-  color: variables.$primary;
+  color: $primary;
   padding: 0.5rem;
   .nav-item {
     border: 0;
@@ -524,11 +521,11 @@
       margin-inline-end: 0;
     }
     .nav-link {
-      color: variables.$primary;
+      color: $primary;
       padding: 0.5rem 1rem;
       font-size: 0.813rem;
       border: 0;
-      font-weight: variables.$font-weight-medium;
+      font-weight: $font-weight-medium;
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
@@ -537,8 +534,8 @@
       -ms-flex-align: center;
       &.active {
         border: 0;
-        background-color: variables.$primary;
-        color: variables.$white;
+        background-color: $primary;
+        color: $white;
         border: 0;
         box-shadow: 0px 3px 10px 0px rgba(var(--dark-rgb),0.05);
       }
@@ -553,7 +550,7 @@
   .nav-link {
     margin-block-end: 0.5rem;
     font-size: 0.813rem;
-    color: variables.$text-muted;
+    color: $text-muted;
     text-align: left;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -563,8 +560,8 @@
     -ms-flex-align: center;
     &:active,
     &.active {
-      background-color: rgba(variables.$primary, 0.1);
-      color: variables.$primary;
+      background-color: rgba($primary, 0.1);
+      color: $primary;
     }
   }
 }
@@ -572,8 +569,8 @@
   .nav-item {
     .nav-link {
       &.active {
-        background-color: rgba(variables.$primary, 0.1);
-        color: variables.$primary;
+        background-color: rgba($primary, 0.1);
+        color: $primary;
       }
     }
   }
@@ -600,30 +597,30 @@
         border-top-left-radius: 0.25rem;
         border-top-right-radius: 0.25rem;
         &.active {
-          border-color: variables.$gray-300;
+          border-color: $gray-300;
         }
     }
     li{
         a{
-            color: variables.$gray-600;
+            color: $gray-600;
             border-bottom-width: 2px;
             &.active{
                 border-color: transparent;
-                border-bottom-color: variables.$primary;
+                border-bottom-color: $primary;
                 background-color: transparent;
-                @include mixins.transition(all 0.2s ease);
+                @include transition(all 0.2s ease);
             }
         }
     }
 }
 .nav-tabs{
     .nav-tabs-solid {
-        background-color: variables.$white;
+        background-color: $white;
         border: 0;
         .active{
-            background-color: variables.$primary;
-            border-color: variables.$primary;
-            color: variables.$white;
+            background-color: $primary;
+            border-color: $primary;
+            color: $white;
         }
     }
 }
@@ -631,7 +628,7 @@
     .nav-link{
         &:hover{
             border-color: transparent;
-            color: variables.$primary;
+            color: $primary;
         }
     }
     &.nav-tabs-top{
@@ -639,13 +636,13 @@
             a{
                 border-width: 2px 0 0 0;
                 &.active{
-                    border-top-color: variables.$primary;                    
-                    @include mixins.rounded(0);
+                    border-top-color: $primary;                    
+                    @include rounded(0);
                 }
                 &:hover {
-                    border-top-color: variables.$primary;  
+                    border-top-color: $primary;  
                     background-color: transparent;                    
-                    @include mixins.rounded(0);
+                    @include rounded(0);
                 }
             }
         }
@@ -655,24 +652,24 @@
             a{
                 border-width:0 0 2px  0;
                 &.active, &:hover {
-                    border-bottom-color: variables.$primary;
+                    border-bottom-color: $primary;
                     background: transparent;
-                    @include mixins.rounded(0);
+                    @include rounded(0);
                 }
             }
         }
     }
     &.nav-tabs-solid{
-        background-color: variables.$white;
+        background-color: $white;
         border: 0;
         &.nav-tabs-rounded{
             li{
                 a{
                     &.active {
-                        background-color: variables.$primary;
-                        border-color: variables.$primary;
-                        color: variables.$white;
-                        @include mixins.rounded(50px);
+                        background-color: $primary;
+                        border-color: $primary;
+                        color: $white;
+                        @include rounded(50px);
                     }
                 }
             }  
@@ -680,10 +677,10 @@
         li{
             a{
                 &.active{
-                    background-color: variables.$primary;
-                    border-color: variables.$primary;
-                    color: variables.$white;
-                    @include mixins.rounded(0);
+                    background-color: $primary;
+                    border-color: $primary;
+                    color: $white;
+                    @include rounded(0);
                 }
             }
         }   
@@ -691,14 +688,14 @@
 }
 .nav-link{
     &:hover{
-        color: variables.$primary;
+        color: $primary;
     }
 }
 .page-menu{
     .nav-tabs {
         li{
             a{
-                font-size: variables.$font-size-16;
+                font-size: $font-size-16;
             }
         }
     }
@@ -708,16 +705,16 @@
         border-bottom: 0;
         margin-bottom: 20px;
         .nav-link{
-            color: variables.$secondary;
-            @include mixins.margin-padding(null, 8px 15px);
-            font-size: variables.$font-size-16;
-            font-weight: variables.$font-weight-bold;
+            color: $secondary;
+            @include margin-padding(null, 8px 15px);
+            font-size: $font-size-16;
+            font-weight: $font-weight-bold;
             border: 0;
             min-width: 120px;
             margin-right: 10px;
             border-radius: 8px;
             background: var(--Stroke, rgba(145, 158, 171, 0.30));
-            @include mixins.margin-padding(null, null);
+            @include margin-padding(null, null);
             &:focus{
                 border-color: transparent;
             }
@@ -726,9 +723,9 @@
             }
             &.active{
                 border:0;
-                border-bottom:2px solid variables.$primary;
-                background: variables.$primary;
-                color: variables.$white;
+                border-bottom:2px solid $primary;
+                background: $primary;
+                color: $white;
             }
         }
     }
@@ -738,38 +735,38 @@
         border-bottom: 0;
         margin-bottom: 16px;
         .nav-link{
-            color: variables.$gray-900;;
-            font-size: variables.$font-size-12;
-            font-weight: variables.$font-weight-medium;
+            color: $gray-900;;
+            font-size: $font-size-12;
+            font-weight: $font-weight-medium;
             border: 0;
-            background: variables.$light;
+            background: $light;
             padding: 7px 12px;
-            @include mixins.rounded(5px);
-            @include mixins.transition(all 0.5s ease);
+            @include rounded(5px);
+            @include transition(all 0.5s ease);
             &:focus, &:hover, &.active{
-                background: variables.$primary;
-                color: variables.$white !important;
+                background: $primary;
+                color: $white !important;
             }
         }
     }
 }
-@include mixins.respond-below(custom768) {
+@include respond-below(custom768) {
     .nav-tabs {
         border-bottom: 0;
         position: relative;
-        background-color: variables.$white;
+        background-color: $white;
         border: 1px solid #eee;
-        @include mixins.margin-padding(null, 5px 0);
-        @include mixins.rounded(3px);
+        @include margin-padding(null, 5px 0);
+        @include rounded(3px);
     }
 }
 .nav-pills.list .nav-link.active{
   background-color: transparent;
-  color: variables.$text-color;
+  color: $text-color;
 }
 .nav-pills.list .nav-link{
   background-color: transparent;
-  color: variables.$text-color;
+  color: $text-color;
 }
 .nav-pills.list .nav-item button{
   position: relative;
@@ -788,14 +785,14 @@
   content: "";
   width: 7px;
   height: 7px;
-  background: variables.$primary;
+  background: $primary;
   border-radius: 50%;
   position: absolute;
   top: 15px;
   left: 16px;
 }
 .nav-pills.list .nav-item button.active::before {
-  border-color:variables.$primary;
+  border-color:$primary;
 }
 .single-pill-product {
   .nav-link {

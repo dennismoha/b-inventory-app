@@ -1,6 +1,3 @@
-@use "../utils/mixins";
-@use "../utils/variables";
-
 table.dataTable>thead .sorting:after, 
 table.dataTable>thead .sorting_asc:after,
 table.dataTable>thead .sorting_desc:after,
@@ -46,18 +43,18 @@ table.dataTable>thead .sku:before{
     float: left;
     padding-right: 15px;
     font-size: 14px;
-    color: variables.$gray-600;
-    font-weight: variables.$font-weight-normal;
+    color: $gray-600;
+    font-weight: $font-weight-normal;
     margin-top: -50px;
     padding-bottom: 20px;
 }
 .custom-select {
     min-width: 80px;
-    background: url(/chicksfeeds/src/assets/img/icons/dropdown.svg) no-repeat 95% 50%;
+    background: url(../../../../public/assets/img/icons/dropdown.svg) no-repeat 95% 50%;
 }
 .dataTables_paginate .pagination{
     li{
-        @include mixins.margin-padding(0 5px, null);
+        @include margin-padding(0 5px, null);
         a{
             background: var(--Stroke, rgba(145, 158, 171, 0.30));
             border-radius: 85px !important;
@@ -67,16 +64,16 @@ table.dataTable>thead .sku:before{
             align-items: center;
             justify-content: center;
             color: #5B6670;
-            font-size: variables.$font-size-12;
+            font-size: $font-size-12;
             &:hover{
-                background: variables.$primary;
-                color: variables.$white;
+                background: $primary;
+                color: $white;
             }
         }
         &.active a.page-link{
-            background: variables.$primary;
-            border-color: variables.$primary;
-            @include mixins.rounded(85px);
+            background: $primary;
+            border-color: $primary;
+            @include rounded(85px);
             width: 25px;
             height: 25px;
             display: flex;
@@ -130,14 +127,14 @@ table.dataTable thead>tr>th.no-sort.sorting::after {
         -webkit-box-align: center;
         -ms-flex-align: center;
         align-items: center;
-        color: variables.$gray-600;
-        font-size: variables.$font-size-14;     
+        color: $gray-600;
+        font-size: $font-size-14;     
         select {
-            border: 1px solid variables.$input-border;
+            border: 1px solid $input-border;
             border-radius: 8px;
             margin: 0 8px;
             padding: 4px 25px 4px 10px;
-            font-size: variables.$font-size-12;
+            font-size: $font-size-12;
         }
     }
 }
@@ -162,8 +159,8 @@ table.dataTable{
 }
 .dataTables_length {
     float: left;
-    font-size: variables.$font-size-12;
-    @include mixins.respond-below(custom767){
+    font-size: $font-size-12;
+    @include respond-below(custom767){
       float: none;
     }
 }

@@ -1,15 +1,12 @@
-@use "../utils/mixins";
-@use "../utils/variables";
-
 .notes-page-wrapper {
     .content {
         padding: 24px;
         .page-add-notes {
-            border-bottom: 1px solid variables.$gray-400;
+            border-bottom: 1px solid $gray-400;
             padding-bottom: 25px;
             position: relative;
             margin-bottom: 0;
-            @include mixins.respond-below(custom767) {
+            @include respond-below(custom767) {
                 flex-direction: column;
                 align-items: start;
             }
@@ -27,11 +24,11 @@
                 bottom: -12px;
                 border-radius: 30px;
                 background: #1B2850;
-                color: variables.$white;
+                color: $white;
                 width: 24px;
                 height: 24px;
                 padding: 5px;
-                @include mixins.respond-below(custom991) {
+                @include respond-below(custom991) {
                     display: none;
                 }
             }
@@ -49,9 +46,9 @@
             margin: 30px 0 24px 0;
             padding: 20px;
             border-radius: 8px;
-            background:  variables.$white;
+            background:  $white;
             box-shadow: 0px 4px 60px 0px rgba(231, 231, 231, 0.47);
-            @include mixins.respond-below(custom767) {
+            @include respond-below(custom767) {
                 flex-direction: column;
                 align-items: start;
             }
@@ -62,10 +59,10 @@
                 align-items: center;
                 -webkit-box-align: center;
                 -ms-flex-align: center;
-                @include mixins.respond-below(custom767) {
+                @include respond-below(custom767) {
                     margin-bottom: 20px;
                 }
-                @include mixins.respond-below(custom575) {
+                @include respond-below(custom575) {
                     margin-bottom: 0;
                     flex-direction: column;
                     align-items: self-start;
@@ -85,17 +82,17 @@
                     }
                 }
                 .btn-added {
-                    background: variables.$secondary;
+                    background: $secondary;
                     padding: 8px 20px;
-                    color: variables.$white;
-                    font-size: variables.$font-size-15;
-                    font-weight: variables.$font-weight-normal;  
+                    color: $white;
+                    font-size: $font-size-15;
+                    font-weight: $font-weight-normal;  
                     margin-right: 15px; 
                     height: 38px; 
                     &:hover {
-                        background: variables.$primary;
+                        background: $primary;
                     }    
-                    @include mixins.respond-below(custom575) {
+                    @include respond-below(custom575) {
                         margin: 20px 0;
                     }           
                 }   
@@ -114,7 +111,7 @@
         .section-notes-slider {
             position: relative;
             padding-bottom: 40px;
-            border-bottom: 1px solid variables.$gray-400;
+            border-bottom: 1px solid $gray-400;
             .notes-content {
                 display: -webkit-box;
                 display: -ms-flexbox;
@@ -128,9 +125,9 @@
                 margin-bottom: 20px;
                 .notes-close {
                     a {
-                        color: variables.$danger;
-                        font-size: variables.$font-size-15;
-                        font-weight: variables.$font-weight-normal;
+                        color: $danger;
+                        font-size: $font-size-15;
+                        font-weight: $font-weight-normal;
                         i {
                             margin-right: 6px;
                         }
@@ -160,12 +157,12 @@
                     p {
                         &.badged  {
                             border-radius: 8px;
-                            border: 1px solid  variables.$warning;
+                            border: 1px solid  $warning;
                             padding: 4px 10px; 
                             margin-bottom: 0;
-                            color:variables.$warning;
-                            font-size: variables.$font-size-base;
-                            font-weight: variables.$font-weight-semibold;
+                            color:$warning;
+                            font-size: $font-size-base;
+                            font-weight: $font-weight-semibold;
                             display: flex;
                             align-items: center;
                             i {
@@ -177,8 +174,8 @@
                                 border: 1px solid #7429F8;
                             }
                             &.high {
-                                color: variables.$danger;
-                                border: 1px solid variables.$danger;
+                                color: $danger;
+                                border: 1px solid $danger;
                             }
                         }
                     }
@@ -189,10 +186,10 @@
                         align-items: center;
                         -webkit-box-align: center;
                         -ms-flex-align: center;
-                        color: variables.$secondary;
+                        color: $secondary;
                         &.dropdown-item {
                             &:hover {
-                                color: variables.$white;
+                                color: $white;
                             }
                         }   
                     }
@@ -203,22 +200,22 @@
                     h4 {
                         a {
                             margin-bottom: 10px;
-                            color:variables.$secondary;
-                            font-size: variables.$font-size-16;
-                            font-weight: variables.$font-weight-semibold;
+                            color:$secondary;
+                            font-size: $font-size-16;
+                            font-weight: $font-weight-semibold;
                             display: -webkit-box;
                             -webkit-line-clamp: 1;
                             -webkit-box-orient: vertical;
                             overflow: hidden;
                             &:hover {
-                                color: variables.$warning;
+                                color: $warning;
                             }
                         }                      
                     }
                     p {
-                        color: variables.$text-color;
-                        font-size: variables.$font-size-15;
-                        font-weight: variables.$font-weight-normal;
+                        color: $text-color;
+                        font-size: $font-size-15;
+                        font-weight: $font-weight-normal;
                         margin-bottom: 0px;
                         display: -webkit-box;
                         -webkit-line-clamp: 2;
@@ -259,7 +256,7 @@
                             &.medium-square {
                                 margin-right: 5px;
                                 i {
-                                    color: variables.$success;
+                                    color: $success;
                                     transform: rotate(45deg);
                                     font-size: 10px;
                                 }
@@ -267,7 +264,7 @@
                             &.high-square {
                                 margin-right: 5px;
                                 i {
-                                    color: variables.$warning;
+                                    color: $warning;
                                     transform: rotate(45deg);
                                     font-size: 10px;
                                 }
@@ -289,8 +286,8 @@
                             -webkit-box-align: center;
                             -ms-flex-align: center;
                             color:#288EC7;
-                            font-size: variables.$font-size-15;
-                            font-weight: variables.$font-weight-normal;
+                            font-size: $font-size-15;
+                            font-weight: $font-weight-normal;
                             margin-bottom: 0px;
                             i {
                                 &.fa-draw-polygon {
@@ -298,10 +295,10 @@
                                 }
                             }
                             &.medium {
-                                color: variables.$success;
+                                color: $success;
                             }
                             &.high {
-                                color: variables.$warning;
+                                color: $warning;
                             }
                         }
                     }
@@ -314,13 +311,13 @@
                         -ms-flex-align: center;
                         span {
                             .fa-star {
-                                color: variables.$warning;
+                                color: $warning;
                                 width: 16px;
                                 height: 16px;
                                 margin-right: 10px;
                             }
                             .feather-trash-2 {
-                                color: variables.$danger;
+                                color: $danger;
                                 width: 16px;
                                 height: 16px;
                             }
@@ -334,7 +331,7 @@
             .notes-card-details {
                 border-radius: 8px;
                 border: 1px solid  rgba(145, 158, 171, 0.30);
-                background: variables.$white;
+                background: $white;
                 box-shadow: 0px 4px 60px 0px rgba(190, 190, 190, 0.27);
                 padding: 24px;
                 margin-bottom: 24px;
@@ -357,12 +354,12 @@
                             -webkit-box-align: center;
                             -ms-flex-align: center;
                             border-radius: 8px;
-                            border: 1px solid  variables.$warning;
+                            border: 1px solid  $warning;
                             padding: 4px 10px; 
                             margin-bottom: 0;
-                            color:variables.$warning;
-                            font-size: variables.$font-size-base;
-                            font-weight: variables.$font-weight-semibold;
+                            color:$warning;
+                            font-size: $font-size-base;
+                            font-weight: $font-weight-semibold;
                             i {
                                 font-size: 7px;
                                 margin-right: 4px;
@@ -372,8 +369,8 @@
                                 border: 1px solid #7429F8;
                             }
                             &.high {
-                                color: variables.$danger;
-                                border: 1px solid variables.$danger;
+                                color: $danger;
+                                border: 1px solid $danger;
                             }
                         }
                     }
@@ -385,17 +382,17 @@
                             align-items: center;
                             -webkit-box-align: center;
                             -ms-flex-align: center;
-                            color: variables.$secondary;
+                            color: $secondary;
                             svg {
                                 width: 14px;
                                 height: 14px;
-                                color: variables.$text-color;
+                                color: $text-color;
                             }
                         }
                         &:hover {
                             span {
                                 svg {
-                                    color: variables.$white;
+                                    color: $white;
                                 }
                             }
                         }
@@ -403,26 +400,26 @@
                 }
                 .notes-wrap-content {
                     padding: 20px 0;
-                    border-bottom: 1px solid variables.$gray-400;
+                    border-bottom: 1px solid $gray-400;
                     h4 {
                         a {
-                            color:variables.$secondary;
-                            font-size: variables.$font-size-16;
-                            font-weight: variables.$font-weight-semibold;
+                            color:$secondary;
+                            font-size: $font-size-16;
+                            font-weight: $font-weight-semibold;
                             margin-bottom: 5px;
                             display: -webkit-box;
                             -webkit-line-clamp: 1;
                             -webkit-box-orient: vertical;
                             overflow: hidden;
                             &:hover {
-                                color: variables.$warning;
+                                color: $warning;
                             }
                         }                    
                     }
                     .wrap-cal {
-                        color:variables.$text-color;
-                        font-size: variables.$font-size-15;
-                        font-weight: variables.$font-weight-normal;
+                        color:$text-color;
+                        font-size: $font-size-15;
+                        font-weight: $font-weight-normal;
                         margin-bottom: 20px;
                         display: -webkit-box;
                         display: -ms-flexbox;
@@ -437,9 +434,9 @@
                         }
                     }
                     p {
-                        color:variables.$text-color;
-                        font-size: variables.$font-size-15;
-                        font-weight: variables.$font-weight-normal;
+                        color:$text-color;
+                        font-size: $font-size-15;
+                        font-weight: $font-weight-normal;
                         margin-bottom: 0px;
                         display: -webkit-box;
                         -webkit-line-clamp: 2;
@@ -479,7 +476,7 @@
                             &.medium-square {
                                 margin-right: 5px;
                                 i {
-                                    color: variables.$success;
+                                    color: $success;
                                     transform: rotate(45deg);
                                     font-size: 10px;
                                 }
@@ -487,7 +484,7 @@
                             &.high-square {
                                 margin-right: 5px;
                                 i {
-                                    color: variables.$warning;
+                                    color: $warning;
                                     transform: rotate(45deg);
                                     font-size: 10px;
                                 }
@@ -503,8 +500,8 @@
                         }
                         p {
                             color:#288EC7;
-                            font-size: variables.$font-size-15;
-                            font-weight: variables.$font-weight-normal;
+                            font-size: $font-size-15;
+                            font-weight: $font-weight-normal;
                             margin-bottom: 0px;
                             display: -webkit-box;
                             display: -ms-flexbox;
@@ -518,10 +515,10 @@
                                 }
                             }
                             &.medium {
-                                color: variables.$success;
+                                color: $success;
                             }
                             &.high {
-                                color: variables.$warning;
+                                color: $warning;
                             }
                         }
                     }
@@ -534,13 +531,13 @@
                         -ms-flex-align: center;
                         span {
                             .feather-star {
-                                color: variables.$text-color;
+                                color: $text-color;
                                 width: 16px;
                                 height: 16px;
                                 margin-right: 10px;
                             }
                             .feather-trash-2 {
-                                color: variables.$danger;
+                                color: $danger;
                                 width: 16px;
                                 height: 16px;
                             }
@@ -554,7 +551,7 @@
 .notes-card-details {
     .notes-card-body {
         a {
-            color: variables.$secondary;
+            color: $secondary;
         }
     }
 
@@ -563,7 +560,7 @@
     svg {
         width: 13px;
         height: 13px;
-        color: variables.$text-color;
+        color: $text-color;
     }
 }
 .inbox-call-profile {
@@ -571,13 +568,13 @@
     background: #E92990;
     border: 1px solid #E92990;
     padding: 4px 10px;
-    font-size: variables.$font-size-14;
-    font-weight: variables.$font-weight-bold;
-    color: variables.$white;
+    font-size: $font-size-14;
+    font-weight: $font-weight-bold;
+    color: $white;
     margin: 0 20px;
     &:hover  {
         color: #E92990;
-        background: variables.$white;
+        background: $white;
     }
 }
 .notes-tog {
@@ -615,17 +612,17 @@
         z-index: 99999;
         a {
             &.dropdown-item {
-                color: variables.$secondary;
-                font-size: variables.$font-size-15;
-                font-weight: variables.$font-weight-normal;
+                color: $secondary;
+                font-size: $font-size-15;
+                font-weight: $font-weight-normal;
                 display: flex;
                 align-items: center; 
                 padding: 10px 20px;   
                 &:hover {
-                    background: variables.$warning;
-                    color: variables.$white;
+                    background: $warning;
+                    color: $white;
                     svg {
-                        color: variables.$white;
+                        color: $white;
                     }
                 }                          
             }
@@ -637,7 +634,7 @@
         svg {
             width: 14px;
             height: 14px;
-            color: variables.$text-color;
+            color: $text-color;
         }
     } 
 }
@@ -645,8 +642,8 @@
     a {
         border-radius: 30px;
         border: 1px solid rgba(145, 158, 171, 0.30);
-        background:  variables.$white;
-        color: variables.$secondary;
+        background:  $white;
+        color: $secondary;
         padding: 15px;
         display: flex;
         align-items: center;
@@ -655,8 +652,8 @@
         height: 20px;
         &:hover {
             border-radius: 20px;
-            background:  variables.$primary;
-            color: variables.$white;
+            background:  $primary;
+            color: $white;
         }
     }
 }
@@ -705,9 +702,9 @@
     background: transparent;
 }
 .notes-summernote p {
-    color: variables.$text-color;
-    font-size: variables.$font-size-15;
-    font-weight: variables.$font-weight-normal;
+    color: $text-color;
+    font-size: $font-size-15;
+    font-weight: $font-weight-normal;
 }
 
 .notes-dash {
@@ -715,14 +712,14 @@
     padding: 24px;
     border-radius: 8px;
     border: 1px solid  rgba(145, 158, 171, 0.30);
-    background: variables.$white;
+    background: $white;
     transition: 0.6s all;
     .notes-top-head {       
-        border-bottom: 1px solid variables.$gray-400;
+        border-bottom: 1px solid $gray-400;
         h5 {
-            font-size: variables.$font-size-18;
-            font-weight: variables.$font-weight-bold;
-            color: variables.$secondary;
+            font-size: $font-size-18;
+            font-weight: $font-weight-bold;
+            color: $secondary;
             margin-bottom: 15px;
             display: flex;
             align-items: center;
@@ -730,13 +727,13 @@
                 width: 19px;
                 height: 19px;
                 margin-right: 6px;
-                color: variables.$text-color;
+                color: $text-color;
             }
         }
     }
     .notes-top-head-submenu {
         padding: 15px 0;
-        border-bottom: 1px solid variables.$gray-400;
+        border-bottom: 1px solid $gray-400;
         ul {
             padding: 15px 0;
             li {
@@ -752,21 +749,21 @@
                 padding: 10px;
                 &.active {
                     border-radius: 10px;
-                    background:  variables.$secondary;
+                    background:  $secondary;
                     svg {
                         width: 16px;
                         height: 16px;
                         margin-right: 8px;
                     }
                     p {
-                        color: variables.$white;                        
+                        color: $white;                        
                     }
                 }
 
                 p {
-                    font-size: variables.$font-size-15;
-                    font-weight: variables.$font-weight-semibold;
-                    color: variables.$text-color;
+                    font-size: $font-size-15;
+                    font-weight: $font-weight-semibold;
+                    color: $text-color;
                     margin-bottom: 0;
                     display: flex;
                     align-items: center;
@@ -784,8 +781,8 @@
                     justify-content: center;
                     align-items: center;
                     border-radius: 12px;
-                    background:  variables.$primary;
-                    color: variables.$white;
+                    background:  $primary;
+                    color: $white;
                 }
 
             }
@@ -795,9 +792,9 @@
         margin-top: 15px;
         padding: 10px;
         h6 {
-            font-size: variables.$font-size-16;
-            font-weight: variables.$font-weight-semibold;
-            color: variables.$secondary;
+            font-size: $font-size-16;
+            font-weight: $font-weight-semibold;
+            color: $secondary;
         }
         ul {
             padding: 10px 0;
@@ -829,7 +826,7 @@
                         }
                     }
                     a {
-                        color: variables.$warning;
+                        color: $warning;
                         display: flex;
                         align-items: center;
                     }
@@ -844,7 +841,7 @@
                         }
                     }
                     a{
-                        color: variables.$success;
+                        color: $success;
                         display: flex;
                         align-items: center;
                     }
@@ -874,7 +871,7 @@
                         }
                     } 
                      a {
-                        color: variables.$purple;
+                        color: $purple;
                         display: flex;
                         align-items: center;
                      }
@@ -889,7 +886,7 @@
                         }
                     }
                     a {
-                        color: variables.$danger;
+                        color: $danger;
                         display: flex;
                         align-items: center;
                     }
@@ -904,14 +901,14 @@
                         }
                     }
                     a  {
-                        color: variables.$warning;
+                        color: $warning;
                         display: flex;
                         align-items: center;
                     }
                     
                 }
-                   font-size: variables.$font-size-15;
-                   font-weight: variables.$font-weight-normal;
+                   font-size: $font-size-15;
+                   font-weight: $font-weight-normal;
                    display: flex;
                    align-items: center;
                 +li {
@@ -936,7 +933,7 @@
 }
 .notes-top-head-submenu {
     padding: 15px 0;
-    border-bottom: 1px solid variables.$gray-400;
+    border-bottom: 1px solid $gray-400;
     .nav {
         &.todo-inbox {
             button.todo-inbox {
@@ -944,9 +941,9 @@
                justify-content: start; 
                align-items: center;             
                 padding: 10px;
-                font-size: variables.$font-size-15;
-                font-weight: variables.$font-weight-semibold;
-                color: variables.$text-color;
+                font-size: $font-size-15;
+                font-weight: $font-weight-semibold;
+                color: $text-color;
                 margin-bottom: 0;
                 display: flex;
                 align-items: center;
@@ -956,7 +953,7 @@
                     border-radius: 10px;
                     background:  #212B36;
                     padding: 10px;
-                    color: variables.$white;
+                    color: $white;
                     svg {
                         width: 16px;
                         height: 16px;
@@ -965,7 +962,7 @@
                 }
                 &:hover {
                     background:  #212B36;
-                    color: variables.$white;
+                    color: $white;
                 }
                
                 svg {
@@ -981,8 +978,8 @@
                     justify-content: center;
                     align-items: center;
                     border-radius: 12px;
-                    background:  variables.$primary;
-                    color: variables.$white;
+                    background:  $primary;
+                    color: $white;
                 }
                   
             }            
@@ -991,8 +988,8 @@
     
 }
 .notes-trash-btn {
-    background: variables.$danger;
-    color: variables.$white;
+    background: $danger;
+    color: $white;
     border-radius: 8px;
     margin: 4px 0 20px 0;
     padding: 10px;
@@ -1013,22 +1010,22 @@
 .delete-popup {
     padding: 24px;
     border-radius: 8px;
-    background: variables.$white;
+    background: $white;
     .delete-image {
         margin-bottom: 20px;
     }
     .delete-heads {
         text-align: center;
         h4 {
-            color: variables.$secondary;
-            font-size: variables.$font-size-20;
-            font-weight: variables.$font-weight-bold;
+            color: $secondary;
+            font-size: $font-size-20;
+            font-weight: $font-weight-bold;
             margin-bottom: 5px;
         }
         p {
-            color: variables.$text-color;
-            font-size: variables.$font-size-15;
-            font-weight: variables.$font-weight-normal;
+            color: $text-color;
+            font-size: $font-size-15;
+            font-weight: $font-weight-normal;
             margin-bottom: 0px;
         }       
     }
@@ -1040,15 +1037,15 @@
     display: flex;
     align-items: center;
     h4 {
-        font-size: variables.$font-size-18;
-        font-weight: variables.$font-weight-bold;
-        color: variables.$secondary;
+        font-size: $font-size-18;
+        font-weight: $font-weight-bold;
+        color: $secondary;
         margin-bottom: 0;
         margin-right: 10px;
     }
     p {
-        font-size: variables.$font-size-15;
-        font-weight: variables.$font-weight-normal;
+        font-size: $font-size-15;
+        font-weight: $font-weight-normal;
         color: #288EC7;
     }
 }
@@ -1056,15 +1053,15 @@
     margin-bottom: 20px;
     border-bottom: rgba(145, 158, 171, 0.30);
     h6 {
-        font-size: variables.$font-size-16;
-        font-weight: variables.$font-weight-semibold;
-        color: variables.$secondary;
+        font-size: $font-size-16;
+        font-weight: $font-weight-semibold;
+        color: $secondary;
         margin-bottom: 15px;
     }
     p {
-        font-size: variables.$font-size-15;
-        font-weight: variables.$font-weight-normal;
-        color: variables.$text-color;
+        font-size: $font-size-15;
+        font-weight: $font-weight-normal;
+        color: $text-color;
         margin-bottom: 15px;
     }
     p {
@@ -1074,30 +1071,30 @@
                 margin-right: 7px;
             }
             border-radius: 8px;
-            border: 1px solid variables.$warning;
+            border: 1px solid $warning;
             padding: 4px 10px;
             margin-bottom: 0;
-            color: variables.$warning;
-            font-size: variables.$font-size-14;
-            font-weight: variables.$font-weight-semibold;
+            color: $warning;
+            font-size: $font-size-14;
+            font-weight: $font-weight-semibold;
             display: inline-flex;
             align-items: center;
         }
     }
 }
 .edit-footer-menu a {
-    background-color: variables.$danger;
+    background-color: $danger;
 }
 .edit-noted-head {
     a {
         span {
             i{
                  &.fa-trash-alt {
-                    color: variables.$danger;
+                    color: $danger;
                     margin-right: 10px;
                  }
                  &.fa-star {
-                    color: variables.$warning;
+                    color: $warning;
                  }
             }
         }
@@ -1111,12 +1108,12 @@
                 margin-right: 7px;
             }
             border-radius: 8px;
-            border: 1px solid variables.$danger;
+            border: 1px solid $danger;
             padding: 4px 10px;
             margin-bottom: 0;
-            color: variables.$danger;
-            font-size: variables.$font-size-14;
-            font-weight: variables.$font-weight-semibold;
+            color: $danger;
+            font-size: $font-size-14;
+            font-weight: $font-weight-semibold;
             display: inline-flex;
             align-items: center;
         }
@@ -1134,8 +1131,8 @@
         right: 7px;
         .x-square-add {
             border-radius: 3px;
-            background:variables.$danger;
-            color: variables.$white;
+            background:$danger;
+            color: $white;
         }       
     }
 }
@@ -1149,7 +1146,7 @@
         span {
             display: flex;
             align-items: center;
-            color: variables.$text-color;
+            color: $text-color;
             width: 16px;
             height: 16px;
             .fa-chevron-left {
@@ -1161,10 +1158,10 @@
                 a {
                     margin-right: 8px;
                     border-radius: 85px;
-                    background: variables.$gray-400;
-                    color:variables.$white;
-                    font-size: variables.$font-size-base;
-                    font-weight: variables.$font-weight-medium;                    
+                    background: $gray-400;
+                    color:$white;
+                    font-size: $font-size-base;
+                    font-weight: $font-weight-medium;                    
                     display: flex;
                     width: 30px;
                     height: 30px;
@@ -1172,13 +1169,13 @@
                     justify-content: center;
                     align-items: center;
                     &.active {
-                        background: variables.$primary;
-                        color: variables.$white;
+                        background: $primary;
+                        color: $white;
                     }                         
                 }  
                 :hover {
-                    background: variables.$primary;
-                    color: variables.$white;
+                    background: $primary;
+                    color: $white;
                     transition: .3s all;
                 }                                   
             }                
@@ -1197,12 +1194,12 @@
                     width: 15px;
                     height: auto;
                     i {
-                        color: variables.$secondary;
+                        color: $secondary;
                     }
                     &:hover {
                         background-color: transparent;
                         i {
-                            color: variables.$primary;
+                            color: $primary;
                         }
                     }
                 }

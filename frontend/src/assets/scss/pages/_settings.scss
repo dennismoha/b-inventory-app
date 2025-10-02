@@ -1,10 +1,7 @@
-@use "../utils/mixins";
-@use "../utils/variables";
-
 .page-wrapper {
     .content {
         &.settings-content {
-            background-color: variables.$light-500;
+            background-color: $light-500;
             padding-bottom: 24px;
         }
     }
@@ -19,25 +16,25 @@
         width: 309px;
         margin-right: 24px;
         border-right: 0;
-        border: 1px solid variables.$secondary-transparent;
+        border: 1px solid $secondary-transparent;
         border-radius: 5px;
-        @include mixins.respond-below(custom1399) {
+        @include respond-below(custom1399) {
             width: 250px;
         }
-        @include mixins.respond-below(custom1199) {
+        @include respond-below(custom1199) {
             width: 200px;
             margin-right: 15px;
         }
-        @include mixins.respond-below(custom991) {
+        @include respond-below(custom991) {
             display: none;
         }
         .slimScrollDiv {
             background-color: transparent;
             width: 309px !important;
-            @include mixins.respond-below(custom1399) {
+            @include respond-below(custom1399) {
                 width: 250px !important;
             }
-            @include mixins.respond-below(custom1199) {
+            @include respond-below(custom1199) {
                 width: 200px !important;
             }
         }
@@ -46,21 +43,21 @@
         }
         .sidebar-menu {
             padding: 15px;
-            @include mixins.respond-below(custom1199) {
+            @include respond-below(custom1199) {
                 padding: 10px 8px;
             }
             h4 {
-                color: variables.$secondary;
-                border-bottom: 1px solid variables.$secondary-transparent;
+                color: $secondary;
+                border-bottom: 1px solid $secondary-transparent;
             }
             .menu-arrow {
-                background-color: variables.$white;
+                background-color: $white;
                 right: 5px;
                 &::before {
-                    border-left: 1px solid variables.$text-color;
-                    border-bottom: 1px solid variables.$text-color;
+                    border-left: 1px solid $text-color;
+                    border-bottom: 1px solid $text-color;
                     border-right: none;
-                    color: variables.$text-color;
+                    color: $text-color;
                 }
             }
             .submenu-open {
@@ -72,65 +69,65 @@
                         margin-bottom: 0;
                         a {
                             &.active {
-                                background-color: variables.$white;
+                                background-color: $white;
                                 &.subdrop {
-                                    background-color: variables.$white;
+                                    background-color: $white;
                                     margin-bottom: 0;
                                 }
                                 .menu-arrow {
-                                    background-color: variables.$light-900;
+                                    background-color: $light-900;
                                 }
                                 .menu-arrow {
                                     &::before {
-                                        border-color: variables.$text-color;
+                                        border-color: $text-color;
                                     }
                                 }
                             }
                             &.subdrop {
                                 .menu-arrow {
-                                    background-color: variables.$light-900;
+                                    background-color: $light-900;
                                     transform: rotate(180deg);
                                     -webkit-transform: rotate(180deg);
                                     -ms-transform: rotate(180deg);
-                                    color: variables.$secondary;
+                                    color: $secondary;
                                 }
                             }
                             i {
-                                color: variables.$gray-600;
+                                color: $gray-600;
                             }
                             svg {
-                                color: variables.$secondary;
+                                color: $secondary;
                             }
                             span {
-                                color: variables.$title-color;
-                                @include mixins.respond-below(custom1199) {
-                                    font-size: variables.$font-size-base;
+                                color: $title-color;
+                                @include respond-below(custom1199) {
+                                    font-size: $font-size-base;
                                 }
                             }
                             .menu-arrow {
-                                background-color: variables.$light-900;
+                                background-color: $light-900;
                             }
                         }
                         ul {
                             li {
                                 a {
-                                    font-size: variables.$font-size-14;
-                                    font-weight: variables.$font-weight-medium;
+                                    font-size: $font-size-14;
+                                    font-weight: $font-weight-medium;
                                     margin-left: 0;
                                     padding: 8px 15px;
                                     &::after {
                                         display: none;
                                     }
                                     &.active {
-                                        background-color: variables.$primary-transparent;
-                                        color: variables.$primary;
+                                        background-color: $primary-transparent;
+                                        color: $primary;
                                         border-radius: 8px;
                                         &::after {
                                             content: "";
                                             width: 7px;
                                             height: 7px;
                                             border-radius: 50%;
-                                            background-color: variables.$primary;
+                                            background-color: $primary;
                                             right: 10px;
                                             left: unset;
                                             border: 0;
@@ -153,7 +150,7 @@
         border-bottom: 0;
         padding-bottom: 0;
         span {
-            color: variables.$primary;
+            color: $primary;
         }
     }
 }
@@ -161,24 +158,24 @@
     align-items: start;
     .profile-pic-upload {
         margin-bottom: 16px;
-        @include mixins.respond-below(custom575) {
+        @include respond-below(custom575) {
             display: block;
             .new-employee-field {
                 margin-top: 15px;
             }
         }
         .profile-pic {
-            border: 2px dashed variables.$secondary-transparent;
+            border: 2px dashed $secondary-transparent;
             border-width: 2px;
             margin-right: 16px;
             span {
-                color: variables.$gray-300;
+                color: $gray-300;
             }
         }
     }
     .new-employee-field {
         span {
-            color: variables.$text-color;
+            color: $text-color;
             display: block;
         }
     }
@@ -213,7 +210,7 @@
 .logo-company {
     li {
         margin-bottom: 20px;
-        @include mixins.respond-below(custom575) {
+        @include respond-below(custom575) {
             flex-direction: column !important;
             align-items: start !important;
         }
@@ -228,13 +225,13 @@
 .localization-select {
     width: 200px;
     margin-bottom: 20px;
-    @include mixins.respond-below(custom1199) {
+    @include respond-below(custom1199) {
         width: 150px;
     }
     &.fixed-width {
         width: 70px;
         span {
-            color: variables.$text-color;
+            color: $text-color;
         }
     }
     &.width-custom {
@@ -245,14 +242,14 @@
             line-height: 14px;
             .tag {
                 padding: 4px 8px;
-                border-radius: variables.$border-radius-lg;
+                border-radius: $border-radius-lg;
                 [data-role="remove"] {
                     margin-left: 4px;
                     &:after {
                         top: 1px;
                         position: relative;
                         padding: 0;
-                        font-size: variables.$font-size-14;
+                        font-size: $font-size-14;
                         content: "\eb55";
                         font-family: "tabler-icons";
                     }
@@ -268,8 +265,8 @@ textarea {
     .setting-info {
         margin-bottom: 20px;
         h6 {
-            font-size: variables.$font-size-base;
-            font-weight: variables.$font-weight-bold;
+            font-size: $font-size-base;
+            font-weight: $font-weight-bold;
         }
     }
 }
@@ -277,9 +274,9 @@ textarea {
     .theme-type-images {
         .theme-image {
             box-shadow: 0px 4px 60px 0px rgba(231, 231, 231, 0.47);
-            background: variables.$white;
+            background: $white;
             border-radius: 8px;
-            border: 2px solid variables.$white;
+            border: 2px solid $white;
             padding: 10px;
             margin-right: 10px;
             text-align: center;
@@ -287,14 +284,14 @@ textarea {
                 margin-right: 0;
             }
             span {
-                font-weight: variables.$font-weight-medium;
+                font-weight: $font-weight-medium;
                 margin-top: 10px;
                 display: block;
             }
             &.active {
-                border-color: variables.$primary;
+                border-color: $primary;
                 span {
-                    color: variables.$primary;
+                    color: $primary;
                 }
             }
         }
@@ -310,7 +307,7 @@ textarea {
                 width: 35px;
                 height: 35px;
                 border-radius: 50%;
-                background-color: variables.$primary;
+                background-color: $primary;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -322,7 +319,7 @@ textarea {
                         content: "";
                         width: 25px;
                         height: 25px;
-                        background-color: variables.$primary;
+                        background-color: $primary;
                         border-radius: 50%;
                         opacity: 1;
                     }
@@ -362,10 +359,10 @@ textarea {
     }
 }
 .input-notify-info {
-    color: variables.$text-color;
+    color: $text-color;
     margin-top: 5px;
     span {
-        color: variables.$primary;
+        color: $primary;
     }
 }
 .pos-payment-method {
@@ -392,7 +389,7 @@ textarea {
 }
 .bank-settings {
     .btn-list,.btn-grid {
-        background-color: variables.$body-bg;
+        background-color: $body-bg;
         width: 36px;
         height: 36px;
         border-radius: 8px;
@@ -409,12 +406,12 @@ textarea {
         svg {
             width: 18px;
             height: 18px;
-            color: variables.$secondary;
+            color: $secondary;
         }
         &.active {
-            background-color: variables.$primary;
+            background-color: $primary;
             svg {
-                color: variables.$white;
+                color: $white;
             }
         }
     }
@@ -422,7 +419,7 @@ textarea {
 .bank-box {
     position: relative;
     &.active {
-        border-color: variables.$success;
+        border-color: $success;
         &::after {
             position: absolute;
             top: -8px;
@@ -430,11 +427,11 @@ textarea {
             content: "\f058";
             font-family: "Font Awesome 5 Free";
             font-weight: 900;
-            color: variables.$success-900;
+            color: $success-900;
             width: 22px;
             height: 22px;
             border-radius: 50%;
-            background-color: variables.$white;
+            background-color: $white;
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
@@ -450,8 +447,8 @@ textarea {
         .bank-name {
             margin-bottom: 24px;
             h6 {
-                font-size: variables.$font-size-18;
-                font-weight: variables.$font-weight-bold;
+                font-size: $font-size-18;
+                font-weight: $font-weight-bold;
                 margin-bottom: 10px;
             }
             p {
@@ -470,7 +467,7 @@ textarea {
     -webkit-justify-content: center;
     -ms-flex-pack: center;
     a {
-        border: 1px solid variables.$gray-100;
+        border: 1px solid $gray-100;
         border-radius: 8px;
         svg {
             width: 14px;
@@ -485,25 +482,25 @@ textarea {
             -webkit-justify-content: center;
             -ms-flex-pack: center;
             &.feather-edit {
-                color: variables.$blue;
+                color: $blue;
             }
             &.feather-trash-2 {
-                color: variables.$danger;
+                color: $danger;
             }
         }
     }
 }
 .storage-icon {
     h6 {
-        font-weight: variables.$font-weight-semibold;
-        font-size: variables.$font-size-16;
+        font-weight: $font-weight-semibold;
+        font-size: $font-size-16;
     }
 }
 svg {
     &.filter-icon {
         width: 18px;
         height: 18px;
-        color: variables.$white;
+        color: $white;
     } 
 }
 .search-path .btn-filter.setclose > .filter-icon {
@@ -521,39 +518,39 @@ svg {
         width: 100%;
     }
     .progress-bar-violet {
-        background-color: variables.$purple;
+        background-color: $purple;
         width: 5%;
     }
     .progress-bar-violet-two {
-        background-color: variables.$purple;
+        background-color: $purple;
         width: 40%;
     }
     span {
         position: absolute;
         right: 0;
         top: -20px;
-        color: variables.$secondary;
+        color: $secondary;
     }
 }
 .table tbody td.action-table-data {
     .language-action {
         a {
             border: 0;
-            color: variables.$white;
+            color: $white;
             &:hover {
-                background-color: variables.$primary;
+                background-color: $primary;
             }
             &.language-import {
-                background-color: variables.$body-bg;
+                background-color: $body-bg;
                 svg {
-                    color: variables.$secondary;
+                    color: $secondary;
                     width: 18px;
                     height: 18px;
                 }
                 &:hover {
-                    background-color: variables.$primary;
+                    background-color: $primary;
                     svg {
-                        color: variables.$white;
+                        color: $white;
                     }
                 }
             }
@@ -564,25 +561,25 @@ svg {
     }
 }
 .selected-language {
-    border: 1px solid variables.$gray-100;
+    border: 1px solid $gray-100;
     padding: 5px 10px;
     border-radius: 8px;
-    color: variables.$secondary;
+    color: $secondary;
 }
 .back-btn {
     a {
         &.btn-translation {
-            background-color: variables.$gray-100;
+            background-color: $gray-100;
             border-radius: 5px;
-            font-weight: variables.$font-weight-medium;
+            font-weight: $font-weight-medium;
             svg {
-                color: variables.$secondary;
+                color: $secondary;
             }
             &:hover {
-                background-color: variables.$primary;
-                color: variables.$white;
+                background-color: $primary;
+                color: $white;
                 svg {
-                    color: variables.$white;
+                    color: $white;
                 }
             }
         }
@@ -591,8 +588,8 @@ svg {
 td {
     span {
         &.file-data {
-            color: variables.$blue;
-            font-weight: variables.$font-weight-medium;
+            color: $blue;
+            font-weight: $font-weight-medium;
         }
     }
 }
@@ -611,19 +608,19 @@ th {
 }
 .poor-active span.active#poor, 
 .poor-active span.active#poors {
-    background: variables.$danger;
+    background: $danger;
 }
 .avg-active span.active#poor, .avg-active span.active#weak,
 .avg-active span.active#poors, .avg-active span.active#weaks {
-    background: variables.$warning;
+    background: $warning;
 }
 .strong-active span.active#poor, .strong-active span.active#weak, .strong-active span.active#strong,
 .strong-active span.active#poors, .strong-active span.active#weaks, .strong-active span.active#strongs {
-    background: variables.$info;
+    background: $info;
 }
 .heavy-active span.active#poor, .heavy-active span.active#weak, .heavy-active span.active#strong, .heavy-active span.active#heavy,
 .heavy-active span.active#poors, .heavy-active span.active#weaks, .heavy-active span.active#strongs, .heavy-active span.active#heavys {
-    background: variables.$success;
+    background: $success;
 }
 .password-strength {
     display: flex;
@@ -632,7 +629,7 @@ th {
 .password-strength span {
     width: 100%;
     height: 5px;
-    background: variables.$secondary-transparent;
+    background: $secondary-transparent;
     margin-right: 10px;
     border-radius: 5px;
 }
@@ -640,19 +637,19 @@ th {
     margin-right: 0;
 }
 .weak-pass .password-strength span {
-    background: variables.$danger;
+    background: $danger;
 }
 .device-management-modal {
     .device-management-table {
         .table-responsive {
-            border: 1px solid variables.$secondary-transparent;
-            border-radius: variables.$border-radius-lg;
+            border: 1px solid $secondary-transparent;
+            border-radius: $border-radius-lg;
             .table {
                 thead {
-                    background: variables.$secondary-transparent;
+                    background: $secondary-transparent;
                     tr {
                         th {
-                            background: variables.$secondary-transparent;
+                            background: $secondary-transparent;
                         }
                     }
                 }
@@ -673,19 +670,19 @@ th {
                                 justify-content: center;
                                 -webkit-justify-content: center;
                                 -ms-flex-pack: center;
-                                font-size: variables.$font-size-14;
-                                color: variables.$gray-900;
+                                font-size: $font-size-14;
+                                color: $gray-900;
                                 width: 30px;
                                 min-width: 30px;
                                 height: 30px;
                                 background: transparent;
-                                border: 1px solid variables.$secondary-transparent;
+                                border: 1px solid $secondary-transparent;
                                 &:hover {
-                                    color: variables.$gray-900;
-                                    background: variables.$gray-100;
-                                    border-color: variables.$gray-100;
+                                    color: $gray-900;
+                                    background: $gray-100;
+                                    border-color: $gray-100;
                                     i {
-                                        color: variables.$gray-900;
+                                        color: $gray-900;
                                     }
                                 }
                             }
@@ -700,22 +697,22 @@ th {
     .delete-header {
         margin-bottom: 15px;
         p {
-            font-size: variables.$font-size-16;
-            @include mixins.respond-below(custom767) {
-                font-size: variables.$font-size-14;
+            font-size: $font-size-16;
+            @include respond-below(custom767) {
+                font-size: $font-size-14;
             }
         }      
     }
 }
 .notification-table-responsive {
-    border-radius: variables.$border-radius-lg;
-    border: 1px solid variables.$secondary-transparent;
+    border-radius: $border-radius-lg;
+    border: 1px solid $secondary-transparent;
     margin-top: 16px;
     .table {
         thead {
             tr {
                 th {
-                    background: variables.$light;
+                    background: $light;
                     padding: 10px;
                 }
             }
@@ -727,7 +724,7 @@ th {
                 }
                 td {
                     padding: 15px 10px;
-                    color: variables.$gray-900;
+                    color: $gray-900;
                 }
             }
         }
@@ -737,7 +734,7 @@ th {
     > a {
         border-radius: 5px;
         &.subdrop {
-            background: variables.$primary-100;
+            background: $primary-100;
         }
         &.active {
             ::after {
@@ -781,7 +778,7 @@ th {
         width: 100%;
         height: 100%;
         border-radius: 50%;
-        border: 3px solid  variables.$light-900;
+        border: 3px solid  $light-900;
         position: absolute;
         top: 0;
         left: 0;
@@ -843,10 +840,10 @@ th {
   }
 
 .border-cyan {
-    border-color: variables.$cyan;
+    border-color: $cyan;
 }
 .border-purple {
-    border-color: variables.$purple;
+    border-color: $purple;
 }
 .settings-wrapper{
     .no-pagination{
@@ -879,7 +876,7 @@ th {
     justify-content: center;
 }
 .pricing-active {
-    border: 1px solid variables.$pink;
+    border: 1px solid $pink;
 }
 .badge-top {
     position: absolute;
@@ -890,7 +887,7 @@ th {
     width: 40px;
     height: 40px;
     border-radius: 8px;
-    background-color: variables.$body-bg;
+    background-color: $body-bg;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -902,11 +899,11 @@ th {
     -ms-flex-pack: center;
     margin-right: 8px;
     flex-shrink: 0;
-    border: 1px solid variables.$secondary-transparent;
+    border: 1px solid $secondary-transparent;
 }
 .new-logo {
     text-align: right;
-    @include mixins.respond-below(custom575) {
+    @include respond-below(custom575) {
         text-align: left;
         margin-left: 0 !important;
         margin-top: 15px;
@@ -921,7 +918,7 @@ th {
         justify-content: center;
         -webkit-justify-content: center;
         -ms-flex-pack: center;
-        border: 1px solid variables.$gray-100;;
+        border: 1px solid $gray-100;;
         border-radius: 10px;
         padding: 10px;
         position: relative;
@@ -929,7 +926,7 @@ th {
             max-height: 42px;
         }
         span {
-            font-size: variables.$font-size-12;
+            font-size: $font-size-12;
             width: 16px;
             min-width: 16px;
             height: 16px;
@@ -942,14 +939,14 @@ th {
             justify-content: center;
             -webkit-justify-content: center;
             -ms-flex-pack: center;
-            color: variables.$white;
-            background-color: variables.$danger;
+            color: $white;
+            background-color: $danger;
             border-radius: 5px;
             position: absolute;
             right: 4px;
             top: 4px;
             &:hover {
-                background-color: variables.$danger-hover;   
+                background-color: $danger-hover;   
             }
         }
     }
@@ -958,15 +955,15 @@ th {
     border-width: 2px;
     .avatar {
         i {
-            color: variables.$gray-600;
+            color: $gray-600;
         }
     }
     &:hover {
-        border-color: variables.$primary;
+        border-color: $primary;
         .avatar {
-            background: variables.$primary !important;
+            background: $primary !important;
             i {
-                color: variables.$white;
+                color: $white;
             }
         }
     }

@@ -1,25 +1,22 @@
-@use "../utils/mixins";
-@use "../utils/variables";
-
 .sale-widget {
     .sale-icon {
         width: 44px;
         height: 44px;
-        @include mixins.rounded(8px);
+        @include rounded(8px);
         display: flex;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
     }
     .badge {
-        font-size: variables.$font-size-10;
+        font-size: $font-size-10;
     }
 }
 .revenue-widget {
     .revenue-icon {
         width: 36px;
         height: 36px;
-        @include mixins.rounded(8px);
+        @include rounded(8px);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -42,24 +39,24 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    @include mixins.rounded(8px);
+    @include rounded(8px);
 }
 .item-list {
     p {
         padding-right: 12px;
         margin: 0 8px 0 0;
         position: relative;
-        font-size: variables.$font-size-13;
+        font-size: $font-size-13;
         &::before {
             content: "";
             position: absolute;
             top: 50%;
-            @include mixins.transform(translateY(-50%));
+            @include transform(translateY(-50%));
             right: 0;
-            background: variables.$orange;
+            background: $orange;
             width: 4px;
             height: 4px;
-            @include mixins.rounded(50%);
+            @include rounded(50%);
         }
         &:last-child {
             padding: 0;
@@ -71,7 +68,7 @@
     }
 }
 .info-item {
-    @include mixins.rounded(8px);
+    @include rounded(8px);
 }
 #customer-chart {
     margin: 0;
@@ -98,28 +95,28 @@
             position: absolute;
             top: 50%;
             left: 0;
-            @include mixins.transform(translateY(-50%));
-            @include mixins.rounded(4px);
+            @include transform(translateY(-50%));
+            @include rounded(4px);
         }
     }
     &.category-primary {
         p {
             &::before {
-                background: variables.$primary;
+                background: $primary;
             }
         }
     }
     &.category-orange {
         p {
             &::before {
-                background: variables.$orange;
+                background: $orange;
             }
         }
     }
     &.category-secondary {
         p {
             &::before {
-                background: variables.$secondary;
+                background: $secondary;
             }
         }
     }
@@ -132,15 +129,15 @@
         padding: 0 16px;
         li {
             a {
-                font-size: variables.$font-size-14;
-                font-weight: variables.$font-weight-semibold;
-                color: variables.$gray-900;
+                font-size: $font-size-14;
+                font-weight: $font-weight-semibold;
+                color: $gray-900;
                 border: 0;
                 border-radius: 0;
-                border-bottom: 2px solid variables.$white;
+                border-bottom: 2px solid $white;
                 &.active, &:hover {
-                    color: variables.$orange !important;
-                    border-color: variables.$primary;
+                    color: $orange !important;
+                    border-color: $primary;
                 }
             } 
         }
@@ -150,9 +147,9 @@
     li {
         margin: 0;
         .nav-link {
-            font-size: variables.$font-size-12;
-            font-weight: variables.$font-weight-medium;
-            color: variables.$gray-900;
+            font-size: $font-size-12;
+            font-weight: $font-weight-medium;
+            color: $gray-900;
             width: 41px;
             height: 28px;
             display: flex;
@@ -160,21 +157,21 @@
             justify-content: center;
             padding: 0;
             border-width: 0 1px 0 0;
-            border-right: 1px solid variables.$secondary-transparent;
-            background: variables.$light;
+            border-right: 1px solid $secondary-transparent;
+            background: $light;
             &.active {
-                background: variables.$orange;
-                color: variables.$white;
+                background: $orange;
+                color: $white;
             }
         }
         &:first-child {
             a {
-                @include mixins.rounded(4px 0 0 4px);
+                @include rounded(4px 0 0 4px);
             }
         }
         &:last-child {
             a {
-                @include mixins.rounded(0 4px 4px 0);
+                @include rounded(0 4px 4px 0);
                 border-right: 0;
             }
         }
@@ -185,12 +182,12 @@
 }
 .btn-group.custom-btn-group {
     .btn {
-        background: variables.$light;
+        background: $light;
         padding: 0.35rem 0.75rem;
         &.active {
-            border-color: variables.$primary;
-            background: variables.$primary;
-            color: variables.$white !important;
+            border-color: $primary;
+            background: $primary;
+            color: $white !important;
         }
     }
 }
