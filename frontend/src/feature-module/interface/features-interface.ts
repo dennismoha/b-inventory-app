@@ -1062,3 +1062,20 @@ export interface TransactionProductsBetweenDates {
   totalSales: number;
   transactions: Transaction[];
 }
+
+// custome sales report
+export interface CustomerSalesResponse {
+  customerId: string;
+  firstName: string;
+  lastName: string;
+  email?: string;
+  totalSales: CustomerProductSales[];
+  transactionDate: Transaction[];
+}
+
+export interface CustomerProductSales {
+  supplier_products_id: string;
+  supplierProduct: string;
+  products: string;
+  totalSales: number;
+}

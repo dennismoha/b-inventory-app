@@ -634,17 +634,16 @@ export const SidebarData = [
       //     { label: 'Supplier Due Report', link: '/supplier-due-report' }
       //   ]
       // },
-      // {
-      //   label: 'Customer Report',
-
-      //   icon: 'report',
-      //   showSubRoute: false,
-      //   submenu: true,
-      //   submenuItems: [
-      //     { label: 'Customer Report', link: '/customer-report' },
-      //     { label: 'Customer Due Report', link: '/customer-due-report' }
-      //   ]
-      // },
+      {
+        label: 'Customer Report',
+        icon: 'report',
+        showSubRoute: false,
+        submenu: true,
+        submenuItems: [
+          { label: 'Customer Report', link: '/customer-report' }
+          // { label: 'Customer Due Report', link: '/customer-due-report' }
+        ]
+      },
       // {
       //   label: 'Product Report',
       //   icon: 'report-analytics',
