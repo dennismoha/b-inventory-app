@@ -971,8 +971,19 @@ export interface Expense {
   updatedAt: Date;
 }
 
-export type NewExpensePayload = Omit<Expense, 'id' | 'createdAt' | 'updatedAt'>;
-
+export type NewExpensePayload = {
+  description: string;
+  amount: number;
+  category: string;
+  expenseDate: Date | null;
+  accountId: string;
+  paymentMethod: string;
+  purchaseId?: string | null;
+  batch?: string | null;
+  referenceNo: string;
+  vendor: string;
+  isGeneral: boolean;
+};
 export interface ExpensesApiResponse {
   statusCode: number;
   message: string;

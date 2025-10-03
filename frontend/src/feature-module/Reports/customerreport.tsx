@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BarChart, PieChart, LineChart } from '@mui/x-charts';
 import { useGetTotalSalesForEachCustomerQuery } from '@core/redux/api/inventory-api';
 import type { CustomerTotalSalesInterface, GetTransactionDateData } from '../interface/features-interface';

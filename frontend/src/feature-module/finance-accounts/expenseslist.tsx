@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { expenselist } from '../../core/json/expenselistdata';
+// import { expenselist } from '../../core/json/expenselistdata';
 import PrimeDataTable from '../../components/data-table';
 import TableTopHead from '../../components/table-top-head';
 import CommonDatePicker from '../../components/date-picker/common-date-picker';
@@ -10,12 +10,12 @@ import { Editor } from 'primereact/editor';
 import SearchFromApi from '../../components/data-table/search';
 import {
   useCreateExpenseMutation,
-  useGetAccountsQuery,
-  useGetBatchInventoriesQuery,
-  useGetExpensesQuery,
-  useGetPurchasesQuery
+  // useGetAccountsQuery,
+  // useGetBatchInventoriesQuery,
+  useGetExpensesQuery
+  // useGetPurchasesQuery
 } from '@core/redux/api/inventory-api';
-import type { CreatePurchaseRequest, FormattedBatchInventory } from '../interface/features-interface';
+// import type { CreatePurchaseRequest, FormattedBatchInventory } from '../interface/features-interface';
 
 const ExpensesList = () => {
   const [text, setText] = useState('');
@@ -618,7 +618,7 @@ export function AddExpenseModal() {
   const [description, setDescription] = useState('');
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState('');
-  const [expenseDate, setExpenseDate] = useState<Date | null>(null);
+  const [expenseDate, setExpenseDate] = useState<Date | null>(new Date());
   const [accountId, setAccountId] = useState('');
   const [purchaseId, setPurchaseId] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');

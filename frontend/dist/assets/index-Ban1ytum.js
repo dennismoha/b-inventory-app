@@ -1,0 +1,1 @@
+import{j as e}from"./index-C-4I-xyq.js";import{C as p}from"./chips.esm-DT9pghPW.js";const C=({value:o,onChange:n,placeholder:r="Type and enter",className:s})=>e.jsx(p,{className:s,value:o,onChange:t=>n(t.value),placeholder:r});export{C};
