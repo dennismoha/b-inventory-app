@@ -6,6 +6,7 @@ import { all_routes } from '../../routes/all_routes';
 import EndSession from './components/end-session';
 import { useState, useEffect } from 'react';
 import LogoutButton from '@utils/api/logout';
+import { useAppSelector } from '@core/redux/store';
 
 function useClock() {
   const [time, setTime] = useState(new Date());
@@ -23,6 +24,7 @@ function useClock() {
 
 const PosHeader = () => {
   // const [isFullscreen] = useState(false);
+  const userrole = useAppSelector((state) => state.auth.user.role);
   const time = useClock();
   return (
     <>
@@ -59,12 +61,14 @@ const PosHeader = () => {
             </span>
           </li>
           {/* /Search */}
-          <li className="nav-item pos-nav">
-            <Link to={all_routes.newdashboard} className="btn btn-purple btn-md d-inline-flex align-items-center">
-              <i className="ti ti-world me-1" />
-              Dashboard
-            </Link>
-          </li>
+          {userrole === 'user' ? null : (
+            <li className="nav-item pos-nav">
+              <Link to={all_routes.newdashboard} className="btn btn-purple btn-md d-inline-flex align-items-center">
+                <i className="ti ti-world me-1" />
+                Dashboard
+              </Link>
+            </li>
+          )}
           <li className="nav-item pos-nav">
             {/* <Link to={all_routes.newdashboard} className="btn btn-purple btn-md d-inline-flex align-items-center">
               <i className="ti ti-world me-1" />

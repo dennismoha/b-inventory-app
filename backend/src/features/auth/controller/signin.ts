@@ -48,34 +48,34 @@ export class Login {
 
     // 3️ Check if user already has an active login from another device
 
-    if (user.role === 'user') {
-      // If the user is a super admin, allow login without checking for active sessions
-      console.log('Super admin login allowed without active session check');
-      const existingLogin = await prisma.userLoginLog.findFirst({
-        where: {
-          userId: user.user_id,
-          isLoggedIn: true
-        }
-      });
+    // if (user.role === 'user') {
+    //   // If the user is a super admin, allow login without checking for active sessions
+    //   console.log('Super admin login allowed without active session check');
+    //   const existingLogin = await prisma.userLoginLog.findFirst({
+    //     where: {
+    //       userId: user.user_id,
+    //       isLoggedIn: true
+    //     }
+    //   });
 
-      if (existingLogin) {
-        const currentDevice = req.headers['user-agent'] || '';
-        const currentIP = req.ip;
+    //   if (existingLogin) {
+    //     const currentDevice = req.headers['user-agent'] || '';
+    //     const currentIP = req.ip;
 
-        // Log the failed login attempt
-        await prisma.userLoginAttempt.create({
-          data: {
-            userId: user.user_id,
-            attemptTime: new Date(),
-            ipAddress: currentIP || 'unknown',
-            userAgent: currentDevice,
-            status: 'FAILED_ACTIVE_SESSION'
-          }
-        });
+    //     // Log the failed login attempt
+    //     await prisma.userLoginAttempt.create({
+    //       data: {
+    //         userId: user.user_id,
+    //         attemptTime: new Date(),
+    //         ipAddress: currentIP || 'unknown',
+    //         userAgent: currentDevice,
+    //         status: 'FAILED_ACTIVE_SESSION'
+    //       }
+    //     });
 
-        throw new BadRequestError('You are already logged in on another device. Please log out from that device first.');
-      }
-    }
+    //     throw new BadRequestError('You are already logged in on another device. Please log out from that device first.');
+    //   }
+    // }
 
     //  Register successful login
     await prisma.userLoginLog.create({
