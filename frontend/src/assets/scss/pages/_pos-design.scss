@@ -1,3 +1,6 @@
+@use "../utils/mixins";
+@use "../utils/variables";
+
 .btn-icon {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -25,15 +28,15 @@
     }
 }
 .btn-row {
-    @include respond-below(custom575) {
+    @include mixins.respond-below(custom575) {
         flex-direction: column;
     }
     .btn {
-        font-size: $font-size-base;
+        font-size: variables.$font-size-base;
         padding: 9px;
         margin-right: 10px;
-        @include rounded(4px);
-        @include respond-below(custom575) {
+        @include mixins.rounded(4px);
+        @include mixins.respond-below(custom575) {
             margin: 0 0 15px 0;
             width: 100%;
         }
@@ -44,11 +47,11 @@
 }
 .pos-categories, .order-list {
     h5, h6 {
-        color: $secondary;
+        color: variables.$secondary;
     }
     h5 {
-        font-size: $font-size-18;
-        font-weight: $font-weight-bold;
+        font-size: variables.$font-size-18;
+        font-weight: variables.$font-weight-bold;
     }
 }
 .owl-carousel {
@@ -64,25 +67,25 @@
                 position: relative;
                 width: 28px;
                 height: 28px;
-                @include rounded(50%);
-                color: $gray-900;
+                @include mixins.rounded(50%);
+                color: variables.$gray-900;
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
                 &:hover {
-                    background-color: $secondary;
-                    border-color: $secondary;
-                    color: $white;
+                    background-color: variables.$secondary;
+                    border-color: variables.$secondary;
+                    color: variables.$white;
                 }
             }
         }
     }
 }
 .pos-categories {
-    background-color: $light;
+    background-color: variables.$light;
     padding: 24px;
     border-collapse: collapse;
-    @include respond-above(lg) {
+    @include mixins.respond-above(lg) {
         height: calc(100vh - 65px);
         overflow-y: auto;
     }
@@ -91,11 +94,11 @@
 .pos-category {
     margin-bottom: 24px;
     padding-bottom: 24px;
-    border-bottom: 1px solid $border-color;
+    border-bottom: 1px solid variables.$border-color;
     .owl-item {
         li {
             padding: 15px 0;
-            background-color: $white;
+            background-color: variables.$white;
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
@@ -109,15 +112,15 @@
             flex-wrap: wrap;
             text-align: center;
             cursor: pointer;
-            border: 1px solid $border-color;
-            box-shadow: $box-shadow;
-            @include transition(all 0.5s ease);
-            @include rounded(8px);
+            border: 1px solid variables.$border-color;
+            box-shadow: variables.$box-shadow;
+            @include mixins.transition(all 0.5s ease);
+            @include mixins.rounded(8px);
             margin-left: -0.1px!important;
         }
         a {
             img {
-                @include transition(all 0.5s ease);
+                @include mixins.transition(all 0.5s ease);
                 min-width:  40px;
                 width: 40px;
                 height: 40px;
@@ -125,7 +128,7 @@
             }
         }
         h6 {
-            font-weight: $font-weight-bold;
+            font-weight: variables.$font-weight-bold;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
@@ -133,15 +136,15 @@
             width: 100%;
             margin-bottom: 5px;
             a {
-                color: $secondary;
+                color: variables.$secondary;
             }
         }
         &:hover {
-            border-color: $primary;    
+            border-color: variables.$primary;    
             border-radius: 5px;
             h6 {
                 a {
-                    color:  $primary;
+                    color:  variables.$primary;
                 }
             }
             a {
@@ -164,13 +167,13 @@
                 margin-right: 5px;
             }
             &.owl-next, &.owl-prev {
-                background-color: $white;
-                border:  1px solid $border-color;
-                color: $gray-900;
+                background-color: variables.$white;
+                border:  1px solid variables.$border-color;
+                color: variables.$gray-900;
                 &:hover {
-                    background-color: $primary;
-                    border-color: $primary;
-                    color: $white;
+                    background-color: variables.$primary;
+                    border-color: variables.$primary;
+                    color: variables.$white;
                 }
             }
         }
@@ -179,7 +182,7 @@
 .pos-search {
     &.input-icon-start {
         .form-control {
-            font-size: $font-size-12;
+            font-size: variables.$font-size-12;
         }
     }
     .form-control {
@@ -193,20 +196,20 @@
         margin-right: 7px;
         input {
             padding: 1px 9px;   
-            @include rounded(8px);
+            @include mixins.rounded(8px);
             height: 28px;
             width: 71px;
             text-align: center;
-            font-size: $font-size-base;
+            font-size: variables.$font-size-base;
         }
         .dec, .inc {
             position: absolute;
             top: 50%;
-            @include transform(translateY(-50%));
-            color: $secondary;
-            @include transition(all 0.5s ease);
+            @include mixins.transform(translateY(-50%));
+            color: variables.$secondary;
+            @include mixins.transition(all 0.5s ease);
             &:hover {
-                color: $primary;
+                color: variables.$primary;
             }
         }
         .dec {
@@ -218,11 +221,11 @@
     }
     .product-info {
         padding: 15px;
-        color:  $sub-title;
-        @include transition(all 0.5s ease);
+        color:  variables.$sub-title;
+        @include mixins.transition(all 0.5s ease);
         .pro-img {
-            background-color: $light;
-            @include rounded(10px);
+            background-color: variables.$light;
+            @include mixins.rounded(10px);
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
@@ -236,15 +239,15 @@
             position: relative;
             padding: 10px;
             img {
-                @include transition(all 0.5s ease);
+                @include mixins.transition(all 0.5s ease);
             }
             span {
-                @include transition(all 0.5s ease);
+                @include mixins.transition(all 0.5s ease);
                 position: absolute;
                 top: -5px;
                 right: -5px;
-                @include rounded(100%);
-                color: $success;
+                @include mixins.rounded(100%);
+                color: variables.$success;
                 display: -webkit-box;
                 display: -ms-flexbox;
                 display: flex;
@@ -255,21 +258,21 @@
                 -webkit-justify-content: center;
                 -ms-flex-pack: center;
                 display: none;
-                font-size: $font-size-18;
+                font-size: variables.$font-size-18;
             }
         }
         h6 {
-            font-weight: $font-weight-bold;
+            font-weight: variables.$font-weight-bold;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             &.cat-name {
                 margin-bottom: 4px;
-                font-weight: $font-weight-normal;
+                font-weight: variables.$font-weight-normal;
                 a {
-                    color: $gray-600;
+                    color: variables.$gray-600;
                     &:hover {
-                        color: $primary;
+                        color: variables.$primary;
                     }
                 }
             }
@@ -277,18 +280,18 @@
         .price {
             margin-top: 8px;
             padding-top: 8px;
-            border-top: 1px dashed $border-color;
+            border-top: 1px dashed variables.$border-color;
             span {
-                color:  $pink;
+                color:  variables.$pink;
             }
             p {
-                color: $teal;
-                font-weight: $font-weight-bold;
+                color: variables.$teal;
+                font-weight: variables.$font-weight-bold;
             }
 
         }
         &:hover, &.active {
-            border-color: $success;
+            border-color: variables.$success;
             .pro-img {
                 img {
                     transform: scale(1.2);
@@ -305,30 +308,30 @@
     display: inline-block;
     input {
         padding: 1px 9px;   
-        @include rounded(8px);
+        @include mixins.rounded(8px);
         height: 28px;
         width: 71px;
         text-align: center;
-        font-size: $font-size-base;
+        font-size: variables.$font-size-base;
         background: transparent;
         border: 0;
     }
     .dec, .inc {
         position: absolute;
         top: 50%;
-        @include transform(translateY(-50%));
-        @include transition(all 0.5s ease);
-        background: $secondary-transparent;
+        @include mixins.transform(translateY(-50%));
+        @include mixins.transition(all 0.5s ease);
+        background: variables.$secondary-transparent;
         width: 20px;
         height: 20px;
-        font-size: $font-size-12;
-        @include rounded(50%);
-        color: $gray-900;
+        font-size: variables.$font-size-12;
+        @include mixins.rounded(50%);
+        color: variables.$gray-900;
         &:hover {
-            background: $teal;
-            color: $white;
+            background: variables.$teal;
+            color: variables.$white;
             i {
-                color: $white;
+                color: variables.$white;
             }
         }
     }
@@ -351,8 +354,8 @@
         display: none;
     }
     .product-list {
-        border: 1px solid $border-color;
-        @include rounded(8px);
+        border: 1px solid variables.$border-color;
+        @include mixins.rounded(8px);
         padding: 8px;
         margin-bottom: 5px;
         display: flex;
@@ -363,14 +366,14 @@
         }
         .product-info {
             width: 60%;
-            @include respond-below(xxl) {
+            @include mixins.respond-below(xxl) {
                 width: 55%;
             }
             .pro-img {
                 width: 83px;
                 height: 83px;
-                background-color: $body-bg;
-                @include rounded(10px);
+                background-color: variables.$body-bg;
+                @include mixins.rounded(10px);
                 display: -webkit-box;
                 display: -ms-flexbox;
                 display: flex;
@@ -387,22 +390,22 @@
         }
         .info {
             span {
-                background-color: $primary;
-                @include rounded(3px);
-                font-weight: $font-weight-semibold;
-                color: $white;
-                font-size: $font-size-12;
+                background-color: variables.$primary;
+                @include mixins.rounded(3px);
+                font-weight: variables.$font-weight-semibold;
+                color: variables.$white;
+                font-size: variables.$font-size-12;
                 padding: 2px 4px;
                 min-width: 52px;
                 display: inline-block;
                 margin-bottom: 5px;
             }
             h6 {
-                font-weight: $font-weight-bold;
+                font-weight: variables.$font-weight-bold;
                 margin-bottom: 5px;
             }
             p {
-                font-size: $font-size-14;
+                font-size: variables.$font-size-14;
             }
         }
         .qty-item {
@@ -411,21 +414,21 @@
             margin-right: 7px;
             input {
                 padding: 1px 9px;   
-                @include rounded(8px);
+                @include mixins.rounded(8px);
                 height: 28px;
                 width: 71px;
                 text-align: center;
-                font-size: $font-size-base;
+                font-size: variables.$font-size-base;
             }
             .dec, .inc {
                 position: absolute;
                 top: 50%;
-                @include transform(translateY(-50%));
-                color: $secondary;
-                @include transition(all 0.5s ease);
+                @include mixins.transform(translateY(-50%));
+                color: variables.$secondary;
+                @include mixins.transition(all 0.5s ease);
                 background: transparent;
                 &:hover {
-                    color: $primary;
+                    color: variables.$primary;
                 }
             }
             .dec {
@@ -438,8 +441,8 @@
         .action {
             a {
                 padding: 7px;
-                @include rounded(8px);
-                border: 1px solid $border-color;
+                @include mixins.rounded(8px);
+                border: 1px solid variables.$border-color;
                 width: 30px;
                 height: 30px;
                 cursor: pointer;
@@ -448,16 +451,16 @@
                 justify-content: center;
                 &.edit-icon {
                     &:hover {
-                        background-color: $primary;
-                        border-color: $primary;
-                        color: $white;
+                        background-color: variables.$primary;
+                        border-color: variables.$primary;
+                        color: variables.$white;
                     }
                 }
                 &.delete-icon {
                     &:hover {
-                        background-color: $danger;
-                        border-color: $danger;
-                        color: $white;
+                        background-color: variables.$danger;
+                        border-color: variables.$danger;
+                        color: variables.$white;
                     }
                 }
             }
@@ -467,9 +470,9 @@
 aside {    
     overflow-y: auto;
     padding: 20px;
-    background-color: $white;
-    border-left: 1px solid $border-color;
-    @include respond-above(lg) {
+    background-color: variables.$white;
+    border-left: 1px solid variables.$border-color;
+    @include mixins.respond-above(lg) {
         height: calc(100vh - 65px);
     }
     &.product-order-list {
@@ -480,16 +483,16 @@ aside {
             margin-bottom: 20px;
         }
         .order-head {
-            @include rounded(8px);
+            @include mixins.rounded(8px);
             padding: 10px;
             margin-bottom: 20px;
             span {
-                font-size: $font-size-15;
-                font-weight: $font-weight-medium;
+                font-size: variables.$font-size-15;
+                font-weight: variables.$font-weight-medium;
             }
         }
         .customer-info {
-            border-bottom: 1px solid $border-color;
+            border-bottom: 1px solid variables.$border-color;
             padding-bottom: 10px;
             .input-block {
                 margin-bottom: 10px;
@@ -501,7 +504,7 @@ aside {
                     align-items: center;
                     justify-content: center;
                     padding: 0;
-                    @include rounded(8px);
+                    @include mixins.rounded(8px);
                 }
             }
         }
@@ -527,11 +530,11 @@ aside {
                     justify-content: center;
                     -webkit-justify-content: center;
                     -ms-flex-pack: center;
-                    background: $primary;
-                    @include rounded(100%);
-                    color: $white;
-                    font-size: $font-size-10;
-                    font-weight: $font-weight-semibold;
+                    background: variables.$primary;
+                    @include mixins.rounded(100%);
+                    color: variables.$white;
+                    font-size: variables.$font-size-10;
+                    font-weight: variables.$font-weight-semibold;
                     margin-left: 5px;
                 }
             }
@@ -539,39 +542,39 @@ aside {
         .selling-info {
             margin-bottom: 20px;
             padding-bottom: 20px;
-            border-bottom: 1px solid $border-color;
+            border-bottom: 1px solid variables.$border-color;
             .input-block {
                 label {
-                    font-size: $font-size-15;
-                    color: $gray-900;
+                    font-size: variables.$font-size-15;
+                    color: variables.$gray-900;
                     margin-bottom: 5px;
                 }
                 .select2-container--default .select2-selection--single .select2-selection__rendered {
-                    @include rounded(5px);
+                    @include mixins.rounded(5px);
                     height: 40px;
                     line-height: 40px;
                 }
             }
         }
         .order-total{
-            background-color: $light;
+            background-color: variables.$light;
             padding: 24px;
-            @include rounded(8px);
+            @include mixins.rounded(8px);
             table {
                 tr {
                     td {
                         padding: 0 0 15px 0;
-                        color: $text-color;
-                        font-size: $font-size-15;
-                        font-weight: $font-weight-medium;
+                        color: variables.$text-color;
+                        font-size: variables.$font-size-15;
+                        font-weight: variables.$font-weight-medium;
                         background: transparent;
                     }
                     &:last-child {
                         td {
                             padding: 20px 0 0 0;
-                            font-size: $font-size-16;
-                            font-weight: $font-weight-semibold;
-                            color: $secondary;
+                            font-size: variables.$font-size-16;
+                            font-weight: variables.$font-weight-semibold;
+                            color: variables.$secondary;
                             border-bottom: 0;
                         }
                     }
@@ -582,16 +585,16 @@ aside {
         .payment-method {
             .methods {
                 .payment-item {
-                    @include transition(all 0.5s ease);
-                    @include margin-padding(null, 10px 15px);
+                    @include mixins.transition(all 0.5s ease);
+                    @include mixins.margin-padding(null, 10px 15px);
                     text-align: center;
                     display: block;
-                    font-size: $font-size-15;
-                    color: $secondary;
-                    @include rounded(10px);
-                    border: 1px solid $border-color;
+                    font-size: variables.$font-size-15;
+                    color: variables.$secondary;
+                    @include mixins.rounded(10px);
+                    border: 1px solid variables.$border-color;
                     i {
-                        color: $gray-600;
+                        color: variables.$gray-600;
                     }
                     span {
                         white-space: nowrap;
@@ -600,11 +603,11 @@ aside {
                         display: block;
                     }
                     &:hover, &.active {
-                        background-color: $primary-transparent;
-                        border-color: $primary;
-                        color: $primary;
+                        background-color: variables.$primary-transparent;
+                        border-color: variables.$primary;
+                        color: variables.$primary;
                         i {
-                            color: $primary;
+                            color: variables.$primary;
                         }
                     }
 
@@ -614,8 +617,8 @@ aside {
         .btn-block {
             margin-bottom: 20px;
             .btn {
-                font-size: $font-size-base;
-                font-weight: $font-weight-bold;
+                font-size: variables.$font-size-base;
+                font-weight: variables.$font-weight-bold;
                 padding: 13px 10px;
             }
         }
@@ -632,74 +635,74 @@ aside {
 }
 .success-wrap {
     padding: 40px;
-    @include respond-below(lg) {
+    @include mixins.respond-below(lg) {
         padding: 30px;
     }
 }
 .icon-success {
     width: 48px;
     height: 48px;
-    @include rounded(50%);
-    font-size: $font-size-24;
+    @include mixins.rounded(50%);
+    font-size: variables.$font-size-24;
     display: inline-flex;
     align-items: center;
     justify-content: center;
 }
 #print-receipt {
-    color:  $text-color;
+    color:  variables.$text-color;
     .modal-dialog {
         width: 424px;
     }
     .modal-body {
         padding: 30px;
-        color: $text-color;
+        color: variables.$text-color;
         h6 {
-            font-size: $font-size-16;
+            font-size: variables.$font-size-16;
         }
         .info {
             h6 {
                 margin: 10px 0;
-                font-weight: $font-weight-bold;
+                font-weight: variables.$font-weight-bold;
             }
             a {
-                color: $text-color;
+                color: variables.$text-color;
             }
         }
         .tax-invoice {
             h6 {
                 margin: 10px 0;
-                font-weight: $font-weight-bold;
+                font-weight: variables.$font-weight-bold;
                 position: relative;
                 &:after, &:before {
-                    @include transform(translateY(-50%));
+                    @include mixins.transform(translateY(-50%));
                     content: "";
-                    border-top:  1px dashed $border-color;
+                    border-top:  1px dashed variables.$border-color;
                     width: 35%;
                 }
                 &:before {
-                    @include position(absolute,50%,null,null,0);
+                    @include mixins.position(absolute,50%,null,null,0);
                 }
                 &:after {
-                    @include position(absolute,50%,0,null,null);
+                    @include mixins.position(absolute,50%,0,null,null);
                 }
             }
             .invoice-user-name {
                 margin-bottom: 10px;
             }
             span {
-                color: $gray-900;
+                color: variables.$gray-900;
             }
         }
         table {
             thead {
                 th {
-                    color: $gray-900;
-                    font-weight: $font-weight-bold;
+                    color: variables.$gray-900;
+                    font-weight: variables.$font-weight-bold;
                     width: auto;
                     min-width: auto;
                     padding: 10px 5px;
-                    border-top: 1px dashed $border-color;
-                    border-bottom: 1px dashed $border-color;
+                    border-top: 1px dashed variables.$border-color;
+                    border-bottom: 1px dashed variables.$border-color;
                 }
             }
             tbody{ 
@@ -718,15 +721,15 @@ aside {
                         padding: 5px;
                     }
                     table {
-                        border-top: 1px dashed $border-color;
+                        border-top: 1px dashed variables.$border-color;
                         tr {
                             &:last-child {
                                 td {
-                                    font-weight: $font-weight-bold;
-                                    font-size: $font-size-18;
-                                    color: $secondary;
-                                    @include respond-below(lg) {
-                                        font-size: $font-size-16;
+                                    font-weight: variables.$font-weight-bold;
+                                    font-size: variables.$font-size-18;
+                                    color: variables.$secondary;
+                                    @include mixins.respond-below(lg) {
+                                        font-size: variables.$font-size-16;
                                     }
                                 }
                             }
@@ -736,8 +739,8 @@ aside {
             }
         }
         .invoice-bar {
-            border-top: 1px dashed $border-color;
-            @include margin-padding(null, 20px 0 0 0);
+            border-top: 1px dashed variables.$border-color;
+            @include mixins.margin-padding(null, 20px 0 0 0);
             img {
                 margin: 20px 0 10px;
             }
@@ -750,8 +753,8 @@ aside {
 .pos-modal {
     .modal-header {
         h5 {
-            font-size: $font-size-18;
-            font-weight: $font-weight-bold;
+            font-size: variables.$font-size-18;
+            font-weight: variables.$font-weight-bold;
         }
     }
     &#recents {
@@ -780,9 +783,9 @@ aside {
             .drag-drop {
                 position: relative;
                 padding: 20px;
-                border:  1px dashed $sub-title;
+                border:  1px dashed variables.$sub-title;
                 input[type="file"] {
-                    @include position(absolute,0,0,null,0);
+                    @include mixins.position(absolute,0,0,null,0);
                     width: 100%;
                     height: 100%;
                     opacity: 0;
@@ -790,37 +793,37 @@ aside {
                 }
             }
             span {
-                font-size: $font-size-13;
-                font-weight: $font-weight-medium;
-                color: $text-color;
+                font-size: variables.$font-size-13;
+                font-weight: variables.$font-weight-medium;
+                color: variables.$text-color;
             }
             p {
-                font-size: $font-size-16;
-                font-weight: $font-weight-semibold;
-                color: $secondary;
+                font-size: variables.$font-size-16;
+                font-weight: variables.$font-weight-semibold;
+                color: variables.$secondary;
                 margin-bottom: 0;
             }
             .progress {
                 height: 6px;
-                @include rounded(5px);
+                @include mixins.rounded(5px);
             }
             ul {
                 li {
-                    @include margin-padding(0 0 15px 0, 15px);
-                    @include rounded(8px);
-                    border: 1px solid $gray-100;
+                    @include mixins.margin-padding(0 0 15px 0, 15px);
+                    @include mixins.rounded(8px);
+                    border: 1px solid variables.$gray-100;
                     h6 {
                         a {
-                            font-size: $font-size-16;
-                            font-weight: $font-weight-semibold;
-                            color: $secondary;
+                            font-size: variables.$font-size-16;
+                            font-weight: variables.$font-weight-semibold;
+                            color: variables.$secondary;
                             svg {
-                                color:  $success;
+                                color:  variables.$success;
                             }
                         }
                         &:hover {
                             a {
-                                color: $primary;
+                                color: variables.$primary;
                             }
                         }
                     }
@@ -843,12 +846,12 @@ aside {
         }
         .progress {
             height: 6px;
-            @include rounded(5px);
+            @include mixins.rounded(5px);
         }
     }
 }
 label span {
-    color: $danger;
+    color: variables.$danger;
 }
 .wordset {
     ul {
@@ -856,9 +859,9 @@ label span {
             a {
                 width: 38px;
                 height: 38px;
-                @include rounded(8px);
-                border:  1px solid $gray-100;
-                color: $secondary;
+                @include mixins.rounded(8px);
+                border:  1px solid variables.$gray-100;
+                color: variables.$secondary;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -896,31 +899,31 @@ label span {
 .pos-two {
     aside {
         border-left: 0;
-        border-right: 1px solid $border-color;
+        border-right: 1px solid variables.$border-color;
     }
 }
 .pos-three {
     .product-info {
-        @include rounded(10px);
+        @include mixins.rounded(10px);
         padding: 0;
         margin: 0;
         .product-image {
-            @include rounded(10px 10px 0 0);
+            @include mixins.rounded(10px 10px 0 0);
             position: relative;
             display: inline-flex;
             overflow: hidden;
             img {
-                @include rounded(10px 10px 0 0);
-                @include transition(all 0.5s ease);
+                @include mixins.rounded(10px 10px 0 0);
+                @include mixins.transition(all 0.5s ease);
             }
             &::before {
                 position: absolute;
                 content: "\eb0b";
-                background: $success;
-                color: $white;
+                background: variables.$success;
+                color: variables.$white;
                 width: 16px;
                 height: 16px;
-                @include rounded(50%);
+                @include mixins.rounded(50%);
                 font-family: "tabler-icons" !important;
                 display: inline-flex;
                 align-items: center;
@@ -934,7 +937,7 @@ label span {
             padding: 16px;
         }
         &:hover,  &.active {
-            border-color: $primary;
+            border-color: variables.$primary;
         }
         &:hover  {
             .product-image {
@@ -948,7 +951,7 @@ label span {
             .product-image {
                 &::before { 
                     content: "\eaf2";
-                    background: $danger;
+                    background: variables.$danger;
                 }
             }
         }
@@ -979,21 +982,21 @@ label span {
                     display: block;
                     .qty-item {
                         .form-control {
-                            background: $secondary-transparent;
+                            background: variables.$secondary-transparent;
                             border: 0;
-                            color: $gray-900;
+                            color: variables.$gray-900;
                         }
                     }
                     .edit-icon {
-                        color: $gray-600;
+                        color: variables.$gray-600;
                         &:hover {
-                            color: $info;
+                            color: variables.$info;
                         }
                     }
                     .delete-icon {
-                        color: $gray-600;
+                        color: variables.$gray-600;
                         &:hover {
-                            color: $danger;
+                            color: variables.$danger;
                         }
                     }
                     .form-control {
@@ -1018,25 +1021,25 @@ label span {
             padding: 20px 20px 12px;
             margin: 0;
             .order-total {
-                @include rounded(5px);
-                border: 1px solid $border-color;
+                @include mixins.rounded(5px);
+                border: 1px solid variables.$border-color;
                 padding: 0;
-                background: $white;
+                background: variables.$white;
                 margin-bottom: 20px;
                 table {
                     tr {
                         td {
                             padding: 8px 16px;
-                            font-size: $font-size-15;
-                            font-weight: $font-weight-medium;
+                            font-size: variables.$font-size-15;
+                            font-weight: variables.$font-weight-medium;
                         }
                         &:last-child {
                             td {
                                 padding: 16px;
-                                font-size: $font-size-16;
-                                font-weight: $font-weight-bold;
-                                border-top: 1px solid $border-color;
-                                background: $secondary-transparent;
+                                font-size: variables.$font-size-16;
+                                font-weight: variables.$font-weight-bold;
+                                border-top: 1px solid variables.$border-color;
+                                background: variables.$secondary-transparent;
                                 &:first-child {
                                     border-bottom-left-radius: 6px;
                                 }
@@ -1055,11 +1058,11 @@ label span {
     }
     &.pos-four {
         .product-info {
-            @include rounded(0);
+            @include mixins.rounded(0);
             .product-image {
-                @include rounded(0);
+                @include mixins.rounded(0);
                 img {
-                    @include rounded(0);
+                    @include mixins.rounded(0);
                 }
             }
         }
@@ -1068,7 +1071,7 @@ label span {
 .pos-category3 {
     li {
         padding: 8px;
-        background-color: $white;
+        background-color: variables.$white;
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
@@ -1077,27 +1080,27 @@ label span {
         -ms-flex-align: center;
         justify-content: center;
         cursor: pointer;
-        border: 1px solid $border-color;
-        box-shadow: $box-shadow;
-        @include transition(all 0.5s ease);
-        @include rounded(8px);
+        border: 1px solid variables.$border-color;
+        box-shadow: variables.$box-shadow;
+        @include mixins.transition(all 0.5s ease);
+        @include mixins.rounded(8px);
         margin-left: -0.1px!important;
     }
     a {
         img {
-            @include transition(all 0.5s ease);
+            @include mixins.transition(all 0.5s ease);
             width: 20px;
             height: 20px;
             margin-right: 10px;
         }
     }
     h6 {
-        font-size: $font-size-14;
-        font-weight: $font-weight-medium;
+        font-size: variables.$font-size-14;
+        font-weight: variables.$font-weight-medium;
         white-space: nowrap;
     }
     &:hover {
-        border-color: $primary;   
+        border-color: variables.$primary;   
     }
 }
 .pos-category4 {
@@ -1113,22 +1116,22 @@ label span {
         justify-content: center;
         cursor: pointer;
         border: 0;
-        box-shadow: $box-shadow;
-        @include transition(all 0.5s ease);
-        @include rounded(50px);
+        box-shadow: variables.$box-shadow;
+        @include mixins.transition(all 0.5s ease);
+        @include mixins.rounded(50px);
         margin-left: -0.1px!important;
-        color: $gray-900;
+        color: variables.$gray-900;
         h6 {
-            font-size: $font-size-14;
-            font-weight: $font-weight-medium;
+            font-size: variables.$font-size-14;
+            font-weight: variables.$font-weight-medium;
             white-space: nowrap;
         }
         &.active, &:hover {
-            background: $secondary;
-            color: $white;
+            background: variables.$secondary;
+            color: variables.$white;
             h6 {
                 a {
-                    color: $white;
+                    color: variables.$white;
                 }
             }
         }
@@ -1139,33 +1142,33 @@ label span {
 }
 .quick-cash {
     padding: 20px;
-    @include rounded(5px);
+    @include mixins.rounded(5px);
     .form-check {
         padding: 0;
         margin: 0;
         label {
-            font-size: $font-size-20;
-            font-weight: $font-weight-bold;
-            border: 1px solid $border-color;
+            font-size: variables.$font-size-20;
+            font-weight: variables.$font-weight-bold;
+            border: 1px solid variables.$border-color;
             width: 88px;
             height: 62px;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0;
-            color: $text-color;
+            color: variables.$text-color;
             &:hover {
-                background: $white;
+                background: variables.$white;
             }
-            @include respond-below(lg) {
+            @include mixins.respond-below(lg) {
                 height: 50px;
-                font-size: $font-size-16;
+                font-size: variables.$font-size-16;
             }
         }
         .btn-check:checked + .btn {
-            background: $primary-transparent;
-            border-color: $primary;
-            color: $secondary !important;
+            background: variables.$primary-transparent;
+            border-color: variables.$primary;
+            color: variables.$secondary !important;
         }
     }
 }
@@ -1175,7 +1178,7 @@ label span {
     }
 }
 .customer-item {
-    @include rounded(5px);
+    @include mixins.rounded(5px);
     padding: 12px;
     position: relative;
     .customer-bonus {
@@ -1185,16 +1188,16 @@ label span {
             margin-bottom: 0;
             .badge {
                 padding: 2px 4px;
-                @include rounded(8px);
+                @include mixins.rounded(8px);
             }
             &::before {
                 content: "";
                 width: 1px;
                 height: 14px;
-                background: $dark;
+                background: variables.$dark;
                 position: absolute;
                 top: 50%;
-                @include transform(translateY(-50%));
+                @include mixins.transform(translateY(-50%));
                 right: 0;
             }
             &:last-child {
@@ -1208,22 +1211,22 @@ label span {
     .close-icon {
         width: 18px;
         height: 18px;
-        @include rounded(50%);
-        background: $orange;
-        color: $white;
+        @include mixins.rounded(50%);
+        background: variables.$orange;
+        color: variables.$white;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         position: absolute;
         top: -8px;
         right: -8px;
-        font-size: $font-size-10;
+        font-size: variables.$font-size-10;
     }
 }
 .discount-item {
     padding: 12px;
-    @include rounded(8px);
-    border: 1px solid $purple;
+    @include mixins.rounded(8px);
+    border: 1px solid variables.$purple;
     .discount-icon {
         width: 36px;
         height: 36px;
@@ -1233,24 +1236,24 @@ label span {
     }
     .close-icon {
         &:hover {
-            color: $danger;
+            color: variables.$danger;
         }
     }
 }
 .clear-icon {
-    background: $danger-100;
+    background: variables.$danger-100;
     padding: 5px 8px;
-    @include rounded(8px);
-    color: $danger;
+    @include mixins.rounded(8px);
+    color: variables.$danger;
     &:hover {
-        background: $danger;
-        color: $white;
+        background: variables.$danger;
+        color: variables.$white;
     }
 }
 .scan-wrap {
     h5 {
         margin-bottom: 40px;
-        @include respond-below(lg) {
+        @include mixins.respond-below(lg) {
             margin-bottom: 20px;
         }
     }
@@ -1265,22 +1268,22 @@ label span {
             position: absolute;
             top: 50%;
             left: 50%;
-            @include transform(translateX(-50%));
+            @include mixins.transform(translateX(-50%));
         }
-        @include respond-below(lg) {
+        @include mixins.respond-below(lg) {
             margin-bottom: 20px;
         }
     }
 }
 .pos-five {
     .pos-categories {
-        @include respond-above(lg) {
+        @include mixins.respond-above(lg) {
             height: calc(100vh - 132px);
         }
     }
     .content-wrap {
         display: flex;
-        @include respond-below(sm) {
+        @include mixins.respond-below(sm) {
             display: block;
         }
     }
@@ -1293,17 +1296,17 @@ label span {
             border: 0;
         }
         .inc, .dec {
-            background: $secondary-transparent !important;
+            background: variables.$secondary-transparent !important;
             width: 20px;
             height: 20px;
-            font-size: $font-size-12;
-            @include rounded(50%);
-            color: $gray-900;
+            font-size: variables.$font-size-12;
+            @include mixins.rounded(50%);
+            color: variables.$gray-900;
             &:hover {
-                background: $teal;
-                color: $white;
+                background: variables.$teal;
+                color: variables.$white;
                 i {
-                    color: $white;
+                    color: variables.$white;
                 }
             }
         }
@@ -1315,15 +1318,15 @@ label span {
         }
     }
     aside {
-        @include respond-above(lg) {
+        @include mixins.respond-above(lg) {
             height: calc(100vh - 132px);
         }
         .card {
             margin-bottom: 20px;
         }
         .order-head {
-            border-bottom: 1px dashed $border-color;
-            @include rounded(0);
+            border-bottom: 1px dashed variables.$border-color;
+            @include mixins.rounded(0);
             padding: 0 0 20px;
         }
         .payment-item {
@@ -1343,19 +1346,19 @@ label span {
         .product-list {
             display: block;
             .delete-icon {
-                color: $gray-500;
+                color: variables.$gray-500;
                 margin-right: 10px;
                 &:hover {
-                    color: $danger;
+                    color: variables.$danger;
                     i {
-                        color: $danger;
+                        color: variables.$danger;
                     }
                 }
             }
             .qty-item {
                 .inc, .dec {
                     &:hover {
-                        color: $white;
+                        color: variables.$white;
                     }
                 }
                 .inc {
@@ -1390,9 +1393,9 @@ label span {
 .tab-wrap {
     width: 142px;
     padding: 24px;
-    border-right: 1px solid $border-color;
+    border-right: 1px solid variables.$border-color;
     flex-shrink: 0;
-    @include respond-below(sm) {
+    @include mixins.respond-below(sm) {
         width: 100%;
         padding-bottom: 0;
     }
@@ -1401,7 +1404,7 @@ label span {
     height: 400px; 
     overflow-y: scroll;
     overflow-x: hidden; 
-    @include respond-below(sm) {
+    @include mixins.respond-below(sm) {
         height: auto;
     }
     .owl-stage {
@@ -1409,7 +1412,7 @@ label span {
         flex-direction: column; 
         height: auto;
         width: 100% !important;
-        @include respond-below(sm) {
+        @include mixins.respond-below(sm) {
             height: auto;
             width: auto !important;
             flex-direction: unset;
@@ -1420,7 +1423,7 @@ label span {
     .owl-item {
         width: 100% !important;
         margin-bottom: 8px;
-        @include respond-below(sm) {
+        @include mixins.respond-below(sm) {
             width: 32% !important;
             margin-bottom: 0;
         }
@@ -1429,7 +1432,7 @@ label span {
         }
         li {
             padding: 15px;
-            background-color: $white;
+            background-color: variables.$white;
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
@@ -1443,26 +1446,26 @@ label span {
             flex-wrap: wrap;
             text-align: center;
             cursor: pointer;
-            border: 1px solid $border-color;
-            box-shadow: $box-shadow;
-            @include transition(all 0.5s ease);
-            @include rounded(8px);
+            border: 1px solid variables.$border-color;
+            box-shadow: variables.$box-shadow;
+            @include mixins.transition(all 0.5s ease);
+            @include mixins.rounded(8px);
             margin-left: -0.1px!important;
-            @include respond-below(sm) {
+            @include mixins.respond-below(sm) {
                 padding: 10px;
             }
         }
         a {
             img {
-                @include transition(all 0.5s ease);
+                @include mixins.transition(all 0.5s ease);
                 width: 24px;
                 height: 24px;
                 margin: 0 auto;
             }
         }
         h6 {
-            font-size: $font-size-13;
-            font-weight: $font-weight-medium;
+            font-size: variables.$font-size-13;
+            font-weight: variables.$font-weight-medium;
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
@@ -1470,24 +1473,24 @@ label span {
             width: 100%;
             margin-bottom: 5px;
             a {
-                color: $secondary;
+                color: variables.$secondary;
             }
         }
         &:hover, &.active {
-            border-color: $primary;   
+            border-color: variables.$primary;   
         }
     }
 }
 .resend-form {
-    border: 1px solid $border-color;
-    @include rounded(5px);
+    border: 1px solid variables.$border-color;
+    @include mixins.rounded(5px);
     padding-right: 98px;
     position: relative;
     .btn {
         position: absolute;
         top: 50%;
         right: 12px;
-        @include transform(translateY(-50%));
+        @include mixins.transform(translateY(-50%));
     }
     .form-control {
         border: 0;
@@ -1495,35 +1498,35 @@ label span {
 }
 .calculator-wrap {
     .calculator-body {
-        background: $light;
+        background: variables.$light;
         padding: 40px;
         border-radius: 0 0 8px 8px;
-        @include respond-below(md) {
+        @include mixins.respond-below(md) {
             padding: 20px;
         }
         button {
-            font-size: $font-size-28;
-            font-weight: $font-weight-bold;
+            font-size: variables.$font-size-28;
+            font-weight: variables.$font-weight-bold;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 8px;
             &:hover {
-                box-shadow: $box-shadow;
+                box-shadow: variables.$box-shadow;
             }
             &:last-child {
                 margin-bottom: 0;
             }
-            @include respond-below(md) {
-                font-size: $font-size-22;
+            @include mixins.respond-below(md) {
+                font-size: variables.$font-size-22;
             }
         }
         .btn-number {
             width: 65px;
             height: 65px;
-            background: $white;
-            @include rounded(50%);
-            @include respond-below(md) {
+            background: variables.$white;
+            @include mixins.rounded(50%);
+            @include mixins.respond-below(md) {
                 width: 38px;
                 height: 38px;
             }
@@ -1531,9 +1534,9 @@ label span {
         .btn-expression {
             width: 65px;
             height: 65px;
-            background: $gray-100;
-            @include rounded(50%);
-            @include respond-below(md) {
+            background: variables.$gray-100;
+            @include mixins.rounded(50%);
+            @include mixins.respond-below(md) {
                 width: 38px;
                 height: 38px;
             }
@@ -1541,10 +1544,10 @@ label span {
         .btn-clear {
             width: 65px;
             height: 65px;
-            background: $primary;
-            @include rounded(50%);
-            color: $white;
-            @include respond-below(md) {
+            background: variables.$primary;
+            @include mixins.rounded(50%);
+            color: variables.$white;
+            @include mixins.respond-below(md) {
                 width: 38px;
                 height: 38px;
             }
@@ -1553,12 +1556,12 @@ label span {
     input {
         height: 100px;
         text-align: right;
-        font-size: $font-size-40;
-        font-weight: $font-weight-bold;
-        color: $gray-900;
+        font-size: variables.$font-size-40;
+        font-weight: variables.$font-weight-bold;
+        color: variables.$gray-900;
         width: 100%;
-        background: $light-200;
-        border: 1px solid $border-color;
+        background: variables.$light-200;
+        border: 1px solid variables.$border-color;
         margin-top: 16px;
         padding: 10px;
     }
@@ -1569,12 +1572,12 @@ label span {
     left: 0;
     width: 100%;
     z-index: 9;
-    @include respond-below(lg) {
+    @include mixins.respond-below(lg) {
         position: relative;
     }
 }
 .pos-page {
-    @include respond-above(lg) {
+    @include mixins.respond-above(lg) {
         overflow-y: hidden;
     }
 }

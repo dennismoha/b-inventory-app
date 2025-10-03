@@ -1,8 +1,10 @@
+@use "../utils/variables";
+
 .ribbon1 {
   position: absolute;
   inset-block-start: -6.1px;
   inset-inline-end: 10px;
-  color: $white;
+  color: variables.$white;
   z-index: 1;
   &:after {
     position: absolute;
@@ -11,14 +13,14 @@
     height: 0;
     border-inline-start: 20px solid transparent;
     border-inline-end: 24px solid transparent;
-    border-block-start: 13px solid $danger;
+    border-block-start: 13px solid variables.$danger;
   }
   span {
     position: relative;
     display: block;
     text-align: center;
-    background: $danger;
-    font-size: $font-size-14;
+    background: variables.$danger;
+    font-size: variables.$font-size-14;
     line-height: 1;
     padding: 12px 8px 10px;
     border-start-end-radius: 8px;
@@ -32,7 +34,7 @@
       width: 6px;
       inset-inline-start: -6px;
       inset-block-start: 0;
-      background: $danger;
+      background: variables.$danger;
     }
     &:after {
       height: 6px;
@@ -40,7 +42,7 @@
       inset-inline-start: -8px;
       inset-block-start: 0;
       border-radius: 8px 8px 0 0;
-      background: $danger;
+      background: variables.$danger;
     }
   }
 }
@@ -49,7 +51,7 @@
   position: relative;
   background-size: cover;
   text-transform: uppercase;
-  color: $white;
+  color: variables.$white;
   width: 150px;
   height: 150px;
   overflow: hidden;
@@ -75,7 +77,7 @@
     width: 225px;
     padding: 3px 0;
     box-shadow: 0 5px 10px rgba(0,0,0, 0.1);
-    color: $white;
+    color: variables.$white;
     text-shadow: 0 1px 1px rgba(0,0,0, 0.1);
     text-transform: capitalize;
     text-align: center;
@@ -94,14 +96,14 @@
     height: 0;
     border-inline-start: 20px solid transparent;
     border-inline-end: 24px solid transparent;
-    border-block-start: 13px solid $danger;
+    border-block-start: 13px solid variables.$danger;
   }
   span {
     position: relative;
     display: block;
     text-align: center;
-    background: $danger;
-    font-size: $font-size-14;
+    background: variables.$danger;
+    font-size: variables.$font-size-14;
     line-height: 1;
     padding: 12px 8px 10px;
     border-start-end-radius: 8px;
@@ -113,7 +115,7 @@
       inset-inline-start: -8px;
       inset-block-start: 0;
       border-radius: 8px 8px 0 0;
-      background: $danger;
+      background: variables.$danger;
     }
     &:before {
       position: absolute;
@@ -122,12 +124,12 @@
       width: 6px;
       inset-inline-start: -6px;
       inset-block-start: 0;
-      background: $danger;
+      background: variables.$danger;
     }
   }
 }
 .arrow-ribbone-left {
-  color: $white;
+  color: variables.$white;
   padding: 2px 8px;
   position: absolute;
   inset-block-start: 10px;
@@ -144,7 +146,7 @@
     content: "";
     inset-inline-end: -12px;
     border-block-start: 12px solid transparent;
-    border-inline-start: 12px solid $purple;
+    border-inline-start: 12px solid variables.$purple;
     border-block-end: 11px solid transparent;
     width: 0;
   }
@@ -158,7 +160,7 @@
     content: "";
     inset-inline-end: -12px;
     border-block-start: 112px solid transparent;
-    border-inline-start: 12px solid $danger;
+    border-inline-start: 12px solid variables.$danger;
     border-block-end: 11px solid transparent;
     width: 0;
   }
@@ -185,7 +187,7 @@
     content: "";
     inset-inline-end: -12px;
     border-block-start: 12px solid transparent;
-    border-inline-start: 12px solid $secondary;
+    border-inline-start: 12px solid variables.$secondary;
     border-block-end: 11px solid transparent;
     width: 0;
   }
@@ -199,7 +201,7 @@
     content: "";
     inset-inline-end: -12px;
     border-block-start: 12px solid transparent;
-    border-inline-start: 12px solid $primary;
+    border-inline-start: 12px solid variables.$primary;
     border-block-end: 11px solid transparent;
     width: 0;
   }
@@ -213,7 +215,7 @@
     content: "";
     inset-inline-end: -12px;
     border-block-start: 12px solid transparent;
-    border-inline-start: 12px solid $info;
+    border-inline-start: 12px solid variables.$info;
     border-block-end: 11px solid transparent;
     width: 0;
   }
@@ -227,7 +229,7 @@
     content: "";
     inset-inline-end: -12px;
     border-block-start: 12px solid transparent;
-    border-inline-start: 12px solid $warning;
+    border-inline-start: 12px solid variables.$warning;
     border-block-end: 11px solid transparent;
     width: 0;
   }
@@ -241,7 +243,7 @@
     content: "";
     inset-inline-end: -12px;
     border-block-start: 12px solid transparent;
-    border-inline-start: 12px solid $pink;
+    border-inline-start: 12px solid variables.$pink;
     border-block-end: 11px solid transparent;
     width: 0;
   }
@@ -255,13 +257,13 @@
     content: "";
     inset-inline-start: -12px;
     border-block-start: 12px solid transparent;
-    border-inline-end: 12px solid $teal;
+    border-inline-end: 12px solid variables.$teal;
     border-block-end: 11px solid transparent;
     width: 0;
   }
 }
 .arrow-ribbone-right {
-  color: $white;
+  color: variables.$white;
   padding: 2px 8px;
   position: absolute;
   inset-block-start: 10px;
@@ -278,7 +280,7 @@
     content: "";
     inset-inline-start: -12px;
     border-block-start: 12px solid transparent;
-    border-inline-end: 12px solid $purple;
+    border-inline-end: 12px solid variables.$purple;
     border-block-end: 11px solid transparent;
     width: 0;
   }
@@ -292,7 +294,7 @@
     content: "";
     inset-inline-start: -12px;
     border-block-start: 12px solid transparent;
-    border-inline-end: 12px solid $danger;
+    border-inline-end: 12px solid variables.$danger;
     border-block-end: 11px solid transparent;
     width: 0;
   }
@@ -319,7 +321,7 @@
     content: "";
     inset-inline-start: -12px;
     border-block-start: 12px solid transparent;
-    border-inline-end: 12px solid $secondary;
+    border-inline-end: 12px solid variables.$secondary;
     border-block-end: 11px solid transparent;
     width: 0;
   }
@@ -333,7 +335,7 @@
     content: "";
     inset-inline-start: -12px;
     border-block-start: 12px solid transparent;
-    border-inline-end: 12px solid $primary;
+    border-inline-end: 12px solid variables.$primary;
     border-block-end: 11px solid transparent;
     width: 0;
   }
@@ -347,7 +349,7 @@
     content: "";
     inset-inline-start: -12px;
     border-block-start: 12px solid transparent;
-    border-inline-end: 12px solid $info;
+    border-inline-end: 12px solid variables.$info;
     border-block-end: 11px solid transparent;
     width: 0;
   }
@@ -361,7 +363,7 @@
     content: "";
     inset-inline-start: -12px;
     border-block-start: 12px solid transparent;
-    border-inline-end: 12px solid $warning;
+    border-inline-end: 12px solid variables.$warning;
     border-block-end: 11px solid transparent;
     width: 0;
   }
@@ -375,7 +377,7 @@
     content: "";
     inset-inline-start: -12px;
     border-block-start: 12px solid transparent;
-    border-inline-end: 12px solid $pink;
+    border-inline-end: 12px solid variables.$pink;
     border-block-end: 11px solid transparent;
     width: 0;
   }
@@ -389,19 +391,19 @@
     content: "";
     inset-inline-start: -12px;
     border-block-start: 12px solid transparent;
-    border-inline-end: 12px solid $teal;
+    border-inline-end: 12px solid variables.$teal;
     border-block-end: 11px solid transparent;
     width: 0;
   }
 }
 .arrow-ribbone2 {
-  color: $white;
+  color: variables.$white;
   padding: 3px 8px;
   position: absolute;
   inset-block-start: 10px;
   inset-inline-start: -1px;
   z-index: 6;
-  font-size: $font-size-30;
+  font-size: variables.$font-size-30;
   &:before {
     position: absolute;
     inset-inline-end: 0;
@@ -425,7 +427,7 @@
     display: block;
     width: 82px;
     padding: 8px 0;
-    color: $white;
+    color: variables.$white;
     font: 500 16px/1 Lato, sans-serif;
     text-shadow: 0 1px 1px rgba(0,0,0, 0.1);
     text-transform: capitalize;
@@ -534,7 +536,7 @@
   position: absolute;
   inset-block-start: -8px;
   inset-inline-end: 10px;
-  color: $white;
+  color: variables.$white;
   &:after {
     position: absolute;
     content: "";
@@ -542,14 +544,14 @@
     height: 0;
     border-inline-start: 17px solid transparent;
     border-inline-end: 17px solid transparent;
-    border-block-start: 10px solid $warning;
+    border-block-start: 10px solid variables.$warning;
     z-index: 6;
   }
   span {
     position: relative;
     display: block;
     text-align: center;
-    background: $warning;
+    background: variables.$warning;
     font-size: 13px;
     line-height: 1;
     padding: 10px 2px 5px;
@@ -559,7 +561,7 @@
       position: absolute;
       content: "";
       inset-inline-end: -6px;
-      background: $warning;
+      background: variables.$warning;
       height: 6px;
       width: 10px;
       inset-inline-start: -9px;
@@ -576,12 +578,12 @@
       width: 10px;
       inset-inline-start: -9px;
       inset-block-start: 3px;
-      background: $warning;
+      background: variables.$warning;
     }
   }
   i {
-    color: $white;
-    font-size: $font-size-16;
+    color: variables.$white;
+    font-size: variables.$font-size-16;
     padding-inline-start: 7px;
     padding-inline-end: 7px;
   }
@@ -590,7 +592,7 @@
   position: absolute;
   inset-block-start: -8px;
   inset-inline-end: 10px;
-  color: $white;
+  color: variables.$white;
   &:after {
     position: absolute;
     content: "";
@@ -598,14 +600,14 @@
     height: 0;
     border-inline-start: 17px solid transparent;
     border-inline-end: 17px solid transparent;
-    border-block-start: 10px solid $danger;
+    border-block-start: 10px solid variables.$danger;
     z-index: 6;
   }
   span {
     position: relative;
     display: block;
     text-align: center;
-    background: $danger;
+    background: variables.$danger;
     font-size: 13px;
     line-height: 1;
     padding: 10px 2px 5px;
@@ -615,7 +617,7 @@
       position: absolute;
       content: "";
       inset-inline-end: -6px;
-      background: $danger;
+      background: variables.$danger;
       height: 6px;
       width: 10px;
       inset-inline-start: -9px;
@@ -632,12 +634,12 @@
       width: 10px;
       inset-inline-start: -9px;
       inset-block-start: 3px;
-      background: $danger;
+      background: variables.$danger;
     }
   }
   i {
-    color: $white;
-    font-size: $font-size-16;
+    color: variables.$white;
+    font-size: variables.$font-size-16;
     padding-inline-start: 7px;
     padding-inline-end: 7px;
   }
@@ -646,7 +648,7 @@
   position: absolute;
   inset-block-start: -8px;
   inset-inline-start: 10px;
-  color: $white;
+  color: variables.$white;
   &:after {
     position: absolute;
     content: "";
@@ -654,14 +656,14 @@
     height: 0;
     border-inline-start: 17px solid transparent;
     border-inline-end: 17px solid transparent;
-    border-block-start: 10px solid $success;
+    border-block-start: 10px solid variables.$success;
     z-index: 6;
   }
   span {
     position: relative;
     display: block;
     text-align: center;
-    background: $success;
+    background: variables.$success;
     font-size: 13px;
     line-height: 1;
     padding: 10px 2px 5px;
@@ -671,7 +673,7 @@
       position: absolute;
       content: "";
       inset-inline-end: -6px;
-      background: $success;
+      background: variables.$success;
       height: 6px;
       width: 10px;
       inset-inline-end: -9px;
@@ -688,12 +690,12 @@
       width: 10px;
       inset-inline-end: -9px;
       inset-block-start: 3px;
-      background: $success;
+      background: variables.$success;
     }
   }
   i {
-    color: $white;
-    font-size: $font-size-16;
+    color: variables.$white;
+    font-size: variables.$font-size-16;
     padding-inline-start: 7px;
     padding-inline-end: 7px;
   }
@@ -702,7 +704,7 @@
   position: absolute;
   inset-block-start: -8px;
   inset-inline-start: 10px;
-  color: $white;
+  color: variables.$white;
   &:after {
     position: absolute;
     content: "";
@@ -710,14 +712,14 @@
     height: 0;
     border-inline-start: 17px solid transparent;
     border-inline-end: 17px solid transparent;
-    border-block-start: 10px solid $info;
+    border-block-start: 10px solid variables.$info;
     z-index: 6;
   }
   span {
     position: relative;
     display: block;
     text-align: center;
-    background: $info;
+    background: variables.$info;
     font-size: 13px;
     line-height: 1;
     padding: 10px 2px 5px;
@@ -727,7 +729,7 @@
       position: absolute;
       content: "";
       inset-inline-end: -6px;
-      background: $info;
+      background: variables.$info;
       height: 6px;
       width: 10px;
       inset-inline-end: -9px;
@@ -744,12 +746,12 @@
       width: 10px;
       inset-inline-end: -9px;
       inset-block-start: 3px;
-      background: $info;
+      background: variables.$info;
     }
   }
   i {
-    color: $white;
-    font-size: $font-size-16;
+    color: variables.$white;
+    font-size: variables.$font-size-16;
     padding-inline-start: 7px;
     padding-inline-end: 7px;
   }
@@ -757,7 +759,7 @@
 .bookmark-ribbone-success-left {
   position: absolute;
   inset-inline-start: 10px;
-  color: $white;
+  color: variables.$white;
   &:after {
     position: absolute;
     content: "";
@@ -765,23 +767,23 @@
     height: 0;
     z-index: 6;
     inset-inline-start: 0;
-    border-inline-start: 18px solid $success;
-    border-inline-end: 18px solid $success;
+    border-inline-start: 18px solid variables.$success;
+    border-inline-end: 18px solid variables.$success;
     border-block-end: 10px solid transparent;
   }
   span {
     position: relative;
     display: block;
     text-align: center;
-    background: $success;
+    background: variables.$success;
     font-size: 13px;
     line-height: 1;
     padding: 12px 3px 20px;
     z-index: 6;
   }
   i {
-    color: $white;
-    font-size: $font-size-16;
+    color: variables.$white;
+    font-size: variables.$font-size-16;
     padding-inline-start: 7px;
     padding-inline-end: 7px;
   }
@@ -789,7 +791,7 @@
 .bookmark-ribbone-danger-left {
   position: absolute;
   inset-inline-start: 10px;
-  color: $white;
+  color: variables.$white;
   width: 30px;
   &:after {
     position: absolute;
@@ -798,23 +800,23 @@
     height: 0;
     z-index: 6;
     inset-inline-start: 0;
-    border-inline-start: 15px solid $danger;
-    border-inline-end: 15px solid $danger;
+    border-inline-start: 15px solid variables.$danger;
+    border-inline-end: 15px solid variables.$danger;
     border-block-end: 8px solid transparent;
   }
   span {
     position: relative;
     display: block;
     text-align: center;
-    background: $danger;
+    background: variables.$danger;
     font-size: 12px;
     line-height: 1;
     padding: 12px 0px;
     z-index: 6;
   }
   i {
-    color: $white;
-    font-size: $font-size-16;
+    color: variables.$white;
+    font-size: variables.$font-size-16;
     padding-inline-start: 7px;
     padding-inline-end: 7px;
   }
@@ -822,7 +824,7 @@
 .bookmark-ribbone-secondary-right {
   position: absolute;
   inset-inline-end: 10px;
-  color: $white;
+  color: variables.$white;
   width: 30px;
   &:after {
     position: absolute;
@@ -831,23 +833,23 @@
     height: 0;
     z-index: 6;
     inset-inline-end: 0;
-    border-inline-start: 15px solid $secondary;
-    border-inline-end: 15px solid $secondary;
+    border-inline-start: 15px solid variables.$secondary;
+    border-inline-end: 15px solid variables.$secondary;
     border-block-end: 8px solid transparent;
   }
   span {
     position: relative;
     display: block;
     text-align: center;
-    background: $secondary;
+    background: variables.$secondary;
     font-size: 11px;
     line-height: 1;
     padding: 12px 0px;
     z-index: 6;
   }
   i {
-    color: $white;
-    font-size: $font-size-16;
+    color: variables.$white;
+    font-size: variables.$font-size-16;
     padding-inline-start: 7px;
     padding-inline-end: 7px;
   }
@@ -855,7 +857,7 @@
 .bookmark-sideleft-ribbone-success-left {
   position: absolute;
   inset-block-start: 10px;
-  color: $white;
+  color: variables.$white;
   &:after {
     position: absolute;
     content: "";
@@ -864,23 +866,23 @@
     z-index: 6;
     inset-block-start: 0;
     inset-inline-end: -8px;
-    border-block-start: 13px solid $success;
-    border-block-end: 13px solid $success;
+    border-block-start: 13px solid variables.$success;
+    border-block-end: 13px solid variables.$success;
     border-inline-end: 8px solid transparent;
   }
   span {
     position: relative;
     display: block;
     text-align: center;
-    background: $success;
+    background: variables.$success;
     font-size: 11px;
     padding: 5px 13px;
     z-index: 6;
     height: 26px;
   }
   i {
-    color: $white;
-    font-size: $font-size-16;
+    color: variables.$white;
+    font-size: variables.$font-size-16;
     padding-inline-start: 7px;
     padding-inline-end: 7px;
   }
@@ -889,7 +891,7 @@
   position: absolute;
   inset-block-start: 10px;
   inset-inline-end: 0;
-  color: $white;
+  color: variables.$white;
   &:after {
     position: absolute;
     content: "";
@@ -898,23 +900,23 @@
     z-index: 6;
     inset-block-start: 0;
     inset-inline-start: -8px;
-    border-block-start: 13px solid $primary;
-    border-block-end: 13px solid $primary;
+    border-block-start: 13px solid variables.$primary;
+    border-block-end: 13px solid variables.$primary;
     border-inline-start: 8px solid transparent;
   }
   span {
     position: relative;
     display: block;
     text-align: center;
-    background: $primary;
+    background: variables.$primary;
     font-size: 11px;
     padding: 5px 13px;
     z-index: 6;
     height: 26px;
   }
   i {
-    color: $white;
-    font-size: $font-size-16;
+    color: variables.$white;
+    font-size: variables.$font-size-16;
     padding-inline-start: 7px;
     padding-inline-end: 7px;
   }
@@ -928,11 +930,11 @@
   }
 }
 .arrow-ribbone-2 {
-  color: $white;
+  color: variables.$white;
   padding: 3px 8px;
   position: absolute;
   z-index: 6;
-  font-size: $font-size-20;
+  font-size: variables.$font-size-20;
   &:before {
     position: absolute;
     inset-inline-end: 0;
@@ -941,7 +943,7 @@
     content: "";
     inset-inline-end: -24px;
     border-block-start: 16px solid transparent;
-    border-inline-start: 24px solid $purple;
+    border-inline-start: 24px solid variables.$purple;
     border-block-end: 16px solid transparent;
     width: 0;
   }
@@ -951,13 +953,13 @@
 }
 .fullwidth-primary-ribbons {
   .bar {
-    color: $white;
-    background-color: $primary;
+    color: variables.$white;
+    background-color: variables.$primary;
     padding: 5px;
     text-align: center;
     position: relative;
     border: 2px transparent solid;
-    box-shadow: 0 10px 30px -10px $light;
+    box-shadow: 0 10px 30px -10px variables.$light;
     span {
       position: absolute;
       &:nth-child(1) {
@@ -981,10 +983,10 @@
         border-style: solid;
         border-width: 18px;
         z-index: -2;
-        border-color: $primary $primary $primary transparent;
-        border-block-start-color: $primary;
-        border-inline-end-color: $primary;
-        border-block-end-color: $primary;
+        border-color: variables.$primary variables.$primary variables.$primary transparent;
+        border-block-start-color: variables.$primary;
+        border-inline-end-color: variables.$primary;
+        border-block-end-color: variables.$primary;
         border-inline-start-color: transparent;
         inset-inline-start: -30px;
       }
@@ -993,10 +995,10 @@
         border-style: solid;
         border-width: 18px;
         z-index: -2;
-        border-block-start-color: $primary;
+        border-block-start-color: variables.$primary;
         border-inline-end-color: transparent;
-        border-block-end-color: $primary;
-        border-inline-start-color: $primary;
+        border-block-end-color: variables.$primary;
+        border-inline-start-color: variables.$primary;
         inset-inline-end: -30px;
       }
     }
@@ -1004,13 +1006,13 @@
 }
 .fullwidth-secondary-ribbons {
   .bar {
-    color: $white;
-    background-color: $secondary;
+    color: variables.$white;
+    background-color: variables.$secondary;
     padding: 5px;
     text-align: center;
     position: relative;
     border: 2px transparent solid;
-    box-shadow: 0 10px 30px -10px $light;
+    box-shadow: 0 10px 30px -10px variables.$light;
     span {
       position: absolute;
       &:nth-child(1) {
@@ -1034,9 +1036,9 @@
         border-style: solid;
         border-width: 18px;
         z-index: -2;
-        border-block-start-color: $secondary;
-        border-inline-end-color: $secondary;
-        border-block-end-color: $secondary;
+        border-block-start-color: variables.$secondary;
+        border-inline-end-color: variables.$secondary;
+        border-block-end-color: variables.$secondary;
         border-inline-start-color: transparent;
         inset-inline-start: -30px;
       }
@@ -1045,10 +1047,10 @@
         border-style: solid;
         border-width: 18px;
         z-index: -2;
-        border-block-start-color: $secondary;
+        border-block-start-color: variables.$secondary;
         border-inline-end-color: transparent;
-        border-block-end-color: $secondary;
-        border-inline-start-color: $secondary;
+        border-block-end-color: variables.$secondary;
+        border-inline-start-color: variables.$secondary;
         inset-inline-end: -30px;
       }
     }
@@ -1056,13 +1058,13 @@
 }
 .fullwidth-arrow-warning-ribbons {
   .bar {
-    color: $white;
-    background-color: $warning;
+    color: variables.$white;
+    background-color: variables.$warning;
     padding: 5px;
     text-align: center;
     position: relative;
     border: 2px transparent solid;
-    box-shadow: 0 10px 30px -10px $light;
+    box-shadow: 0 10px 30px -10px variables.$light;
     span {
       position: absolute;
       &:nth-child(1) {
@@ -1086,9 +1088,9 @@
         border-style: solid;
         border-width: 18px;
         z-index: -2;
-        border-block-start-color: $warning;
-        border-inline-end-color: $warning;
-        border-block-end-color: $warning;
+        border-block-start-color: variables.$warning;
+        border-inline-end-color: variables.$warning;
+        border-block-end-color: variables.$warning;
         border-inline-start-color: transparent;
         inset-inline-start: -30px;
       }
@@ -1098,7 +1100,7 @@
         border-width: 18px;
         z-index: -2;
         border-block-start: 18px solid transparent;
-        border-inline-start: 18px solid $warning;
+        border-inline-start: 18px solid variables.$warning;
         border-block-end: 18px solid transparent;
         border-inline-end: transparent;
         inset-inline-end: -20px;
@@ -1109,13 +1111,13 @@
 }
 .fullwidth-arrow-danger-ribbons-right {
   .bar {
-    color: $white;
-    background-color: $danger;
+    color: variables.$white;
+    background-color: variables.$danger;
     padding: 5px;
     text-align: center;
     position: relative;
     border: 2px transparent solid;
-    box-shadow: 0 10px 30px -10px $light;
+    box-shadow: 0 10px 30px -10px variables.$light;
     span {
       position: absolute;
       &:nth-child(1) {
@@ -1139,10 +1141,10 @@
         border-style: solid;
         border-width: 18px;
         z-index: -2;
-        border-block-start-color: $danger;
+        border-block-start-color: variables.$danger;
         border-inline-end-color: transparent;
-        border-block-end-color: $danger;
-        border-inline-start-color: $danger;
+        border-block-end-color: variables.$danger;
+        border-inline-start-color: variables.$danger;
         inset-inline-end: -30px;
       }
       &:nth-child(4) {
@@ -1151,7 +1153,7 @@
         border-width: 18px;
         z-index: -2;
         border-block-start: 18px solid transparent;
-        border-inline-end: 18px solid $danger;
+        border-inline-end: 18px solid variables.$danger;
         border-block-end: 18px solid transparent;
         border-inline-start: transparent;
         inset-inline-start: -20px;
@@ -1199,14 +1201,14 @@ svg {
 }
 .btn-icon {
   &.btn-danger-light {
-    color: $danger-900;
-    background: $danger-100;
+    color: variables.$danger-900;
+    background: variables.$danger-100;
   }
 }
 .live-rating {
   &.badge {
-    background: $success-200;
-    color: $success-900;
+    background: variables.$success-200;
+    color: variables.$success-900;
   }
 }
 @media (min-width: 576px) {

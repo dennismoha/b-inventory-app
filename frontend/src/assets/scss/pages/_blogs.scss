@@ -1,12 +1,14 @@
+@use "../utils/variables";
+
 .trend-tag {
     position: absolute;
     left: 20px;
     top: 20px;
-    background: $light-200;
+    background: variables.$light-200;
     display: inline-flex;
     padding: 4px 8px;
     border-radius: 5px;
-    font-size: $font-size-12;
+    font-size: variables.$font-size-12;
 }
 
 .dot-icon{
@@ -19,6 +21,6 @@
 .bootstrap-tagsinput {
     .label-info {
         position: relative;
-        background: $dark-transparent;
+        background: variables.$dark-transparent;
     }
 }

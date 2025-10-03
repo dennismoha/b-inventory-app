@@ -1,15 +1,18 @@
+@use "../utils/mixins";
+@use "../utils/variables";
+
 body {
-	font-family: $font-family-primary;
-	font-size: $font-size-14;
-	color: $text-color;
+	font-family: variables.$font-family-primary;
+	font-size: variables.$font-size-14;
+	color: variables.$text-color;
 	line-height: 1.5;
-	background-color: $light-500;
+	background-color: variables.$light-500;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
 ::selection {
-  background: $primary;
-  color: $white;
+  background: variables.$primary;
+  color: variables.$white;
   text-shadow: none;
 }
 img {
@@ -21,19 +24,19 @@ img {
 	outline: none;
 }
 button {
-	@include transition(all 0.5s ease);
+	@include mixins.transition(all 0.5s ease);
 	&:focus {
 		box-shadow: none !important;
 	}
 }
 a {
-	color: $primary;
+	color: variables.$primary;
 	cursor: pointer;
 	text-decoration: none;
-	@include transition(all 0.5s ease);
+	@include mixins.transition(all 0.5s ease);
 	&:hover {
-		color: $primary-hover;
-		@include transition(all 0.5s ease);
+		color: variables.$primary-hover;
+		@include mixins.transition(all 0.5s ease);
 	}
 	&:focus {
 		outline: 0;
@@ -46,12 +49,12 @@ p {
 	}
 }
 strong {
-	font-weight: $font-weight-bold;
+	font-weight: variables.$font-weight-bold;
 }
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
-  	color: $title-color;
-  	font-family: $font-family-primary;
-	font-weight: $font-weight-bold;
+  	color: variables.$title-color;
+  	font-family: variables.$font-family-primary;
+	font-weight: variables.$font-weight-bold;
   	margin-bottom: 0;
 }
 ol, ul {
@@ -96,7 +99,7 @@ ul {
 	      
 	    }
 	    i {
-	      font-size: $font-size-20;
+	      font-size: variables.$font-size-20;
 	      top: 5px;
 	    }
 	  }

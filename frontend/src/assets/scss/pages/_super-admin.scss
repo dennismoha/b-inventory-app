@@ -1,10 +1,13 @@
+@use "../utils/mixins";
+@use "../utils/variables";
+
 .welcome-wrap {
     padding: 40px 40px 24px;
-    background: $primary;
-    @include rounded(5px);
+    background: variables.$primary;
+    @include mixins.rounded(5px);
     position: relative;
     z-index: 1;
-    @include respond-below(md) {
+    @include mixins.respond-below(md) {
         padding: 20px 20px 4px;
     }
     .welcome-bg-01 {
@@ -35,7 +38,7 @@
     .apexcharts-bar-series {
         .apexcharts-series path {
             &:hover {
-                fill: $primary;
+                fill: variables.$primary;
             }
         }
     }

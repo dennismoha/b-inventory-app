@@ -1,3 +1,7 @@
+@use "sass:color";
+@use "../utils/mixins";
+@use "../utils/variables";
+
 h1,
 h2,
 h3,
@@ -10,8 +14,8 @@ h6,
 .h4,
 .h5,
 .h6 {
-  color: $title-color;
-  font-family: $font-family-primary;
+  color: variables.$title-color;
+  font-family: variables.$font-family-primary;
   margin-bottom: 0;
 }
 h1,
@@ -40,16 +44,16 @@ h6,
   font-size: 0.875rem;
 }
 .display-1 {
-  font-size: $font-size-40;
-  font-weight: $font-weight-bold;
-  @include respond-below(xl) {
-    font-size: $font-size-38;
+  font-size: variables.$font-size-40;
+  font-weight: variables.$font-weight-bold;
+  @include mixins.respond-below(xl) {
+    font-size: variables.$font-size-38;
   }
-  @include respond-below(lg) {
-    font-size: $font-size-34;
+  @include mixins.respond-below(lg) {
+    font-size: variables.$font-size-34;
   }
-  @include respond-below(xl) {
-    font-size: $font-size-30;
+  @include mixins.respond-below(xl) {
+    font-size: variables.$font-size-30;
   }
 }
 .fs-sm {
@@ -170,234 +174,234 @@ h6,
 }
 
 .text-default {
-  color: $text-color !important;
+  color: variables.$text-color !important;
 }
 .text-muted {
-  color: $text-muted !important;
+  color: variables.$text-muted !important;
 }
 .text-primary {
-  color: $primary !important;
+  color: variables.$primary !important;
   opacity: 1;
   &.text-opacity-75 {
-    color: rgba($primary, 0.75) !important;
+    color: rgba(variables.$primary, 0.75) !important;
   }
   &.text-opacity-25 {
-    color: rgba($primary, 0.25) !important;
+    color: rgba(variables.$primary, 0.25) !important;
   }
   &.text-opacity-50 {
-    color: rgba($primary, 0.50) !important;
+    color: rgba(variables.$primary, 0.50) !important;
   }
 }
 .text-primary-300 {
-  color: $primary-300;
+  color: variables.$primary-300;
 }
 .text-secondary {
-  color: $secondary !important;
+  color: variables.$secondary !important;
   opacity: 1;
 }
 .text-info {
-  color: $info !important;
+  color: variables.$info !important;
   opacity: 1;
 }
 .text-success {
-  color: $success !important;
+  color: variables.$success !important;
   opacity: 1;
 }
 .text-warning {
-  color: $warning !important;
+  color: variables.$warning !important;
   opacity: 1;
 }
 .text-danger {
-  color: $danger !important;
+  color: variables.$danger !important;
   opacity: 1;
 }
 .text-blue {
-  color: $blue !important;
+  color: variables.$blue !important;
 }
 .text-green {
-  color: $green !important;
+  color: variables.$green !important;
 }
 .text-pink {
-  color: $pink !important;
+  color: variables.$pink !important;
 }
 .text-teal {
-  color: $teal !important;
+  color: variables.$teal !important;
 }
 .text-orange {
-  color: $orange !important;
+  color: variables.$orange !important;
 }
 .text-indigo {
-  color: $indigo !important;
+  color: variables.$indigo !important;
 }
 .text-purple {
-  color: $purple !important;
+  color: variables.$purple !important;
 }
 .text-dark {
-  color: $dark !important;
+  color: variables.$dark !important;
 }
 .text-light {
-  color: $light !important;
+  color: variables.$light !important;
 }
 .text-gray {
-  color: $gray-500 !important;
+  color: variables.$gray-500 !important;
 }
 .text-black {
-  color: $black !important;
+  color: variables.$black !important;
 }
 .text-white {
-  color: $white !important;
+  color: variables.$white !important;
 }
 .text-fixed-white {
-  color: $white !important;
+  color: variables.$white !important;
 }
 .text-fixed-black {
-  color: $black !important;
+  color: variables.$black !important;
 }
 .text-gray-1 {
-  color: $gray-100;
+  color: variables.$gray-100;
 }
 .text-gray-2 {
-  color: $gray-200;
+  color: variables.$gray-200;
 }
 .text-gray-3 {
-  color: $gray-300;
+  color: variables.$gray-300;
 }
 .text-gray-4 {
-  color: $gray-400;
+  color: variables.$gray-400;
 }
 .text-gray-5 {
-  color: $gray-500;
+  color: variables.$gray-500;
 }
 .text-gray-6 {
-  color: $gray-600 !important;
+  color: variables.$gray-600 !important;
 }
 .text-gray-7 {
-  color: $gray-700;
+  color: variables.$gray-700;
 }
 .text-gray-8 {
-  color: $gray-800;
+  color: variables.$gray-800;
 }
 .text-gray-9 {
-  color: $gray-900 !important;
+  color: variables.$gray-900 !important;
 }
 .text-cyan {
-  color: $cyan !important;
+  color: variables.$cyan !important;
 }
 
 a {
   text-decoration: none;
-  color: $gray-900;
+  color: variables.$gray-900;
 
   &:hover {
     --bs-text-opacity: 1;
     opacity: 1;
-    color: $primary;
+    color: variables.$primary;
   }
 }
 .link-default {
-  color: $text-color !important;
+  color: variables.$text-color !important;
   &:hover,
   &:focus,
   &:active {
-    color: $primary !important;
+    color: variables.$primary !important;
   }
 }
 .link-primary {
-  color: $primary !important;
+  color: variables.$primary !important;
   &:hover,
   &:focus,
   &:active {
-    color: $primary !important;
+    color: variables.$primary !important;
   }
 }
 .link-secondary {
-  color: $secondary !important;
+  color: variables.$secondary !important;
   &:hover,
   &:focus,
   &:active {
-    color: $secondary !important;
+    color: variables.$secondary !important;
   }
 }
 .link-success {
-  color: $success !important;
+  color: variables.$success !important;
   &:hover,
   &:focus,
   &:active {
-    color: $success !important;
+    color: variables.$success !important;
   }
 }
 .link-danger {
-  color: $danger !important;
+  color: variables.$danger !important;
   &:hover,
   &:focus,
   &:active {
-    color: $danger !important;
+    color: variables.$danger !important;
   }
 }
 .link-warning {
-  color: $warning !important;
+  color: variables.$warning !important;
   &:hover,
   &:focus,
   &:active {
-    color: $warning !important;
+    color: variables.$warning !important;
   }
 }
 .link-info {
-  color: $info !important;
+  color: variables.$info !important;
   &:hover,
   &:focus,
   &:active {
-    color: $info !important;
+    color: variables.$info !important;
   }
 }
 .link-light {
-  color: $light !important;
+  color: variables.$light !important;
   &:hover,
   &:focus,
   &:active {
-    color: $light !important;
+    color: variables.$light !important;
   }
 }
 .link-dark {
-  color: $dark !important;
+  color: variables.$dark !important;
   &:hover,
   &:focus,
   &:active {
-    color: $dark !important;
+    color: variables.$dark !important;
   }
 }
 .link-orange {
-  color: $orange !important;
+  color: variables.$orange !important;
   &:hover,
   &:focus,
   &:active {
-    color: darken($orange, 3%) !important;
+    color: color.adjust(variables.$orange, $lightness: -3%) !important;
   }
 }
 hr {
   &.text-danger {
-    border-color: $danger !important;
+    border-color: variables.$danger !important;
   }
 }
 
 .blockquote-container {
   padding: 1.25rem;
-  border-left: 4px solid $default-border;
+  border-left: 4px solid variables.$default-border;
   position: relative;
   &.text-end {
-    border-right: 4px solid $default-border;
+    border-right: 4px solid variables.$default-border;
     border-left: 0;
   }
 }
 .blockquote.custom-blockquote {
   font-size: 0.85rem;
-  font-weight: $font-weight-semibold;
+  font-weight: variables.$font-weight-semibold;
   padding: 1rem;
-  border-radius: $border-radius;
+  border-radius: variables.$border-radius;
   position: relative;
   &:before {
     content: "\f10d";
-    font-family: $font-awesome;
+    font-family: variables.$font-awesome;
     z-index: 0;
     font-size: 2rem;
     position: absolute;
@@ -405,45 +409,45 @@ hr {
     inset-inline-start: 0.5rem;
   }
   &.primary {
-    background-color: rgba($primary, 0.1);
-    border-inline-start: 2px solid $primary;
+    background-color: rgba(variables.$primary, 0.1);
+    border-inline-start: 2px solid variables.$primary;
     &:before {
-      color: rgba($primary, 0.1);
+      color: rgba(variables.$primary, 0.1);
     }
   }
   &.secondary {
-    background-color: rgba($secondary, 0.1);
-    border-inline-start: 2px solid $secondary;
+    background-color: rgba(variables.$secondary, 0.1);
+    border-inline-start: 2px solid variables.$secondary;
     &:before {
-      color: rgba($secondary, 0.1);
+      color: rgba(variables.$secondary, 0.1);
     }
   }
   &.info {
-    background-color: rgba($info, 0.1);
-    border-inline-start: 2px solid $info;
+    background-color: rgba(variables.$info, 0.1);
+    border-inline-start: 2px solid variables.$info;
     &:before {
-      color: rgba($info, 0.1);
+      color: rgba(variables.$info, 0.1);
     }
   }
   &.warning {
-    background-color: rgba($warning, 0.1);
-    border-inline-start: 2px solid $warning;
+    background-color: rgba(variables.$warning, 0.1);
+    border-inline-start: 2px solid variables.$warning;
     &:before {
-      color: rgba($warning, 0.1);
+      color: rgba(variables.$warning, 0.1);
     }
   }
   &.success {
-    background-color: rgba($success, 0.1);
-    border-inline-start: 2px solid $success;
+    background-color: rgba(variables.$success, 0.1);
+    border-inline-start: 2px solid variables.$success;
     &:before {
-      color: rgba($success, 0.1);
+      color: rgba(variables.$success, 0.1);
     }
   }
   &.danger {
-    background-color: rgba($danger, 0.1);
-    border-inline-start: 2px solid $danger;
+    background-color: rgba(variables.$danger, 0.1);
+    border-inline-start: 2px solid variables.$danger;
     &:before {
-      color: rgba($danger, 0.1);
+      color: rgba(variables.$danger, 0.1);
     }
   }
 }

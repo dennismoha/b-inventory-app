@@ -426,35 +426,35 @@ export const SidebarData = [
         icon: 'moneybag',
         showSubRoute: false,
         submenu: false
-      },
-      {
-        label: 'Balance Sheet',
-        link: '/balance-sheet',
-        icon: 'report-money',
-        showSubRoute: false,
-        submenu: false
-      },
-      {
-        label: 'Trial Balance',
-        link: '/trial-balance',
-        icon: 'alert-circle',
-        showSubRoute: false,
-        submenu: false
-      },
-      {
-        label: 'Cash Flow',
-        link: '/cash-flow',
-        icon: 'zoom-money',
-        showSubRoute: false,
-        submenu: false
-      },
-      {
-        label: 'Cash book',
-        link: '/cash-book',
-        icon: 'zoom-money',
-        showSubRoute: false,
-        submenu: false
       }
+      // {
+      //   label: 'Balance Sheet',
+      //   link: '/balance-sheet',
+      //   icon: 'report-money',
+      //   showSubRoute: false,
+      //   submenu: false
+      // },
+      // {
+      //   label: 'Trial Balance',
+      //   link: '/trial-balance',
+      //   icon: 'alert-circle',
+      //   showSubRoute: false,
+      //   submenu: false
+      // },
+      // {
+      //   label: 'Cash Flow',
+      //   link: '/cash-flow',
+      //   icon: 'zoom-money',
+      //   showSubRoute: false,
+      //   submenu: false
+      // },
+      // {
+      //   label: 'Cash book',
+      //   link: '/cash-book',
+      //   icon: 'zoom-money',
+      //   showSubRoute: false,
+      //   submenu: false
+      // }
       // {
       //   label: "Account Statement",
       //   link: "/account-statement",
@@ -643,6 +643,34 @@ export const SidebarData = [
           { label: 'Customer Report', link: '/customer-report' }
           // { label: 'Customer Due Report', link: '/customer-due-report' }
         ]
+      },
+      {
+        label: 'Balance Sheet',
+        link: '/balance-sheet',
+        icon: 'report-money',
+        showSubRoute: false,
+        submenu: false
+      },
+      {
+        label: 'Trial Balance',
+        link: '/trial-balance',
+        icon: 'alert-circle',
+        showSubRoute: false,
+        submenu: false
+      },
+      {
+        label: 'Cash Flow',
+        link: '/cash-flow',
+        icon: 'zoom-money',
+        showSubRoute: false,
+        submenu: false
+      },
+      {
+        label: 'Cash book',
+        link: '/cash-book',
+        icon: 'zoom-money',
+        showSubRoute: false,
+        submenu: false
       },
       // {
       //   label: 'Product Report',

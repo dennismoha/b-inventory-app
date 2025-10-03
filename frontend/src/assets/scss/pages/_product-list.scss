@@ -1,3 +1,5 @@
+@use "../utils/variables";
+
 .user{
     &.product-list{
         align-items: center;
@@ -31,20 +33,20 @@
   max-width: 1140px;
 }
 .page-header .btn-added.color{
-    background-color: $secondary;
+    background-color: variables.$secondary;
     &:hover{
-        background-color: $primary;
-        color: $white;
+        background-color: variables.$primary;
+        color: variables.$white;
     }
 }
 .input-blocks.download{
     float: right;
 }
 .feather-plus-circles{
-    color: $white;
+    color: variables.$white;
 }
 .add-icon.plus a{
-    color:$secondary ;
+    color:variables.$secondary ;
 }
 .import-btn{
     float: right;
@@ -66,28 +68,28 @@ margin-bottom: 0;
 #view-notes{
     .custom-modal-body{
         p{
-            font-size: $font-size-14;
+            font-size: variables.$font-size-14;
         }
         label{
-            color: $gray-900;
+            color: variables.$gray-900;
         }
     }
     .modal-top{
         padding: 20px;
     }
     .modal-btns{
-        border-top: 1px solid $secondary-transparent;
+        border-top: 1px solid variables.$secondary-transparent;
         padding: 20px;
         .row{
             justify-content: flex-end;
         }
         .btn{
-            font-size: $font-size-13;
+            font-size: variables.$font-size-13;
             padding: 5px 12px;
-            font-weight: $font-weight-medium;
+            font-weight: variables.$font-weight-medium;
         }
         .btn-cancel {
-            background-color: $secondary;
+            background-color: variables.$secondary;
         }
         .modal-footer-btn{
             margin-top: 0;
@@ -96,9 +98,9 @@ margin-bottom: 0;
     .close{
       width: 16px;
       height: 16px;
-      background-color: $danger;
-      color: $white;
-      font-size: $font-size-13;
+      background-color: variables.$danger;
+      color: variables.$white;
+      font-size: variables.$font-size-13;
     }
     .download-file{
         .btn{

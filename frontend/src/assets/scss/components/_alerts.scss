@@ -1,12 +1,14 @@
+@use "../utils/variables";
+
 .alert {
   padding: 0.625rem 0.85rem;
-  border-radius: $border-radius;
+  border-radius: variables.$border-radius;
   font-size: 0.8125rem;
   &.alert-dismissible {
     padding: 0.625rem 2.25rem 0.625rem 0.85rem;
   }
   i {
-    font-size: $font-size-20;
+    font-size: variables.$font-size-20;
   }
   .btn-close {
     background-image: none;
@@ -15,7 +17,7 @@
     align-items: center;
     justify-content: center;
     i {
-      font-size: $font-size-18;
+      font-size: variables.$font-size-18;
       line-height: 18px;
     }
   }
@@ -23,7 +25,7 @@
     margin-bottom: 0;
   }
   .alert-link {
-    font-weight: $font-weight-semibold;
+    font-weight: variables.$font-weight-semibold;
   }
 }
 [dir="rtl"] {
@@ -33,163 +35,163 @@
 }
 @mixin custom-close($color) {
   background-color: $color;
-  color: $white;
+  color: variables.$white;
   opacity: 1;
   border-radius: 50px;
-  box-shadow: $box-shadow;
+  box-shadow: variables.$box-shadow;
   padding: 0.85rem;
 }
 .alert-warning {
-  background-color: rgba($warning, 0.1);
-  color: $warning;
-  border-color: rgba($warning, 0.1);
+  background-color: rgba(variables.$warning, 0.1);
+  color: variables.$warning;
+  border-color: rgba(variables.$warning, 0.1);
   .alert-link {
-    color: $warning;
+    color: variables.$warning;
   }
   .btn-close {
-    color: $warning;
+    color: variables.$warning;
     &.custom-close {
-      @include custom-close($warning);
+      @include custom-close(variables.$warning);
     }
   }
 }
 .alert-primary {
-  background-color: rgba($primary, 0.1);
-  color: $primary;
-  border-color: rgba($primary, 0.1);
+  background-color: rgba(variables.$primary, 0.1);
+  color: variables.$primary;
+  border-color: rgba(variables.$primary, 0.1);
   .alert-link {
-    color: $primary;
+    color: variables.$primary;
   }
   .custom-alert-icon {	
-	color: $primary;
+	color: variables.$primary;
   }
   .btn-close {
-    color: $primary;
+    color: variables.$primary;
     &.custom-close {
-      @include custom-close($primary);
+      @include custom-close(variables.$primary);
     }
   }
 }
 .alert-secondary {
-  background-color: rgba($secondary, 0.1);
-  color: $secondary;
-  border-color: rgba($secondary, 0.1);
+  background-color: rgba(variables.$secondary, 0.1);
+  color: variables.$secondary;
+  border-color: rgba(variables.$secondary, 0.1);
   .alert-link {
-    color: $secondary;
+    color: variables.$secondary;
   }
   .btn-close {
-    color: $secondary;
+    color: variables.$secondary;
     &.custom-close {
-      @include custom-close($secondary);
+      @include custom-close(variables.$secondary);
     }
   }
 }
 .alert-success {
-  background-color: rgba($success, 0.1);
-  color: $success;
-  border-color: rgba($success, 0.1);
+  background-color: rgba(variables.$success, 0.1);
+  color: variables.$success;
+  border-color: rgba(variables.$success, 0.1);
   .alert-link {
-    color: $success;
+    color: variables.$success;
   }
   .btn-close {
-    color: $success;
+    color: variables.$success;
     &.custom-close {
-      @include custom-close($success);
+      @include custom-close(variables.$success);
     }
   }
 }
 .alert-info {
-  background-color: rgba($info, 0.1);
-  color: $info;
-  border-color: rgba($info, 0.1);
+  background-color: rgba(variables.$info, 0.1);
+  color: variables.$info;
+  border-color: rgba(variables.$info, 0.1);
   .alert-link {
-    color: $info;
+    color: variables.$info;
   }
   .btn-close {
-    color: $info;
+    color: variables.$info;
     &.custom-close {
-      @include custom-close($info);
+      @include custom-close(variables.$info);
     }
   }
 }
 .alert-danger {
-  background-color: rgba($danger, 0.1);
-  color: $danger;
-  border-color: rgba($danger, 0.1);
+  background-color: rgba(variables.$danger, 0.1);
+  color: variables.$danger;
+  border-color: rgba(variables.$danger, 0.1);
   .alert-link {
-    color: $danger;
+    color: variables.$danger;
   }
   .btn-close {
-    color: $danger;
+    color: variables.$danger;
     &.custom-close {
-      @include custom-close($danger);
+      @include custom-close(variables.$danger);
     }
   }
 }
 .alert-light {
-  background-color: $light;
-  color: $text-color;
-  border-color: $light;
+  background-color: variables.$light;
+  color: variables.$text-color;
+  border-color: variables.$light;
   .alert-link {
-    color: $text-color;
+    color: variables.$text-color;
   }
   .btn-close {
-    color: $text-color;
+    color: variables.$text-color;
     &.custom-close {
-      @include custom-close($light);
+      @include custom-close(variables.$light);
     }
   }
 }
 .alert-dark {
-  background-color: rgba($dark, 0.1);
-  color: $text-color;
-  border-color: rgba($dark, 0.1);
+  background-color: rgba(variables.$dark, 0.1);
+  color: variables.$text-color;
+  border-color: rgba(variables.$dark, 0.1);
   .alert-link {
-    color: $text-color;
+    color: variables.$text-color;
   }
   .btn-close {
-    color: $white;
+    color: variables.$white;
     &.custom-close {
-      @include custom-close($dark);
+      @include custom-close(variables.$dark);
     }
   }
 }
 @mixin alert-solid-color($color) {
   background-color: $color;
-  color: $white;
+  color: variables.$white;
   border-color: $color;
   .btn-close {
-    color: $white;
+    color: variables.$white;
   }
 }
 .alert-solid-primary {
-  @include alert-solid-color($primary);
+  @include alert-solid-color(variables.$primary);
 }
 .alert-solid-secondary {
-  @include alert-solid-color($secondary);
+  @include alert-solid-color(variables.$secondary);
 }
 .alert-solid-warning {
-  @include alert-solid-color($warning);
+  @include alert-solid-color(variables.$warning);
 }
 .alert-solid-info {
-  @include alert-solid-color($info);
+  @include alert-solid-color(variables.$info);
 }
 .alert-solid-success {
-  @include alert-solid-color($success);
+  @include alert-solid-color(variables.$success);
 }
 .alert-solid-danger {
-  @include alert-solid-color($danger);
+  @include alert-solid-color(variables.$danger);
 }
 .alert-solid-light {
-  background-color: $light;
-  color: $text-color;
-  border-color: $default-border;
+  background-color: variables.$light;
+  color: variables.$text-color;
+  border-color: variables.$default-border;
 }
 .alert-solid-dark {
-  @include alert-solid-color($dark);
+  @include alert-solid-color(variables.$dark);
 }
 @mixin outline-alert($color) {
-  background-color: $white;
+  background-color: variables.$white;
   color: $color;
   border-color: $color;
   .btn-close {
@@ -197,93 +199,93 @@
   }
 }
 .alert-outline-primary {
-  @include outline-alert($primary);
+  @include outline-alert(variables.$primary);
 }
 .alert-outline-secondary {
-  @include outline-alert($secondary);
+  @include outline-alert(variables.$secondary);
 }
 .alert-outline-info {
-  @include outline-alert($info);
+  @include outline-alert(variables.$info);
 }
 .alert-outline-warning {
-  @include outline-alert($warning);
+  @include outline-alert(variables.$warning);
 }
 .alert-outline-success {
-  @include outline-alert($success);
+  @include outline-alert(variables.$success);
 }
 .alert-outline-danger {
-  @include outline-alert($danger);
+  @include outline-alert(variables.$danger);
 }
 .alert-outline-light {
-  background-color: $white;
-  color: $text-color;
-  border-color: $light;
+  background-color: variables.$white;
+  color: variables.$text-color;
+  border-color: variables.$light;
 }
 .alert-outline-dark {
-  @include outline-alert($dark);
+  @include outline-alert(variables.$dark);
 }
 @mixin custom-alert($color) {
   border-inline-start: 0.313rem solid $color !important;
-  color: $text-muted;
-  background-color: $white;
-  border: 1px solid $default-border;
+  color: variables.$text-muted;
+  background-color: variables.$white;
+  border: 1px solid variables.$default-border;
   font-size: 0.813rem;
   .btn-close {
-    color: $text-color;
+    color: variables.$text-color;
   }
 }
 .alert-primary.custom-alert-icon {
-  @include custom-alert($primary);
+  @include custom-alert(variables.$primary);
   & > i {
-	color: $primary;
+	color: variables.$primary;
   }
 }
 .alert-secondary.custom-alert-icon {
-  @include custom-alert($secondary);
+  @include custom-alert(variables.$secondary);
   & > i {
-	color: $secondary;
+	color: variables.$secondary;
   }
 }
 .alert-warning.custom-alert-icon {
-  @include custom-alert($warning);
+  @include custom-alert(variables.$warning);
   & > i {
-	color: $warning;
+	color: variables.$warning;
   }
 }
 .alert-danger.custom-alert-icon {
-  @include custom-alert($danger);
+  @include custom-alert(variables.$danger);
   & > i {
-	color: $danger;
+	color: variables.$danger;
   }
 }
 .alert-success.custom-alert-icon {
-  @include custom-alert($success);
+  @include custom-alert(variables.$success);
 }
 .alert-info.custom-alert-icon {
-  @include custom-alert($info);
+  @include custom-alert(variables.$info);
 }
 .alert-light.custom-alert-icon {
-  @include custom-alert($light);
+  @include custom-alert(variables.$light);
 }
 .alert-dark.custom-alert-icon {
-  @include custom-alert($dark);
+  @include custom-alert(variables.$dark);
 }
 .custom-alert1 {
   margin-block-end: 0;
-  background-color: $white;
+  background-color: variables.$white;
   border: 0;
   padding: 1.25rem;
-  color: $text-color;
+  color: variables.$text-color;
   p {
     margin-block-end: 2.5rem;
-    color: $text-muted;
+    color: variables.$text-muted;
     font-size: 0.8rem;
   }
   .custom-alert-icon {
-	font-size: $font-size-40;
+	font-size: variables.$font-size-40;
     margin-bottom: 0.85rem;
 	i {		
-		font-size: $font-size-40;
+		font-size: variables.$font-size-40;
 	}
   }
   .btn-close {
@@ -291,27 +293,27 @@
     margin-block-end: 1rem;
   }
   &.alert-primary {
-    border-block-start: 0.313rem solid $primary;	
+    border-block-start: 0.313rem solid variables.$primary;	
 	.custom-alert-icon {	
-		color: $primary;
+		color: variables.$primary;
 	}
   }
   &.alert-secondary {
-    border-block-start: 0.313rem solid $secondary;	
+    border-block-start: 0.313rem solid variables.$secondary;	
 	.custom-alert-icon {	
-		color: $secondary;
+		color: variables.$secondary;
 	}
   }
   &.alert-warning {
-    border-block-start: 0.313rem solid $warning;	
+    border-block-start: 0.313rem solid variables.$warning;	
 	.custom-alert-icon {	
-		color: $warning;
+		color: variables.$warning;
 	}
   }
   &.alert-danger {
-    border-block-start: 0.313rem solid $danger;	
+    border-block-start: 0.313rem solid variables.$danger;	
 	.custom-alert-icon {	
-		color: $danger;
+		color: variables.$danger;
 	}
   }
 }

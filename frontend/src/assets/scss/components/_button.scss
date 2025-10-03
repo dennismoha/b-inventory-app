@@ -1,15 +1,19 @@
+@use "sass:color";
+@use "../utils/mixins";
+@use "../utils/variables";
+
 .btn-submit {
-    background: $primary;
-    color: $white;
-    font-size: $font-size-14;
-    font-weight: $font-weight-bold;
-    @include margin-padding(null, 10px 20px);
-    @include transition(all 0.2s ease);
+    background: variables.$primary;
+    color: variables.$white;
+    font-size: variables.$font-size-14;
+    font-weight: variables.$font-weight-bold;
+    @include mixins.margin-padding(null, 10px 20px);
+    @include mixins.transition(all 0.2s ease);
     &:hover{
-        background: $primary-hover;
-        color: $white;
+        background: variables.$primary-hover;
+        color: variables.$white;
     }
-    @include respond-below(custom991) {
+    @include mixins.respond-below(custom991) {
         min-width: auto;
     }
 }
@@ -17,17 +21,17 @@
     padding: 8px 12px;
 }
 .btn-cancel {
-    background: $gray-600;
-    color: $white;
-    font-size: $font-size-14;
-    font-weight: $font-weight-bold;
-    @include margin-padding(null, 10px 20px);
-    @include transition(all 0.5s ease);
+    background: variables.$gray-600;
+    color: variables.$white;
+    font-size: variables.$font-size-14;
+    font-weight: variables.$font-weight-bold;
+    @include mixins.margin-padding(null, 10px 20px);
+    @include mixins.transition(all 0.5s ease);
     &:hover{
         background: #424b52;
-        color: $white;
+        color: variables.$white;
      }
-    @include respond-below(custom991) {
+    @include mixins.respond-below(custom991) {
         min-width: auto;
     }
 }
@@ -40,63 +44,63 @@
     min-width: 0;
 }
 .btn-primary {
-    color: $white;
-    background-color: $primary;
-    border-color: $primary;
+    color: variables.$white;
+    background-color: variables.$primary;
+    border-color: variables.$primary;
 }
 .btn-previw {
-    background: $danger;
-    color: $white;
-    font-size: $font-size-14;
-    font-weight: $font-weight-bold;
+    background: variables.$danger;
+    color: variables.$white;
+    font-size: variables.$font-size-14;
+    font-weight: variables.$font-weight-bold;
     border-radius: 5px;
-    @include margin-padding(null, 8px 20px);
-    @include transition(all 0.5s ease);
+    @include mixins.margin-padding(null, 8px 20px);
+    @include mixins.transition(all 0.5s ease);
     &:hover{
-        background: $danger;
-        color: $white;
+        background: variables.$danger;
+        color: variables.$white;
      }
-    @include respond-below(custom991) {
+    @include mixins.respond-below(custom991) {
         min-width: auto;
     }
 }
 .btn-save {
-    background: $primary;
-    color: $white;
-    font-size: $font-size-14;
-    font-weight: $font-weight-bold;
+    background: variables.$primary;
+    color: variables.$white;
+    font-size: variables.$font-size-14;
+    font-weight: variables.$font-weight-bold;
     border-radius: 5px;
-    @include margin-padding(null, 8px 20px);
-    @include transition(all 0.2s ease);
+    @include mixins.margin-padding(null, 8px 20px);
+    @include mixins.transition(all 0.2s ease);
     &:hover{
-        background: $primary-hover;
-        color: $white;
+        background: variables.$primary-hover;
+        color: variables.$white;
     }
-    @include respond-below(custom991) {
+    @include mixins.respond-below(custom991) {
         min-width: auto;
         padding: 5px 7px;
     }
 }
 .btn-reset {
-    background: $text-color;
-    color: $white;
-    font-size: $font-size-14;
-    font-weight: $font-weight-bold;
+    background: variables.$text-color;
+    color: variables.$white;
+    font-size: variables.$font-size-14;
+    font-weight: variables.$font-weight-bold;
     border-radius: 5px;
-    @include margin-padding(null, 8px 20px);
-    @include transition(all 0.2s ease);
+    @include mixins.margin-padding(null, 8px 20px);
+    @include mixins.transition(all 0.2s ease);
     &:hover{
-        background: $secondary;
-        color: $white;
+        background: variables.$secondary;
+        color: variables.$white;
     }
-    @include respond-below(custom991) {
+    @include mixins.respond-below(custom991) {
         min-width: auto;
         padding: 5px 7px;
     }
 }
 .btn-send {
-    background: $primary;
-    @include margin-padding(null, 9px 14px);
+    background: variables.$primary;
+    @include mixins.margin-padding(null, 9px 14px);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -107,13 +111,13 @@
     -webkit-justify-content: center;
     -ms-flex-pack: center;
     color: #fff;
-    font-weight: $font-weight-bold;
-    font-size: $font-size-14;
+    font-weight: variables.$font-weight-bold;
+    font-size: variables.$font-size-14;
     margin-right: 15px;
     border-radius: 8px;
     &:hover{
-        background: $primary-hover;
-        color: $white;
+        background: variables.$primary-hover;
+        color: variables.$white;
     }
     .send-mail {
         margin-right: 10px;
@@ -122,8 +126,8 @@
     }
 }
 .btn-download {
-    background: $secondary;
-    @include margin-padding(null, 9px 14px);
+    background: variables.$secondary;
+    @include mixins.margin-padding(null, 9px 14px);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -134,13 +138,13 @@
     -webkit-justify-content: center;
     -ms-flex-pack: center;
     color: #fff;
-    font-weight: $font-weight-bold;
-    font-size: $font-size-14;
+    font-weight: variables.$font-weight-bold;
+    font-size: variables.$font-size-14;
     margin-right: 15px;
     border-radius: 8px;
     &:hover{
-        background: $gray-900;
-        color: $white;
+        background: variables.$gray-900;
+        color: variables.$white;
      }
     .download {
         margin-right: 10px;
@@ -149,8 +153,8 @@
     }    
 }
 .btn-barcode {
-    background: $danger;
-    @include margin-padding(null, 9px 14px);
+    background: variables.$danger;
+    @include mixins.margin-padding(null, 9px 14px);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -161,13 +165,13 @@
     -webkit-justify-content: center;
     -ms-flex-pack: center;
     color: #fff;
-    font-weight: $font-weight-bold;
-    font-size: $font-size-14;
+    font-weight: variables.$font-weight-bold;
+    font-size: variables.$font-size-14;
     margin-right: 15px;
     border-radius: 8px;
     &:hover{
-        background: $danger;
-        color: $white;
+        background: variables.$danger;
+        color: variables.$white;
      }
     .print {
         margin-right: 10px;
@@ -179,8 +183,8 @@
 .btn-primary.add-em-payroll {
     padding: 9px 11px;
     color: #fff;
-    font-weight: $font-weight-bold;
-    font-size: $font-size-14;
+    font-weight: variables.$font-weight-bold;
+    font-size: variables.$font-size-14;
     border-radius: 8px;
     .me-2 {
         width: 16px;
@@ -188,13 +192,13 @@
     }
 }
 .swal2-actions .swal2-confirm.btn:active {
-    background-color: $primary;
-    border-color: $primary;
+    background-color: variables.$primary;
+    border-color: variables.$primary;
 }
 .btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
-    background-color: $primary;
-    border-color: $primary;
-    color: $white !important;
+    background-color: variables.$primary;
+    border-color: variables.$primary;
+    color: variables.$white !important;
 }
 .search-input {
     .btn-searchset {
@@ -202,7 +206,7 @@
             background-color: transparent;
             border-color: transparent;
             svg {
-                color: $secondary;
+                color: variables.$secondary;
             }
         }
     }
@@ -218,12 +222,12 @@ button {
     }
 }
 .btn {
-    border-radius: $border-radius-lg;
+    border-radius: variables.$border-radius-lg;
     padding: 0.625rem 1.25rem;
     padding: 0.4rem 0.85rem;
     font-size: 0.85rem;
     transition: all 0.5s;
-    font-weight: $font-weight-semibold;
+    font-weight: variables.$font-weight-semibold;
     &:focus {
         box-shadow: none !important;
     }
@@ -247,37 +251,37 @@ button {
         font-size: 10px;
     }
     @each $color,
-    $value in $theme-colors {
+    $value in variables.$theme-colors {
         &.btn-#{$color} {
             background-color: #{$value} !important;
             border: 1px solid #{$value} !important;
-            color: $white;
+            color: variables.$white;
             box-shadow: 0 4px 20px rgba($value, .15);
             &:hover,
             &:focus,
             &.focus,
             &:active,
             &.active {
-                background-color: #{darken($value, 7%)}!important;
-                border:1px solid #{darken($value, 7%)}!important;
+                background-color: #{color.adjust($value, $lightness: -7%)}!important;
+                border:1px solid #{color.adjust($value, $lightness: -7%)}!important;
                 box-shadow: 0 3px 10px rgba($value, 0.5);
-                color: $white !important;
+                color: variables.$white !important;
             }
         }
     }
     &.btn-light {
-        background-color: $light;
-        border: 1px solid $light;
-        color: $gray-800 !important;
+        background-color: variables.$light;
+        border: 1px solid variables.$light;
+        color: variables.$gray-800 !important;
         &:hover,
         &:focus,
         &.focus,
         &:active,
         &.active {
-            background-color: lighten($light, 3%);
-            border: 1px solid lighten($light, 3%);
-            box-shadow: 0 0 0 2px rgba($light, .08);
-            color: $dark !important;
+            background-color: color.adjust(variables.$light, $lightness: 3%);
+            border: 1px solid color.adjust(variables.$light, $lightness: 3%);
+            box-shadow: 0 0 0 2px rgba(variables.$light, .08);
+            color: variables.$dark !important;
         }
     }
 }
@@ -364,130 +368,130 @@ button {
   }
 .btn {
   &.btn-primary-light {
-    background-color: rgba($primary, 0.1);
-    color: $primary;
+    background-color: rgba(variables.$primary, 0.1);
+    color: variables.$primary;
     &:hover,
     &:focus,
     &:active {
-      background-color: $primary;
-      color: $white;
-      border-color: $primary;
+      background-color: variables.$primary;
+      color: variables.$white;
+      border-color: variables.$primary;
     }
   }
   &.btn-secondary-light {
-    background-color: rgba($secondary, 0.1);
-    color: $secondary;
+    background-color: rgba(variables.$secondary, 0.1);
+    color: variables.$secondary;
     &:hover,
     &:focus,
     &:active {
-      background-color: $secondary;
-      color: $white;
-      border-color: $secondary;
+      background-color: variables.$secondary;
+      color: variables.$white;
+      border-color: variables.$secondary;
     }
   }
   &.btn-warning-light {
-    background-color: rgba($warning, 0.1);
-    color: $warning;
+    background-color: rgba(variables.$warning, 0.1);
+    color: variables.$warning;
     &:hover,
     &:focus,
     &:active {
-      background-color: $warning;
-      color: $white;
-      border-color: $warning;
+      background-color: variables.$warning;
+      color: variables.$white;
+      border-color: variables.$warning;
     }
   }
   &.btn-info-light {
-    background-color: rgba($info, 0.1);
-    color: $info;
+    background-color: rgba(variables.$info, 0.1);
+    color: variables.$info;
     &:hover,
     &:focus,
     &:active {
-      background-color: $info;
-      color: $white;
-      border-color: $info;
+      background-color: variables.$info;
+      color: variables.$white;
+      border-color: variables.$info;
     }
   }
   &.btn-success-light {
-    background-color: rgba($success, 0.1);
-    color: $success;
+    background-color: rgba(variables.$success, 0.1);
+    color: variables.$success;
     &:hover,
     &:focus,
     &:active {
-      background-color: $success;
-      color: $white;
-      border-color: $success;
+      background-color: variables.$success;
+      color: variables.$white;
+      border-color: variables.$success;
     }
   }
   &.btn-danger-light {
-    background-color: rgba($danger, 0.1);
-    color: $danger;
+    background-color: rgba(variables.$danger, 0.1);
+    color: variables.$danger;
     &:hover,
     &:focus,
     &:active {
-      background-color: $danger;
-      color: $white;
-      border-color: $danger;
+      background-color: variables.$danger;
+      color: variables.$white;
+      border-color: variables.$danger;
     }
   }
 }
 .btn {
   &.btn-primary-ghost {
     background-color: transparent;
-    color: $primary;
-    border: 1px solid $primary;
+    color: variables.$primary;
+    border: 1px solid variables.$primary;
     &:active {
-      color: $primary;
-      border: 1px solid $primary;
+      color: variables.$primary;
+      border: 1px solid variables.$primary;
       background-color: transparent;
     }
   }
   &.btn-secondary-ghost {
     background-color: transparent;
-    color: $secondary;
-    border: 1px solid $secondary;
+    color: variables.$secondary;
+    border: 1px solid variables.$secondary;
     &:active {
-      color: $secondary;
-      border: 1px solid $secondary;
+      color: variables.$secondary;
+      border: 1px solid variables.$secondary;
       background-color: transparent;
     }
   }
   &.btn-warning-ghost {
     background-color: transparent;
-    color: $warning;
-    border: 1px solid $warning;
+    color: variables.$warning;
+    border: 1px solid variables.$warning;
     &:active {
-      color: $warning;
-      border: 1px solid $warning;
+      color: variables.$warning;
+      border: 1px solid variables.$warning;
       background-color: transparent;
     }
   }
   &.btn-info-ghost {
     background-color: transparent;
-    color: $info;
-    border: 1px solid $info;
+    color: variables.$info;
+    border: 1px solid variables.$info;
     &:active {
-      color: $info;
-      border: 1px solid $info;
+      color: variables.$info;
+      border: 1px solid variables.$info;
       background-color: transparent;
     }
   }
   &.btn-success-ghost {
     background-color: transparent;
-    color: $success;
-    border: 1px solid $success;
+    color: variables.$success;
+    border: 1px solid variables.$success;
     &:active {
-      color: $success;
-      border: 1px solid $success;
+      color: variables.$success;
+      border: 1px solid variables.$success;
       background-color: transparent;
     }
   }
   &.btn-danger-ghost {
     background-color: transparent;
-    color: $danger;
-    border: 1px solid $danger;
+    color: variables.$danger;
+    border: 1px solid variables.$danger;
     &:active {
-      color: $danger;
-      border: 1px solid $danger;
+      color: variables.$danger;
+      border: 1px solid variables.$danger;
       background-color: transparent;
     }
   }
@@ -498,211 +502,211 @@ button {
   }
 }
 .btn-outline-primary {
-    border: 1px solid $primary !important;
-    color: $primary !important;
+    border: 1px solid variables.$primary !important;
+    color: variables.$primary !important;
     &:hover,
     &:focus,
     &.focus,
     &:active,
     &.active {
-        background-color: $primary !important;
-        border:1px solid $primary !important;
-        box-shadow: 0 3px 10px rgba($primary, 0.5);
-        color: $white !important;
+        background-color: variables.$primary !important;
+        border:1px solid variables.$primary !important;
+        box-shadow: 0 3px 10px rgba(variables.$primary, 0.5);
+        color: variables.$white !important;
     }
 }
 .btn-outline-secondary {
-    border: 1px solid $secondary !important;
-    color: $secondary !important;
+    border: 1px solid variables.$secondary !important;
+    color: variables.$secondary !important;
     &:hover,
     &:focus,
     &.focus,
     &:active,
     &.active {
-        background-color: $secondary !important;
-        border:1px solid $secondary !important;
-        box-shadow: 0 3px 10px rgba($secondary, 0.5);
-        color: $white !important;
+        background-color: variables.$secondary !important;
+        border:1px solid variables.$secondary !important;
+        box-shadow: 0 3px 10px rgba(variables.$secondary, 0.5);
+        color: variables.$white !important;
     }
 }
 .btn-outline-success {
-    border: 1px solid $success !important;
-    color: $success !important;
+    border: 1px solid variables.$success !important;
+    color: variables.$success !important;
     &:hover,
     &:focus,
     &.focus,
     &:active,
     &.active {
-        background-color: $success !important;
-        border:1px solid $success !important;
-        box-shadow: 0 3px 10px rgba($success, 0.5);
-        color: $white !important;
+        background-color: variables.$success !important;
+        border:1px solid variables.$success !important;
+        box-shadow: 0 3px 10px rgba(variables.$success, 0.5);
+        color: variables.$white !important;
     }
 }
 .btn-outline-danger {
-    border: 1px solid $danger !important;
-    color: $danger !important;
+    border: 1px solid variables.$danger !important;
+    color: variables.$danger !important;
     &:hover,
     &:focus,
     &.focus,
     &:active,
     &.active {
-        background-color: $danger !important;
-        border:1px solid $danger !important;
-        box-shadow: 0 3px 10px rgba($danger, 0.5);
-        color: $white !important;
+        background-color: variables.$danger !important;
+        border:1px solid variables.$danger !important;
+        box-shadow: 0 3px 10px rgba(variables.$danger, 0.5);
+        color: variables.$white !important;
     }
 }
 .btn-outline-warning {
-    border: 1px solid $warning !important;
-    color: $warning !important;
+    border: 1px solid variables.$warning !important;
+    color: variables.$warning !important;
     &:hover,
     &:focus,
     &.focus,
     &:active,
     &.active {
-        background-color: $warning !important;
-        border:1px solid $warning !important;
-        box-shadow: 0 3px 10px rgba($warning, 0.5);
-        color: $white !important;
+        background-color: variables.$warning !important;
+        border:1px solid variables.$warning !important;
+        box-shadow: 0 3px 10px rgba(variables.$warning, 0.5);
+        color: variables.$white !important;
     }
 }
 .btn-outline-info {
-    border: 1px solid $info !important;
-    color: $info !important;
+    border: 1px solid variables.$info !important;
+    color: variables.$info !important;
     &:hover,
     &:focus,
     &.focus,
     &:active,
     &.active {
-        background-color: $info !important;
-        border:1px solid $info !important;
-        box-shadow: 0 3px 10px rgba($info, 0.5);
-        color: $white !important;
+        background-color: variables.$info !important;
+        border:1px solid variables.$info !important;
+        box-shadow: 0 3px 10px rgba(variables.$info, 0.5);
+        color: variables.$white !important;
     }
 }
 .btn-outline-light {
-    border: 1px solid $border-color;
-    color: $gray-900 !important;
+    border: 1px solid variables.$border-color;
+    color: variables.$gray-900 !important;
     &:hover,
     &:focus,
     &.focus,
     &:active,
     &.active {
-        background-color: $light;
-        border: 1px solid $border-color;
-        color: $gray-900 !important;
+        background-color: variables.$light;
+        border: 1px solid variables.$border-color;
+        color: variables.$gray-900 !important;
     }
 }
 .btn-outline-dark {
-    border: 1px solid $dark !important;
-    color: $dark !important;
+    border: 1px solid variables.$dark !important;
+    color: variables.$dark !important;
     &:hover,
     &:focus,
     &.focus,
     &:active,
     &.active {
-        background-color: $dark !important;
-        border:1px solid $dark !important;
-        box-shadow: 0 3px 10px rgba($dark, 0.5);
-        color: $white !important;
+        background-color: variables.$dark !important;
+        border:1px solid variables.$dark !important;
+        box-shadow: 0 3px 10px rgba(variables.$dark, 0.5);
+        color: variables.$white !important;
     }
 }
 .btn-soft-primary {
-    background-color: $primary-300 !important;
-    color: $primary !important;
+    background-color: variables.$primary-300 !important;
+    color: variables.$primary !important;
     &:hover,
     &:focus,
     &.focus,
     &:active,
     &.active {
-       box-shadow: 0 3px 12px rgba($primary, .2);
-       border-color: $primary;
+       box-shadow: 0 3px 12px rgba(variables.$primary, .2);
+       border-color: variables.$primary;
     }    
 }
 .btn-soft-secondary {
-    background-color: $secondary-300 !important;
-    color: $secondary !important;
+    background-color: variables.$secondary-300 !important;
+    color: variables.$secondary !important;
     &:hover,
     &:focus,
     &.focus,
     &:active,
     &.active {
-       box-shadow: 0 3px 12px rgba($secondary, .2);
-       border-color: $secondary;
+       box-shadow: 0 3px 12px rgba(variables.$secondary, .2);
+       border-color: variables.$secondary;
     }    
 }
 .btn-soft-success {
-    background-color: $success-300 !important;
-    color: $success !important;
+    background-color: variables.$success-300 !important;
+    color: variables.$success !important;
     &:hover,
     &:focus,
     &.focus,
     &:active,
     &.active {
-       box-shadow: 0 3px 12px rgba($success, .2);
-       border-color: $success;
+       box-shadow: 0 3px 12px rgba(variables.$success, .2);
+       border-color: variables.$success;
     }    
 }
 .btn-soft-danger {
-    background-color: $danger-300 !important;
-    color: $danger !important;
+    background-color: variables.$danger-300 !important;
+    color: variables.$danger !important;
     &:hover,
     &:focus,
     &.focus,
     &:active,
     &.active {
-       box-shadow: 0 3px 12px rgba($danger, .2);
-       border-color: $danger;
+       box-shadow: 0 3px 12px rgba(variables.$danger, .2);
+       border-color: variables.$danger;
     }    
 }
 .btn-soft-warning {
-    background-color: $warning-300 !important;
-    color: $warning !important;
+    background-color: variables.$warning-300 !important;
+    color: variables.$warning !important;
     &:hover,
     &:focus,
     &.focus,
     &:active,
     &.active {
-       box-shadow: 0 3px 12px rgba($warning, .2);
-       border-color: $warning;
+       box-shadow: 0 3px 12px rgba(variables.$warning, .2);
+       border-color: variables.$warning;
     }    
 }
 .btn-soft-info {
-    background-color: rgba($info, 0.3) !important;
-    color: $info !important;
+    background-color: rgba(variables.$info, 0.3) !important;
+    color: variables.$info !important;
     &:hover,
     &:focus,
     &.focus,
     &:active,
     &.active {
-       box-shadow: 0 3px 12px rgba($info, .2);
-       border-color: $info;
+       box-shadow: 0 3px 12px rgba(variables.$info, .2);
+       border-color: variables.$info;
     }    
 }
 .btn-soft-light {
-    background-color: rgba($light, .9) !important;
-    color: $text-color !important;
+    background-color: rgba(variables.$light, .9) !important;
+    color: variables.$text-color !important;
     &:hover,
     &:focus,
     &.focus,
     &:active,
     &.active {
-       box-shadow: 0 3px 12px rgba($light, .2);
-       border-color: $light;
-       border-color: $text-color;
+       box-shadow: 0 3px 12px rgba(variables.$light, .2);
+       border-color: variables.$light;
+       border-color: variables.$text-color;
     }    
 }
 .btn-soft-dark {
-    background-color: rgba($dark, 0.3) !important;
-    color: $white !important;
+    background-color: rgba(variables.$dark, 0.3) !important;
+    color: variables.$white !important;
     &:hover,
     &:focus,
     &.focus,
     &:active,
     &.active {
-       box-shadow: 0 3px 12px rgba($dark, .2);
-       border-color: $dark;
+       box-shadow: 0 3px 12px rgba(variables.$dark, .2);
+       border-color: variables.$dark;
     }    
 }
 
@@ -720,15 +724,15 @@ button {
 }
 
 .page-header .btn-added.dark {
-  background-color: $dark !important;
-  border: 1px solid $dark !important;
+  background-color: variables.$dark !important;
+  border: 1px solid variables.$dark !important;
   &:hover,
   &:focus,
   &.focus,
   &:active,
   &.active {
-      background-color: $primary !important;
-      border: 1px solid $primary !important;
+      background-color: variables.$primary !important;
+      border: 1px solid variables.$primary !important;
   }
 }
 .btn-primaryadd{
@@ -736,11 +740,11 @@ button {
   top: 37px;
   right: 10px;
   padding: 4px 8px;
-  background-color: $primary;
-  font-size: $font-size-10;
-  color: $white;
+  background-color: variables.$primary;
+  font-size: variables.$font-size-10;
+  color: variables.$white;
   &:hover{
-      border: 1px solid $primary;
-      color: $primary;
+      border: 1px solid variables.$primary;
+      color: variables.$primary;
   }
 }

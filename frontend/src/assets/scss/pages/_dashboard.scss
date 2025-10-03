@@ -1,8 +1,11 @@
+@use "../utils/mixins";
+@use "../utils/variables";
+
 .dash-widget {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    background: $white;
+    background: variables.$white;
     margin-bottom: 24px;
     &.dash1{
         .dash-widgetimg{
@@ -28,12 +31,12 @@
     .dash-widgetcontent {
         margin-left: 15px;
         h5 {
-            font-size: $font-size-18;
+            font-size: variables.$font-size-18;
         }
         h6 {
-            font-weight: $font-weight-normal;
-            font-size: $font-size-base;
-            color: $gray-600;
+            font-weight: variables.$font-weight-normal;
+            font-size: variables.$font-size-base;
+            color: variables.$gray-600;
             width: 100%;
             margin-bottom: 0;
         }
@@ -52,16 +55,16 @@
             justify-content: center;
             -webkit-justify-content: center;
             -ms-flex-pack: center;
-            @include rounded(50px);
+            @include mixins.rounded(50px);
         }
     }
 }
 .dash-count {
-    background: $primary;
-    color: $white;
+    background: variables.$primary;
+    color: variables.$white;
     min-height:98px;
     width: 100%;
-    @include rounded(6px);
+    @include mixins.rounded(6px);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -71,38 +74,38 @@
     justify-content: space-between;
     -webkit-justify-content: space-between;
     -ms-flex-pack: space-between;
-    @include margin-padding(0 0 25px, 20px);
+    @include mixins.margin-padding(0 0 25px, 20px);
     &.das1{
-        background: $cyan-900;
+        background: variables.$cyan-900;
     }
     &.das2{
-        background: $title-color;
+        background: variables.$title-color;
         
     }
     &.das3{
-        background: $success;
+        background: variables.$success;
     }
     h4 {
-        color: $white;
-        font-size: $font-size-24;
+        color: variables.$white;
+        font-size: variables.$font-size-24;
     }
     h5 {
-        color: $white;
-        font-size: $font-size-14;
-        font-weight: $font-weight-normal;
+        color: variables.$white;
+        font-size: variables.$font-size-14;
+        font-weight: variables.$font-weight-normal;
     }
     .dash-imgs{
 		display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
-        @include transition(all 0.5s ease);
+        @include mixins.transition(all 0.5s ease);
         img{
             width: 50px;
             height: 50px;
         }
         i{
-            font-size: $font-size-36;
-            color: $white;
+            font-size: variables.$font-size-36;
+            color: variables.$white;
         }
         svg{
             width: 50px;
@@ -111,7 +114,7 @@
     }
     &:hover{
         .dash-imgs{
-            @include transform(scale(1.25));
+            @include mixins.transform(scale(1.25));
         }
     }
 }
@@ -129,29 +132,29 @@
         align-items: center;
         -webkit-box-align: center;
         -ms-flex-align: center;
-        @include respond-below(custom991) {
+        @include mixins.respond-below(custom991) {
             display: none;
         }
         li{
             margin-right: 35px;
             span{
-                color: $gray-600;
-                font-weight: $font-weight-normal;
+                color: variables.$gray-600;
+                font-weight: variables.$font-weight-normal;
                 position: relative;
                 &:after{
                     content:"";
                     width:12px;
                     height: 12px;
-                    background-color: $success;
-                    @include rounded(50px);
-                    @include position(absolute,3px,null,null,-20px);
+                    background-color: variables.$success;
+                    @include mixins.rounded(50px);
+                    @include mixins.position(absolute,3px,null,null,-20px);
                 }
             }
             &:last-child{
                 margin-right: 16px;
                 span{
                     &:after{
-                        background-color: $danger-700;
+                        background-color: variables.$danger-700;
                     }
                 }
             }
@@ -164,19 +167,19 @@
         tbody {
             td.action-table-data {
                 a {
-                    @include rounded(8px);
-                    color: $blue;
+                    @include mixins.rounded(8px);
+                    color: variables.$blue;
                     svg, .feather-edit {
-                        color: $blue;
+                        color: variables.$blue;
                     }
                     .feather-trash-2 {
-                        color: $danger;
+                        color: variables.$danger;
                     }
                     &:hover {
-                        background: $light;
+                        background: variables.$light;
                     }
                     &.confirm-text {
-                        color: $danger;
+                        color: variables.$danger;
                     }
                 }
             }

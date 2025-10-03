@@ -1,3 +1,6 @@
+@use "../utils/mixins";
+@use "../utils/variables";
+
 .todo-inbox-check {
     margin-right: 15px;
     .checkboxs {
@@ -15,7 +18,7 @@
         input {
             &:checked {
                 ~ .checkmarks{
-                    border-color: $primary;
+                    border-color: variables.$primary;
                 }
             }
         }
@@ -25,13 +28,13 @@
     margin-left: 5px;
 }
 .notes-header h3 {
-    color: $secondary;
-    font-size: $font-size-18;
-    font-weight: $font-weight-bold;
+    color: variables.$secondary;
+    font-size: variables.$font-size-18;
+    font-weight: variables.$font-weight-bold;
     margin-bottom: 0;
 }
 .daterangepicker .ranges li.active  {
-    background-color: $primary !important;
+    background-color: variables.$primary !important;
 }
 .todo-inbox-check .checkboxs .checkmarks:after {
     left: 7px;
@@ -48,7 +51,7 @@
     .todo-drop-down {
         span {
             i {
-                color: $secondary;
+                color: variables.$secondary;
             }
         }
     }
@@ -62,13 +65,13 @@
             svg {
                 width: 16px;
                 height: 16px;
-                color: $text-color;
+                color: variables.$text-color;
             }
         }
         h3 {
-            font-size: $font-size-16;
-            font-weight: $font-weight-semibold;
-            color: $secondary;
+            font-size: variables.$font-size-16;
+            font-weight: variables.$font-weight-semibold;
+            color: variables.$secondary;
             margin-bottom: 0;
             margin-right: 5px;
         }
@@ -78,11 +81,11 @@
             justify-content: center;
             width: 18px;
             height: 18px;
-            background-color: $primary;
+            background-color: variables.$primary;
             border-radius: 50px;
-            color: $white;
+            color: variables.$white;
             font-size: 10px;
-            font-weight: $font-weight-semibold;
+            font-weight: variables.$font-weight-semibold;
             margin-bottom: 0;
         }
     }
@@ -91,11 +94,11 @@
     padding: 15px;
     border-radius: 8px;
     border: 1px solid  rgba(145, 158, 171, 0.30);
-    background:  $white;
+    background:  variables.$white;
     display: flex;
     align-items: center;
     margin-bottom: 10px;
-    @include respond-below(custom575) {
+    @include mixins.respond-below(custom575) {
         flex-direction: column;
     }
     .todo-inbox-check {
@@ -103,21 +106,21 @@
         align-items: center;
         .todo-wrapper-list-content {
             h4 {
-                font-size: $font-size-16;
-                font-weight: $font-weight-bold;
-                color: $secondary;
+                font-size: variables.$font-size-16;
+                font-weight: variables.$font-weight-bold;
+                color: variables.$secondary;
                 margin-bottom: 5px;
             }
             p {
                 font-size: 13px;
-                font-weight: $font-weight-medium;
-                color: $text-color;
+                font-weight: variables.$font-weight-medium;
+                color: variables.$text-color;
                 margin-bottom: 0;
             }
         }
         &.todo-inbox-check-list {
             width: 45%;
-            @include respond-below(custom575) {
+            @include mixins.respond-below(custom575) {
                 width: auto;
             }
             .checkboxs {
@@ -131,7 +134,7 @@
     }   
     .notes-card-body {
         width: 35%;
-        @include respond-below(custom575) {
+        @include mixins.respond-below(custom575) {
             width: auto;
             margin: 20px 0;
         }
@@ -140,44 +143,44 @@
             align-items: center;
             &.high {
                 border-radius: 8px;
-                border: 1px solid $danger;
+                border: 1px solid variables.$danger;
                 padding: 4px 10px;
-                font-size: $font-size-14;
-                font-weight: $font-weight-semibold;
-                color: $danger;
+                font-size: variables.$font-size-14;
+                font-weight: variables.$font-weight-semibold;
+                color: variables.$danger;
                 margin-right: 10px;
             }
             &.medium {
                 padding: 4px 10px;
                 border-radius: 8px;
                 border: 1px solid #423B93;
-                font-size: $font-size-14;
-                font-family: $font-weight-semibold;
+                font-size: variables.$font-size-14;
+                font-family: variables.$font-weight-semibold;
                 color: #423B93;
             }
             &.pending {
                 padding: 4px 10px;
                 border-radius: 8px;
                 border: 1px solid #288EC7;
-                font-size: $font-size-14;
-                font-family: $font-weight-semibold;
+                font-size: variables.$font-size-14;
+                font-family: variables.$font-weight-semibold;
                 color: #288EC7;
             }
             &.low {
                 padding: 4px 10px;
                 border-radius: 8px;
-                border: 1px solid $warning;
-                font-size: $font-size-14;
-                font-family: $font-weight-semibold;
-                color: $warning;                
+                border: 1px solid variables.$warning;
+                font-size: variables.$font-size-14;
+                font-family: variables.$font-weight-semibold;
+                color: variables.$warning;                
             }
             &.success {
                 padding: 4px 10px;
                 border-radius: 8px;
-                border: 1px solid $success;
-                font-size: $font-size-14;
-                font-family: $font-weight-semibold;
-                color: $success;                
+                border: 1px solid variables.$success;
+                font-size: variables.$font-size-14;
+                font-family: variables.$font-weight-semibold;
+                color: variables.$success;                
             }
             i {
                 &.fa-circle{
@@ -207,7 +210,7 @@
         }
         a {
             .fa-ellipsis-v {
-                color: $secondary;
+                color: variables.$secondary;
             }
         }
     }
@@ -226,7 +229,7 @@
             width: 16px;
             height: 16px;
             right: 5px !important;
-            color: $text-color;
+            color: variables.$text-color;
         } 
     }   
 }
@@ -255,7 +258,7 @@
                 a {
                     span {
                         i {
-                            color: $text-color;
+                            color: variables.$text-color;
                         }
                     }
                 }

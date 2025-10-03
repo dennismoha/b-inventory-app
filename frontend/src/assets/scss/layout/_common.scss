@@ -1,35 +1,38 @@
+@use "../utils/mixins";
+@use "../utils/variables";
+
 ::-webkit-scrollbar {
     width: 5px;
     height: 5px;
     border-radius: 50px !important;
 }
 ::-webkit-scrollbar-track {
-    background: $gray-300;
+    background: variables.$gray-300;
 }
 ::-webkit-scrollbar-thumb {
-    background: $primary;
+    background: variables.$primary;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: $gray-300;
+    background: variables.$gray-300;
 }
 .swal2-header{
     .swal2-title{
-        font-size: $font-size-18;
+        font-size: variables.$font-size-18;
     }
 }
 .none{
     display: none !important;
 }
 .text-red{
-    color: $danger !important;
+    color: variables.$danger !important;
 }
 .text-green{
-    color: $success !important;
+    color: variables.$success !important;
 }
 .input-blocks{
     input[type=text]{
         &:focus{
-            border-color: $input-border;
+            border-color: variables.$input-border;
         }
     }
 }
@@ -44,14 +47,14 @@
         justify-content: center;
         -webkit-justify-content: center;
         -ms-flex-pack: center;
-        background: $primary;
+        background: variables.$primary;
         border-radius: 5px !important;
         width: 40px;
-        color: $white;
-        font-weight: $font-weight-semibold;
+        color: variables.$white;
+        font-weight: variables.$font-weight-semibold;
         padding: 0;
         &:hover{
-            background: $title-color;
+            background: variables.$title-color;
         }
     }
 }
@@ -61,33 +64,33 @@
     border-radius: 50px !important;
 }
 ::-webkit-scrollbar-track {
-    background: $gray-300;
+    background: variables.$gray-300;
 }
 ::-webkit-scrollbar-thumb {
-    background: $primary;
+    background: variables.$primary;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: $gray-300;
+    background: variables.$gray-300;
 }
 .swal2-header{
     .swal2-title{
-        font-size: $font-size-18;
+        font-size: variables.$font-size-18;
     }
 }
 .none{
     display: none !important;
 }
 .text-red{
-    color: $danger !important;
+    color: variables.$danger !important;
 }
 .text-green{
-    color: $success !important;
+    color: variables.$success !important;
 }
 
 .input-blocks{
     input[type=text]{
         &:focus{
-            border-color: $input-border;
+            border-color: variables.$input-border;
         }
     }
 }
@@ -105,39 +108,39 @@
     .breadcrumb {
         margin-bottom: 0;
     }
-    @include respond-below(custom575) {
+    @include mixins.respond-below(custom575) {
         margin-bottom: 20px;
         flex-direction: column;
         align-items: self-start;
     }
     h3{
-        font-weight: $font-weight-bold;
-        color: $secondary;
-        font-size: $font-size-18;
-        @include respond-below(custom991) {
-            font-size: $font-size-base;
+        font-weight: variables.$font-weight-bold;
+        color: variables.$secondary;
+        font-size: variables.$font-size-18;
+        @include mixins.respond-below(custom991) {
+            font-size: variables.$font-size-base;
         }
     }
     h4 {
         margin-bottom: 5px;
-        @include respond-below(custom991) {
-            font-size: $font-size-18;
+        @include mixins.respond-below(custom991) {
+            font-size: variables.$font-size-18;
         }
     }
     h6 {
-        font-size: $font-size-base;
-        color: $gray-600;
-        font-weight: $font-weight-normal;
-        @include respond-below(custom991) {
-            font-size: $font-size-12;
+        font-size: variables.$font-size-base;
+        color: variables.$gray-600;
+        font-weight: variables.$font-weight-normal;
+        @include mixins.respond-below(custom991) {
+            font-size: variables.$font-size-12;
         }
-        @include respond-below(custom575) {
-            font-size: $font-size-12;
+        @include mixins.respond-below(custom575) {
+            font-size: variables.$font-size-12;
             margin-bottom: 20px;
         }
     }
     .btn-filter {
-        background: $primary;
+        background: variables.$primary;
         width: 34px;
         height: 34px;
         display: -webkit-box;
@@ -151,12 +154,12 @@
         -ms-flex-pack: center;
         padding: 0;
         &:hover{
-            background: linear-gradient(46.62deg, $primary 0%, $violet 93.64%);
+            background: linear-gradient(46.62deg, variables.$primary 0%, variables.$violet 93.64%);
         }
     }
     .page-btn {
         margin-left: 8px;
-        @include respond-below(custom575) {
+        @include mixins.respond-below(custom575) {
             margin-left: 0;
             margin-top: 10px;
         }
@@ -168,20 +171,20 @@
         align-items: center;
         -webkit-box-align: center;
         -ms-flex-align: center;
-        background: $primary;
+        background: variables.$primary;
         padding: 5px 8px;
-        color: $white;
-        font-weight: $font-weight-medium;
-        font-size: $font-size-13;
+        color: variables.$white;
+        font-weight: variables.$font-weight-medium;
+        font-size: variables.$font-size-13;
         border-radius: 8px;
         &:active {
-            color: $white;
+            color: variables.$white;
         }
         img{
             filter: brightness(0) invert(1);
         }
         &:hover{
-            background: $title-color;
+            background: variables.$title-color;
         }
         .me-2 {
             width: 16px;
@@ -195,21 +198,21 @@
         align-items: center;
         -webkit-box-align: center;
         -ms-flex-align: center;
-        background: $secondary;
+        background: variables.$secondary;
         padding: 9px 11px;
-        color: $white;
-        font-weight: $font-weight-bold;
-        font-size: $font-size-14;
+        color: variables.$white;
+        font-weight: variables.$font-weight-bold;
+        font-size: variables.$font-size-14;
         border-radius: 8px;
         margin: 0 15px 0 15px;
         img{
             filter: brightness(0) invert(1);
         }
-        @include respond-below(custom991) {
+        @include mixins.respond-below(custom991) {
             padding: 10px 10px; 
         }
         &:hover{
-            background: $primary;
+            background: variables.$primary;
         }
         .me-2 {
             width: 16px;
@@ -223,20 +226,20 @@
         align-items: center;
         -webkit-box-align: center;
         -ms-flex-align: center;
-        background: $danger;
+        background: variables.$danger;
         padding: 9px 11px;
-        color: $white;
-        font-weight: $font-weight-bold;
-        font-size: $font-size-14;
+        color: variables.$white;
+        font-weight: variables.$font-weight-bold;
+        font-size: variables.$font-size-14;
         border-radius: 8px;
         img{
             filter: brightness(0) invert(1);
         }
-        @include respond-below(custom991) {
+        @include mixins.respond-below(custom991) {
             padding: 10px 10px; 
         }
         &:hover{
-            background: $secondary;
+            background: variables.$secondary;
         }
         .me-2 {
             width: 16px;
@@ -244,14 +247,14 @@
         }
     }
     .add-item {
-        @include respond-below(custom767) {
+        @include mixins.respond-below(custom767) {
             display: block !important;
             .page-btn {
                 margin-left: 0;
             }
         }
         .page-btn {
-            @include respond-below(custom575) {
+            @include mixins.respond-below(custom575) {
                  margin-left: 0;
                  margin-bottom: 24px;
             }
@@ -277,7 +280,7 @@
     padding: 24px;
     margin-bottom: 0;
     border-radius: 8px 8px 0px 0px;
-    background: $body-bg;
+    background: variables.$body-bg;
 }
 
 .table-top {
@@ -291,7 +294,7 @@
     -webkit-justify-content: space-between;
     -ms-flex-pack: space-between;
     margin-bottom: 25px;
-    @include respond-below(custom575) {
+    @include mixins.respond-below(custom575) {
         flex-wrap: wrap;
         flex-direction: column;
         align-items: flex-start;
@@ -308,36 +311,36 @@
     align-items: center;
     -webkit-box-align: center;
     -ms-flex-align: center;
-    @include respond-below(custom575){
+    @include mixins.respond-below(custom575){
         width: 100%;
     }
     .search-input{
         position: relative;
-        @include respond-below(custom575) {
+        @include mixins.respond-below(custom575) {
             width: 100%;
         }    
         input[type="search"] {
             height: 38px;
-            @include rounded(8px);
+            @include mixins.rounded(8px);
             padding: 0.45rem 0.85rem 0.45rem 1.875rem;
-            font-size: $font-size-14;
+            font-size: variables.$font-size-14;
             &::placeholder {
-                color: $gray-300;
+                color: variables.$gray-300;
                 opacity: 1;
             }
-            @include respond-below(custom1199) {
+            @include mixins.respond-below(custom1199) {
                 width: 220px;
             }
-            @include respond-below(custom991) {
+            @include mixins.respond-below(custom991) {
                 width: 200px;
             }
-            @include respond-below(custom575) {
+            @include mixins.respond-below(custom575) {
                 width: 100%;
             }
         }
         .btn-searchset {
-            @include margin-padding(null, null);
-            @include rounded(50px);
+            @include mixins.margin-padding(null, null);
+            @include mixins.rounded(50px);
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
@@ -347,27 +350,27 @@
             .feather-search {
                 width: 14px;
                 height: 14px;
-                color: $gray-300;
+                color: variables.$gray-300;
             }
         }
     }
 }
 .search-path {
     margin-left: auto;
-    @include respond-below(custom575) {
+    @include mixins.respond-below(custom575) {
         margin-right: 0;
         margin-left: 0;
     }
-    @include respond-below(custom575) {
+    @include mixins.respond-below(custom575) {
         margin-top: 24px;
     }
     .info-img {
         width: 16px;
         height: 16px;
-        color: $white;
+        color: variables.$white;
     }
     .btn-filter {
-        background: $primary;
+        background: variables.$primary;
         width: 36px;
         height: 36px;
         display: -webkit-box;
@@ -385,10 +388,10 @@
             display: none;
         }
         &:hover{
-            background: $title-color;
+            background: variables.$title-color;
         }
         &.setclose{
-            background: $danger;
+            background: variables.$danger;
             >img {
                 display:none;
             }
@@ -419,11 +422,11 @@
         height: 16px;
         left: 0;
         margin-left: 10px;
-        color: $text-color;
+        color: variables.$text-color;
         transform: translateY(-50%);
         line-height: normal;
     }
-    @include respond-below(custom575) {
+    @include mixins.respond-below(custom575) {
         margin-top: 24px;
     }
 }
@@ -441,7 +444,7 @@
         -webkit-box-align: center;
         -ms-flex-align: center;
         li {
-            @include margin-padding(0 10px,null);
+            @include mixins.margin-padding(0 10px,null);
             a{
                 display: block;
             }
@@ -471,13 +474,13 @@
         height: 0;
         width: 0;
         & ~ .checkmarks {
-            border: 1px solid $secondary-transparent;
-            background-color: $white;
+            border: 1px solid variables.$secondary-transparent;
+            background-color: variables.$white;
             border-radius: 5px;
           }
           &:checked ~ .checkmarks {
-            background-color: $primary;
-            border-color: $primary;
+            background-color: variables.$primary;
+            border-color: variables.$primary;
           }
           &:checked ~ .checkmarks:after {
             display: block;
@@ -486,7 +489,7 @@
     .checkmarks {
         height: 16px;
         width: 16px;
-        @include position(absolute,0,null,null,0);
+        @include mixins.position(absolute,0,null,null,0);
         &:after {
             content: "";
             position: absolute;
@@ -497,9 +500,9 @@
             top: 2px;
             width: 5px;
             height: 8px;
-            border: solid $white;
+            border: solid variables.$white;
             border-width: 0 2px 2px 0;
-            @include transform(rotate(45deg));
+            @include mixins.transform(rotate(45deg));
           }
     }
 }
@@ -521,7 +524,7 @@ th,td {
     margin-bottom: 35px;
     border-radius: 5px;
     &:hover{
-        background:$gray-100;
+        background:variables.$gray-100;
     }
     &.image-upload-two {
         margin-bottom: 0;
@@ -539,18 +542,18 @@ th,td {
         position: relative;
         z-index: 9;
         cursor: pointer;
-        color: $gray-300;
+        color: variables.$gray-300;
     }
     .image-uploads {
         text-align: center;
         width: 100%;
-        @include margin-padding(null, 20px 0);
-        @include rounded(5px);
-        @include position(absolute,0,null,null,null);
+        @include mixins.margin-padding(null, 20px 0);
+        @include mixins.rounded(5px);
+        @include mixins.position(absolute,0,null,null,null);
         h4 {
-            font-size: $font-size-base;
-            font-weight: $font-weight-medium;
-            color: $gray-300;
+            font-size: variables.$font-size-base;
+            font-weight: variables.$font-weight-medium;
+            color: variables.$gray-300;
         }
     }
     &.image-upload-new{
@@ -574,7 +577,7 @@ th,td {
 }
 .checktoggle {
     background-color: rgba(115, 103, 240, 0.2);
-    @include rounded(12px);
+    @include mixins.rounded(12px);
     cursor: pointer;
     display: block;
     font-size: 0;
@@ -588,15 +591,15 @@ th,td {
         transform: translate(2px, -50%);
         width: 10px;
         height: 10px;
-        background-color:$white;
+        background-color:variables.$white;
         transition: left 300ms ease, transform 300ms ease;
-        @include rounded( 50%);
-        @include transform(translate(2px,-50%));
-        @include position(absolute,50%,null,null,0);
+        @include mixins.rounded( 50%);
+        @include mixins.transform(translate(2px,-50%));
+        @include mixins.position(absolute,50%,null,null,0);
     }
 }
 .check:checked + .checktoggle:after {
-    background-color: $white;
+    background-color: variables.$white;
     left: 100%;
     transform: translate(calc(-90% - 3px), -45%);
 }
@@ -612,7 +615,7 @@ th,td {
     position: absolute;
     &:checked + {
         .checktoggle {
-            background-color:$success;
+            background-color:variables.$success;
         }
     }
 }
@@ -660,7 +663,7 @@ th,td {
         height: 12px;
         right: 10px;
         margin-left: 10px;
-        color: $gray-900;
+        color: variables.$gray-900;
         transform: translateY(-50%);
         line-height: normal;
     }
@@ -669,12 +672,12 @@ th,td {
     }
     label{
         margin-bottom: 8px;
-        color: $gray-900;
-        font-weight: $font-weight-medium;
-        font-size: $font-size-base;
+        color: variables.$gray-900;
+        font-weight: variables.$font-weight-medium;
+        font-size: variables.$font-size-base;
         display: block;
         .manitory{
-            color: $danger;
+            color: variables.$danger;
         }
     }
     .input-groupicon{
@@ -684,8 +687,8 @@ th,td {
             right: 12px;
             top: 50%;
             line-height: 0;
-            @include transform(translateY(-50%));
-            @include respond-below(custom991) {
+            @include mixins.transform(translateY(-50%));
+            @include mixins.respond-below(custom991) {
                display: none;
             }
         }
@@ -718,12 +721,12 @@ th,td {
         
     } */
     .display-btn {
-        color: $white;
+        color: variables.$white;
         border-radius: 8px;
-        background: $secondary;
+        background: variables.$secondary;
         padding: 10px 34px;
-        font-size:$font-size-base;
-        font-weight: $font-weight-bold;
+        font-size:variables.$font-size-base;
+        font-weight: variables.$font-weight-bold;
         .info-img {
             position: absolute;
             top: 50%;
@@ -733,7 +736,7 @@ th,td {
             left: 5px;
             margin-left: 10px;
             margin-right: 8px;
-            color: $white;
+            color: variables.$white;
             transform: translateY(-50%);
             line-height: normal;
         }
@@ -748,18 +751,18 @@ th,td {
         justify-content: center;
         -webkit-justify-content: center;
         -ms-flex-pack: center;
-        background: $primary;
-        color: $white;
+        background: variables.$primary;
+        color: variables.$white;
         width: 89px;
         height: 38px;
         border-radius: 8px;
         padding: 0;
         &:hover{
-            background: $title-color;
+            background: variables.$title-color;
         }
         &:active {
-            color: $white;
-            background: $title-color;
+            color: variables.$white;
+            background: variables.$title-color;
         }
         .feather-search {
             width: 16px;
@@ -771,11 +774,11 @@ th,td {
         border:1px solid rgba(145, 158, 171, 0.32);
         height: 100px;
         width: 100%;
-        font-size: $font-size-base;
-        font-weight: $font-weight-normal;
-        color: $black;;
-        @include margin-padding(null, 10px 15px);
-        @include rounded(5px);
+        font-size: variables.$font-size-base;
+        font-weight: variables.$font-weight-normal;
+        color: variables.$black;;
+        @include mixins.margin-padding(null, 10px 15px);
+        @include mixins.rounded(5px);
     }
     .text-form {
         width: 100%;
@@ -808,30 +811,30 @@ th,td {
 }
 .search-input {
   label{
-    @include respond-below(custom575){
+    @include mixins.respond-below(custom575){
         width: 100%;
     }
     }
 }
 .table-dropdown{
-    @include respond-below(custom575){
+    @include mixins.respond-below(custom575){
      display:  block !important;
      width: 100%;
     }
     .dropdown {
-        @include respond-below(custom575){
+        @include mixins.respond-below(custom575){
         width: 100%;
         margin-right: 0 !important;
         margin-bottom:10px;
        }
         a{
-            @include respond-below(custom575){
+            @include mixins.respond-below(custom575){
                 width: 100%;
             }
         }
         .dropdown-menu{
             padding: 0 !important;
-            @include respond-below(custom575){
+            @include mixins.respond-below(custom575){
                 width: 100%;
             }    
         }
@@ -839,7 +842,7 @@ th,td {
 }
 .dropdown {
 .dropdown-toggle.show::after{
-    color: $white;
+    color: variables.$white;
 }
 }
 .add-image-upload {
@@ -853,7 +856,7 @@ th,td {
  .add-image {
     width: 120px;
     height: 120px;
-    border: 1px dashed $secondary-transparent;
+    border: 1px dashed variables.$secondary-transparent;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -902,17 +905,17 @@ th,td {
     }
     .badge.table-badge.bg-light{
         &::before{
-            background-color: $gray-900;
+            background-color: variables.$gray-900;
         }
     }
     .input-blocks.seacrh-barcode-item{
         input{
-            border: 1px solid $secondary-transparent !important;
+            border: 1px solid variables.$secondary-transparent !important;
             padding: 10px 10px 10px 32px;
-            color: $gray-900;
+            color: variables.$gray-900;
             box-shadow: none;
             &::placeholder{
-                color: $gray-300 !important; 
+                color: variables.$gray-300 !important; 
             }
         }
     }
@@ -933,9 +936,9 @@ th,td {
         }
     }
 }
-$cyan:#06AED4;
+variables.$cyan:#06AED4;
 .badge-pending{
-    background-color: $cyan !important;
+    background-color: variables.$cyan !important;
 }
 .badges.status-badge{
     font-size: 10px;
@@ -963,7 +966,7 @@ $cyan:#06AED4;
 }
 .purple-badge{
     background-color: #F2EDFE;
-    color: $purple;
+    color: variables.$purple;
     line-height: normal;
 }
 .input-blocks{
@@ -975,10 +978,10 @@ $cyan:#06AED4;
 }
 .total-order{
     ul{
-        border: 1px solid $secondary-transparent;
+        border: 1px solid variables.$secondary-transparent;
     }
     li{
-        border-bottom: 1px solid $secondary-transparent;
+        border-bottom: 1px solid variables.$secondary-transparent;
     }
 }
 .dataTables_paginate {
@@ -987,9 +990,9 @@ $cyan:#06AED4;
     }
         .ellipsis{
             margin-left: 8px;
-            color: $gray-600;
-            font-weight: $font-weight-bold;
-            @include respond-below(custom767){
+            color: variables.$gray-600;
+            font-weight: variables.$font-weight-bold;
+            @include mixins.respond-below(custom767){
              margin: 0 4px;
             }
         }
@@ -1013,8 +1016,8 @@ $cyan:#06AED4;
            background-color: rgba(145, 158, 171, 0.3);
         }
         .nav-link.active{
-            background-color: $primary;
-            color: $white;
+            background-color: variables.$primary;
+            color: variables.$white;
            }
     }
 }
@@ -1026,20 +1029,20 @@ $cyan:#06AED4;
     position: absolute;
     left: 10px;
     bottom: 13px;
-    color: $gray-900;
+    color: variables.$gray-900;
    }
 }
 .input-groupicon.calender-input.balance-sheet-date{
     input{
-        font-size: $font-size-13;
+        font-size: variables.$font-size-13;
         padding: 7px 12px 7px 30px;
-        border: 1px solid $secondary-transparent;
+        border: 1px solid variables.$secondary-transparent;
         border-radius: 5px;
-        color: $gray-900;
+        color: variables.$gray-900;
         min-width: 212px;
         width: 100%;
         &::placeholder{
-            color: $gray-900;
+            color: variables.$gray-900;
             opacity: 1; 
         }
     }
@@ -1085,8 +1088,8 @@ $cyan:#06AED4;
         height: 16px;
         border: 0;
         font-weight: 700;
-        background-color: $danger;
-        color: $white;
+        background-color: variables.$danger;
+        color: variables.$white;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -1094,7 +1097,7 @@ $cyan:#06AED4;
     .profile-pic-upload{
    .profile-pic{
     border-style: solid;
-    @include respond-below(custom575){
+    @include mixins.respond-below(custom575){
         margin-right: 12px;
        }
    }
@@ -1123,7 +1126,7 @@ $cyan:#06AED4;
     -webkit-justify-content: center;
     -ms-flex-pack: center;
     &.low-stock-top-head {
-        @include respond-below(custom575) {
+        @include mixins.respond-below(custom575) {
             flex-wrap: wrap;  
            justify-content: start;
         }
@@ -1142,7 +1145,7 @@ $cyan:#06AED4;
         }
         #collapse-header {
             margin-right: 0;
-            @include respond-below(custom991) {
+            @include mixins.respond-below(custom991) {
                 display: none;
             }
         }
@@ -1158,19 +1161,19 @@ $cyan:#06AED4;
             justify-content: center;
             -webkit-justify-content: center;
             -ms-flex-pack: center;
-            border: 1px solid $secondary-transparent;
-            background: $white;
+            border: 1px solid variables.$secondary-transparent;
+            background: variables.$white;
             border-radius: 5px;
             padding: 4px;
             img{
                 width: 20px;
             }
             svg {
-                color: $secondary;
+                color: variables.$secondary;
             }
             &.btn-primary {
                 svg {
-                    color: $white;
+                    color: variables.$white;
                 }
             }
             &:hover {
@@ -1180,25 +1183,25 @@ $cyan:#06AED4;
                 margin-right: 10px;
             }
             &.btn-secondary {
-                background-color: $secondary;
-                color: $white;
+                background-color: variables.$secondary;
+                color: variables.$white;
                 padding: 3px 11px;
-                font-weight: $font-weight-medium;
-                font-size: $font-size-13;
+                font-weight: variables.$font-weight-medium;
+                font-size: variables.$font-size-13;
                 &:hover {
-                    background-color: $primary;
+                    background-color: variables.$primary;
                 }
                 svg {
                     width: 16px;
                     margin-right: 5px;
-                    color: $white;
+                    color: variables.$white;
                 }
-                @include respond-below(custom767) {
-                    font-size: $font-size-base;
+                @include mixins.respond-below(custom767) {
+                    font-size: variables.$font-size-base;
                 }
             }
             .action-edit.sales-action {
-                color: $blue;
+                color: variables.$blue;
             }
         }
         .status-toggle {
@@ -1212,8 +1215,8 @@ $cyan:#06AED4;
             justify-content: center;
             -webkit-justify-content: center;
             -ms-flex-pack: center;
-            border: 1px solid $gray-100;
-            background: $white;
+            border: 1px solid variables.$gray-100;
+            background: variables.$white;
             border-radius: 8px;
             padding: 6px 10px;
             label {

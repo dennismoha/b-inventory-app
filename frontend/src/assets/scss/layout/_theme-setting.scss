@@ -1,3 +1,6 @@
+@use "../utils/mixins";
+@use "../utils/variables";
+
 .sidebar-contact {
     position: fixed;
     top: 0%;
@@ -5,7 +8,7 @@
      transform: translateY(-50%); 
     width: 350px;
     height: auto;
-    background: $white;
+    background: variables.$white;
     box-sizing: border-box;
     transition: 0.5s;
     z-index: 9999;
@@ -14,16 +17,16 @@
         width: 48px;
         text-align: center;
         cursor: pointer;
-        background: $primary;
+        background: variables.$primary;
         top: 225px;
         right: 10px;
         height: 48px;
-        color: $white;
+        color: variables.$white;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: $font-size-18;
+        font-size: variables.$font-size-18;
         .fa-spin {
             -webkit-animation: fa-spin 2s infinite linear;
             animation: fa-spin 2s infinite linear;
@@ -34,7 +37,7 @@
 #theme-settings{
     width: 26px;
     height: 26px;
-    border: 1px solid $gray-200;
+    border: 1px solid variables.$gray-200;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -55,13 +58,13 @@
         right: 0; 
     }
     .offcanvas-header{
-        border-bottom: 1px solid $gray-200;
+        border-bottom: 1px solid variables.$gray-200;
         position: relative;
         border-radius: 10px 0 0 0;
     }
     .themecard-body{
         .themesettings-content{
-            border-bottom: 1px solid $gray-200;
+            border-bottom: 1px solid variables.$gray-200;
             margin-bottom: 15px;
             h6{
                 font-size: 14px;
@@ -72,10 +75,10 @@
         }
     }
     .input-themeselect{
-        background: $light-500;
+        background: variables.$light-500;
         padding: 10px;
         border-radius: 10px;
-        border:1px solid $gray-200;
+        border:1px solid variables.$gray-200;
         margin-bottom: 15px;
         input[type="radio"]{
             display: none;
@@ -83,8 +86,8 @@
                 ~ label{
                     .checkboxs-theme{
                         &:after{
-                            background-color: $purple;
-                            border-color: $purple;
+                            background-color: variables.$purple;
+                            border-color: variables.$purple;
                             content: "";
                         }
                         &::before{
@@ -125,8 +128,8 @@
         font-weight: 600;
         &::after {
             content: "\f077";
-            background: $white;
-            font-size: $font-size-10;
+            background: variables.$white;
+            font-size: variables.$font-size-10;
             width: 18px;
             height: 18px;
         }
@@ -154,7 +157,7 @@
         height: 34px;
         border-radius: 50%;
         position: relative;
-        border: 1px solid $gray-200;
+        border: 1px solid variables.$gray-200;
         position: relative;
         &::before {
             width: 24px;
@@ -168,37 +171,37 @@
         }
         &.primary-clr{
             &::before {
-                background: $primary;
+                background: variables.$primary;
             }
         }
         &.theme-color-1 {
             &::before {
-                background: $theme-color-1;
+                background: variables.$theme-color-1;
             }
         }
         &.theme-color-2 {
             &::before {
-                background: $theme-color-2;
+                background: variables.$theme-color-2;
             }
         }
         &.theme-color-3 {
             &::before {
-                background: $theme-color-3;
+                background: variables.$theme-color-3;
             }
         }
         &.theme-color-4 {
             &::before {
-                background: $theme-color-4;
+                background: variables.$theme-color-4;
             }
         }
         &.theme-color-5 {
             &::before {
-                background: $theme-color-5;
+                background: variables.$theme-color-5;
             }
         }
         &.theme-color-6 {
             &::before {
-                background: $orange;
+                background: variables.$orange;
             }
         }
     }
@@ -209,9 +212,9 @@
                 &:after{
                     content: "\f00c";
                     font-family: "Fontawesome";
-                    color: $white;
+                    color: variables.$white;
                     font-weight: 700;
-                    font-size: $font-size-8;
+                    font-size: variables.$font-size-8;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -221,7 +224,7 @@
                     position: absolute;
                     width: 12px;
                     height: 12px;
-                    background: $success;
+                    background: variables.$success;
                     border-radius: 50%;
                 }
             }
@@ -231,7 +234,7 @@
         width: 34px;
         height: 34px;
         border-radius: 50%;
-        border: 1px solid $gray-200;
+        border: 1px solid variables.$gray-200;
         padding: 4px;
         .pickr {
             .pcr-button {
@@ -252,9 +255,9 @@
                 &:after{
                     content: "\f00c";
                     font-family: "Fontawesome";
-                    color: $white;
+                    color: variables.$white;
                     font-weight: 700;
-                    font-size: $font-size-8;
+                    font-size: variables.$font-size-8;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -264,12 +267,12 @@
                     position: absolute;
                     width: 18px;
                     height: 18px;
-                    background: $success;
+                    background: variables.$success;
                     border-radius: 50%;
                 }
                 &.primary-topbar,   &.dark-topbar {
                     &:after{
-                        color: $white;
+                        color: variables.$white;
                     }
                 }
             }
@@ -281,94 +284,94 @@
         border-radius: 5px;
         position: relative;
         outline-offset: 3px;
-        outline: 1px solid $gray-200;
+        outline: 1px solid variables.$gray-200;
         border-radius: 45px;
         &.bg-sidebar-color-1 {
-            background: $sidebar-color-1;
-            border-color: $sidebar-color-1;
+            background: variables.$sidebar-color-1;
+            border-color: variables.$sidebar-color-1;
         }
         &.bg-sidebar-color-2 {
-            background: $sidebar-color-2;
-            border-color: $sidebar-color-2;
+            background: variables.$sidebar-color-2;
+            border-color: variables.$sidebar-color-2;
         }
         &.bg-sidebar-color-3 {
-            background: $sidebar-color-3;
-            border-color: $sidebar-color-3;
+            background: variables.$sidebar-color-3;
+            border-color: variables.$sidebar-color-3;
         }
         &.bg-sidebar-color-4 {
-            background: $sidebar-color-4;
-            border-color: $sidebar-color-4;
+            background: variables.$sidebar-color-4;
+            border-color: variables.$sidebar-color-4;
         }
         &.bg-sidebar-color-5 {
-            background: $sidebar-color-5;
-            border-color: $sidebar-color-5;
+            background: variables.$sidebar-color-5;
+            border-color: variables.$sidebar-color-5;
         }
         &.bg-sidebar-color-6 {
-            background: $sidebar-color-6;
-            border-color: $sidebar-color-6;
+            background: variables.$sidebar-color-6;
+            border-color: variables.$sidebar-color-6;
         }
         &.bg-sidebar-color-7 {
-            background: $sidebar-color-7;
-            border-color: $sidebar-color-7;
+            background: variables.$sidebar-color-7;
+            border-color: variables.$sidebar-color-7;
         }
         &.bg-sidebar-color-8 {
-            background: $sidebar-color-8;
-            border-color: $sidebar-color-8;
+            background: variables.$sidebar-color-8;
+            border-color: variables.$sidebar-color-8;
         }
         &.bg-sidebar-color-9 {
-            background: $sidebar-color-9;
-            border-color: $sidebar-color-9;
+            background: variables.$sidebar-color-9;
+            border-color: variables.$sidebar-color-9;
         }
         &.bg-sidebar-color-10 {
-            background: $sidebar-color-10;
-            border-color: $sidebar-color-10;
+            background: variables.$sidebar-color-10;
+            border-color: variables.$sidebar-color-10;
         }
         &.bg-sidebar-color-11 {
-            background: $sidebar-color-11;
-            border-color: $sidebar-color-11;
+            background: variables.$sidebar-color-11;
+            border-color: variables.$sidebar-color-11;
         }
         &.bg-sidebar-color-12 {
-            background: $sidebar-color-12;
-            border-color: $sidebar-color-12;
+            background: variables.$sidebar-color-12;
+            border-color: variables.$sidebar-color-12;
         }
         &.bg-sidebar-color-13 {
-            background: $sidebar-color-13;
-            border-color: $sidebar-color-13;
+            background: variables.$sidebar-color-13;
+            border-color: variables.$sidebar-color-13;
         }
         &.bg-sidebar-color-14 {
-            background: $sidebar-color-14;
-            border-color: $sidebar-color-14;
+            background: variables.$sidebar-color-14;
+            border-color: variables.$sidebar-color-14;
         }
         &.white-topbar {
-            background: $white;
-            border: 1px solid $light;
+            background: variables.$white;
+            border: 1px solid variables.$light;
         }
         &.darkaqua-topbar {
-            background: $darkaqua;
+            background: variables.$darkaqua;
         }
         &.whiterock-topbar {
-            background: $whiterock;
+            background: variables.$whiterock;
         }
         &.rockblue-topbar {
-            background: $rockblue;
+            background: variables.$rockblue;
         }
         &.bluehaze-topbar {
-            background: $bluehaze;
+            background: variables.$bluehaze;
         }
         &.primary-topbar {
-            background: $primary;
+            background: variables.$primary;
         }
         &.blackpearl-topbar {
-            background: $blackpearl;
+            background: variables.$blackpearl;
         }
         &.maroon-topbar {
-            background: $maroon;
+            background: variables.$maroon;
         }
         &.bluegem-topbar {
-            background: $bluegem;
+            background: variables.$bluegem;
         }
         &.firefly-topbar {
-            background: $firefly;
+            background: variables.$firefly;
         }
     }
     .pickr-container-background, .pickr-topbar, .pickr-topbarcolor {
@@ -376,7 +379,7 @@
         height: 50px;
         border-radius: 45px;
         outline-offset: 3px;
-        outline: 1px solid $gray-200;
+        outline: 1px solid variables.$gray-200;
         .pickr {
             .pcr-button {
                 width: 25px;
@@ -400,9 +403,9 @@
                 &:after{
                     content: "\f00c";
                     font-family: "Fontawesome";
-                    color: $white;
+                    color: variables.$white;
                     font-weight: 700;
-                    font-size: $font-size-8;
+                    font-size: variables.$font-size-8;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -412,7 +415,7 @@
                     position: absolute;
                     width: 18px;
                     height: 18px;
-                    background: $success;
+                    background: variables.$success;
                     border-radius: 50%;
                 }
             }
@@ -421,12 +424,12 @@
     label {
         .layout-img {
             img {
-                border: 1px solid $gray-200;
-                @include rounded(5px);
+                border: 1px solid variables.$gray-200;
+                @include mixins.rounded(5px);
             }
         }
         .layout-type { 
-            color: $gray-900;
+            color: variables.$gray-900;
         }
         &:after {
             display: none;
@@ -434,8 +437,8 @@
     }
     .layout-img {
         img {
-            border: 1px solid $gray-200;
-            @include rounded(5px);
+            border: 1px solid variables.$gray-200;
+            @include mixins.rounded(5px);
         }
     }
 }
@@ -444,25 +447,25 @@
         display: none;
         &:checked{
             ~ label{
-                border-color: $light-900 !important;
-                background: $secondary-transparent;
-                color: $gray-900;
+                border-color: variables.$light-900 !important;
+                background: variables.$secondary-transparent;
+                color: variables.$gray-900;
                 span {
-                    color: $gray-900;
+                    color: variables.$gray-900;
                 }
             }
         }
     }
     label {
-        border: 1px solid $gray-200;
-        color: $gray-700;
+        border: 1px solid variables.$gray-200;
+        color: variables.$gray-700;
         padding: 8px 10px;
         .avatar {
-            background-color: $dark-transparent;
-            color: $dark;
+            background-color: variables.$dark-transparent;
+            color: variables.$dark;
         }
         span {
-            color: $gray-700;
+            color: variables.$gray-700;
         }
     }
 }
@@ -474,9 +477,9 @@
                 &:after{
                     content: "\f00c";
                     font-family: "Fontawesome";
-                    color: $white;
+                    color: variables.$white;
                     font-weight: 700;
-                    font-size: $font-size-8;
+                    font-size: variables.$font-size-8;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -486,11 +489,11 @@
                     position: absolute;
                     width: 12px;
                     height: 12px;
-                    background: $success;
+                    background: variables.$success;
                     border-radius: 50%;
                 }   
                 img {        
-                    box-shadow: $box-shadow-sm;
+                    box-shadow: variables.$box-shadow-sm;
                 }     
             }
         }
@@ -516,9 +519,9 @@
                 &:after{
                     content: "\f00c";
                     font-family: "Fontawesome";
-                    color: $white;
+                    color: variables.$white;
                     font-weight: 700;
-                    font-size: $font-size-8;
+                    font-size: variables.$font-size-8;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -528,11 +531,11 @@
                     position: absolute;
                     width: 18px;
                     height: 18px;
-                    background: $success;
+                    background: variables.$success;
                     border-radius: 50%;
                 }   
                 img {        
-                    box-shadow: $box-shadow-sm;
+                    box-shadow: variables.$box-shadow-sm;
                 }     
             }
         }
@@ -545,7 +548,7 @@
             width: 100px;
             height: 50px;
             object-fit: cover;
-            @include rounded(10px);
+            @include mixins.rounded(10px);
         }
     }
 }
@@ -554,20 +557,20 @@
         display: none;
         &:checked{
             ~ label{
-                border-color: $light-900 !important;
-                background: $secondary-transparent;
-                color: $gray-900;
+                border-color: variables.$light-900 !important;
+                background: variables.$secondary-transparent;
+                color: variables.$gray-900;
                 span {
-                    color: $gray-900;
+                    color: variables.$gray-900;
                 }
             }
         }
     }
     label {
-        border: 1px solid $gray-200;
+        border: 1px solid variables.$gray-200;
         padding: 8px 10px;
         position: relative;
-        color: $gray-700;
+        color: variables.$gray-700;
     }
 }
 .theme-sidebarcolor {
@@ -575,12 +578,12 @@
         display: none;
         &:checked{
             ~ label{                
-                border-color: $primary !important;
+                border-color: variables.$primary !important;
                 position: relative;
                 &:after{
                     content: "\f058";
                     font-family: "Fontawesome";
-                    color: $primary;
+                    color: variables.$primary;
                     font-weight: 700;
                     font-size: 12px;
                     display: flex;
@@ -593,7 +596,7 @@
                 }
                 &.bg-dark {
                     &:after{
-                        color: $white;
+                        color: variables.$white;
                     }
                 }
             }
@@ -602,7 +605,7 @@
     label {        
         width: 29px;
         height: 46px;
-        border: 1px solid $gray-200;
+        border: 1px solid variables.$gray-200;
     }
 }
 .theme-container-primary,
@@ -640,41 +643,41 @@
 .custom-btn-close {
     width: 20px;
     height: 20px;
-    @include rounded(50%);
-    background-color: $gray-500;
-    color: $white;
+    @include mixins.rounded(50%);
+    background-color: variables.$gray-500;
+    color: variables.$white;
     margin: 0;
     padding: 0;
     background-image: none;
     &:hover {
-        background-color: $danger;
+        background-color: variables.$danger;
     }
 }
 [data-color=all] {
     .theme-colorsset {
         .pickr-container-primary {
-            border-color: $primary;
+            border-color: variables.$primary;
         }
     }
 }
 [data-topbarcolor=all] {
     .theme-colorselect {
         .pickr-topbarcolor {
-            outline-color: $primary;
+            outline-color: variables.$primary;
         }
     }
 }
 [data-topbar=all] {
     .theme-colorselect {
         .pickr-topbar {
-            outline-color: $primary;
+            outline-color: variables.$primary;
         }
     }
 }
 [data-sidebar=all] {
     .theme-colorselect {
         .pickr-container-background {
-            outline-color: $primary;
+            outline-color: variables.$primary;
         }
     }
 }
@@ -691,41 +694,41 @@
     }
     label {
         &.topbar-bg-1 {
-            background: $light-200;
+            background: variables.$light-200;
         }
         &.topbar-bg-2 {
-            background: $secondary-transparent;
+            background: variables.$secondary-transparent;
         }
         &.topbar-bg-3 {
-            background: $gray-100;
+            background: variables.$gray-100;
         }
         &.topbar-bg-4 {
-            background: $orange-100;
+            background: variables.$orange-100;
         }
     }
 }
 .theme-colorsset {
     label {
         &.bg-topbar-color-1::before {
-            background: $sidebar-color-1;
+            background: variables.$sidebar-color-1;
         }
         &.bg-topbar-color-2::before {
-            background: $sidebar-color-3;
+            background: variables.$sidebar-color-3;
         }
         &.bg-topbar-color-3::before {
-            background: $sidebar-color-5;
+            background: variables.$sidebar-color-5;
         }
         &.bg-topbar-color-4::before {
-            background: $sidebar-color-4;
+            background: variables.$sidebar-color-4;
         }
         &.bg-topbar-color-5::before {
-            background: $sidebar-color-7;
+            background: variables.$sidebar-color-7;
         }
         &.bg-topbar-color-6::before {
-            background: $sidebar-color-2;
+            background: variables.$sidebar-color-2;
         }
         &.bg-topbar-color-7::before {
-            background: $sidebar-color-6;
+            background: variables.$sidebar-color-6;
         }
     }
 }

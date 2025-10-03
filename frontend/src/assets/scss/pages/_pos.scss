@@ -1,9 +1,12 @@
+@use "../utils/mixins";
+@use "../utils/variables";
+
 .main-wrappers{
-    background-color: $body-bg;
+    background-color: variables.$body-bg;
     &.pos-page{
         .sidebar{
             display: none;
-            @include respond-below(custom991) {
+            @include mixins.respond-below(custom991) {
                 display: block;                
             }
         }
@@ -25,16 +28,16 @@
     }
 }
 .pos-button {
-    @include rounded(10px);
+    @include mixins.rounded(10px);
     padding: 10px 10px 0;
     .btn {
         margin: 0 10px 10px 0;
     }
 }
 .main-set{
-    @include margin-padding(null, 0 30px);
-    @include respond-below(custom991) {
-        @include margin-padding(null, 0 10px);
+    @include mixins.margin-padding(null, 0 30px);
+    @include mixins.respond-below(custom991) {
+        @include mixins.margin-padding(null, 0 10px);
     }
 }
 .table{
@@ -55,14 +58,14 @@
 .table-product{
     tr{
         th{
-            font-weight: $font-weight-semibold;
-            color: $gray-600;
-            font-size: $font-size-base;
+            font-weight: variables.$font-weight-semibold;
+            color: variables.$gray-600;
+            font-size: variables.$font-size-base;
         }
         td{
-            font-weight: $font-weight-semibold;
-            color: $gray-600;
-            font-size: $font-size-base;
+            font-weight: variables.$font-weight-semibold;
+            color: variables.$gray-600;
+            font-size: variables.$font-size-base;
         }
     }
 }
@@ -81,23 +84,23 @@
             -ms-flex-pack: space-between;
             margin-bottom: 10px;
             h5{
-                font-size: $font-size-13;
-                font-weight: $font-weight-medium;
+                font-size: variables.$font-size-13;
+                font-weight: variables.$font-weight-medium;
             }
             h6{
-                font-size: $font-size-13;
-                font-weight: $font-weight-medium;
+                font-size: variables.$font-size-13;
+                font-weight: variables.$font-weight-medium;
             }
             &.total-value{
                 h5{
-                    font-size: $font-size-16;
-                    font-weight: $font-weight-semibold;
-                    color: $purple;
+                    font-size: variables.$font-size-16;
+                    font-weight: variables.$font-weight-semibold;
+                    color: variables.$purple;
                 }
                 h6{
-                    font-size: $font-size-16;
-                    font-weight: $font-weight-semibold;
-                    color: $purple;
+                    font-size: variables.$font-size-16;
+                    font-weight: variables.$font-weight-semibold;
+                    color: variables.$purple;
                 }
             }
         }
@@ -113,10 +116,10 @@
     justify-content: space-between;
     -webkit-justify-content: space-between;
     -ms-flex-pack: space-between;
-    border: 1px solid $body-bg;
+    border: 1px solid variables.$body-bg;
     box-shadow: 0px 4px 4px 0px #EDEDED40;
-    @include margin-padding(0 0 15px, 15px);
-    @include respond-below(sm) {
+    @include mixins.margin-padding(0 0 15px, 15px);
+    @include mixins.respond-below(sm) {
         flex-direction: column;
         li{
             margin: 10px 0;
@@ -134,8 +137,8 @@
         margin-top:10px;
         input[type="button"] {
             background-color: transparent;
-            font-size: $font-size-20;
-            border: 1px solid $gray-500;
+            font-size: variables.$font-size-20;
+            border: 1px solid variables.$gray-500;
             border-radius: 4px;
             height: 20px;
             width: 20px;
@@ -151,7 +154,7 @@
             margin-top: 0px;
             line-height: 0;
             padding: 0;
-            color: $gray-500;
+            color: variables.$gray-500;
         }
     }
     .quantity-field {
@@ -180,9 +183,9 @@
     }
     .productcontet {
         h4 {
-            font-size: $font-size-base;
-            color: $black;
-            font-weight: $font-weight-semibold;
+            font-size: variables.$font-size-base;
+            color: variables.$black;
+            font-weight: variables.$font-weight-semibold;
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
@@ -208,12 +211,12 @@
         -webkit-box-align: center;
         -ms-flex-align: center;
         h5 {
-            background:  $primary;
-            color: $white;
-            font-size: $font-size-12;
-            @include rounded(5px);
+            background:  variables.$primary;
+            color: variables.$white;
+            font-size: variables.$font-size-12;
+            @include mixins.rounded(5px);
             margin-right: 10px;
-            @include margin-padding(null,2px 10px);
+            @include mixins.margin-padding(null,2px 10px);
         }
         a {
             position: relative;
@@ -224,21 +227,21 @@
 .product-table {
     height: 34vh;
     overflow: auto;
-    @include respond-below(custom991) {
+    @include mixins.respond-below(custom991) {
         height: auto;
     }
 }
 .btn-set{
-    @include margin-padding(15px 0 25px, null);
+    @include mixins.margin-padding(15px 0 25px, null);
     h4{
-        font-weight: $font-weight-bold;
+        font-weight: variables.$font-weight-bold;
     }
 }
 .product-detils {
     height: 70vh;
     overflow-y: auto;
     overflow-x: hidden;
-    @include respond-below(custom991) {
+    @include mixins.respond-below(custom991) {
         height: auto;
     }
 }
@@ -257,32 +260,32 @@
             width: 48%;
             text-align: center;
             margin-right: 5px;
-            @include respond-below(custom575) {
+            @include mixins.respond-below(custom575) {
                width:100%;
                 margin-right: 0;
             }
             &:last-child {
                 margin: 0;
                 width: 50%;
-                @include respond-below(custom575) {
+                @include mixins.respond-below(custom575) {
                    width:100%;
                 }
             }
             a {
-                background: $gray-700;
+                background: variables.$gray-700;
                 width: 100%;
                 display: block;
-                color: $white;
-                font-weight: $font-weight-semibold;
-                @include rounded(5px);
-                @include margin-padding(null, 10px);
-                @include respond-below(custom575) {
-                    @include rounded(0);
+                color: variables.$white;
+                font-weight: variables.$font-weight-semibold;
+                @include mixins.rounded(5px);
+                @include mixins.margin-padding(null, 10px);
+                @include mixins.respond-below(custom575) {
+                    @include mixins.rounded(0);
                 }
             }
             &.active {
                 a {
-                    background:  $primary;
+                    background:  variables.$primary;
                 }
             }
         }
@@ -292,7 +295,7 @@
     .modal-body{
         .btn{
             min-width: 100px;
-            @include margin-padding(null, 10px);
+            @include mixins.margin-padding(null, 10px);
         }
     }
 }
@@ -300,7 +303,7 @@
     padding-top: 35px;
     .owl-nav {
         margin-top: 10px;
-        @include position(absolute,-10px,0,null,null);
+        @include mixins.position(absolute,-10px,0,null,null);
         button{
             border-radius: 50px !important;
             width: 20px;
@@ -317,14 +320,14 @@
             width: 19px;
             position: relative;
             height: 19px;
-            background: $white !important;
-            color: $purple !important;
+            background: variables.$white !important;
+            color: variables.$purple !important;
             span{
                 font-size: 0;
             }
             &.owl-next {
                 span:before {
-                    @include position(absolute,2px,5px,null,null);
+                    @include mixins.position(absolute,2px,5px,null,null);
                     content: "\f054";
                     font-family: "Font Awesome 5 Free";
                     font-style: normal;
@@ -341,13 +344,13 @@
                     font-weight: 900;
                     font-size: 10px;
                     color: #1A54C7;
-                    @include position(absolute,2px,7px,null,null);
+                    @include mixins.position(absolute,2px,7px,null,null);
                 }
             }
             &:hover{
                 background: #1A54C7 !important;  
                 span:before{
-                    color: $white;
+                    color: variables.$white;
                 }
             }
         }
@@ -388,10 +391,10 @@
         li{
             margin-right: 1px;
             margin-bottom: 10px;
-            @include respond-below(custom991) {
+            @include mixins.respond-below(custom991) {
                 width: 48%;
             }
-            @include respond-below(custom575) {
+            @include mixins.respond-below(custom575) {
                 width: 100%;
                 margin-right: 10px;
             }
@@ -401,16 +404,16 @@
                     font-size: 10px;
                     width: 100%;
                     padding: 5px 12px;
-                    background: $gray-300;
+                    background: variables.$gray-300;
                     border-radius: 50px;
-                    border: 1px solid $gray-300;
+                    border: 1px solid variables.$gray-300;
                     display: -webkit-box;
                     display: -ms-flexbox;
                     display: flex;
-                    @include margin-padding(null, 5px 12px);
-                    @include respond-below(custom991) {
+                    @include mixins.margin-padding(null, 5px 12px);
+                    @include mixins.respond-below(custom991) {
                         min-width: auto;
-                        @include margin-padding(null, 6px 15px);
+                        @include mixins.margin-padding(null, 6px 15px);
                     }
                     &:hover{
                         border:1px solid #EA5455;
@@ -419,19 +422,19 @@
                     }
                 }
                 &.btn-hold{
-                    background: $warning;
+                    background: variables.$warning;
                 } 
                 &.btn-quation{
-                    background: $gray-600;
+                    background: variables.$gray-600;
                 }   
                 &.btn-void{
                     background: #D0512E;
                 } 
                 &.btn-payment{
-                    background: $success ;
+                    background: variables.$success ;
                 }   
                 &.btn-recent{
-                    background: $primary ;
+                    background: variables.$primary ;
                 }   
             }
         }
@@ -442,12 +445,12 @@
         margin-bottom: 15px;
         h4 {
             width: 100%;
-            background:  $primary;
+            background:  variables.$primary;
             text-align: center;
-            color: $white;
-            font-size: $font-size-36;
-            font-weight: $font-weight-bold;
-            @include rounded(5px);
+            color: variables.$white;
+            font-size: variables.$font-size-36;
+            font-weight: variables.$font-weight-bold;
+            @include mixins.rounded(5px);
         }
     }
     ul{
@@ -464,21 +467,21 @@
             text-align: center;
             a{
                 width: 100%;
-                border:1px solid $gray-500;
-                font-size: $font-size-24;
-                font-weight: $font-weight-medium;
+                border:1px solid variables.$gray-500;
+                font-size: variables.$font-size-24;
+                font-weight: variables.$font-weight-medium;
                 display: block;
-                color:$black;
-                @include rounded(0);
-                @include margin-padding(null, 10px);
+                color:variables.$black;
+                @include mixins.rounded(0);
+                @include mixins.margin-padding(null, 10px);
                 &.btn-closes{
-                    background: $danger-700;
+                    background: variables.$danger-700;
                 }
                 &.btn-reverse{
                     background: #2E7D32;
                 }
                 &:hover{
-                    background: $gray-100;
+                    background: variables.$gray-100;
                 }
             }
         }
@@ -486,20 +489,20 @@
 }
 .hold-order {
     text-align: center;
-    @include margin-padding(15px 0, null);
+    @include mixins.margin-padding(15px 0, null);
     h2 {
-        @include margin-padding(null, 0 0 30px);
-        color:  $primary;
-        font-size: $font-size-36;
-        font-weight: $font-weight-bold;
+        @include mixins.margin-padding(null, 0 0 30px);
+        color:  variables.$primary;
+        font-size: variables.$font-size-36;
+        font-weight: variables.$font-weight-bold;
     }
 }
 .para-set {
     margin-bottom: 30px;
     p {
-        color: $gray-700;
-        font-size: $font-size-13;
-        font-weight: $font-weight-medium;
+        color: variables.$gray-700;
+        font-size: variables.$font-size-13;
+        font-weight: variables.$font-weight-medium;
     }
 }
 .delete-order {
@@ -507,15 +510,15 @@
 }
 .btn-set{
     h4{
-        background:  $primary;
+        background:  variables.$primary;
         text-align: center;
-        color: $white;
-        @include rounded(5px);
-        @include margin-padding(null, 10px);
+        color: variables.$white;
+        @include mixins.rounded(5px);
+        @include mixins.margin-padding(null, 10px);
     }
 }
 .header-menuset{
-    @include margin-padding(null, 15px);
+    @include mixins.margin-padding(null, 15px);
     ul{
         display: -webkit-box;
         display: -ms-flexbox;
@@ -537,14 +540,14 @@
             -ms-flex-pack: space-between;
             width: 50%;
             margin-bottom: 10px;
-            @include respond-below(custom991) {
+            @include mixins.respond-below(custom991) {
                 width: 100%;
             }
             .win-maximize{
                 display: none;
             }
             a{
-                border: 1px solid  $primary;
+                border: 1px solid  variables.$primary;
                 width: 95%;
                 text-align: center;
                 display: -webkit-box;
@@ -556,9 +559,9 @@
                 justify-content: center;
                 -webkit-justify-content: center;
                 -ms-flex-pack: center;
-                background:  $primary;
-                color: $white;
-                @include margin-padding(null, 10px);
+                background:  variables.$primary;
+                color: variables.$white;
+                @include mixins.margin-padding(null, 10px);
                 img{
                     filter: brightness(0) invert(1);
                 }
@@ -570,12 +573,12 @@
     text-align: center;
     margin-top: 20px;
     .btn {
-        font-weight: $font-weight-bold;
-        font-size: $font-size-16;
-        color: $primary;
+        font-weight: variables.$font-weight-bold;
+        font-size: variables.$font-size-16;
+        color: variables.$primary;
         min-width: 150px;
-        background: $white;
-        border: 2px solid $primary;
+        background: variables.$white;
+        border: 2px solid variables.$primary;
         display: -webkit-inline-box;
         display: -ms-inline-flexbox;
         display: inline-flex;
@@ -585,8 +588,8 @@
         justify-content: space-between;
         -webkit-justify-content: space-between;
         -ms-flex-pack: space-between;
-        @include rounded(6px);
-        @include margin-padding(null, 12px 15px);
+        @include mixins.rounded(6px);
+        @include mixins.margin-padding(null, 12px 15px);
         span {
             display: inline-block;
             width: 25px;
@@ -594,16 +597,16 @@
             margin-right: 8px;
             vertical-align: 0;
             border: 3px solid #fc88037d;
-            border-right-color: $primary;
+            border-right-color: variables.$primary;
             animation: .75s linear infinite spinner-border;
-            @include rounded(50%);
+            @include mixins.rounded(50%);
         }
         &:hover {
-            background: $primary;
-            color: $white;
+            background: variables.$primary;
+            color: variables.$white;
             span {
-                border: 3px solid $white;
-                border-right-color: $white;
+                border: 3px solid variables.$white;
+                border-right-color: variables.$white;
             }
         }
     }
@@ -612,16 +615,16 @@
     .input-blocks{
         input{
             height: 50px;
-            background: $light;
+            background: variables.$light;
         }
         .scanner-set{
             min-width: 50px;
-            @include position(relative,null,null,null,-2px);
+            @include mixins.position(relative,null,null,null,-2px);
         }
     }
 }
 .product-details{
-    background: $white;
+    background: variables.$white;
     border-radius: 5px;
     padding: 10px;
     box-shadow: 0px 4px 4px 0px #EDEDED40;
@@ -638,28 +641,28 @@
     -ms-flex-pack: center;
     flex-direction: column;
     &:hover{
-        background:$purple;
+        background:variables.$purple;
         h6{
-            color: $white;
+            color: variables.$white;
         }
     }
     &.active{
-        background-color:$purple !important;
+        background-color:variables.$purple !important;
         h6{
-            color: $white;
+            color: variables.$white;
         }
     }
     img{
         width: auto !important;
     }
     h6{
-        font-size: $font-size-13;
-        color: $black;
+        font-size: variables.$font-size-13;
+        color: variables.$black;
         margin-top: 10px;
     }
 }
 .btn-scanner-set {
-    background: $purple;
+    background: variables.$purple;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -668,22 +671,22 @@
     -ms-flex-align: center;
     max-width: 160px;
     margin-left: auto;
-    color: $white;
-    font-size: $font-size-base;
-    font-weight: $font-weight-bold;
+    color: variables.$white;
+    font-size: variables.$font-size-base;
+    font-weight: variables.$font-weight-bold;
     &:hover{
-        background: $primary;
-        color: $white;
+        background: variables.$primary;
+        color: variables.$white;
     }
 }
 .split-card {
     margin: 0 0 15px;
-    border: 1px dashed $body-bg;
+    border: 1px dashed variables.$body-bg;
     position: relative;
     &::before{
         position: absolute;
         content:"";
-        background: $body-bg;
+        background: variables.$body-bg;
         width: 22px;
         height: 22px;
         border-radius: 50px;
@@ -693,7 +696,7 @@
     &::after{
         position: absolute;
         content:"";
-        background: $body-bg;
+        background: variables.$body-bg;
         width: 22px;
         height: 22px;
         border-radius: 50px;
@@ -715,15 +718,15 @@
     h4{
         padding: 7px 13px;
         background: #F8F8F8;
-        color: $purple;
+        color: variables.$purple;
         font-size: 12px;
-        font-weight: $font-weight-bold;
+        font-weight: variables.$font-weight-bold;
         border-radius: 50px;
     }
     a{
-        font-size: $font-size-base;
+        font-size: variables.$font-size-base;
         color: #EA5455;
-        font-weight: $font-weight-bold;
+        font-weight: variables.$font-weight-bold;
     }
 }
 .card{
@@ -732,16 +735,16 @@
     }
 }
 .btn-adds{
-    border: 2px solid $success;
-    color: $success;
+    border: 2px solid variables.$success;
+    color: variables.$success;
     width: 100%;
     padding: 10px;
     border-radius: 5px;
-    font-weight: $font-weight-semibold;
+    font-weight: variables.$font-weight-semibold;
     margin-bottom: 20px;
     &:hover{
-        background: $success; 
-        color: $white;
+        background: variables.$success; 
+        color: variables.$white;
     }
 }
 .order-list {
@@ -757,15 +760,15 @@
     margin-bottom: 25px;
     .orderid{
         h4{
-            font-size: $font-size-18;
-            font-weight: $font-weight-bold;
+            font-size: variables.$font-size-18;
+            font-weight: variables.$font-weight-bold;
             color: #5E5873;
             margin-bottom: 0;
         }
         h5{
-            font-size: $font-size-base;
-            font-weight: $font-weight-normal;
-            color: $black;
+            font-size: variables.$font-size-base;
+            font-weight: variables.$font-weight-normal;
+            color: variables.$black;
         }
     }
     .actionproducts{
@@ -788,7 +791,7 @@
                 justify-content: center;
                 -webkit-justify-content: center;
                 -ms-flex-pack: center;
-                    background: $white;
+                    background: variables.$white;
                     box-shadow: 0px 4px 14px 0px #C7C7C740;
                     width: 30px;
                     height: 30px;
@@ -806,28 +809,28 @@
 .productset{
     border: 1px solid #F8F8F8;
     box-shadow: 0px 4px 4px 0px #EDEDED40;
-    background: $white;
+    background: variables.$white;
     margin: 0 0 25px;
     border-radius: 5px;
     position: relative;
     width: 100%;
     overflow: hidden;
     &:hover{
-        border:1px solid $purple;
+        border:1px solid variables.$purple;
     }
     .check-product{
         display: none;
         width: 34px;
         height: 23px;
-        color: $white;
+        color: variables.$white;
         position: absolute;
         left: 0;
         top:0;
-        background: $purple;
+        background: variables.$purple;
         border-radius: 4px 0;
     }
     &.active{
-        border:1px solid $purple;
+        border:1px solid variables.$purple;
         .check-product{
             display: -webkit-box;
             display: -ms-flexbox;
@@ -865,14 +868,14 @@
         img{
             transition: all 0.5s;
             border-radius: 5px 5px 0px 0px;
-            @include respond-below(custom991) {
+            @include mixins.respond-below(custom991) {
                 max-height: 150px;
             }
         }
         h6{
             position: absolute;
-            background: $primary;
-            color: $white;
+            background: variables.$primary;
+            color: variables.$white;
             font-size: 10px;
             padding: 5px;
             border-radius: 5px;
@@ -886,9 +889,9 @@
         padding: 13px;
         text-align: center;
         h4{
-            font-size: $font-size-base;
-            font-weight: $font-weight-semibold;
-            color: $black;
+            font-size: variables.$font-size-base;
+            font-weight: variables.$font-weight-semibold;
+            color: variables.$black;
             margin-bottom: 13px;
         }
         h5{
@@ -898,8 +901,8 @@
         h6{
             color: #EA5455;
             margin: 0 0 0 auto;
-            font-weight: $font-weight-semibold;
-            font-size: $font-size-base;
+            font-weight: variables.$font-weight-semibold;
+            font-size: variables.$font-size-base;
         }
     }
 }
@@ -913,12 +916,12 @@
             cursor:pointer;
             width: 100%;
             &.active{
-                border-color: $primary;
+                border-color: variables.$primary;
                 .product-details {
                     background: transparent;
                     border:0 !important;
                     h6{
-                        color: $white;
+                        color: variables.$white;
                     }
                 }
             }

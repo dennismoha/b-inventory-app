@@ -1,3 +1,4 @@
+@use "sass:color";
 // Base Font
 $font-size-base: 14px;
 $font-size-sm: $font-size-base * .875;
@@ -17,17 +18,17 @@ $font-awesome: "Fontawesome";
 	
 // Theme Colors Variables
 $primary: #FE9F43;
-$primary-hover: darken($primary, 10%);
+$primary-hover: color.adjust($primary, $lightness: -10%);
 $secondary: #092C4C;
-$secondary-hover: darken($secondary, 10%);
+$secondary-hover: color.adjust($secondary, $lightness: -10%);
 $success: #3EB780;
-$success-hover: darken($success, 10%);
+$success-hover: color.adjust($success, $lightness: -10%);
 $info: #155EEF;
-$info-hover: darken($info, 10%);
+$info-hover: color.adjust($info, $lightness: -10%);
 $warning: #FFCA18;
-$warning-hover: darken($warning, 10%);
+$warning-hover: color.adjust($warning, $lightness: -10%);
 $danger: #FF0000;
-$danger-hover: darken($danger, 10%);
+$danger-hover: color.adjust($danger, $lightness: -10%);
 $dark: #1B2850;
 $light: #F9FAFB;
 $white: #ffffff;
@@ -314,7 +315,7 @@ $dark-gradient: linear-gradient(to right, $dark 0%, #54505D 100%);
 $link-color: $primary;
 $link-decoration: none;
 $link-shade-percentage: 20%;
-$link-hover-color: darken($link-color, 10%);
+$link-hover-color: color.adjust($link-color, $lightness: -10%);
 $link-hover-decoration: null;
 $spacer: 1rem;
 

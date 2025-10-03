@@ -1,14 +1,17 @@
+@use "../utils/mixins";
+@use "../utils/variables";
+
 .add-newplus {
     display: flex;
     justify-content: space-between;
     .plus-down-add {
-        color: $primary;
+        color: variables.$primary;
     }
     span{
-        font-size: $font-size-14;
+        font-size: variables.$font-size-14;
         font-style: normal;
-        font-weight: $font-weight-medium;
-        color: $primary;
+        font-weight: variables.$font-weight-medium;
+        color: variables.$primary;
     }
 }
 .plus-down-add{
@@ -17,11 +20,11 @@
     height: 14px;
     position: relative;
     top: -2px;
-    color: $gray-300;
+    color: variables.$gray-300;
 }
 .add-choosen{
     display: flex;
-    @include respond-below(custom767) {
+    @include mixins.respond-below(custom767) {
         flex-wrap: wrap;
     }
     .phone-img{
@@ -35,7 +38,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        @include respond-below(custom767) {
+        @include mixins.respond-below(custom767) {
             margin-bottom: 10px;
             margin-left: 10px;
         }
@@ -43,11 +46,11 @@
             position: absolute;
             right: 3px;
             top: 3px;
-            background: $danger;
+            background: variables.$danger;
             border-radius: 3px;
             width: 16px;
             height: 16px;
-            color: $white;
+            color: variables.$white;
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
@@ -58,23 +61,23 @@
             -webkit-justify-content: center;
             -ms-flex-pack: center;
             &:hover {
-                color: $white;
+                color: variables.$white;
                 background: #e61414;
             }
         }
     }
 }
 .add-icon.tab a{
-    background-color: $secondary;
-    color: $white;
+    background-color: variables.$secondary;
+    color: variables.$white;
 }
 
 .add-icon.tab-icon .feather-trashs{
-    background-color: $white;
-    color: $danger;
+    background-color: variables.$white;
+    color: variables.$danger;
 }
 .add-icon.tab-icon a{
-    background-color: $white;
+    background-color: variables.$white;
     font-size: 11px;
     width: 34px;
     padding: 0;
@@ -92,7 +95,7 @@
 }
 }
 .feather-pluses{
-    color: $secondary;
+    color: variables.$secondary;
     width: 14px;
     height: 14px;
 }
@@ -104,7 +107,7 @@
     position: relative;
     padding: 10px 31px 10px 10px;
     border: 1px solid var(--Stroke, rgba(145, 158, 171, 0.30));
-    background: $white;
+    background: variables.$white;
 }
 .feather-16.icon{
     position: absolute;
@@ -117,20 +120,20 @@
 }
 .add-product {
     .add-icon a {
-       background-color: $secondary;
-       color: $white;
-       font-size: $font-size-15;
-       @include respond-below(custom767) {
+       background-color: variables.$secondary;
+       color: variables.$white;
+       font-size: variables.$font-size-15;
+       @include mixins.respond-below(custom767) {
             z-index: 1;
         }
        &:hover {
-        background-color: $primary;
+        background-color: variables.$primary;
        }
     }
 }
 .new-employee-field.product .card-title-head h6 {
-    font-weight: $font-weight-semibold;
-    font-size: $font-size-16;
+    font-weight: variables.$font-weight-semibold;
+    font-size: variables.$font-size-16;
     align-items: center;
     margin: 0 ;
     padding: 0;
@@ -179,16 +182,16 @@
                 .custom-filed{
                     display: flex;
                     padding: 15px;
-                    background-color: $light-900;
+                    background-color: variables.$light-900;
                     margin-bottom: 20px;
                     .input-block{
                         &.add-lists{
                             display: flex;
                             gap: 20px;
                             align-items: center;
-                            font-size: $font-size-16;
-                            color: $gray-600;
-                            @include respond-below(custom767) {
+                            font-size: variables.$font-size-16;
+                            color: variables.$gray-600;
+                            @include mixins.respond-below(custom767) {
                                 flex-wrap: wrap;
                             }
                             .checkboxs{
@@ -222,50 +225,50 @@
       padding: 15px;
     }
     .tag{
-    background-color: $secondary-transparent !important;
+    background-color: variables.$secondary-transparent !important;
     }
     .selected-hide-color{
       .bootstrap-tagsinput{
-          border-color: $secondary-transparent;
+          border-color: variables.$secondary-transparent;
       }
       .remove-color{
-         border: 1px solid $secondary-transparent;
+         border: 1px solid variables.$secondary-transparent;
          width: 40px;
          height: 40px;
          display: flex;
          border-radius: 5px;
-         color: $gray-600;
-         font-size: $font-size-16;
+         color: variables.$gray-600;
+         font-size: variables.$font-size-16;
          align-items: center;
          justify-content: center;
          &:hover{
-          background-color: $secondary-transparent;
+          background-color: variables.$secondary-transparent;
          }
       }
  
     }
     .product-quantity{
-      border: 1px solid $secondary-transparent;
+      border: 1px solid variables.$secondary-transparent;
   }
  }
  .edit-product{
   .form-label{
-      color: $gray-900;
+      color: variables.$gray-900;
       margin-bottom: 6px;
   }
   .bootstrap-tagsinput {
       .tag {
-         background-color: $secondary-transparent;
+         background-color: variables.$secondary-transparent;
       }
   }
   .remove-color {
-      border: 1px solid $secondary-transparent;
+      border: 1px solid variables.$secondary-transparent;
       width: 40px;
       height: 40px;
       display: flex;
       border-radius: 5px;
-      color: $gray-600;
-      font-size: $font-size-16;
+      color: variables.$gray-600;
+      font-size: variables.$font-size-16;
       align-items: center;
       justify-content: center;
   }
@@ -273,13 +276,13 @@
    tr{
       th{
           padding: 15px;
-          background-color: $secondary-transparent;
-          color: $gray-900;
+          background-color: variables.$secondary-transparent;
+          color: variables.$gray-900;
       }
   } 
  tbody{
   tr{
-      border: 1px solid $secondary-transparent;
+      border: 1px solid variables.$secondary-transparent;
       &:last-child{
           border-radius: 0 0 10px 10px;
           opacity: 0.4;
@@ -288,7 +291,7 @@
       padding: 15px;
       border: none;
       min-width: 120px;
-      @include respond-below(custom575){
+      @include mixins.respond-below(custom575){
           padding: 10px;
           padding: 10px;
       }
@@ -297,7 +300,7 @@
   }
  }
  .product-quantity {
-  border: 1px solid $secondary-transparent;
+  border: 1px solid variables.$secondary-transparent;
  }
  input[type=text].datetimepicker {
   padding-left: 10px;

@@ -1,26 +1,28 @@
+@use "../utils/variables";
+
 .page-link {
-    color: $text-color;
-    background-color: $white;
-    border: 1px solid $border-color;
+    color: variables.$text-color;
+    background-color: variables.$white;
+    border: 1px solid variables.$border-color;
     &:focus {
         box-shadow: none;
-        background-color: $light;
+        background-color: variables.$light;
     }
     &:hover {
-        color: $primary;
-        background-color: $light;
-        border-color: $border-color;
+        color: variables.$primary;
+        background-color: variables.$light;
+        border-color: variables.$border-color;
     }
 }
 .page-item.active .page-link {
-    color: $white;
-    background-color: $primary;
-    border-color: $primary;
+    color: variables.$white;
+    background-color: variables.$primary;
+    border-color: variables.$primary;
 }
 .disabled>.page-link, .page-link.disabled {
-    color: $text-color;
-    background-color: $white;
-    border-color: $border-color;
+    color: variables.$text-color;
+    background-color: variables.$white;
+    border-color: variables.$border-color;
     opacity: 0.7;
 }
 
@@ -47,36 +49,36 @@
         margin: 0 0.25rem;
         .page-link {
             border: 0;
-            border-radius: $border-radius;
+            border-radius: variables.$border-radius;
             font-size: 0.8125rem;
             i {
-                font-weight: $font-weight-semibold;
+                font-weight: variables.$font-weight-semibold;
             }
         }
         &.active {
             .page-link {
-                border-radius: $border-radius;
-                background-color: $primary;
-                color: $white;
+                border-radius: variables.$border-radius;
+                background-color: variables.$primary;
+                color: variables.$white;
             }
             &:hover {
                 .page-link {
-                    border-radius: $border-radius;
-                    background-color: $primary;
-                    color: $white;
+                    border-radius: variables.$border-radius;
+                    background-color: variables.$primary;
+                    color: variables.$white;
                 }
             } 
         }
         &:hover {
             .page-link {
-                background-color: $light;
-                color: $primary;
+                background-color: variables.$light;
+                color: variables.$primary;
             }
         }
     }
 }
 .pagination-style-2 .pagination {
-    border-radius: $border-radius;
+    border-radius: variables.$border-radius;
     .page-item {
         margin: 0 0.25rem;
         .page-link {
@@ -85,8 +87,8 @@
         }
         &.active {
             .page-link {
-                background-color: $white;
-                color: $primary;
+                background-color: variables.$white;
+                color: variables.$primary;
                 position: relative;
                 font-weight: bold;
                 &:before {
@@ -96,7 +98,7 @@
                     inset-inline-start: 0;
                     width: 100%;
                     height: 0.1rem;
-                    background-color: $primary;
+                    background-color: variables.$primary;
                 }
             }
         }
@@ -118,23 +120,23 @@
             border-radius: 50px;
             font-size: 0.8125rem;
             i {
-                font-weight: $font-weight-semibold;
+                font-weight: variables.$font-weight-semibold;
             }
         }
         &.active {
             .page-link {
-                background-color: $primary;
-                color: $white;
+                background-color: variables.$primary;
+                color: variables.$white;
             }
             &:hover {
                 .page-link {
-                    background-color: $primary;
+                    background-color: variables.$primary;
                 }
             }
         }
         &:hover {
             .page-link {
-                background-color: $light;
+                background-color: variables.$light;
             }
         }
     }
@@ -144,21 +146,21 @@
         .page-link {
             border: 0 !important;
             font-size: 0.8125rem;
-            border-radius: $border-radius;
+            border-radius: variables.$border-radius;
             i {
-                font-weight: $font-weight-semibold;
+                font-weight: variables.$font-weight-semibold;
             }
         }
         &.active {
             .page-link {
                 border: 0;
-                border-radius: $border-radius;
-                background-color: $primary;
-                color: $white;
+                border-radius: variables.$border-radius;
+                background-color: variables.$primary;
+                color: variables.$white;
             }
             &:hover {
                 .page-link {
-                    background-color: $primary;
+                    background-color: variables.$primary;
                 }
             }
         }

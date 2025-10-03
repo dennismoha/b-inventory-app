@@ -1054,7 +1054,7 @@ const ProductPricingApi = InventoryApi.injectEndpoints({
         method: 'POST',
         body: newProductPricing
       }),
-      invalidatesTags: ['ProductPricing']
+      invalidatesTags: ['ProductPricing', 'InventoryItems']
     }),
 
     // Update an existing product pricing
@@ -1064,7 +1064,7 @@ const ProductPricingApi = InventoryApi.injectEndpoints({
         method: 'PUT',
         body: patch
       }),
-      invalidatesTags: ['ProductPricing']
+      invalidatesTags: ['ProductPricing', 'InventoryItems']
     }),
 
     // Delete product pricing
@@ -1073,7 +1073,7 @@ const ProductPricingApi = InventoryApi.injectEndpoints({
         url: `/product-pricing/${product_pricing_id}`,
         method: 'DELETE'
       }),
-      invalidatesTags: ['ProductPricing']
+      invalidatesTags: ['ProductPricing', 'InventoryItems']
     })
   }),
   overrideExisting: true

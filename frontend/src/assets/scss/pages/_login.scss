@@ -1,3 +1,6 @@
+@use "../utils/mixins";
+@use "../utils/variables";
+
 .login-wrapper {
     width: 100%;
     overflow: hidden;
@@ -8,7 +11,7 @@
     display: -ms-flexbox;
     display: flex;
     &.bg-img {
-        background-image: url(/src/assets/img/authentication/login-img.jpg);
+        background-image: url(/chicksfeeds/src/assets/img/authentication/login-img.jpg);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -17,36 +20,24 @@
             backdrop-filter: blur(17px);
         }
         &.register-wrap {
-            background-image: url(/src/assets/img/authentication/register-img.jpg);
+            background-image: url(/chicksfeeds/src/assets/img/authentication/register-img.jpg);
         }
         &.forgot-pass-wrap {
-            background-image: url(/src/assets/img/authentication/forgot-password-img.jpg);
+            background-image: url(/chicksfeeds/src/assets/img/authentication/forgot-password-img.jpg);
         }
         &.reset-pass-wrap {
-            background-image: url(/src/assets/img/authentication/reset-password-img.jpg);
+            background-image: url(/chicksfeeds/src/assets/img/authentication/reset-password-img.jpg);
         }
         &.email-veri-wrap {
-            background-image: url(/src/assets/img/authentication/email-verification-img.jpg);
+            background-image: url(/chicksfeeds/src/assets/img/authentication/email-verification-img.jpg);
         }
-        @include respond-below(custom991) {
+        @include mixins.respond-below(custom991) {
            background-image: none;
         }
     }
     .login-content {
-        form {
-            width: 70%;
-            @include respond-below(custom991) {
-                width: 100%;
-            }
-        }
-        &.authent-content {
-            width: 50%;
-            @include respond-below(custom991) {
-                width: 100%;
-            }
-        }
         height: 100vh;
-        @include margin-padding(null, 24px);
+        padding: 24px;
         overflow: auto;
         display: -webkit-box;
         display: -ms-flexbox;
@@ -58,6 +49,18 @@
         -webkit-justify-content: center;
         -ms-flex-pack: center;
         flex-wrap: wrap;
+        form {
+            width: 70%;
+            @include mixins.respond-below(custom991) {
+                width: 100%;
+            }
+        }
+        &.authent-content {
+            width: 50%;
+            @include mixins.respond-below(custom991) {
+                width: 100%;
+            }
+        }
         .login-logo {
             display: block;
             max-width: 150px;
@@ -67,16 +70,16 @@
             }
         }
         .login-userset{
-            @include respond-below(custom991) {
+            @include mixins.respond-below(custom991) {
                 margin-top: 30px;
             }
             .my-4  {
                 margin-top: 50px !important;
                 p {
-                    font-size: $font-size-14;
-                    color: $secondary;
+                    font-size: variables.$font-size-14;
+                    color: variables.$secondary;
                     margin-bottom: 0;
-                    font-weight: $font-weight-normal;
+                    font-weight: variables.$font-weight-normal;
                 }
             }
             form .otp-box { 
@@ -84,16 +87,16 @@
                 input { 
                     width: 74px; 
                     height: 74px; 
-                    background: $white ; 
+                    background: variables.$white ; 
                     border: 1px solid #E1E1E1; 
                     border-radius: 8px; 
                     text-align: center; 
                     margin-right: 15px; 
-                    font-weight: $font-weight-bold; 
-                    font-size: $font-size-26; 
-                    color: $black; 
+                    font-weight: variables.$font-weight-bold; 
+                    font-size: variables.$font-size-26; 
+                    color: variables.$black; 
                     outline: none;
-                    @include respond-below(custom575) {
+                    @include mixins.respond-below(custom575) {
                         width: 50px; 
                         height: 50px; 
                     }
@@ -114,24 +117,24 @@
             
             p {
                 
-                color: $danger;
-                font-size: $font-size-14;
-                font-weight: $font-weight-normal;
+                color: variables.$danger;
+                font-size: variables.$font-size-14;
+                font-weight: variables.$font-weight-normal;
             }
          }
         }
         .login-userheading {
-            @include margin-padding( 0 0 24px, null);
+            @include mixins.margin-padding( 0 0 24px, null);
              h3 {
-                font-size: $font-size-24;
-                font-weight: $font-weight-bold;
-                @include margin-padding( 0 0 10px, null);
-                color: $black;
+                font-size: variables.$font-size-24;
+                font-weight: variables.$font-weight-bold;
+                @include mixins.margin-padding( 0 0 10px, null);
+                color: variables.$black;
             }
              h4 {
-                font-size: $font-size-15;
-                font-weight: $font-weight-normal;
-                color: $secondary;
+                font-size: variables.$font-size-15;
+                font-weight: variables.$font-weight-normal;
+                color: variables.$secondary;
                 line-height: 1.4;
             }
             .verfy-mail-content {
@@ -143,15 +146,15 @@
             margin-bottom: 15px;
             label {
                 width: 100%;
-                color: $secondary;
+                color: variables.$secondary;
                 margin-bottom:10px;
-                font-size: $font-size-15;
-                font-weight: $font-weight-normal;
+                font-size: variables.$font-size-15;
+                font-weight: variables.$font-weight-normal;
             }
             .form-addons{
                 position: relative;
                 img{
-                    @include position(absolute,16px,20px,null,null);
+                    @include mixins.position(absolute,16px,20px,null,null);
                 }
                 
             }
@@ -159,37 +162,37 @@
                 width: 100%;
                 height: 40px;
                 border: 1px solid rgba(145, 158, 171, 0.32);
-                @include rounded(5px);
-                @include margin-padding(null, 0 15px);
-                @include transition(all 0.2s ease);
+                @include mixins.rounded(5px);
+                @include mixins.margin-padding(null, 0 15px);
+                @include mixins.transition(all 0.2s ease);
                 &:focus{
-                    border: 1px solid $primary;
+                    border: 1px solid variables.$primary;
                 }
             }
             .btn-login {
                 width: 100%;
-                font-weight: $font-weight-bold;
-                font-size: $font-size-14;
-                background: $primary;
-                border-color:$primary ;
-                @include margin-padding(null, 10px);
-                @include transition(all 0.5s ease);
+                font-weight: variables.$font-weight-bold;
+                font-size: variables.$font-size-14;
+                background: variables.$primary;
+                border-color:variables.$primary ;
+                @include mixins.margin-padding(null, 10px);
+                @include mixins.transition(all 0.5s ease);
                 margin-top:5px;
-                color: $white;
+                color: variables.$white;
                 &:hover{
-                   box-shadow:0  50px $white inset !important;
-                   color: $primary;
+                   box-shadow:0  50px variables.$white inset !important;
+                   color: variables.$primary;
                 }
             }
             .alreadyuser {
                 margin-bottom: 15px;
                 h4 {
-                    font-size: $font-size-base;
-                    font-weight: $font-weight-normal;
-                    color: $sub-title;
+                    font-size: variables.$font-size-base;
+                    font-weight: variables.$font-weight-normal;
+                    color: variables.$sub-title;
                     a{
-                        color:$primary;
-                        font-weight: $font-weight-semibold;
+                        color:variables.$primary;
+                        font-weight: variables.$font-weight-semibold;
                     }
                 }
             }
@@ -197,7 +200,7 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                @include respond-below(custom575) {
+                @include mixins.respond-below(custom575) {
                     justify-content: start;
                 }
                 .custom-control-input {
@@ -210,59 +213,59 @@
                 }
             }
             .forgot-link {
-                color: $danger;
-                font-size: $font-size-15;
-                font-weight: $font-weight-semibold;
+                color: variables.$danger;
+                font-size: variables.$font-size-15;
+                font-weight: variables.$font-weight-semibold;
             }
         }
         .signinform {
             margin-bottom: 23px;
             h4{
-                font-size: $font-size-15;
-                font-weight: $font-weight-normal;
-                color: $secondary;
-                @include respond-below(custom575) {
-                    font-size: $font-size-base;
+                font-size: variables.$font-size-15;
+                font-weight: variables.$font-weight-normal;
+                color: variables.$secondary;
+                @include mixins.respond-below(custom575) {
+                    font-size: variables.$font-size-base;
                 }
                 a{
-                    color: $secondary;
-                    font-weight: $font-weight-bold;
-                    font-size: $font-size-14;
+                    color: variables.$secondary;
+                    font-weight: variables.$font-weight-bold;
+                    font-size: variables.$font-size-14;
                 }
             }
             .hover-a.resend {
-                color: $danger;
+                color: variables.$danger;
             }
         }
         .form-setlogin {
             text-align: center;
             position: relative;
-            color: $sub-title;
-            font-size: $font-size-base;
-            font-weight: $font-weight-normal;
+            color: variables.$sub-title;
+            font-size: variables.$font-size-base;
+            font-weight: variables.$font-weight-normal;
             margin-bottom: 23px;
             h4{
                 position: relative;
-                font-size: $font-size-base;
-                color: $text-color;
-                font-weight: $font-weight-bold;
+                font-size: variables.$font-size-base;
+                color: variables.$text-color;
+                font-weight: variables.$font-weight-bold;
                 &:after{
                     content: "";
-                    background: $sub-title;
+                    background: variables.$sub-title;
                     width:21px;
                     height: 1px;
-                    @include position(absolute,10px,null,null,200px);
-                    @include respond-below(custom991) {
+                    @include mixins.position(absolute,10px,null,null,200px);
+                    @include mixins.respond-below(custom991) {
                         height: 0px;
                     }
                 }
                 &:before{
                     content: "";
-                    background:$sub-title;
+                    background:variables.$sub-title;
                     width:21px;
                     height: 1px;
-                    @include position(absolute,10px,200px,null,null);
-                    @include respond-below(custom991) {
+                    @include mixins.position(absolute,10px,200px,null,null);
+                    @include mixins.respond-below(custom991) {
                         height: 0px;
                     }
                 }
@@ -276,8 +279,8 @@
             cursor: pointer;
             width: 30px;
             height: 30px;
-            color: $sub-title;
-            font-size: $font-size-18;
+            color: variables.$sub-title;
+            font-size: variables.$font-size-18;
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
@@ -287,19 +290,19 @@
             justify-content: center;
             -webkit-justify-content: center;
             -ms-flex-pack: center;
-            @include rounded(50%);
-            @include transform(translateY(-50%));
-            @include position(absolute,50%,10px,null,null);
+            @include mixins.rounded(50%);
+            @include mixins.transform(translateY(-50%));
+            @include mixins.position(absolute,50%,10px,null,null);
             &:hover{
-                color:$primary;
+                color:variables.$primary;
             }
         }
         .toggle-passwords {
             cursor: pointer;
             width: 30px;
             height: 30px;
-            color: $sub-title;
-            font-size: $font-size-18;
+            color: variables.$sub-title;
+            font-size: variables.$font-size-18;
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
@@ -309,18 +312,18 @@
             justify-content: center;
             -webkit-justify-content: center;
             -ms-flex-pack: center;
-            @include rounded(50%);
-            @include transform(translateY(-50%));
-            @include position(absolute,50%,10px,null,null);
+            @include mixins.rounded(50%);
+            @include mixins.transform(translateY(-50%));
+            @include mixins.position(absolute,50%,10px,null,null);
             &:hover{
-                color:$primary;
+                color:variables.$primary;
             }
         }
         .pass-group {
             position: relative;
-            font-size: $font-size-base;
+            font-size: variables.$font-size-base;
             .fas{
-                font-size: $font-size-13;
+                font-size: variables.$font-size-13;
                 color: #939ea8;
             }
         }
@@ -338,22 +341,22 @@
                 li {
                     text-align: center;
                     margin-right: 10px;
-                    @include respond-below(custom575) {
+                    @include mixins.respond-below(custom575) {
                         width: 100%;
                         margin-bottom: 20px;
                         
                     }
                     &:last-child {
                         padding-right: 0;
-                        @include respond-below(custom575) {
+                        @include mixins.respond-below(custom575) {
                             padding-right: 0;
                         }
                     }
                     a {
-                        color: $secondary;
+                        color: variables.$secondary;
                         width: 100%;
                         border: 1px  solid rgba(145, 158, 171, 0.23);
-                        background: $white;
+                        background: variables.$white;
                         display: -webkit-box;
                         display: -ms-flexbox;
                         display: flex;
@@ -363,12 +366,12 @@
                         justify-content: center;
                         -webkit-justify-content: center;
                         -ms-flex-pack: center;
-                        @include rounded(10px);
-                        @include margin-padding(0 10px 0 0, 15px 53px);
-                        font-weight: $font-weight-medium;
+                        @include mixins.rounded(10px);
+                        @include mixins.margin-padding(0 10px 0 0, 15px 53px);
+                        font-weight: variables.$font-weight-medium;
                         &:hover{
-                            background: $primary;
-                            color: $white;
+                            background: variables.$primary;
+                            color: variables.$white;
                         }
                         img {
                             width: 24px;
@@ -381,7 +384,7 @@
                     }
                     .apple-logo {
                         border-radius: 10px;
-                        background: $black;
+                        background: variables.$black;
                     }
                 }
             }
@@ -399,16 +402,16 @@
             width: 100%;
         }
         .login-userset {
-            background: $white;
+            background: variables.$white;
             box-shadow: 0px 4px 60px 0px rgba(190, 190, 190, 0.27);
             margin: 0;
             padding: 40px;
-            border: 1px solid $gray-300;
+            border: 1px solid variables.$gray-300;
         }
     }
     .login-img {
-        background: $primary-400;
-        @include respond-below(custom991) {
+        background: variables.$primary-400;
+        @include mixins.respond-below(custom991) {
             display: none;
         }
          img {
@@ -441,7 +444,7 @@
     justify-content: center;
     -webkit-justify-content: center;
     -ms-flex-pack: center;
-    background-image: url(/src/assets/img/authentication/login-bg.png);
+    background-image: url(/chicksfeeds/src/assets/img/authentication/login-bg.png);
     background-position: bottom center;
     background-repeat: no-repeat;
     background-size: 100% 500px;
@@ -452,16 +455,16 @@
                 input { 
                     width: 74px; 
                     height: 74px; 
-                    background: $white ; 
+                    background: variables.$white ; 
                     border: 1px solid #E1E1E1; 
                     border-radius: 8px; 
                     text-align: center; 
                     margin-right: 15px; 
-                    font-weight: $font-weight-bold; 
-                    font-size: $font-size-26; 
-                    color: $black; 
+                    font-weight: variables.$font-weight-bold; 
+                    font-size: variables.$font-size-26; 
+                    color: variables.$black; 
                     outline: none;
-                    @include respond-below(custom575) {
+                    @include mixins.respond-below(custom575) {
                         width: 40px; 
                         height: 40px; 
                     }
@@ -472,7 +475,7 @@
 }
 .copyright-text {
     p {
-        @include respond-below(custom575) {
+        @include mixins.respond-below(custom575) {
             text-align: center;
             max-width: 215px;
         }
@@ -493,16 +496,16 @@
         content:"";
         height: 2px;
         width: 100%;
-        background: $primary;
-        @include transform(scale(0));
-        @include transition(all 0.3s ease);
-        @include position(absolute,null,null,-3px,0);
+        background: variables.$primary;
+        @include mixins.transform(scale(0));
+        @include mixins.transition(all 0.3s ease);
+        @include mixins.position(absolute,null,null,-3px,0);
     }
     &:hover:after{
-        @include transform(scale(1));
+        @include mixins.transform(scale(1));
     }
     &:hover{
-        color: $primary !important;
+        color: variables.$primary !important;
     }
 }
 .login-body {
@@ -532,7 +535,7 @@
             display: block;
         }
         .loginbox {
-            background: var(--White, $white);
+            background: var(--White, variables.$white);
             box-shadow: 0px 4px 60px 0px rgba(190, 190, 190, 0.27);
             display: flex;
             margin: 1.875rem auto;
@@ -553,16 +556,16 @@
                         img {
                             border-radius: 100px;
                             border: 2px solid var(--Stroke, rgba(145, 158, 171, 0.30));
-                            // background: url(<path-to-image>), lightgray 50% / cover no-repeat;
+                            background: url(), lightgray 50% / cover no-repeat;
                         }
                         p {
-                            font-size: $font-size-14;
-                            font-weight: $font-weight-bold;
+                            font-size: variables.$font-size-14;
+                            font-weight: variables.$font-weight-bold;
                             margin-bottom: 24px;
                         }
                         h5 {
-                            font-size: $font-size-18;
-                            font-weight: $font-weight-bold;
+                            font-size: variables.$font-size-18;
+                            font-weight: variables.$font-weight-bold;
                             margin-top: 20px;
                         }
                     }
@@ -570,11 +573,11 @@
                         .btn-primary {
                             border-radius: 5px;
                             padding: 5px 163px;
-                            background: $primary;
-                            font-weight: $font-weight-bold;
+                            background: variables.$primary;
+                            font-weight: variables.$font-weight-bold;
                             transition: all .5s ease;
                             &:hover {
-                                color: $primary;
+                                color: variables.$primary;
                                 border-color: unset;
                             }
                         }

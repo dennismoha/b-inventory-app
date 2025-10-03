@@ -17,7 +17,7 @@ import crypto from 'crypto';
 import { BadRequestError } from '@src/shared/globals/helpers/error-handler';
 import { Decimal } from '@prisma/client/runtime/library';
 import { AccountController } from '@src/features/accounting/controller/accounts-controller';
-import { Account_Cash, Account_Inventory } from '@src/constants';
+import { Account_Bank, Account_Inventory } from '@src/constants';
 import { JournalService } from '@src/features/accounting/controller/journals-controller';
 
 /**
@@ -223,7 +223,6 @@ export class TransactionsController {
               });
             }
           } else {
-            console.log('nuuuuuuuuuuuuuuuuuuuuuuuuuuuuuumber');
             await tx.inventory.update({
               where: { supplier_products_id: item.supplier_products_id },
               data: { stock_quantity: { decrement: totalAllocated } }
@@ -251,8 +250,8 @@ export class TransactionsController {
           name: Account_Inventory.name,
           type: Account_Inventory.acc_type
         });
-        const cashAccount = await AccountController.findAccount({ tx, name: Account_Cash.name, type: Account_Cash.acc_type });
-        if (!inventoryAccount && !cashAccount) {
+        const BankAccount = await AccountController.findAccount({ tx, name: Account_Bank.name, type: Account_Bank.acc_type });
+        if (!inventoryAccount && !BankAccount) {
           throw new BadRequestError('Account not configured');
         }
         console.log('inventory account is ', inventoryAccount);
@@ -266,7 +265,7 @@ export class TransactionsController {
               credit: new Decimal(totalCost.total)
             },
             {
-              account_id: cashAccount.account_id,
+              account_id: BankAccount.account_id,
               debit: new Decimal(totalCost.total)
             }
           ]

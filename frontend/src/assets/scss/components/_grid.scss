@@ -1,3 +1,5 @@
+@use "../utils/variables";
+
 .grid-showcase {
   margin-bottom: -10px;
   span, .grid-wrapper {
@@ -19,7 +21,7 @@
 .grid-vertical {
   min-height: 150px;
   padding: 10px;
-  color: $black;
+  color: variables.$black;
 }
 table.table-bordered thead tr th p {
   margin-bottom: 0;
