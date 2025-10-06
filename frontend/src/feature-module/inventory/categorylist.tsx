@@ -274,7 +274,7 @@ const CategoryProductTable = () => {
         <div className="content">
           <div className="page-title">
             <h4 className="fw-bold">Units</h4>
-            <h6>Manage your units</h6>
+            {/* <h6>Manage your units</h6> */}
 
             {/* <TableTopHead /> */}
           </div>

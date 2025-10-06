@@ -219,7 +219,7 @@ const Header = () => {
           <ul className="nav user-menu">
             {/* Search */}
             <li className="nav-item nav-searchinputs">
-              <div className="top-nav-search">
+              {/* <div className="top-nav-search">
                 <Link to="#" className="responsive-search">
                   <i className="feather icon-search" />
                 </Link>
@@ -303,12 +303,12 @@ const Header = () => {
                     </div>
                   </div>
                 </form>
-              </div>
+              </div> */}
             </li>
             {/* /Search */}
 
             {/* Select Store */}
-            <li className="nav-item dropdown has-arrow main-drop select-store-dropdown">
+            {/* <li className="nav-item dropdown has-arrow main-drop select-store-dropdown">
               <Link to="#" className="dropdown-toggle nav-link select-store" data-bs-toggle="dropdown">
                 <span className="user-info">
                   <span className="user-letter">
@@ -337,10 +337,10 @@ const Header = () => {
                   Grocery Eden
                 </Link>
               </div>
-            </li>
+            </li> */}
             {/* /Select Store */}
 
-            <li className="nav-item dropdown link-nav">
+            {/* <li className="nav-item dropdown link-nav">
               <Link to="#" className="btn btn-primary btn-md d-inline-flex align-items-center" data-bs-toggle="dropdown">
                 <i className="ti ti-circle-plus me-1" />
                 Add New
@@ -445,7 +445,7 @@ const Header = () => {
                   </div>
                 </div>
               </div>
-            </li>
+            </li> */}
             <li className="nav-item pos-nav">
               <Link to={route.pos} className="btn btn-dark btn-md d-inline-flex align-items-center">
                 <i className="ti ti-device-laptop me-1" />
@@ -454,23 +454,23 @@ const Header = () => {
             </li>
 
             {/* Flag */}
-            <li className="nav-item dropdown has-arrow flag-nav nav-item-box">
-              <Link className="nav-link dropdown-toggle" data-bs-toggle="dropdown" to="#" role="button">
-                {/* <i data-feather="globe" /> */}
-                {/* <FeatherIcon icon="globe" /> */}
-                <img src={flagImage} alt="img" height={16} />
+            {/* <li className="nav-item dropdown has-arrow flag-nav nav-item-box">
+              <Link className="nav-link dropdown-toggle" data-bs-toggle="dropdown" to="#" role="button"> */}
+            {/* <i data-feather="globe" /> */}
+            {/* <FeatherIcon icon="globe" /> */}
+            {/* <img src={flagImage} alt="img" height={16} />
               </Link>
               <div className="dropdown-menu dropdown-menu-right">
                 <Link to="#" className="dropdown-item active" onClick={() => changeLanguage('en')}>
-                  <img src={englishFlag} alt="img" height={16} />
-                  {'English'}
-                  {/* {t("English")} */}
-                </Link>
+                  <img src={englishFlag} alt="img" height={16} /> */}
+            {/* {'English'} */}
+            {/* {t("English")} */}
+            {/* </Link>
                 <Link to="#" className="dropdown-item" onClick={() => changeLanguage('fr')}>
                   <img src={arabicFlag} alt="img" height={16} /> Arabic
                 </Link>
               </div>
-            </li>
+            </li> */}
             {/* /Flag */}
             <li className="nav-item nav-item-box">
               <Link
@@ -483,21 +483,21 @@ const Header = () => {
                 <i className="ti ti-maximize"></i>
               </Link>
             </li>
-            <li className="nav-item nav-item-box">
-              <Link to="/email">
-                {/* <i data-feather="mail" /> */}
-                <i className="ti ti-mail"></i>
+            {/* <li className="nav-item nav-item-box">
+              <Link to="/email"> */}
+            {/* <i data-feather="mail" /> */}
+            {/* <i className="ti ti-mail"></i>
                 <span className="badge rounded-pill">1</span>
               </Link>
-            </li>
+            </li> */}
             {/* Notifications */}
-            <li className="nav-item dropdown nav-item-box">
-              <Link to="#" className="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-                {/* <i data-feather="bell" /> */}
-                <i className="ti ti-bell"></i>
-                {/* <span className="badge rounded-pill">2</span> */}
-              </Link>
-              <div className="dropdown-menu notifications">
+            {/* <li className="nav-item dropdown nav-item-box"> */}
+            {/* <Link to="#" className="dropdown-toggle nav-link" data-bs-toggle="dropdown"> */}
+            {/* <i data-feather="bell" /> */}
+            {/* <i className="ti ti-bell"></i> */}
+            {/* <span className="badge rounded-pill">2</span> */}
+            {/* </Link> */}
+            {/* <div className="dropdown-menu notifications">
                 <div className="topnav-dropdown-header">
                   <h5 className="notification-title">Notifications</h5>
                   <Link to="#" className="clear-noti">
@@ -578,13 +578,13 @@ const Header = () => {
                   </Link>
                 </div>
               </div>
-            </li>
+            </li> */}
             {/* /Notifications */}
-            <li className="nav-item nav-item-box">
+            {/* <li className="nav-item nav-item-box">
               <Link to="/general-settings">
                 <i className="feather icon-settings"></i>
               </Link>
-            </li>
+            </li> */}
             <li className="nav-item dropdown has-arrow main-drop profile-nav">
               <Link to="#" className="nav-link userset" data-bs-toggle="dropdown">
                 <span className="user-info p-0">

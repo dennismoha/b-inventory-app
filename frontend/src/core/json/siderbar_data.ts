@@ -82,22 +82,22 @@ export const SidebarData = [
       //     { label: "Search List", link: "/search-list", showSubRoute: false },
       //   ],
       // },
-      {
-        label: 'Layouts',
-        icon: 'layout-sidebar-right-collapse',
-        submenu: true,
-        showSubRoute: false,
-        submenuItems: [
-          { label: 'Horizontal', link: route.Horizontal, showSubRoute: false },
-          // { label: 'Detached', link: route.Detached, showSubRoute: false },
-          // { label: "Modern", link: route.Modern, showSubRoute: false },
-          // { label: 'Two Column', link: route.TwoColumn, showSubRoute: false },
-          // { label: 'Hovered', link: route.Hovered, showSubRoute: false },
-          // { label: 'Boxed', link: route.Boxed, showSubRoute: false },
-          // { label: 'RTL', link: route.RTL, showSubRoute: false },
-          { label: 'Dark', link: route.Dark, showSubRoute: false }
-        ]
-      }
+      // {
+      //   label: 'Layouts',
+      //   icon: 'layout-sidebar-right-collapse',
+      //   submenu: true,
+      //   showSubRoute: false,
+      //   submenuItems: [
+      //     { label: 'Horizontal', link: route.Horizontal, showSubRoute: false },
+      //     // { label: 'Detached', link: route.Detached, showSubRoute: false },
+      //     // { label: "Modern", link: route.Modern, showSubRoute: false },
+      //     // { label: 'Two Column', link: route.TwoColumn, showSubRoute: false },
+      //     // { label: 'Hovered', link: route.Hovered, showSubRoute: false },
+      //     // { label: 'Boxed', link: route.Boxed, showSubRoute: false },
+      //     // { label: 'RTL', link: route.RTL, showSubRoute: false },
+      //     { label: 'Dark', link: route.Dark, showSubRoute: false }
+      //   ]
+      // }
     ]
   },
   {
