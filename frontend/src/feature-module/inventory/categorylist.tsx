@@ -1,19 +1,16 @@
 'use client';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import {
   type LiteralUnion,
   MaterialReactTable,
-  type MRT_Row,
+  // type MRT_Row,
   type MRT_TableOptions,
   useMaterialReactTable,
   type MRT_ColumnDef
 } from 'material-react-table';
 //import { getDefaultMRTOptions } from '@/app/(components)/material-table/index'; //your default options
-import { Box, Button, IconButton, Tooltip } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import CommonFooter from '@components/footer/commonFooter';
+import { Box, Button } from '@mui/material';
 
 import type { Category } from '../interface/features-interface';
 import {
@@ -22,68 +19,18 @@ import {
   useDeleteCategoryMutation,
   useUpdateCategoryMutation
 } from '@core/redux/api/inventory-api';
-import { toast } from 'react-toastify';
+
+import { Link } from 'react-router';
 
 const CategoryProductTable = () => {
   const [validationErrors, setValidationErrors] = useState<Record<string, string | undefined>>({});
 
-  const { data: categories, isLoading, isError } = useGetCategoriesQuery();
-  const [createCategory, { isLoading: categoryIsLoading, isError: isCategoryError, error: categoryError }] = useCreateCategoryMutation();
-  const [deleteCategory, { isLoading: deleting, isError: errorDeleting, isSuccess: deletedSuccessfully, error: deleteError }] =
-    useDeleteCategoryMutation();
-  const [updateCategory, { isLoading: updating, isError: updateError, error: updatecategoryError, isSuccess: updatedSuccessfully }] =
-    useUpdateCategoryMutation();
-  useEffect(() => {
-    toast.dismiss();
-    if (isLoading) {
-      toast.info('fetching categories ....');
-    }
+  const { data: categories, isError, error } = useGetCategoriesQuery();
+  const [createCategory, { isError: isCategoryError, error: categoryError }] = useCreateCategoryMutation();
+  const [deleteCategory, { isError: isErrorDeleting, error: deleteError }] = useDeleteCategoryMutation();
+  const [updateCategory, { isError: updateError, error: updatecategoryError }] = useUpdateCategoryMutation();
 
-    if (isError) {
-      toast.error('error fetching categoris');
-    }
-
-    if (categoryIsLoading) {
-      toast.info('creating categoy....');
-    }
-
-    if (isCategoryError) {
-      toast.info('error creating categories');
-    }
-  }, [isLoading, isError, categoryIsLoading, isCategoryError]);
-
-  useEffect(() => {
-    toast.dismiss();
-    if (updateError && updatecategoryError) {
-      if ('data' in updatecategoryError) {
-        //@ts-expect-error data.message is of type unknown
-        toast.error(`${updatecategoryError.data.message}`);
-      }
-
-      if ('message' in updatecategoryError) {
-        //@ts-expect-error message does not exist in fetchbasequery
-        toast.error(`error updating categry , ${updateCategory.message}`);
-      }
-
-      toast.error('error in updating category');
-    }
-
-    if (updatedSuccessfully) {
-      toast.success('category updated successfully');
-    }
-    if (deleting) {
-      toast.info('deleting category');
-    }
-
-    if (errorDeleting) {
-      toast.error(`error deleting category ${JSON.stringify(deleteError)}`);
-    }
-
-    if (deletedSuccessfully) {
-      toast.info('category successfully deleted');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deleting, errorDeleting, deletedSuccessfully, deleteError, updating, updateError, updatedSuccessfully, updatecategoryError]);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const Categories: Category[] = categories ? categories.data : [];
   // Columns for category table
@@ -124,19 +71,19 @@ const CategoryProductTable = () => {
           helperText: validationErrors?.description,
           onFocus: () => setValidationErrors({ ...validationErrors, description: undefined })
         }
-      },
-      {
-        accessorKey: 'created_at',
-        header: 'Created At',
-        enableEditing: false, // Disable editing for created_at
-        size: 180
-      },
-      {
-        accessorKey: 'updated_at',
-        header: 'Updated At',
-        enableEditing: false, // Disable editing for updated_at
-        size: 180
       }
+      // {
+      //   accessorKey: 'created_at',
+      //   header: 'Created At',
+      //   enableEditing: false, // Disable editing for created_at
+      //   size: 180
+      // },
+      // {
+      //   accessorKey: 'updated_at',
+      //   header: 'Updated At',
+      //   enableEditing: false, // Disable editing for updated_at
+      //   size: 180
+      // }
     ],
     [validationErrors]
   );
@@ -155,9 +102,13 @@ const CategoryProductTable = () => {
     delete values.categoryId;
     delete values.created_at;
     delete values.updated_at;
-    await createCategory(values);
 
-    table.setCreatingRow(null); // Close row creation
+    try {
+      await createCategory(values).unwrap();
+      table.setCreatingRow(null); // Close row creation
+    } catch (error) {
+      console.log('error deleting', error);
+    }
   };
 
   // Handle updating a category (mock function, integrate your own API call here)
@@ -174,19 +125,24 @@ const CategoryProductTable = () => {
 
     delete values.created_at;
     delete values.updated_at;
-    updateCategory(values);
-    table.setEditingRow(null); // Close row editing
+
+    try {
+      await updateCategory(values).unwrap();
+      table.setEditingRow(null); // Close row editing
+    } catch (error) {
+      console.log('errror updating category ', error);
+    }
   };
 
   // Handle deleting a category (mock function, integrate your own API call here)
-  const openDeleteConfirmModal = (row: MRT_Row<Category>) => {
-    if (window.confirm('Are you sure you want to delete this category?')) {
-      // Integrate with your API to delete the category (mock API call)
-      console.log('Deleting category:', row.original.categoryId);
-      const categoryId = row.original.categoryId;
-      deleteCategory(categoryId);
-    }
-  };
+  // const openDeleteConfirmModal = (row: MRT_Row<Category>) => {
+  //   if (window.confirm('Are you sure you want to delete this category?')) {
+  //     // Integrate with your API to delete the category (mock API call)
+  //     console.log('Deleting category:', row.original.categoryId);
+  //     const categoryId = row.original.categoryId;
+  //     deleteCategory(categoryId);
+  //   }
+  // };
 
   const table = useMaterialReactTable({
     columns,
@@ -200,12 +156,19 @@ const CategoryProductTable = () => {
     onEditingRowCancel: () => setValidationErrors({}),
     onEditingRowSave: handleSaveCategory,
 
-    muiToolbarAlertBannerProps: isCategoryError
-      ? {
-          color: 'error',
-          children: JSON.stringify(categoryError.message)
-        }
-      : undefined,
+    muiToolbarAlertBannerProps:
+      isCategoryError || isError || isErrorDeleting || updateError
+        ? {
+            color: 'error',
+            children: JSON.stringify(
+              categoryError?.message ||
+                error?.message ||
+                deleteError?.message ||
+                updatecategoryError?.message ||
+                'An unknown error occurred.'
+            )
+          }
+        : undefined,
     muiTableProps: {
       sx: {
         border: '1px solid #F7F7F7',
@@ -235,20 +198,36 @@ const CategoryProductTable = () => {
         fontWeight: '400'
       }
     },
-    renderRowActions: ({ row, table }) => (
-      <Box sx={{ display: 'flex', gap: '1rem' }}>
-        <Tooltip title="Edit">
-          <IconButton onClick={() => table.setEditingRow(row)}>
-            <EditIcon />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Delete">
-          <IconButton color="error" onClick={() => openDeleteConfirmModal(row)}>
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
+    renderRowActions: ({ row }) => (
+      <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+        <Link className="me-2 p-2 d-flex align-items-center border rounded" to="#" onClick={() => table.setEditingRow(row)}>
+          <i data-feather="edit" className="feather-edit" />
+        </Link>
+        <Link
+          data-bs-toggle="modal"
+          data-bs-target="#delete-asset-modal"
+          onClick={() => setDeleteId(row.original.categoryId)}
+          className="me-2 p-2 d-flex align-items-center border rounded error"
+          to="#"
+        >
+          <i data-feather="trash-2" className="feather-trash-2" />
+        </Link>
       </Box>
     ),
+    // renderRowActions: ({ row, table }) => (
+    //   <Box sx={{ display: 'flex', gap: '1rem' }}>
+    //     <Tooltip title="Edit">
+    //       <IconButton onClick={() => table.setEditingRow(row)}>
+    //         <EditIcon />
+    //       </IconButton>
+    //     </Tooltip>
+    //     <Tooltip title="Delete">
+    //       <IconButton color="error" onClick={() => openDeleteConfirmModal(row)}>
+    //         <DeleteIcon />
+    //       </IconButton>
+    //     </Tooltip>
+    //   </Box>
+    // ),
     renderTopToolbarCustomActions: ({ table }) => (
       <Button
         variant="contained"
@@ -267,28 +246,72 @@ const CategoryProductTable = () => {
     }
   });
 
-  // return <MaterialReactTable table={table} />;
   return (
-    <>
-      <div className="page-wrapper">
-        <div className="content">
-          <div className="page-title">
-            <h4 className="fw-bold">Units</h4>
-            {/* <h6>Manage your units</h6> */}
-
-            {/* <TableTopHead /> */}
-          </div>
-
-          <div className="card table-list-card">
-            <div className="card-body">
-              <MaterialReactTable table={table} />
+    <div className="page-wrapper">
+      <div className="content">
+        <div>{updateError ? updatecategoryError?.message : null}</div>
+        <div>{isErrorDeleting ? deleteError?.message : null}</div>
+        <MaterialReactTable table={table} />
+      </div>
+      {/* Delete Modal */}
+      <div className="modal fade" id="delete-asset-modal">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="page-wrapper-new p-0">
+              <div className="content p-5 px-3 text-center">
+                <span className="rounded-circle d-inline-flex p-2 bg-danger-transparent mb-2">
+                  <i className="ti ti-trash fs-24 text-danger" />
+                </span>
+                <h4 className="fs-20 text-gray-9 fw-bold mb-2 mt-1">Delete Asset</h4>
+                <p className="text-gray-6 mb-0 fs-16">Are you sure you want to delete this asset?</p>
+                <div className="modal-footer-btn mt-3 d-flex justify-content-center">
+                  <button type="button" className="btn me-2 btn-secondary fs-13 fw-medium p-2 px-3 shadow-none" data-bs-dismiss="modal">
+                    Cancel
+                  </button>
+                  <button
+                    onClick={async () => {
+                      if (deleteId) {
+                        await deleteCategory(deleteId);
+                        setDeleteId(null);
+                      }
+                    }}
+                    type="button"
+                    data-bs-dismiss="modal"
+                    className="btn btn-submit fs-13 fw-medium p-2 px-3"
+                  >
+                    Yes Delete
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <CommonFooter />
       </div>
-    </>
+    </div>
   );
+
+  // return <MaterialReactTable table={table} />;
+  // return (
+  //   <>
+  //     <div className="page-wrapper">
+  //       <div className="content">
+  //         <div className="page-title">
+  //           <h4 className="fw-bold">Categories</h4>
+  //           {/* <h6>Manage your units</h6> */}
+
+  //           {/* <TableTopHead /> */}
+  //         </div>
+
+  //         <div className="card table-list-card">
+  //           <div className="card-body">
+  //             <MaterialReactTable table={table} />
+  //           </div>
+  //         </div>
+  //       </div>
+  //       <CommonFooter />
+  //     </div>
+  //   </>
+  // );
 };
 
 // Validation function for category

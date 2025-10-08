@@ -509,7 +509,7 @@ export const PosSessionAPI = InventoryApi.injectEndpoints({
 const CategoryApi = InventoryApi.injectEndpoints({
   endpoints: (build) => ({
     getCategories: build.query<CategoryResponse, void>({
-      query: () => '/categories/categories', // Fetch categories from the 'categories' endpoint
+      query: () => '/categories', // Fetch categories from the 'categories' endpoint
       providesTags: ['categories'],
       keepUnusedDataFor: 300000
     }),

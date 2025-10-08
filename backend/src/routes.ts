@@ -48,7 +48,7 @@ export default (app: Application) => {
     app.use(BASE_PATH, authRoutes.signoutRoute());
     app.use(BASE_PATH, authMiddleware.verifyUser, productsRoutes.routes());
     app.use(BASE_PATH, authMiddleware.verifyUser, currentUserRoutes.routes());
-    app.use(`${BASE_PATH}/categories`, authMiddleware.verifyUser, verifyAuthRoles('admin'), categoryRoutes.routes());
+    app.use(`${BASE_PATH}`, authMiddleware.verifyUser, verifyAuthRoles('admin'), categoryRoutes.routes());
     app.use(`${BASE_PATH}`, authMiddleware.verifyUser, subCategoryRoutes.routes());
     app.use(BASE_PATH, productUnitsRoutes.routes());
     app.use(BASE_PATH, reportRoutes.routes());
