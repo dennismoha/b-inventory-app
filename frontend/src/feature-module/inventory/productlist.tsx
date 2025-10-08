@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   MaterialReactTable,
-  type MRT_Row,
+  // type MRT_Row,
   type MRT_TableOptions,
   useMaterialReactTable,
   type MRT_ColumnDef // If using TypeScript (optional, but recommended)
@@ -14,20 +14,33 @@ import {
   useDeleteProductMutation
 } from '@core/redux/api/inventory-api';
 
-import { Box, Button, IconButton, MenuItem, Tooltip } from '@mui/material';
+import {
+  Box,
+  Button,
+  //  IconButton,
+  MenuItem
+  // Tooltip
+} from '@mui/material';
 
-import EditIcon from '@mui/icons-material/Edit';
+// import EditIcon from '@mui/icons-material/Edit';
 import { useGetCategoriesQuery } from '@core/redux/api/inventory-api';
 import { toast } from 'react-toastify';
 import type { Category, Product, SubCategory } from '../interface/features-interface';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router';
 
 export default function ProductList() {
+  const [deleteId, setDeleteId] = useState<string | null>(null);
   const { data: response, isLoading, isError: isProductsError, error: productsError } = useGetProductsQuery('');
 
   // Fetch subcategories data
-  const { data: subCategoriesResponse, isLoading: isSubCategoriesLoading, error: subCategoriesError } = useGetSubCategoriesQuery();
+  const {
+    data: subCategoriesResponse,
+    isLoading: isSubCategoriesLoading,
+    error: subCategoriesError,
+    isError: isSubcategoriesError
+  } = useGetSubCategoriesQuery();
 
   // Fetch categories data
   const { data: Categories, isLoading: IsCategoryLoading, isError: IsCategoryError, error: categoriesError } = useGetCategoriesQuery();
@@ -37,8 +50,10 @@ export default function ProductList() {
     useUpdateProductMutation();
 
   // Mutation hook for creating product
-  const [createProduct, { isError: creatingIsProductError, error: creatingProductError, isSuccess: createdProductSuccess }] =
-    useCreateProductMutation();
+  const [
+    createProduct,
+    { reset: resetCreateProduct, isError: creatingIsProductError, error: creatingProductError, isSuccess: createdProductSuccess }
+  ] = useCreateProductMutation();
   // Mutation hook for deleting product
   const [deleteProduct, { isError: deletingIsProductError, error: deletingProductError, isSuccess: deletedProductSuccess }] =
     useDeleteProductMutation();
@@ -201,17 +216,17 @@ export default function ProductList() {
           const subcategory = subcategories.find((subcat) => subcat.subcategory_id === cell.getValue());
           return <div>{subcategory ? subcategory.subcategory_name : 'Select a Subcategory'}</div>;
         }
-      },
-      {
-        accessorKey: 'sku',
-        header: 'SKU',
-        muiTableHeadCellProps: { style: { color: 'green' } }
-      },
-      {
-        accessorKey: 'image_url',
-        header: 'Image url',
-        muiTableHeadCellProps: { style: { color: 'green' } }
       }
+      // {
+      //   accessorKey: 'sku',
+      //   header: 'SKU',
+      //   muiTableHeadCellProps: { style: { color: 'green' } }
+      // },
+      // {
+      //   accessorKey: 'image_url',
+      //   header: 'Image url',
+      //   muiTableHeadCellProps: { style: { color: 'green' } }
+      // }
     ],
     [categories, subcategories, validationErrors]
   );
@@ -237,15 +252,25 @@ export default function ProductList() {
       return;
     }
     setValidationErrors({});
+    resetCreateProduct();
     values = { ...values };
     delete values.product_id;
-    await createProduct(values);
+    delete values.sku;
+    delete values.image_url;
+    try {
+      await createProduct(values).unwrap();
+      table.setCreatingRow(null);
+      resetCreateProduct();
+    } catch (error) {
+      console.log(error);
+    }
 
     console.log('this is creating product error', creatingIsProductError);
-    if (!creatingIsProductError) {
-      console.log('we are not creating product error', creatingIsProductError);
-      // table.setCreatingRow(null); // Exit creating mode
-    }
+    // if (!creatingIsProductError) {
+
+    //   console.log('we are not creating product error', creatingIsProductError);
+    //   // table.setCreatingRow(null); // Exit creating mode
+    // }
   };
 
   // Handle row creation
@@ -258,19 +283,24 @@ export default function ProductList() {
     setValidationErrors({});
     values = { ...values };
     console.log('values are ', values);
-    await updateProduct(values);
-    table.setCreatingRow(null); // Exit creating mode
+
+    try {
+      await updateProduct(values).unwrap();
+      table.setEditingRow(null); // Exit creating mode
+    } catch (error) {
+      console.log('error editing ', error);
+    }
   };
 
   // const [deleteProduct] = useDeleteProductMutation();
   // Delete action handler
-  const openDeleteConfirmModal = (row: MRT_Row<Product>) => {
-    if (window.confirm(`Are you sure you want to delete this product?${JSON.stringify({ product_id: row.id })}`)) {
-      // Assuming a deleteProduct mutation action here (add implementation as needed)
-      deleteProduct({ product_id: row.id });
-      // dispatch(deleteProduct(row.original.product_id));
-    }
-  };
+  // const openDeleteConfirmModal = (row: MRT_Row<Product>) => {
+  //   if (window.confirm(`Are you sure you want to delete this product?${JSON.stringify({ product_id: row.id })}`)) {
+  //     // Assuming a deleteProduct mutation action here (add implementation as needed)
+  //     deleteProduct({ product_id: row.id });
+  //     // dispatch(deleteProduct(row.original.product_id));
+  //   }
+  // };
 
   // Pass table options to useMaterialReactTable
   const table = useMaterialReactTable({
@@ -290,12 +320,27 @@ export default function ProductList() {
     onCreatingRowSave: handleCreateProduct,
     onEditingRowCancel: () => setValidationErrors({}),
     onEditingRowSave: handleUpdateProduct,
-    muiToolbarAlertBannerProps: creatingIsProductError
-      ? {
-          color: 'error',
-          children: JSON.stringify(creatingProductError.message)
-        }
-      : undefined,
+    muiToolbarAlertBannerProps:
+      isProductsError ||
+      isSubcategoriesError ||
+      IsCategoryError ||
+      creatingIsProductError ||
+      updatingIsProductError ||
+      deletingIsProductError
+        ? {
+            color: 'error',
+            children: JSON.stringify(
+              productsError?.message ||
+                subCategoriesError?.message ||
+                categoriesError?.message ||
+                creatingProductError?.message ||
+                updatingProductError?.message ||
+                deletingProductError?.message ||
+                Object.values(validationErrors).join(', ') ||
+                'An unknown error occurred.'
+            )
+          }
+        : undefined,
     muiTableProps: {
       sx: {
         border: '1px solid #F7F7F7',
@@ -335,25 +380,42 @@ export default function ProductList() {
         Create Product
       </Button>
     ),
-    renderRowActions: ({ row, table }) => (
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }} className="edit-delete-action d-flex align-items-center ">
-        <Tooltip title="Edit">
-          <IconButton onClick={() => table.setEditingRow(row)} className="me-2 p-2 d-flex align-items-center border rounded">
-            {/* <i className="feather icon-edit"></i> */}
-            <EditIcon />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Delete">
-          <IconButton
-            color="error"
-            onClick={() => openDeleteConfirmModal(row)}
-            className="me-2 p-2 d-flex align-items-center border rounded"
-          >
-            <FontAwesomeIcon icon={faTrash} fontSize={18} data-bs-toggle="tooltip" title="fa fa-trash" />
+    // renderRowActions: ({ row, table }) => (
+    //   <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }} className="edit-delete-action d-flex align-items-center ">
+    //     <Tooltip title="Edit">
+    //       <IconButton onClick={() => table.setEditingRow(row)} className="me-2 p-2 d-flex align-items-center border rounded">
+    //         {/* <i className="feather icon-edit"></i> */}
+    //         <EditIcon />
+    //       </IconButton>
+    //     </Tooltip>
+    //     <Tooltip title="Delete">
+    //       <IconButton
+    //         color="error"
+    //         onClick={() => openDeleteConfirmModal(row)}
+    //         className="me-2 p-2 d-flex align-items-center border rounded"
+    //       >
+    //         <FontAwesomeIcon icon={faTrash} fontSize={18} data-bs-toggle="tooltip" title="fa fa-trash" />
 
-            {/* <DeleteIcon /> */}
-          </IconButton>
-        </Tooltip>
+    //         {/* <DeleteIcon /> */}
+    //       </IconButton>
+    //     </Tooltip>
+    //   </Box>
+    // ),
+
+    renderRowActions: ({ row }) => (
+      <Box sx={{ display: 'flex', gap: '0.5rem' }}>
+        <Link className="me-2 p-2 d-flex align-items-center border rounded" to="#" onClick={() => table.setEditingRow(row)}>
+          <i data-feather="edit" className="feather-edit" />
+        </Link>
+        <Link
+          data-bs-toggle="modal"
+          data-bs-target="#delete-product-modal"
+          onClick={() => setDeleteId(row.original.product_id)}
+          className="me-2 p-2 d-flex align-items-center border rounded error"
+          to="#"
+        >
+          <i data-feather="trash-2" className="feather-trash-2" />
+        </Link>
       </Box>
     ),
     state: {
@@ -369,17 +431,59 @@ export default function ProductList() {
 
   // Rendering the MaterialReactTable component
   return (
-    <>
-      {!products || products.length === 0 ? <div>no products available</div> : null}
-      <div className="page-wrapper">
-        <div className="content">
-          <div className="table-responsive">
-            <MaterialReactTable table={table} />
+    <div className="page-wrapper">
+      <div>{updatingIsProductError ? <p>{JSON.stringify(updatingProductError.message)}</p> : null}</div>
+      <div className="content">
+        <MaterialReactTable table={table} />
+      </div>
+      {/* Delete Modal */}
+      <div className="modal fade" id="delete-product-modal">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="page-wrapper-new p-0">
+              <div className="content p-5 px-3 text-center">
+                <span className="rounded-circle d-inline-flex p-2 bg-danger-transparent mb-2">
+                  <i className="ti ti-trash fs-24 text-danger" />
+                </span>
+                <h4 className="fs-20 text-gray-9 fw-bold mb-2 mt-1">Delete Asset</h4>
+                <p className="text-gray-6 mb-0 fs-16">Are you sure you want to delete this asset?</p>
+                <div className="modal-footer-btn mt-3 d-flex justify-content-center">
+                  <button type="button" className="btn me-2 btn-secondary fs-13 fw-medium p-2 px-3 shadow-none" data-bs-dismiss="modal">
+                    Cancel
+                  </button>
+                  <button
+                    onClick={async () => {
+                      if (deleteId) {
+                        await deleteProduct({ product_id: deleteId });
+                        setDeleteId(null);
+                      }
+                    }}
+                    type="button"
+                    data-bs-dismiss="modal"
+                    className="btn btn-submit fs-13 fw-medium p-2 px-3"
+                  >
+                    Yes Delete
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
+  // return (
+  //   <>
+  //     {!products || products.length === 0 ? <div>no products available</div> : null}
+  //     <div className="page-wrapper">
+  //       <div className="content">
+  //         <div className="table-responsive">
+  //           <MaterialReactTable table={table} />
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </>
+  // );
 }
 
 // import React, { useState } from 'react';

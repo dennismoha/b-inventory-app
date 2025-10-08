@@ -294,8 +294,8 @@ export default function SubCategoryList() {
       <div className="page-wrapper">
         <div className="content">
           <div className="page-title">
-            <h4 className="fw-bold">Units</h4>
-            <h6>Manage your units</h6>
+            <h4 className="fw-bold">subcategory</h4>
+            <h6>Manage your subcategories</h6>
 
             {/* <TableTopHead /> */}
           </div>

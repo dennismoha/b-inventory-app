@@ -419,14 +419,14 @@ export const SidebarData = [
         icon: 'building-bank',
         showSubRoute: false,
         submenu: false
-      },
-      {
-        label: 'Money Transfer',
-        link: '/money-transfer',
-        icon: 'moneybag',
-        showSubRoute: false,
-        submenu: false
       }
+      // {
+      //   label: 'Money Transfer',
+      //   link: '/money-transfer',
+      //   icon: 'moneybag',
+      //   showSubRoute: false,
+      //   submenu: false
+      // }
       // {
       //   label: 'Balance Sheet',
       //   link: '/balance-sheet',
@@ -521,7 +521,7 @@ export const SidebarData = [
         link: '/employees-grid',
         icon: 'user',
         showSubRoute: false
-      },
+      }
       // {
       //   label: "Departments",
       //   link: "/department-grid",
@@ -572,17 +572,17 @@ export const SidebarData = [
       //   showSubRoute: false,
       // },
 
-      {
-        label: 'Payroll',
-        link: '#',
-        icon: 'file-dollar',
-        showSubRoute: false,
-        submenu: true,
-        submenuItems: [
-          { label: 'Employee Salary', link: route.payrollList },
-          { label: 'Payslip', link: '/payslip' }
-        ]
-      }
+      // {
+      //   label: 'Payroll',
+      //   link: '#',
+      //   icon: 'file-dollar',
+      //   showSubRoute: false,
+      //   submenu: true,
+      //   submenuItems: [
+      //     { label: 'Employee Salary', link: route.payrollList },
+      //     { label: 'Payslip', link: '/payslip' }
+      //   ]
+      // }
     ]
   },
   {

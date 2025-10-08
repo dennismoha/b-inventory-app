@@ -10,7 +10,7 @@ export const productSchema: ObjectSchema = Joi.object().keys({
   name: Joi.string().required(),
   description: Joi.string().required(),
   category_id: Joi.string().uuid().required(),
-  subcategory_id: Joi.string().uuid().required(),
-  image_url: Joi.string().uri().required(),
-  sku: Joi.string().optional()
+  subcategory_id: Joi.string().uuid().required()
+  // image_url: Joi.string().uri().optional(),
+  // sku: Joi.string().optional()
 });

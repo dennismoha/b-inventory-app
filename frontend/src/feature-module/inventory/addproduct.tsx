@@ -5,7 +5,7 @@ import SupplierProductsTable from './addproductssupplierproductstable';
 // import SearchFromApi from '../../components/data-table/search';
 // import DeleteModal from '../../components/delete-modal';
 // import CommonSelect from '../../components/select/common-select';
-import TableTopHead from '../../components/table-top-head';
+// import TableTopHead from '../../components/table-top-head';
 import CommonFooter from '../../components/footer/commonFooter';
 // import { downloadImg, stockImg02 } from '../../utils/imagepath';
 
@@ -85,23 +85,23 @@ const SupplierProducts: React.FC = () => {
           <div className="page-header">
             <div className="add-item d-flex">
               <div className="page-title">
-                <h4>Stock Transfer</h4>
-                <h6>Manage your stock transfer</h6>
+                <h4>Add new products</h4>
+                <h6>link each supplier with a products</h6>
               </div>
             </div>
-            <TableTopHead />
+            {/* <TableTopHead /> */}
             <div className="page-btn">
               <Link to="#" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-stock-transfer">
                 <i className="ti ti-circle-plus me-1" />
                 Add New
               </Link>
             </div>
-            <div className="page-btn import">
+            {/* <div className="page-btn import">
               <Link to="#" className="btn btn-secondary color" data-bs-toggle="modal" data-bs-target="#view-notes">
                 <i className="feather icon-download me-1" />
                 Import Transfer
               </Link>
-            </div>
+            </div> */}
           </div>
           {/* /product list */}
           <div className="card">
@@ -220,7 +220,7 @@ const SupplierProducts: React.FC = () => {
           <div className="modal-content">
             <div className="modal-header">
               <div className="page-title">
-                <h4>Add Transfer</h4>
+                <h4>Create new product</h4>
               </div>
               <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>

@@ -4,9 +4,10 @@ import prisma from '@src/shared/prisma/prisma-client'; // Prisma client to inter
 import { productSchema } from '@src/features/products/schema/products-schema';
 import { StatusCodes } from 'http-status-codes';
 import { joiValidation } from '@src/shared/globals/decorators/joi-validation-decorators';
-import { ConflictError } from '@src/shared/globals/helpers/error-handler';
+// import { ConflictError } from '@src/shared/globals/helpers/error-handler';
 import GetSuccessMessage from '@src/shared/globals/helpers/success-messages';
 import { Product } from '@src/features/products/interfaces/product.interface';
+// import { ConflictError } from '@src/shared/globals/helpers/error-handler';
 
 export class ProductsController {
   /**
@@ -30,27 +31,29 @@ export class ProductsController {
 
   @joiValidation(productSchema)
   public async createProduct(req: Request, res: Response): Promise<void> {
-    const { name, description, category_id, subcategory_id, image_url, sku } = req.body;
+    // const { name, description, category_id, subcategory_id, image_url, sku } = req.body;
+    const { name, description, category_id, subcategory_id } = req.body;
 
-    // Check if product sku already exists
-    const existingProductSku = await prisma.products.findUnique({
-      where: { sku }
-    });
+    // Check if product name already exists
+    // const existingProductSku = await prisma.products.findUnique({
+    //   where: { name }
+    // });
 
-    if (existingProductSku) {
-      throw new ConflictError('sku arleady exists');
-    }
+    // if (existingProductSku) {
+    //   throw new ConflictError('sku arleady exists');
+    // }
 
+    // const product: Product = await prisma.products.create({
+    //   data: { name, description, category_id, subcategory_id, image_url, sku }
+    // });
     const product: Product = await prisma.products.create({
-      data: { name, description, category_id, subcategory_id, image_url, sku }
+      data: { name, description, category_id, subcategory_id }
     });
     res.status(StatusCodes.CREATED).send(GetSuccessMessage(StatusCodes.OK, product, 'succesfully fetched'));
   }
 
   /**
    * Update an existing product.
-   * @param req The Express request object.
-   * @param res The Express response object.
    */
 
   @joiValidation(productSchema)
@@ -67,9 +70,7 @@ export class ProductsController {
   }
 
   /**
-   * Delete an existing product.
-   * @param req The Express request object.
-   * @param res The Express response object.
+   * Delete an existing product..
    */
   public async deleteProduct(req: Request, res: Response): Promise<void> {
     const { product_id } = req.params;

@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Products" ALTER COLUMN "image_url" DROP NOT NULL,
+ALTER COLUMN "sku" DROP NOT NULL;

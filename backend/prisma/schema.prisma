@@ -149,12 +149,12 @@ model SupplierProducts {
 
 model Products {
   product_id       String             @id @default(uuid()) @db.Uuid
-  name             String
+  name             String             @unique
   description      String
   category_id      String             @db.Uuid
   subcategory_id   String             @db.Uuid
-  image_url        String
-  sku              String             @unique
+  image_url        String?
+  sku              String?             @unique
   created_at       DateTime           @default(now()) @db.Timestamp(6)
   updated_at       DateTime           @updatedAt @db.Timestamp(6)
   category         Categories         @relation(fields: [category_id], references: [categoryId])

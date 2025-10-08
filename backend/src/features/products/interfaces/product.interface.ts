@@ -8,8 +8,8 @@ export interface Product {
   description: string; // Description of the product
   category_id: string; // UUID of the category
   subcategory_id: string; // UUID of the subcategory
-  image_url: string; // URL to the product image
-  sku: string; // Optional SKU (Stock Keeping Unit)
+  image_url: string | null; // URL to the product image
+  sku: string | null; // Optional SKU (Stock Keeping Unit)
   created_at: Date; // ISO 8601 DateTime string
   updated_at: Date; // ISO 8601 DateTime string
   category?: Category; // Parent category of the product
