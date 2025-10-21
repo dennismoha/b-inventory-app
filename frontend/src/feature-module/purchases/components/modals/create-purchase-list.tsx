@@ -3,7 +3,7 @@ import CommonDatePicker from '@components/date-picker/common-date-picker';
 import CommonSelect from '@components/select/common-select';
 import { useCreatePurchaseMutation } from '@core/redux/api/inventory-api';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // export interface Account {
@@ -44,7 +44,7 @@ interface CreatePurchaseListProps {
 }
 
 const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOptions, Accounts, unitsData }) => {
-  const activeAccounts = Accounts.filter((a) => a.account_status === 'ACTIVE');
+  const activeAccounts = Accounts.filter((a) => a.account_status === 'ACTIVE' && a.name === 'Bank');
   const [createPurchase, { isSuccess, isError, error, reset }] = useCreatePurchaseMutation();
 
   const [selectedSupplier, setSelectedSupplier] = useState('');
@@ -73,6 +73,23 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
 
   //   console.log('>>>>>>>>>>>>>>>>>>>> unitsData', unitsData);
 
+  const resetForm = () => {
+    setSelectedSupplier('');
+    setDate(new Date());
+    setUnitId('');
+    setReference('');
+    setPaymentType('full');
+    setTotalCost(0);
+    setInitialPayment(0);
+    setSelectedAccount('');
+    setSplitPayments([{ account: '', amount: 0, date: new Date().toISOString().slice(0, 10), reference: '' }]);
+    setBatch('');
+    setQuantity(0);
+    setDamagedUnits(0);
+    setPurchaseCostPerUnit(0);
+    setDiscounts(0);
+    setTax(0);
+  };
   const paymentTypeOptions = [
     { label: 'Full', value: 'full' },
     { label: 'Partial', value: 'partial' },
@@ -162,6 +179,7 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
       console.log('Validated split payments with errors:', paymentStatus);
     }
 
+    console.log('errors legnth are ', errors.length);
     if (errors.length > 0) {
       alert(errors.join('\n'));
       return;
@@ -195,6 +213,57 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
     console.log('Form Submitted:', payload);
     // send payload to backend here
   };
+
+  const handleDamagedUnitsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    // Allow empty string (so backspace works normally)
+    if (value === '') {
+      setDamagedUnits(0);
+      return;
+    }
+
+    // Allow only digits
+    if (/^\d+$/.test(value)) {
+      setDamagedUnits(Number(value));
+    } else {
+      alert('Only numbers accepted');
+    }
+  };
+
+  const handleNumericChange = (e: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<number>>) => {
+    const value = e.target.value.trim();
+
+    if (value === '') {
+      setter(0);
+      return;
+    }
+
+    if (/^\d+$/.test(value)) {
+      setter(Number(value));
+    } else {
+      alert('Only numbers accepted');
+    }
+  };
+
+  useEffect(() => {
+    const modal = document.getElementById('add-purchase');
+    console.log('Closing Modal element:');
+    if (!modal) return;
+
+    // const handleHidden = () => resetForm();
+    const handleHidden = () => {
+      console.log('Purchase Modal Hidden - resetting form');
+      resetForm();
+      reset(); // clears RTK mutation flags
+    };
+
+    modal.addEventListener('hidden.bs.modal', handleHidden);
+    return () => {
+      modal.removeEventListener('hidden.bs.modal', handleHidden);
+      reset();
+    };
+  }, []);
 
   return (
     <div className="modal fade" id="add-purchase">
@@ -297,7 +366,8 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                       className="form-control"
                       name="quantity"
                       value={quantity}
-                      onChange={(e) => (!Number(e.target.value) ? alert('only numbers accepted') : setQuantity(Number(e.target.value)))}
+                      // onChange={(e) => (!Number(e.target.value) ? alert('only numbers accepted') : setQuantity(Number(e.target.value)))}
+                      onChange={(e) => handleNumericChange(e, setQuantity)}
                     />
                   </div>
                 </div>
@@ -308,7 +378,8 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                       type="text"
                       className="form-control"
                       value={damagedUnits}
-                      onChange={(e) => (!Number(e.target.value) ? alert('only numbers accepted') : setDamagedUnits(Number(e.target.value)))}
+                      // onChange={(e) => (!Number(e.target.value) ? alert('only numbers accepted') : setDamagedUnits(Number(e.target.value)))}
+                      onChange={(e) => handleDamagedUnitsChange(e)}
                       name="damaged_units"
                     />
                   </div>
@@ -316,7 +387,6 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                 <div className="col-lg-4 col-sm-12">
                   <div className="mb-3">
                     <label className="form-label">Unit ID</label>
-                    <label>Account</label>
                     <select className="form-control" value={unitId} onChange={(e) => setUnitId(e.target.value)}>
                       <option value="">Select Units</option>
                       {JSON.stringify(unitsData)}
@@ -338,9 +408,10 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                       type="text"
                       className="form-control"
                       value={purchaseCostPerUnit}
-                      onChange={(e) =>
-                        !Number(e.target.value) ? alert('only numbers accepted') : setPurchaseCostPerUnit(Number(e.target.value))
-                      }
+                      // onChange={(e) =>
+                      //   !Number(e.target.value) ? alert('only numbers accepted') : setPurchaseCostPerUnit(Number(e.target.value))
+                      // }
+                      onChange={(e) => handleNumericChange(e, setPurchaseCostPerUnit)}
                       name="purchase_cost_per_unit"
                     />
                   </div>
@@ -358,7 +429,8 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                       type="text"
                       className="form-control"
                       value={discounts}
-                      onChange={(e) => (!Number(e.target.value) ? alert('only numbers accepted') : setDiscounts(Number(e.target.value)))}
+                      // onChange={(e) => (!Number(e.target.value) ? alert('only numbers accepted') : setDiscounts(Number(e.target.value)))}
+                      onChange={(e) => handleNumericChange(e, setDiscounts)}
                       name="discounts"
                     />
                   </div>
@@ -370,7 +442,8 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                       type="text"
                       className="form-control"
                       value={tax}
-                      onChange={(e) => (!Number(e.target.value) ? alert('only numbers accepted') : setTax(Number(e.target.value)))}
+                      // onChange={(e) => (!Number(e.target.value) ? alert('only numbers accepted') : setTax(Number(e.target.value)))}
+                      onChange={(e) => handleNumericChange(e, setTax)}
                       name="tax"
                     />
                   </div>
@@ -400,7 +473,8 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                       type="text"
                       className="form-control"
                       value={totalCost}
-                      onChange={(e) => (!Number(e.target.value) ? alert('only numbers accepted') : setTotalCost(Number(e.target.value)))}
+                      // onChange={(e) => (!Number(e.target.value) ? alert('only numbers accepted') : setTotalCost(Number(e.target.value)))}
+                      onChange={(e) => handleNumericChange(e, setTotalCost)}
                     />
                   </div>
                   <div className="col-lg-4">
@@ -431,7 +505,13 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                 <div className="row">
                   <div className="col-lg-4">
                     <label>Total Purchase Cost</label>
-                    <input type="text" className="form-control" value={totalCost} onChange={(e) => setTotalCost(Number(e.target.value))} />
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={totalCost}
+                      // onChange={(e) => setTotalCost(Number(e.target.value))}
+                      onChange={(e) => handleNumericChange(e, setTotalCost)}
+                    />
                   </div>
                   <div className="col-lg-4">
                     <label>Initial Payment</label>
@@ -439,7 +519,8 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                       type="number"
                       className="form-control"
                       value={initialPayment}
-                      onChange={(e) => setInitialPayment(Number(e.target.value))}
+                      // onChange={(e) => setInitialPayment(Number(e.target.value))}
+                      onChange={(e) => handleNumericChange(e, setInitialPayment)}
                     />
                   </div>
                   <div className="col-lg-4">
@@ -488,7 +569,8 @@ const CreatePurchaseListModal: React.FC<CreatePurchaseListProps> = ({ supplierOp
                         type="text"
                         className="form-control"
                         value={totalCost}
-                        onChange={(e) => setTotalCost(Number(e.target.value))}
+                        // onChange={(e) => setTotalCost(Number(e.target.value))}
+                        onChange={(e) => handleNumericChange(e, setTotalCost)}
                       />
                     </div>
                   </div>
