@@ -602,7 +602,7 @@ model PurchaseDamage {
 
   // batch            Batch     @relation(fields: [batch_id], references: [batch_id])
   // supplierProduct  SupplierProducts @relation(fields: [supplier_products_id], references: [supplier_products_id])
-  purchase Purchase @relation(fields: [purchase_id], references: [purchase_id])
+  purchase Purchase @relation(fields: [purchase_id], references: [purchase_id], onDelete: Cascade)
 
   @@map("PurchaseDamage")
 }
@@ -623,7 +623,7 @@ model BatchInventory {
   created_at           DateTime             @default(now())
 
   // batch              Batch    @relation(fields: [batch_id], references: [batch_id])
-  purchase Purchase @relation(fields: [purchase_id], references: [purchase_id])
+  purchase Purchase @relation(fields: [purchase_id], references: [purchase_id], onDelete: Cascade)
 
   BatchInventory Inventory[]
   BatchLifeCycle BatchLifecycle[]

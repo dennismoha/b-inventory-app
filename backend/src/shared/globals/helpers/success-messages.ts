@@ -22,6 +22,7 @@ import { Account, TrialBalance } from '@src/features/accounting/interfaces/accou
 import {
   BatchPayableResult,
   FormattedBatchInventory,
+  purchaseList,
   PurchasePayable,
   PurchasePayableResponse
 } from '@src/features/purchase/interface/purchase.interface';
@@ -79,6 +80,7 @@ type success_data =
   | WithArray<PurchasePayable>
   | WithArray<PurchasePayableResponse>
   | WithArray<AdminDashboardResponse>
+  | WithArray<purchaseList[]>
   | null;
 
 // GetSuccessMessage function

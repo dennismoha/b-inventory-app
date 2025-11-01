@@ -12,6 +12,7 @@ class BatchInventoryRoutes {
   public routes(): Router {
     // Example: Get all batch inventories
     this.router.get('/batch-inventories', authMiddleware.checkAuthentication, BatchInventoryController.prototype.getAll);
+    this.router.patch('/batch-inventories/:id/status', authMiddleware.checkAuthentication, BatchInventoryController.prototype.toggleStatus);
 
     return this.router;
   }

@@ -33,11 +33,7 @@ class PurchaseRoutes {
     // );
 
     // // Delete purchase by ID
-    // this.router.delete(
-    //   '/purchase/:id',
-    //   authMiddleware.checkAuthentication,
-    //   PurchaseController.prototype.delete
-    // );
+    this.router.delete('/purchase/', authMiddleware.checkAuthentication, PurchaseController.prototype.deletePurchase);
 
     return this.router;
   }

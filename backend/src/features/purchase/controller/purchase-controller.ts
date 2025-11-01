@@ -2,14 +2,16 @@
 import { Request, Response } from 'express';
 import prisma, { PrismaTransactionalClient } from '@src/shared/prisma/prisma-client';
 import { createPurchaseSchema } from '../schema/purchase-schema';
-import { CreatePurchaseRequest, PaymentType, ReferenceTypes } from '../interface/purchase.interface';
+import { CreatePurchaseRequest, PaymentType, purchaseList, ReferenceTypes } from '../interface/purchase.interface';
 import { joiValidation } from '@src/shared/globals/decorators/joi-validation-decorators';
 import { BadRequestError } from '@src/shared/globals/helpers/error-handler';
 import { PaymentMethod, TransactionType } from '@prisma/client';
 import { Decimal } from '@prisma/client/runtime/library';
 import { AccountController } from '@src/features/accounting/controller/accounts-controller';
-import { Account_Inventory } from '@src/constants';
+import { Account_Inventory, Account_Bank } from '@src/constants';
 import { JournalService } from '@src/features/accounting/controller/journals-controller';
+import { StatusCodes } from 'http-status-codes';
+import GetSuccessMessage from '@src/shared/globals/helpers/success-messages';
 
 // type Tx = Parameters<typeof prisma.$transaction>[0] extends (cb: infer Cb) => any ? Cb extends (tx: infer T) => any ? T : never : never;
 
@@ -471,7 +473,8 @@ export class PurchaseController {
   // fetch all purchase
   public async getAll(req: Request, res: Response) {
     const purchases = await prisma.purchase.findMany();
-    const result: CreatePurchaseRequest[] = purchases.map((purchase) => ({
+    const result: purchaseList[] = purchases.map((purchase) => ({
+      purchase_id: purchase.purchase_id,
       batch: purchase.batch,
       supplier_products_id: purchase.supplier_products_id,
       quantity: purchase.quantity,
@@ -491,6 +494,221 @@ export class PurchaseController {
       arrival_date: purchase.arrival_date
       // Add other fields from CreatePurchaseRequest if needed
     }));
-    return res.status(200).json({ data: result });
+
+    return res.status(StatusCodes.ACCEPTED).send(GetSuccessMessage(StatusCodes.ACCEPTED, result, 'purchases fetched successfully'));
   }
+
+  // delete purchase
+  public async deletePurchase(req: Request, res: Response) {
+    const { purchase_id, batch } = req.body;
+
+    if (!purchase_id || !batch) {
+      throw new BadRequestError('purchase_id and batchInventoryId are required');
+    }
+
+    // Check if purchase exists
+    const purchase = await prisma.batchInventory.findFirst({
+      where: { purchase_id, batch_name: batch },
+      select: {
+        purchase_id: true,
+        batch_inventory_id: true,
+        supplier_products_id: true,
+        total_units: true
+      }
+    });
+
+    if (!purchase) {
+      throw new BadRequestError('Purchase not found');
+    } else {
+      console.log('purchase found...... is ', purchase);
+    }
+
+    // fetch purchase total units for each
+    const purchaseProduct = await prisma.purchase.findUnique({
+      where: { purchase_id },
+      select: {
+        purchase_cost_per_unit: true,
+        payment_type: true,
+        total_purchase_cost: true
+      }
+    });
+
+    if (!purchaseProduct) {
+      throw new BadRequestError('Purchase not found');
+    }
+
+    const result = await prisma.$transaction(async (tx) => {
+      // Check if the purchase has been sold
+      const salesRecord = await tx.sales.findFirst({
+        where: { BatchInventoryId: purchase.batch_inventory_id }
+      });
+
+      if (salesRecord) {
+        throw new BadRequestError('Cannot delete an already sold item');
+      }
+
+      // Delete from batchInventory
+      await tx.batchInventory.delete({
+        where: { batch_inventory_id: purchase.batch_inventory_id }
+      });
+
+      // update the batch lifecycle
+      await tx.batchLifecycle.updateMany({
+        where: { batch_id: purchase.batch_inventory_id },
+        // data: { status: 'DELETED' }
+        data: { ended_at: new Date() }
+      });
+
+      // Fetch total_units from purchase table
+      const purchaseRecord = await tx.productSummary.findUnique({
+        where: { supplier_products_id: purchase.supplier_products_id }
+      });
+
+      if (!purchaseRecord) {
+        throw new BadRequestError('Purchase record not found');
+      }
+
+      await tx.productSummary.update({
+        where: { supplier_products_id: purchase.supplier_products_id },
+        data: {
+          total_received: {
+            decrement: purchaseRecord.total_received - purchase.total_units
+          },
+          total_cost_value: {
+            decrement: (purchaseRecord.total_received - purchase.total_units) * Number(purchaseProduct.purchase_cost_per_unit)
+          }
+        }
+      });
+
+      // check for payment types. full, credi
+
+      switch (purchaseProduct.payment_type) {
+        case 'full':
+          // Delete from expenses table if exists
+          await PurchaseController.deletePurchasePayment(purchase_id, purchaseProduct.total_purchase_cost, tx);
+          console.log('payment is full');
+          break;
+        case 'credit':
+          console.log('payment is credit');
+          break;
+
+        default:
+          throw new BadRequestError('Unsupported payment type for deletion');
+      }
+
+      return { message: 'Purchase deleted successfully', purchase_id, batch_inventory_id: purchase.batch_inventory_id };
+    });
+
+    return res.status(StatusCodes.ACCEPTED).json({ message: 'deketed succesfully', result });
+
+    /**
+     * tables
+     */
+
+    /**
+     * delete for payment_type full
+     *
+     * click on delete. payload purchase_id, batchInventoryId.
+     * first check in purchase table if both exists. if not throw an error. else continue
+     * query the sales tahble to check if batchInventoryId exists and is equal to the batchInventoryId in our req.
+     * if yes. throw an error, cannot delete an arleady sold item.
+     * if none, check the invetnroy table if the batchInventoryId exists.. if yes delete it since no record of it in sales table then it has not been sold.
+     * also update the batchLifecycle.
+     * if non e continue.
+     * fetcg total_units from the records of total units returned from fetching the purchase table,
+     * gi to productSummary table and update the total received by subtracting the total_units from the total received of using the supplier_products_id key
+     * if done.
+     * check the expenses table and delete the record of the purchase_id if it exists. use purchase_id field
+     * if sucecessful
+     * go to the Purchase table and delete the record of the purchase_id. also on delete cascade so this should also delete this respective unit on batchInventory ttable.
+     * then go to the journals and credit and debit from the respective records.
+     * once done return deleted successfully.
+     *
+     *
+     * deelte for payment type credit.
+     * rhis will go on as avoce ecept that  on journals we will skip since it is not ssved on journal yet.
+     * we will have to fetch from batchPayables table and delete the record of the purchase_id.
+     * check if any payments was done and also willl have to adjust the journals for this respectivelu.
+     * this feature willl be fully done once batchpayables auments has been done.
+     */
+  }
+
+  private static async deletePurchasePayment(purchase_id: string, total: Decimal, tx: PrismaTransactionalClient) {
+    const inventoryAccount = await AccountController.findAccount({ tx, name: Account_Inventory.name, type: Account_Inventory.acc_type }); //
+    const bankAccount = await AccountController.findAccount({ tx, name: Account_Bank.name, type: Account_Bank.acc_type });
+
+    const journalEntry = await JournalService.createJournalEntry(tx, {
+      transactionId: 'purchase_delete',
+      description: 'purchase delete',
+      lines: [
+        {
+          account_id: inventoryAccount.account_id!,
+          credit: total
+        },
+        {
+          account_id: bankAccount.account_id,
+          debit: total
+        }
+      ]
+    });
+    console.log('journal entry is ', journalEntry);
+
+    await tx.purchase.delete({
+      where: { purchase_id }
+    });
+
+    // Delete related batch payables, damages, and cashbook entries
+    // await this.deleteBatchPayables(purchase_id, tx);
+    // await this.deletePurchaseDamage(purchase_id, tx);
+    // await this.deleteCashbookEntries(purchase_id, tx);
+
+    // Optionally delete journal entries if needed
+    // await this.deleteJournalEntries(purchase_id, tx);
+
+    console.log('purchase deleted successfully');
+    // Return the journal entry or any other relevant data
+    console.log('journal entry is ', journalEntry);
+
+    return journalEntry;
+  }
+
+  private async deleteBatchPayables(purchase_id: string, tx: PrismaTransactionalClient) {
+    // Delete all batch payables related to this purchase
+    await tx.batchPayables.deleteMany({
+      where: { purchase_id }
+    });
+  }
+
+  private async deletePurchaseDamage(purchase_id: string, tx: PrismaTransactionalClient) {
+    // Delete all damages related to this purchase
+    await tx.purchaseDamage.deleteMany({
+      where: { purchase_id }
+    });
+  }
+
+  private async deleteCashbookEntries(purchase_id: string, tx: PrismaTransactionalClient) {
+    // Delete all cashbook entries related to this purchase
+    await tx.cashBookLedger.deleteMany({
+      where: { reference_id: purchase_id, reference_type: 'PURCHASE_PAYMENT' }
+    });
+  }
+
+  // private async deleteJournalEntries(purchase_id: string, tx: PrismaTransactionalClient) {
+  //   // Delete all journal entries related to this purchase
+  //     const journalEntry = await JournalService.createJournalEntry(tx, {
+  //       transactionId: 'purchase_payment',
+  //       description: 'purchase payment',
+  //       lines: [
+  //         {
+  //           account_id: data.account_id!,
+  //           credit: data.total_purchase_cost
+  //         },
+  //         {
+  //           account_id: inventoryAccount.account_id,
+  //           debit: data.total_purchase_cost
+  //         }
+  //       ]
+  //     });
+
+  // }
 }

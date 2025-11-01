@@ -44,6 +44,10 @@ export interface CreatePurchaseRequest {
   arrival_date: Date; // ISO date
 }
 
+export type purchaseList = CreatePurchaseRequest & {
+  purchase_id: string; // UUID
+};
+
 export interface CreatePurchaseResponse {
   message: string;
   data: {
