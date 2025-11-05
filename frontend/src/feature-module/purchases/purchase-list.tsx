@@ -32,7 +32,7 @@ import {
   MaterialReactTable,
   type MRT_ColumnDef,
   // type MRT_Row,
-  type MRT_TableOptions,
+  // type MRT_TableOptions,
   useMaterialReactTable
 } from 'material-react-table';
 import {

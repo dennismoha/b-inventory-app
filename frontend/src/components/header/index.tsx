@@ -3,25 +3,25 @@ import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { all_routes } from '../../routes/all_routes';
 import {
-  arabicFlag,
-  avatar01,
-  avatar1,
-  avatar10,
-  avatar_02,
-  avatar_03,
-  avatar_13,
-  avatar_17,
+  // arabicFlag,
+  // avatar01,
+  // avatar1,
+  // avatar10,
+  // avatar_02,
+  // avatar_03,
+  // avatar_13,
+  // avatar_17,
   avator1,
-  commandSvg,
-  englishFlag,
+  // commandSvg,
+  // englishFlag,
   logoPng,
   logoSmallPng,
-  logoWhitePng,
-  store_01,
-  store_02,
-  store_03,
-  store_04,
-  usFlag
+  logoWhitePng
+  // store_01,
+  // store_02,
+  // store_03,
+  // store_04,
+  // usFlag
 } from '../../utils/imagepath';
 import LogoutButton from '../../utils/api/logout';
 import { useAppSelector } from '@core/redux/store';
@@ -29,23 +29,23 @@ const Header = () => {
   const route = all_routes;
   const [toggle, SetToggle] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [flagImage, _setFlagImage] = useState(usFlag);
+  // const [flagImage, _setFlagImage] = useState(usFlag);
   const User = useAppSelector((state) => state.auth.user);
 
   // const { t, i18n } = useTranslation();
-  const changeLanguage = (_lng: any) => {
-    // Debugging statement
-    // i18n.changeLanguage(lng);
-    // setFlagImage(
-    //   lng === "en"
-    //     ? 'assets/img/flags/us-flag.svg'
-    //     : lng === "fr"
-    //       ? 'assets/img/flags/fr.png'
-    //       : lng === "es"
-    //         ? 'assets/img/flags/es.png'
-    //         : 'assets/img/flags/de.png'
-    // );
-  };
+  // const changeLanguage = (_lng: any) => {
+  //   // Debugging statement
+  //   // i18n.changeLanguage(lng);
+  //   // setFlagImage(
+  //   //   lng === "en"
+  //   //     ? 'assets/img/flags/us-flag.svg'
+  //   //     : lng === "fr"
+  //   //       ? 'assets/img/flags/fr.png'
+  //   //       : lng === "es"
+  //   //         ? 'assets/img/flags/es.png'
+  //   //         : 'assets/img/flags/de.png'
+  //   // );
+  // };
   const isElementVisible = (element: any) => {
     return element.offsetWidth > 0 || element.offsetHeight > 0;
   };

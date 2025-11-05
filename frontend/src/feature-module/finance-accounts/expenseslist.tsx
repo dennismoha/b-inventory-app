@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { expenselist } from '../../core/json/expenselistdata';
 import PrimeDataTable from '../../components/data-table';
-import TableTopHead from '../../components/table-top-head';
+// import TableTopHead from '../../components/table-top-head';
 import CommonDatePicker from '../../components/date-picker/common-date-picker';
 import CommonSelect from '../../components/select/common-select';
 import DeleteModal from '../../components/delete-modal';
-import { Editor } from 'primereact/editor';
-import SearchFromApi from '../../components/data-table/search';
+// import { Editor } from 'primereact/editor';
+// import SearchFromApi from '../../components/data-table/search';
 import {
   useCreateExpenseMutation,
   // useGetAccountsQuery,
@@ -18,7 +18,7 @@ import {
 // import type { CreatePurchaseRequest, FormattedBatchInventory } from '../interface/features-interface';
 
 const ExpensesList = () => {
-  const [text, setText] = useState('');
+  // const [text, setText] = useState('');
   const { data: expenseData } = useGetExpensesQuery();
 
   const expensesData = expenseData?.data ?? [];
@@ -125,12 +125,12 @@ const ExpensesList = () => {
     { value: 'foodsSnacks', label: 'Foods & Snacks' },
     { value: 'employeeBenefits', label: 'Employee Benefits' }
   ];
-  const [rows, setRows] = useState<number>(10);
-  const [_searchQuery, setSearchQuery] = useState<string | undefined>(undefined);
+  // const [rows, setRows] = useState<number>(10);
+  // const [_searchQuery, setSearchQuery] = useState<string | undefined>(undefined);
 
-  const handleSearch = (value: any) => {
-    setSearchQuery(value);
-  };
+  // const handleSearch = (value: any) => {
+  //   setSearchQuery(value);
+  // };
   return (
     <div>
       <div className="page-wrapper">

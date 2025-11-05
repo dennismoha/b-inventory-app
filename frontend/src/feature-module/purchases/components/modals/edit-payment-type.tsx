@@ -1,10 +1,10 @@
 import type { Account, Unit } from '@features/interface/features-interface';
-import CommonDatePicker from '@components/date-picker/common-date-picker';
-import CommonSelect from '@components/select/common-select';
+// import CommonDatePicker from '@components/date-picker/common-date-picker';
+// import CommonSelect from '@components/select/common-select';
 import { useCreatePurchaseMutation } from '@core/redux/api/inventory-api';
 
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 // export interface Account {
 //   account_id: string;
@@ -43,7 +43,8 @@ interface CreatePurchaseListProps {
   unitsData: Unit[];
 }
 
-const EditPaymentTypeModal: React.FC<CreatePurchaseListProps> = ({ supplierOptions, Accounts, unitsData }) => {
+// const EditPaymentTypeModal: React.FC<CreatePurchaseListProps> = ({ supplierOptions, Accounts, unitsData }) => {
+const EditPaymentTypeModal: React.FC<CreatePurchaseListProps> = ({ Accounts }) => {
   const activeAccounts = Accounts.filter((a) => a.account_status === 'ACTIVE' && a.name === 'Bank');
   const [createPurchase, { isSuccess, isError, error, reset }] = useCreatePurchaseMutation();
 
@@ -214,22 +215,22 @@ const EditPaymentTypeModal: React.FC<CreatePurchaseListProps> = ({ supplierOptio
     // send payload to backend here
   };
 
-  const handleDamagedUnitsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+  // const handleDamagedUnitsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const value = e.target.value;
 
-    // Allow empty string (so backspace works normally)
-    if (value === '') {
-      setDamagedUnits(0);
-      return;
-    }
+  //   // Allow empty string (so backspace works normally)
+  //   if (value === '') {
+  //     setDamagedUnits(0);
+  //     return;
+  //   }
 
-    // Allow only digits
-    if (/^\d+$/.test(value)) {
-      setDamagedUnits(Number(value));
-    } else {
-      alert('Only numbers accepted');
-    }
-  };
+  //   // Allow only digits
+  //   if (/^\d+$/.test(value)) {
+  //     setDamagedUnits(Number(value));
+  //   } else {
+  //     alert('Only numbers accepted');
+  //   }
+  // };
 
   const handleNumericChange = (e: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<number>>) => {
     const value = e.target.value.trim();
