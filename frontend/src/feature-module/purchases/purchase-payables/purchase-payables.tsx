@@ -121,14 +121,18 @@ export default function PurchasePayablesReport() {
     table.setEditingRow(null);
   };
 
+  const tableData = useMemo(
+    () =>
+      (payables ?? []).map((p) => ({
+        ...p,
+        settlement_date: p.settlement_date instanceof Date ? p.settlement_date.toISOString() : p.settlement_date
+      })),
+    [payables]
+  );
+
   const table = useMaterialReactTable({
     columns,
-    data: payables
-      ? payables.map((p) => ({
-          ...p,
-          settlement_date: p.settlement_date instanceof Date ? p.settlement_date.toISOString() : p.settlement_date
-        }))
-      : [],
+    data: tableData,
     createDisplayMode: 'row',
     editDisplayMode: 'row',
     enableEditing: true,

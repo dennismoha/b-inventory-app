@@ -1,4 +1,4 @@
-import  { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Bar, Pie } from 'react-chartjs-2';
 
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from 'chart.js';
@@ -365,6 +365,8 @@ const Dashboard = () => {
     return `${year}-${month}-${day}`;
   }
 
+
+
   // State for selected transaction details
   // const [selectedTransaction, setSelectedTransaction] = useState(null);
 
@@ -639,6 +641,26 @@ const Dashboard = () => {
     }))
   };
 
+  const setDates = (date: Date | null, type: 'start' | 'end') => {
+    if (!date) return;
+
+    if (type === 'start') {
+      // Prevent selecting a start date after the end date
+      if (date > endDate) {
+        alert('Start date cannot be after end date.');
+        return;
+      }
+      setStartDate(date);
+    } else {
+      // Prevent selecting an end date before the start date
+      if (date < startDate) {
+        alert('End date cannot be before start date.');
+        return;
+      }
+      setEndDate(date);
+    }
+  };
+
   return (
     <div className="page-wrapper">
       <div className="content">
@@ -649,11 +671,12 @@ const Dashboard = () => {
             <DatePicker
               selected={startDate}
               //onChange={(date) => setStartDate(date)}
-              onChange={(date: Date | null) => {
-                if (date !== null) {
-                  setStartDate(date); // Only update if date is valid (not null)
-                }
-              }}
+              // onChange={(date: Date | null) => {
+              //   if (date !== null) {
+              //     setStartDate(date); // Only update if date is valid (not null)
+              //   }
+              // }}
+              onChange={(date) => setDates(date, 'start')}
               selectsStart
               startDate={startDate}
               endDate={endDate}
@@ -664,11 +687,12 @@ const Dashboard = () => {
             <DatePicker
               selected={endDate}
               //onChange={(date) => setEndDate(date)}
-              onChange={(date: Date | null) => {
-                if (date !== null) {
-                  setEndDate(date); // Only update if date is valid (not null)
-                }
-              }}
+              // onChange={(date: Date | null) => {
+              //   if (date !== null) {
+              //     setEndDate(date); // Only update if date is valid (not null)
+              //   }
+              // }}
+              onChange={(date) => setDates(date, 'end')}
               selectsEnd
               startDate={startDate}
               endDate={endDate}

@@ -195,6 +195,7 @@ export default function AssetsTable() {
     const value = { ...values };
     delete value.createdAt;
     delete value.updatedAt;
+    delete value.custodianId;
     const { id, ...data } = value;
     await updateAsset({ id, data });
     table.setEditingRow(null);

@@ -142,7 +142,7 @@ const ExpensesList = () => {
                 <h6>Manage your Expenses</h6>
               </div>
             </div>
-            <TableTopHead />
+            {/* <TableTopHead /> */}
             <div className="page-btn">
               <Link to="#" data-bs-toggle="modal" data-bs-target="#add-units" className="btn btn-primary">
                 <i className="feather icon-plus-circle me-2" />
@@ -154,10 +154,10 @@ const ExpensesList = () => {
           {/* /product list */}
           <div className="card table-list-card">
             <div className="card-header d-flex align-items-center justify-content-between flex-wrap row-gap-3">
-              <SearchFromApi callback={handleSearch} rows={rows} setRows={setRows} />
+              {/* <SearchFromApi callback={handleSearch} rows={rows} setRows={setRows} /> */}
               <div className="d-flex table-dropdown my-xl-auto right-content align-items-center flex-wrap row-gap-3">
                 <div className="dropdown me-2">
-                  <Link to="#" className="dropdown-toggle btn btn-white btn-md d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                  {/* <Link to="#" className="dropdown-toggle btn btn-white btn-md d-inline-flex align-items-center" data-bs-toggle="dropdown">
                     Category
                   </Link>
                   <ul className="dropdown-menu  dropdown-menu-end p-3">
@@ -171,11 +171,11 @@ const ExpensesList = () => {
                         Office Supplies
                       </Link>
                     </li>
-                  </ul>
+                  </ul> */}
                 </div>
 
                 <div className="dropdown me-2">
-                  <Link to="#" className="dropdown-toggle btn btn-white btn-md d-inline-flex align-items-center" data-bs-toggle="dropdown">
+                  {/* <Link to="#" className="dropdown-toggle btn btn-white btn-md d-inline-flex align-items-center" data-bs-toggle="dropdown">
                     Status
                   </Link>
                   <ul className="dropdown-menu  dropdown-menu-end p-3">
@@ -189,7 +189,7 @@ const ExpensesList = () => {
                         Pending
                       </Link>
                     </li>
-                  </ul>
+                  </ul> */}
                 </div>
               </div>
             </div>
@@ -526,21 +526,21 @@ const ExpensesList = () => {
                   </div>
                   <div className="modal-body">
                     <div className="row">
-                      <div className="col-12">
+                      {/* <div className="col-12">
                         <div className="mb-3">
                           <label className="form-label">
                             Expense<span className="text-danger ms-1">*</span>
                           </label>
                           <input type="text" className="form-control" defaultValue="Electricity Payment" />
                         </div>
-                      </div>
-                      <div className="col-lg-12 mb-3">
+                      </div> */}
+                      {/* <div className="col-lg-12 mb-3">
                         <div className="mb-3 summer-description-box">
                           <label className="form-label">Description</label>
                           <Editor value={text} onTextChange={(e: any) => setText(e.htmlValue)} style={{ height: '200px' }} />
                           <p className="mt-1">Maximum 60 Words</p>
                         </div>
-                      </div>
+                      </div> */}
                       <div className="col-lg-6">
                         <div className="mb-3">
                           <label className="form-label">

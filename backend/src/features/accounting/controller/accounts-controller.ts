@@ -206,7 +206,7 @@ export class AccountController {
   /**
    * Update account details (excluding deletion).
    */
-  @joiValidation(accountSchema)
+  // @joiValidation(accountSchema)
   public async updateAccount(req: Request, res: Response): Promise<Response> {
     console.log('Updating account with data:', req.body);
     console.log('Account ID from params:', req.params);
@@ -335,7 +335,8 @@ export class AccountController {
    * Soft delete account.
    */
   public async deleteAccount(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params;
+    const { accountId } = req.params;
+    const id = accountId;
 
     const accountExists = await prisma.account.findFirst({
       where: { account_id: id, deleted: false }
@@ -343,7 +344,7 @@ export class AccountController {
     if (!accountExists) {
       throw new NotFoundError(`Account with ID ${id} not found or already deleted`);
     }
-
+    console.log('acccount id is ', id);
     await prisma.account.update({
       where: { account_id: id },
       data: { deleted: true }
@@ -497,7 +498,9 @@ export class AccountController {
   static async findAccount(args: { tx: PrismaTransactionalClient; name: string; type: AccountType }) {
     const { tx, name, type } = args;
 
+    console.log('name is ', name, ' and type is ', type);
     const account = await tx.account.findFirst({ where: { name, type } });
+    console.log('account details are ', account);
     if (!account) {
       throw new BadRequestError('Account not found');
     }

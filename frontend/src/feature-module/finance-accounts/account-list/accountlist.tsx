@@ -316,6 +316,7 @@ export default function AccountsTable() {
                 <button
                   onClick={async () => {
                     if (deleteId) {
+                      console.log('delete id is ', deleteId);
                       await deleteAccount(deleteId);
                       setDeleteId(null);
                     }

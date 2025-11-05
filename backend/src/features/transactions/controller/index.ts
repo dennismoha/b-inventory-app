@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
 import { transactionSchema } from '@src/features/transactions/schema/transactions-schema';
 import { joiValidation } from '@src/shared/globals/decorators/joi-validation-decorators';
@@ -5,12 +6,8 @@ import { StatusCodes } from 'http-status-codes';
 import { utilMessage } from '@src/shared/globals/helpers/utils';
 import GetSuccessMessage from '@src/shared/globals/helpers/success-messages';
 // import prisma, { PrismaTransactionalClient } from '@src/shared/prisma/prisma-client'; // Prisma client to interact with the database
-import prisma from '@src/shared/prisma/prisma-client'; // Prisma client to interact with the database
-import {
-  Transaction,
-  // TransactionProduct,
-  TransactionProductItems
-} from '@src/features/transactions/interfaces/transaction.interface';
+import prisma, { PrismaTransactionalClient } from '@src/shared/prisma/prisma-client'; // Prisma client to interact with the database
+import { Transaction, TransactionProduct, TransactionProductItems } from '@src/features/transactions/interfaces/transaction.interface';
 // import { Decimal } from '@prisma/client/runtime/library';
 
 import crypto from 'crypto';
@@ -106,9 +103,9 @@ export class TransactionsController {
 
       for (const item of cartProducts) {
         let totalAllocated = 0;
-
+        console.log('each items is ', item);
         if (item.needsBatchLoad) {
-          // await TransactionsController.allocateNextBatch(tx, item, transactionId);
+          await TransactionsController.allocateNextBatch(tx, item, transactionId);
           console.log('items need batch load');
         } else {
           // No batch allocation needed (pull directly from inventory)
@@ -295,6 +292,350 @@ export class TransactionsController {
     //   .status(StatusCodes.CREATED)
     //   .send(GetSuccessMessage(StatusCodes.CREATED, result, message));
   }
+
+  // static async allocateNextBatch(
+  //   tx: PrismaTransactionalClient,
+  //   item: TransactionProduct,
+  //   transactionId: string
+  // ) {
+  //   // ===================================================
+  //   // 1 Calculate remaining quantity to allocate
+  //   // ===================================================
+  //   // let remainingQuantity = item.quantity - Number(item.stock_quantity);
+  //   let remainingQuantity = Number(item.stock_quantity) - item.quantity;
+  //   if (remainingQuantity < 0) {
+  //     throw new BadRequestError(
+  //       `Invalid calculation: remaining quantity for ${item.productName} is negative.`
+  //     );
+  //   }
+
+  //   const txProductsData: Array<{
+  //     inventoryId: string;
+  //     supplier_products_id: string;
+  //     batch_id: string;
+  //     quantity: number;
+  //     productName: string;
+  //     price: number;
+  //     VAT: number;
+  //     discount: number;
+  //     productSubTotalCost: number;
+  //     productTotalCost: number;
+  //     transactionId: string;
+  //   }> = [];
+
+  //   // ===================================================
+  //   // 2️ End lifecycle + mark current batch as FINISHED
+  //   // ===================================================
+  //   await tx.batchLifecycle.update({
+  //     where: { batch_id: item.batch_inventory_id, ended_at: null },
+  //     data: { ended_at: new Date() },
+  //   });
+
+  //   await tx.batchInventory.update({
+  //     where: {
+  //       batch_inventory_id: item.batch_inventory_id,
+  //       status: 'ACTIVE',
+  //     },
+  //     data: { status: 'FINISHED' },
+  //   });
+
+  //   await tx.inventory.update({
+  //     where: { supplier_products_id: item.supplier_products_id, status: 'ACTIVE' },
+  //     data: {
+  //       status: 'FINISHED'
+  //     }
+  //   });
+
+  //   // ===================================================
+  //   // 3️ Fetch all pending batches FIFO order
+  //   // ===================================================
+  //   const pendingBatches = await tx.batchInventory.findMany({
+  //     where: {
+  //       supplier_products_id: item.supplier_products_id,
+  //       status: 'PENDING',
+  //     },
+  //     orderBy: { created_at: 'asc' },
+  //   });
+
+  //   if (!pendingBatches.length) {
+  //     throw new BadRequestError(
+  //       `No pending batch available for product: ${item.productName}`
+  //     );
+  //   }
+
+  //   // ===================================================
+  //   // 4️ Iterate through pending batches until filled
+  //   // ===================================================
+  //   let currentBatchIndex = 0;
+  //   let partiallyUsedBatchId: string | null = null;
+  //   const usedBatches: string[] = [];
+
+  //   while (remainingQuantity > 0 && currentBatchIndex < pendingBatches.length) {
+  //     const batch = pendingBatches[currentBatchIndex];
+  //     const batchUnits = batch.total_units;
+
+  //     const useQty = Math.min(batchUnits, remainingQuantity);
+  //     const remainingUnits = batchUnits - useQty;
+
+  //     // Activate batch
+  //     await tx.batchInventory.update({
+  //       where: { batch_inventory_id: batch.batch_inventory_id },
+  //       data: { status: 'ACTIVE' },
+  //     });
+
+  //     // Start new lifecycle for batch
+  //     await tx.batchLifecycle.create({
+  //       data: {
+  //         batch_id: batch.batch_inventory_id,
+  //         started_at: new Date(),
+  //       },
+  //     });
+
+  //     await tx.inventory.update({
+  //       where: { batch_inventory_id: batch.batch_inventory_id },
+  //       data: {
+  //         status: 'ACTIVE',
+  //         stock_quantity: batchUnits,
+  //       },
+  //     });
+
+  //     // Deduct consumed quantity
+  //     if (remainingUnits > 0) {
+  //       // Partial use
+  //       await tx.batchInventory.update({
+  //         where: { batch_inventory_id: batch.batch_inventory_id },
+  //         data: { total_units: remainingUnits },
+  //       });
+
+  //       await tx.inventory.update({
+  //         where: { batch_inventory_id: batch.batch_inventory_id },
+  //         data: { stock_quantity: remainingUnits },
+  //       });
+
+  //       partiallyUsedBatchId = batch.batch_inventory_id;
+  //       remainingQuantity = 0; // done
+  //     } else {
+  //       // Fully consumed
+  //       await tx.batchInventory.update({
+  //         where: { batch_inventory_id: batch.batch_inventory_id },
+  //         data: { status: 'FINISHED', total_units: 0 },
+  //       });
+
+  //       await tx.batchLifecycle.updateMany({
+  //         where: { batch_id: batch.batch_inventory_id, ended_at: null },
+  //         data: { ended_at: new Date() },
+  //       });
+
+  //       usedBatches.push(batch.batch_inventory_id);
+  //       remainingQuantity -= useQty;
+  //     }
+
+  //     currentBatchIndex++;
+  //   }
+
+  //   // ===================================================
+  //   // 5️ Preload the next pending batch (if any)
+  //   // ===================================================
+  //   if (remainingQuantity <= 0) {
+  //     const nextBatch = await tx.batchInventory.findFirst({
+  //       where: {
+  //         supplier_products_id: item.supplier_products_id,
+  //         status: 'PENDING',
+  //       },
+  //       orderBy: { created_at: 'asc' },
+  //     });
+
+  //     if (nextBatch) {
+  //       await tx.batchInventory.update({
+  //         where: { batch_inventory_id: nextBatch.batch_inventory_id },
+  //         data: { status: 'ACTIVE' },
+  //       });
+
+  //       await tx.inventory.updateMany({
+  //         where: { batch_inventory_id: nextBatch.batch_inventory_id },
+  //         data: { status: 'ACTIVE', stock_quantity: nextBatch.total_units },
+  //       });
+
+  //       await tx.batchLifecycle.create({
+  //         data: {
+  //           batch_id: nextBatch.batch_inventory_id,
+  //           started_at: new Date(),
+  //         },
+  //       });
+  //     }
+  //   }
+
+  //   // ===================================================
+  //   // 6️ Update product summary & cost tracking
+  //   // ===================================================
+  //   await tx.productSummary.update({
+  //     where: { supplier_products_id: item.supplier_products_id },
+  //     data: {
+  //       total_received: item.total_stock_quantity - Number(item.stock_quantity),
+  //       total_sold: { increment: item.quantity },
+  //     },
+  //   });
+
+  //   const productSubTotalCost = money(item.price * Number(item.stock_quantity));
+  //   const productTotalCost = money(
+  //     item.price * Number(item.stock_quantity) * (1 + item.VAT / 100) -
+  //     item.discount
+  //   );
+
+  //   txProductsData.push({
+  //     inventoryId: item.inventoryId,
+  //     supplier_products_id: item.supplier_products_id,
+  //     batch_id: item.batch_inventory_id,
+  //     quantity: item.quantity,
+  //     productName: item.productName,
+  //     price: item.price,
+  //     VAT: Number(item.VAT),
+  //     discount: Number(item.discount),
+  //     productSubTotalCost,
+  //     productTotalCost,
+  //     transactionId,
+  //   });
+
+  //   // ===================================================
+  //   // 7️ Return result summary
+  //   // ===================================================
+  //   return {
+  //     usedBatches,
+  //     partiallyUsedBatchId,
+  //     remainingQuantity,
+  //     txProductsData,
+  //   };
+  // }
+
+  /// start of sample
+  // static async allocateNextBatch(tx: PrismaTransactionalClient, item: TransactionProduct, transactionId: string) {
+  //   // ===================================================
+  //   // 1. Calculate remaining quantity after deduction
+  //   // ===================================================
+  //   const remainingQuantity = item.quantity - Number(item.stock_quantity);
+  //   const txProductsData: Array<{
+  //     inventoryId: string;
+  //     supplier_products_id: string;
+  //     batch_id: string;
+  //     quantity: number;
+  //     productName: string;
+  //     price: number;
+  //     VAT: number;
+  //     discount: number;
+  //     productSubTotalCost: number;
+  //     productTotalCost: number;
+  //     transactionId: string;
+  //   }> = [];
+
+  //   if (remainingQuantity < 0) {
+  //     throw new BadRequestError(`Invalid calculation: remaining quantity for ${item.productName} is negative.`);
+  //   }
+
+  //   // ===================================================
+  //   // 2. End lifecycle of current active batch
+  //   // ===================================================
+  //   await tx.batchLifecycle.updateMany({
+  //     where: { batch_id: item.batch_inventory_id, ended_at: null },
+  //     data: { ended_at: new Date() }
+  //   });
+
+  //   // ===================================================
+  //   // 3. Mark current batch as FINISHED
+  //   // ===================================================
+  //   await tx.batchInventory.updateMany({
+  //     where: {
+  //       batch_inventory_id: item.batch_inventory_id,
+  //       status: 'ACTIVE'
+  //     },
+  //     data: { status: 'FINISHED' }
+  //   });
+
+  //   // ===================================================
+  //   // 4. Fetch the next FIFO batch (must exist & PENDING)
+  //   // ===================================================
+  //   const nextBatch = await tx.batchInventory.findFirst({
+  //     where: {
+  //       supplier_products_id: item.supplier_products_id,
+  //       status: 'PENDING'
+  //     },
+  //     orderBy: { created_at: 'asc' }
+  //   });
+
+  //   if (!nextBatch) {
+  //     throw new BadRequestError(`No pending batch available for product: ${item.productName}`);
+  //   }
+
+  //   // ===================================================
+  //   // 5. Activate the new batch in inventory
+  //   // ===================================================
+  //   const loadNewBatch = await tx.inventory.update({
+  //     where: { supplier_products_id: item.supplier_products_id },
+  //     data: {
+  //       stock_quantity: nextBatch.total_units,
+  //       status: 'ACTIVE',
+  //       batch_inventory_id: nextBatch.batch_inventory_id
+  //     }
+  //   });
+
+  //   if (Number(loadNewBatch.stock_quantity) <= 0) {
+  //     throw new BadRequestError(`Next batch for ${item.productName} has no stock units.`);
+  //   }
+
+  //   // ===================================================
+  //   // 6. Start lifecycle record for new batch
+  //   // ===================================================
+  //   await tx.batchLifecycle.create({
+  //     data: {
+  //       batch_id: nextBatch.batch_inventory_id,
+  //       started_at: new Date()
+  //     }
+  //   });
+
+  //   // ===================================================
+  //   // 7. Deduct the carry-over quantity from new batch
+  //   // ===================================================
+  //   const finalQuantity = nextBatch.total_units - remainingQuantity;
+  //   console.log('final Quantity is ', finalQuantity);
+
+  //   if (finalQuantity < 0) {
+  //     throw new BadRequestError(`Next batch for ${item.productName} does not have enough to cover carry-over.`);
+  //   }
+
+  //   await tx.inventory.update({
+  //     where: { supplier_products_id: item.supplier_products_id },
+  //     data: { stock_quantity: finalQuantity }
+  //   });
+
+  //   // ===================================================
+  //   // 8. Update product summary (tracking totals)
+  //   // ===================================================
+  //   await tx.productSummary.update({
+  //     where: { supplier_products_id: item.supplier_products_id },
+  //     data: {
+  //       total_received: item.total_stock_quantity - Number(item.stock_quantity),
+  //       total_sold: { increment: item.quantity }
+  //     }
+  //   });
+
+  //   const productSubTotalCost = money(item.price * Number(item.stock_quantity));
+  //   const productTotalCost = money(item.price * Number(item.stock_quantity) * (1 + item.VAT / 100) - item.discount);
+
+  //   txProductsData.push({
+  //     inventoryId: item.inventoryId,
+  //     supplier_products_id: item.supplier_products_id,
+  //     batch_id: item.batch_inventory_id,
+  //     quantity: item.quantity,
+  //     productName: item.productName,
+  //     price: item.price,
+  //     VAT: Number(item.VAT),
+  //     discount: Number(item.discount),
+  //     productSubTotalCost,
+  //     productTotalCost,
+  //     transactionId
+  //   });
+  // }
+
+  // end of sample
 
   // @joiValidation(transactionSchema)
   // public async createTransaction(req: Request, res: Response): Promise<void> {
@@ -781,4 +1122,266 @@ export class TransactionsController {
   //     transactionId
   //   });
   // }
+
+  static async allocateNextBatch(tx: PrismaTransactionalClient, item: TransactionProduct, transactionId: string) {
+    // ===================================================
+    // 1. Calculate remaining quantity to allocate from pending batches
+    //    (we assume item.stock_quantity is the active inventory currently available)
+    // ===================================================
+    let remainingQuantity = item.quantity - Number(item.stock_quantity);
+    console.log('allocationg next batch');
+
+    if (remainingQuantity < 0) {
+      throw new BadRequestError(`Invalid calculation: remaining quantity for ${item.productName} is negative.`);
+    }
+
+    // If nothing to allocate, return an empty result
+    if (remainingQuantity === 0) {
+      return {
+        totalAllocated: 0,
+        remainingQuantity: 0,
+        allocations: [] as Array<{
+          supplier_products_id: string;
+          batch_inventory_id: string;
+          quantity: number;
+          productName: string;
+          price: number;
+          VAT: number;
+          discount: number;
+          productSubTotalCost: number;
+          productTotalCost: number;
+          transactionId: string;
+        }>,
+        updatedBatches: [] as any[],
+        updatedInventories: [] as any[]
+      };
+    }
+
+    const allocations: Array<{
+      supplier_products_id: string;
+      batch_inventory_id: string;
+      quantity: number;
+      productName: string;
+      price: number;
+      VAT: number;
+      discount: number;
+      productSubTotalCost: number;
+      productTotalCost: number;
+      transactionId: string;
+    }> = [];
+
+    const updatedBatches: any[] = [];
+    const updatedInventories: any[] = [];
+
+    // ===================================================
+    // 2. End lifecycle of the current active batch & mark it FINISHED,
+    //    and zero out the active inventory for this supplier product.
+    //    (This matches the behavior in your non-batch branch.)
+    // ===================================================
+    await tx.batchLifecycle.updateMany({
+      where: { batch_id: item.batch_inventory_id, ended_at: null },
+      data: { ended_at: new Date() }
+    });
+
+    await tx.batchInventory.updateMany({
+      where: {
+        batch_inventory_id: item.batch_inventory_id,
+        status: 'ACTIVE'
+      },
+      data: { status: 'FINISHED' }
+    });
+
+    // ensure the active inventory is zeroed (so we can load next batch into ACTIVE inventory)
+    await tx.inventory.updateMany({
+      where: {
+        supplier_products_id: item.supplier_products_id,
+        status: 'ACTIVE',
+        batch_inventory_id: item.batch_inventory_id
+      },
+      data: { stock_quantity: 0 }
+    });
+
+    // ===================================================
+    // 3. Loop: fetch next pending batch (FIFO) and consume from it
+    // ===================================================
+    while (remainingQuantity > 0) {
+      // get next pending batch (oldest first)
+      const nextBatch = await tx.batchInventory.findFirst({
+        where: {
+          supplier_products_id: item.supplier_products_id,
+          status: 'PENDING'
+        },
+        orderBy: { created_at: 'asc' },
+        select: {
+          batch_inventory_id: true,
+          total_units: true,
+          purchase_id: true,
+          supplier_products_id: true,
+          batch_name: true,
+          created_at: true,
+          // include purchase.unit_id if you need to set inventory.unit_id on upsert
+          purchase: {
+            select: {
+              unit_id: true
+            }
+          }
+        }
+      });
+
+      if (!nextBatch) {
+        // No more pending batches to satisfy remainingQuantity
+        break;
+      }
+
+      // Activate this batch into inventory (or upsert the ACTIVE inventory row)
+      // Upsert pattern used in your existing code
+      const upsertedInventory = await tx.inventory.upsert({
+        where: { supplier_products_id: item.supplier_products_id, status: 'ACTIVE' },
+        create: {
+          supplier_products_id: nextBatch.supplier_products_id,
+          batch_inventory_id: nextBatch.batch_inventory_id,
+          stock_quantity: nextBatch.total_units,
+          unit_id: nextBatch.purchase?.unit_id ?? null,
+          status: 'ACTIVE'
+        },
+        update: {
+          batch_inventory_id: nextBatch.batch_inventory_id,
+          stock_quantity: nextBatch.total_units,
+          status: 'ACTIVE'
+        }
+      });
+
+      updatedInventories.push(upsertedInventory);
+
+      // start lifecycle for the batch we just activated
+      await tx.batchLifecycle.create({
+        data: {
+          batch_id: nextBatch.batch_inventory_id,
+          started_at: new Date()
+        }
+      });
+
+      // How much we can take from this batch
+      const takeFromThisBatch = Math.min(nextBatch.total_units, remainingQuantity);
+
+      // If the batch has less or equal units than remainingQuantity -> fully consume it
+      if (nextBatch.total_units <= remainingQuantity) {
+        // mark batch FINISHED and consumed completely
+        const finishedBatch = await tx.batchInventory.update({
+          where: { batch_inventory_id: nextBatch.batch_inventory_id },
+          data: {
+            status: 'FINISHED',
+            total_units: 0
+          }
+        });
+
+        // set active inventory stock to 0 (consumed)
+        await tx.inventory.update({
+          where: { supplier_products_id: item.supplier_products_id, status: 'ACTIVE' },
+          data: { stock_quantity: 0 }
+        });
+
+        // end lifecycle for that batch
+        await tx.batchLifecycle.updateMany({
+          where: { batch_id: nextBatch.batch_inventory_id, ended_at: null },
+          data: { ended_at: new Date() }
+        });
+
+        updatedBatches.push(finishedBatch);
+
+        // record allocation for this batch
+        const productSubTotalCost = money(item.price * takeFromThisBatch);
+        const productTotalCost = money(item.price * takeFromThisBatch * (1 + item.VAT / 100) - item.discount);
+
+        allocations.push({
+          supplier_products_id: item.supplier_products_id,
+          batch_inventory_id: nextBatch.batch_inventory_id,
+          quantity: takeFromThisBatch,
+          productName: item.productName,
+          price: item.price,
+          VAT: Number(item.VAT),
+          discount: Number(item.discount),
+          productSubTotalCost,
+          productTotalCost,
+          transactionId
+        });
+
+        remainingQuantity -= takeFromThisBatch;
+        // continue loop to fetch next pending batch if remainingQuantity > 0
+        continue;
+      }
+
+      // If the batch has more units than we need -> partial consumption
+      // We will:
+      //  - set the batch to ACTIVE and reduce its total_units to the leftover (total_units - take)
+      //  - set the ACTIVE inventory stock_quantity to leftover
+      // This preserves the batch as ACTIVE with remaining units available in inventory.
+      const leftoverUnits = nextBatch.total_units - takeFromThisBatch;
+
+      // Update the batch: set it ACTIVE and adjust total_units to leftover
+      const updatedBatch = await tx.batchInventory.update({
+        where: { batch_inventory_id: nextBatch.batch_inventory_id },
+        data: {
+          status: 'ACTIVE', // it remains active since we loaded it
+          total_units: leftoverUnits
+        }
+      });
+
+      // Update inventory for the active batch to reflect leftover units
+      await tx.inventory.update({
+        where: { supplier_products_id: item.supplier_products_id, status: 'ACTIVE' },
+        data: { stock_quantity: leftoverUnits }
+      });
+
+      updatedBatches.push(updatedBatch);
+
+      // Record the allocation for the portion we consumed
+      const productSubTotalCost = money(item.price * takeFromThisBatch);
+      const productTotalCost = money(item.price * takeFromThisBatch * (1 + item.VAT / 100) - item.discount);
+
+      allocations.push({
+        supplier_products_id: item.supplier_products_id,
+        batch_inventory_id: nextBatch.batch_inventory_id,
+        quantity: takeFromThisBatch,
+        productName: item.productName,
+        price: item.price,
+        VAT: Number(item.VAT),
+        discount: Number(item.discount),
+        productSubTotalCost,
+        productTotalCost,
+        transactionId
+      });
+
+      // we've satisfied the required quantity
+      remainingQuantity = 0;
+      break;
+    } // end while
+
+    // ===================================================
+    // 4. Final product summary update (same as the non-batch path)
+    //    - total_received remains as earlier logic (you can keep it or adapt)
+    //    - increment total_sold by the original requested quantity
+    // ===================================================
+    await tx.productSummary.update({
+      where: { supplier_products_id: item.supplier_products_id },
+      data: {
+        total_received: item.total_stock_quantity - Number(item.stock_quantity),
+        total_sold: { increment: item.quantity }
+      }
+    });
+
+    // ===================================================
+    // 5. Return a shape the caller can merge into txProductsData
+    //    allocations[] contains per-batch lines (one per consumed portion).
+    // ===================================================
+    const totalAllocated = item.quantity - remainingQuantity;
+
+    return {
+      totalAllocated,
+      remainingQuantity,
+      allocations,
+      updatedBatches,
+      updatedInventories
+    };
+  }
 }

@@ -498,6 +498,286 @@ export class PurchaseController {
     return res.status(StatusCodes.ACCEPTED).send(GetSuccessMessage(StatusCodes.ACCEPTED, result, 'purchases fetched successfully'));
   }
 
+  /***
+   * edit purchase
+   */
+
+  public async editPurchase(req: Request, res: Response) {
+    const { field, value, purchase_id, batch } = req.body;
+
+    if (!purchase_id || !batch) {
+      throw new BadRequestError('purchase_id and batch are required');
+    }
+
+    let result;
+
+    switch (field) {
+      case 'supplier_products_id':
+        result = await PurchaseController.updateSupplierProduct(purchase_id, value);
+        break;
+
+      case 'batch':
+        result = await PurchaseController.updateBatchName(purchase_id, value);
+        break;
+
+      case 'damaged_units':
+        result = await PurchaseController.updateDamagedUnits(purchase_id, Number(value));
+        break;
+
+      case 'quantity':
+        result = await PurchaseController.updateQuantity(purchase_id, Number(value));
+        break;
+
+      // Simple direct updates (no heavy logic)
+      case 'arrival_date':
+      case 'discounts':
+      case 'purchase_cost_per_unit':
+      case 'total_purchase_cost':
+      case 'tax':
+      case 'reason_for_damage':
+        result = await PurchaseController.simplePurchaseUpdate(purchase_id, field, value);
+        break;
+
+      default:
+        throw new BadRequestError(`Unknown or uneditable field: ${field}`);
+    }
+
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: result.message,
+      data: result || null
+    });
+  }
+
+  public static async updateSupplierProduct(purchase_id: string, newSupplierProductId: string) {
+    return await prisma.$transaction(async (tx) => {
+      const purchase = await tx.purchase.findUnique({
+        where: { purchase_id },
+        include: { BatchInventory: true }
+      });
+
+      if (!purchase) throw new BadRequestError('Purchase not found');
+
+      const batchInventory = purchase.BatchInventory;
+      const oldSupplierProductId = purchase.supplier_products_id;
+
+      // Check if already sold
+      const sold = await tx.sales.findFirst({
+        where: { BatchInventoryId: batchInventory?.batch_inventory_id }
+      });
+      if (sold) throw new BadRequestError('Product units already sold, cannot change supplier.');
+
+      // Update supplier_products_id in Purchase, Inventory, BatchInventory
+      await tx.purchase.update({
+        where: { purchase_id },
+        data: { supplier_products_id: newSupplierProductId }
+      });
+
+      if (batchInventory) {
+        await tx.batchInventory.update({
+          where: { batch_inventory_id: batchInventory.batch_inventory_id },
+          data: { supplier_products_id: newSupplierProductId }
+        });
+      }
+
+      await tx.inventory.updateMany({
+        where: { supplier_products_id: oldSupplierProductId },
+        data: { supplier_products_id: newSupplierProductId }
+      });
+
+      // Update productSummary adjustments
+      const undamagedUnits = purchase.undamaged_units;
+
+      // Subtract from old supplier summary
+      await tx.productSummary.updateMany({
+        where: { supplier_products_id: oldSupplierProductId },
+        data: {
+          total_received: { decrement: undamagedUnits },
+          total_cost_value: {
+            decrement: undamagedUnits * Number(purchase.purchase_cost_per_unit)
+          }
+        }
+      });
+
+      // Add to new supplier summary
+      await tx.productSummary.updateMany({
+        where: { supplier_products_id: newSupplierProductId },
+        data: {
+          total_received: { increment: undamagedUnits },
+          total_cost_value: {
+            increment: undamagedUnits * Number(purchase.purchase_cost_per_unit)
+          }
+        }
+      });
+
+      // Set undamaged_units in purchase to 0
+      await tx.purchase.update({
+        where: { purchase_id },
+        data: { undamaged_units: 0 }
+      });
+
+      return {
+        message: 'Supplier product updated successfully.'
+      };
+    });
+  }
+
+  public static async updateBatchName(purchase_id: string, newBatch: string) {
+    return await prisma.$transaction(async (tx) => {
+      const existing = await tx.batchInventory.findUnique({
+        where: { batch_name: newBatch }
+      });
+
+      if (existing) throw new BadRequestError('Batch name already exists.');
+
+      await tx.batchInventory.updateMany({
+        where: { purchase_id },
+        data: { batch_name: newBatch }
+      });
+
+      return {
+        message: 'Batch name updated successfully.'
+      };
+    });
+  }
+
+  public static async updateDamagedUnits(purchase_id: string, newDamagedUnits: number) {
+    return await prisma.$transaction(async (tx) => {
+      const purchase = await tx.purchase.findUnique({
+        where: { purchase_id },
+        include: { BatchInventory: true }
+      });
+      if (!purchase) throw new BadRequestError('Purchase not found');
+
+      if (newDamagedUnits > purchase.quantity) throw new BadRequestError('Damaged units cannot be greater than quantity.');
+
+      const totalUnits = purchase.quantity - newDamagedUnits;
+      const oldUndamagedUnits = purchase.undamaged_units;
+      const supplier_products_id = purchase.supplier_products_id;
+
+      // Update damaged_units and undamaged_units
+      await tx.purchase.update({
+        where: { purchase_id },
+        data: {
+          damaged_units: newDamagedUnits,
+          undamaged_units: totalUnits
+        }
+      });
+
+      // Update batchInventory total_units
+      await tx.batchInventory.updateMany({
+        where: { purchase_id },
+        data: { total_units: totalUnits }
+      });
+
+      // Update inventory
+      await tx.inventory.updateMany({
+        where: { supplier_products_id },
+        data: { stock_quantity: totalUnits }
+      });
+
+      // Adjust productSummary totals
+      await tx.productSummary.updateMany({
+        where: { supplier_products_id },
+        data: {
+          total_received: {
+            decrement: oldUndamagedUnits
+          }
+        }
+      });
+
+      await tx.productSummary.updateMany({
+        where: { supplier_products_id },
+        data: {
+          total_received: { increment: totalUnits },
+          total_cost_value: {
+            increment: totalUnits * Number(purchase.purchase_cost_per_unit)
+          }
+        }
+      });
+
+      return {
+        message: 'Damaged units updated successfully.'
+      };
+    });
+  }
+
+  public static async updateQuantity(purchase_id: string, newQuantity: number) {
+    return await prisma.$transaction(async (tx) => {
+      const purchase = await tx.purchase.findUnique({
+        where: { purchase_id },
+        include: { BatchInventory: true }
+      });
+      if (!purchase) throw new BadRequestError('Purchase not found');
+
+      if (newQuantity <= 0) throw new BadRequestError('Quantity must be greater than 0.');
+
+      const totalUnits = newQuantity - purchase.damaged_units;
+      const oldUndamagedUnits = purchase.undamaged_units;
+      const supplier_products_id = purchase.supplier_products_id;
+
+      // Update purchase quantity and undamaged_units
+      await tx.purchase.update({
+        where: { purchase_id },
+        data: {
+          quantity: newQuantity,
+          undamaged_units: totalUnits
+        }
+      });
+
+      // Update batchInventory total_units
+      await tx.batchInventory.updateMany({
+        where: { purchase_id },
+        data: { total_units: totalUnits }
+      });
+
+      // Update inventory
+      await tx.inventory.updateMany({
+        where: { supplier_products_id },
+        data: { stock_quantity: totalUnits }
+      });
+
+      // Adjust productSummary
+      await tx.productSummary.updateMany({
+        where: { supplier_products_id },
+        data: {
+          total_received: {
+            decrement: oldUndamagedUnits
+          }
+        }
+      });
+
+      await tx.productSummary.updateMany({
+        where: { supplier_products_id },
+        data: {
+          total_received: { increment: totalUnits },
+          total_cost_value: {
+            increment: totalUnits * Number(purchase.purchase_cost_per_unit)
+          }
+        }
+      });
+
+      return {
+        message: 'Quantity updated successfully.'
+      };
+    });
+  }
+
+  public static async simplePurchaseUpdate(purchase_id: string, field: string, value: string) {
+    console.log('simple purchase updating reason for damage', field, value);
+    const purchase = await prisma.purchase.update({
+      where: { purchase_id },
+      data: { [field]: value }
+    });
+
+    return {
+      message: `${field.replace('_', ' ')} updated successfully.`,
+      data: purchase
+    };
+  }
+
+  // end of purchae edit
+
   // delete purchase
   public async deletePurchase(req: Request, res: Response) {
     const { purchase_id, batch } = req.body;

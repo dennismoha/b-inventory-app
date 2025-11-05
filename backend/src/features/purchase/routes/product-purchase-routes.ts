@@ -17,6 +17,7 @@ class PurchaseRoutes {
 
     // // Get all purchases
     this.router.get('/purchase', authMiddleware.checkAuthentication, PurchaseController.prototype.getAll);
+    this.router.put('/purchase/:id', authMiddleware.checkAuthentication, PurchaseController.prototype.editPurchase);
 
     // // Get single purchase by ID
     // this.router.get(

@@ -8,7 +8,7 @@ import GetSuccessMessage from '@src/shared/globals/helpers/success-messages';
 import { Asset } from '@src/features/hrm/assets/interface/assets.interface';
 import { JournalService } from '@src/features/accounting/controller/journals-controller';
 import { AccountController } from '@src/features/accounting/controller/accounts-controller';
-import { Account_Utilities } from '@src/constants';
+import { Account_Inventory } from '@src/constants';
 import { Decimal } from '@prisma/client/runtime/library';
 
 export class AssetsController {
@@ -98,7 +98,8 @@ export class AssetsController {
         }
       });
 
-      const cashAccount = await AccountController.findAccount({ tx, name: Account_Utilities.name, type: Account_Utilities.acc_type });
+      // const cashAccount = await AccountController.findAccount({ tx, name: Account_Utilities.name, type: Account_Utilities.acc_type });
+      const cashAccount = await AccountController.findAccount({ tx, name: Account_Inventory.name, type: Account_Inventory.acc_type }); //
       //  Post Journal Entry (Dr Asset, Cr Cash/Bank)
       await JournalService.createJournalEntry(tx, {
         transactionId: createdAsset.id, // link journal to this asset

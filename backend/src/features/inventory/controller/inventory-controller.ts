@@ -116,109 +116,224 @@ export class InventoryController {
   public async createInventory(req: Request, res: Response): Promise<void> {
     const { batch_name } = req.body;
 
-    // select everything based on the batch inventory id
-
-    const product_item = await prisma.batchInventory.findFirst({
-      where: {
-        batch_name: batch_name
-      },
-      select: {
-        batch_inventory_id: true,
-        purchase_id: true,
-        total_units: true,
-        batch_name: true,
-        status: true,
-        purchase: {
-          select: {
-            supplier_products_id: true,
-            unit_id: true,
-            supplierProduct: {
-              select: {
-                supplier: {
-                  select: {
-                    name: true
-                  }
-                },
-                product: {
-                  select: {
-                    name: true
-                  }
+    const result = await prisma.$transaction(async (tx) => {
+      // 1. Fetch batch + purchase + relations
+      const product_item = await tx.batchInventory.findFirst({
+        where: { batch_name },
+        select: {
+          batch_inventory_id: true,
+          purchase_id: true,
+          total_units: true,
+          batch_name: true,
+          status: true,
+          purchase: {
+            select: {
+              supplier_products_id: true,
+              unit_id: true,
+              supplierProduct: {
+                select: {
+                  supplier: { select: { name: true } },
+                  product: { select: { name: true } }
                 }
               }
             }
           }
         }
+      });
+
+      if (!product_item) throw new NotFoundError('resource does not found');
+
+      // 2. Transform data
+      const transformed: InputData = {
+        batch_inventory_id: product_item.batch_inventory_id,
+        purchase_id: product_item.purchase_id,
+        total_units: product_item.total_units,
+        batch_name: product_item.batch_name,
+        status: product_item.status,
+        unit_id: product_item.purchase.unit_id,
+        supplier_products_id: product_item.purchase.supplier_products_id,
+        name: `${product_item.purchase.supplierProduct.supplier.name} - ${product_item.purchase.supplierProduct.product.name}`
+      };
+
+      // 3. Ensure no active inventory exists
+      const existing = await tx.inventory.findFirst({
+        where: {
+          batch_inventory_id: transformed.batch_inventory_id,
+          status: 'ACTIVE'
+        }
+      });
+
+      if (existing) {
+        throw new ConflictError('An active batch already exists for this product');
       }
+
+      // 4. Create or update inventory
+      const inventory = await tx.inventory.upsert({
+        where: { supplier_products_id: transformed.supplier_products_id },
+        create: {
+          supplier_products_id: transformed.supplier_products_id,
+          batch_inventory_id: transformed.batch_inventory_id,
+          stock_quantity: transformed.total_units,
+          unit_id: transformed.unit_id,
+          status: 'ACTIVE'
+        },
+        update: {
+          batch_inventory_id: transformed.batch_inventory_id,
+          stock_quantity: transformed.total_units,
+          status: 'ACTIVE'
+        }
+      });
+
+      // 5. Mark batch inventory as ACTIVE
+      await tx.batchInventory.update({
+        where: { batch_inventory_id: transformed.batch_inventory_id },
+        data: { status: 'ACTIVE' }
+      });
+
+      // 6. Update lifecycle
+      await tx.batchLifecycle.upsert({
+        where: { batch_id: transformed.batch_inventory_id },
+        create: {
+          batch_id: transformed.batch_inventory_id,
+          started_at: new Date()
+        },
+        update: {
+          batch_id: transformed.batch_inventory_id,
+          ended_at: new Date()
+        }
+      });
+
+      // 7. Log activation
+      const log = await tx.inventoryLog.create({
+        data: {
+          batch_inventory_id: transformed.batch_inventory_id,
+          inventory_id: inventory.inventoryId,
+          batch_id: transformed.batch_inventory_id,
+          quantity: transformed.total_units,
+          action: 'ACTIVATE',
+          user: req.currentUser!.username
+        }
+      });
+
+      return log;
     });
 
-    if (!product_item) {
-      throw new NotFoundError('resource does not found');
-    }
-
-    console.log(product_item);
-
-    // data transformation
-
-    const transformed: InputData = {
-      batch_inventory_id: product_item.batch_inventory_id,
-      purchase_id: product_item.purchase_id,
-      total_units: product_item.total_units,
-      batch_name: product_item.batch_name,
-      status: product_item.status,
-      unit_id: product_item.purchase.unit_id,
-      supplier_products_id: product_item.purchase.supplier_products_id,
-      name: `${product_item.purchase.supplierProduct.supplier.name} - ${product_item.purchase.supplierProduct.product.name}`
-    };
-
-    // check if product already has an active inventory
-    const existing = await prisma.inventory.findFirst({
-      where: { batch_inventory_id: transformed.batch_inventory_id, status: 'ACTIVE' }
-    });
-
-    if (existing) {
-      throw new ConflictError('An active batch already exists for this product');
-    }
-
-    // Create or update inventory
-    const inventory = await prisma.inventory.upsert({
-      where: { supplier_products_id: transformed.supplier_products_id },
-      create: {
-        supplier_products_id: transformed.supplier_products_id,
-        batch_inventory_id: transformed.batch_inventory_id,
-        stock_quantity: transformed.total_units,
-        unit_id: transformed.unit_id,
-        status: 'ACTIVE'
-      },
-      update: {
-        batch_inventory_id: transformed.batch_inventory_id,
-        stock_quantity: transformed.total_units,
-        status: 'ACTIVE'
-      }
-    });
-
-    // Mark BatchInventory as active
-    await prisma.batchInventory.update({
-      where: { batch_inventory_id: transformed.batch_inventory_id },
-      data: { status: 'ACTIVE' }
-    });
-
-    // Log action
-    const log = await prisma.inventoryLog.create({
-      data: {
-        batch_inventory_id: transformed.batch_inventory_id,
-        inventory_id: inventory.inventoryId,
-        batch_id: transformed.batch_inventory_id,
-        quantity: transformed.total_units,
-        action: 'ACTIVATE',
-        user: req.currentUser!.username
-      }
-    });
-
-    res.json(log);
-    // res
-    //   .status(StatusCodes.CREATED)
-    //   .json(GetSuccessMessage(StatusCodes.CREATED, [],'Batch activated successfully'));
+    res.json(result);
   }
+
+  // public async createInventory(req: Request, res: Response): Promise<void> {
+  //   const { batch_name } = req.body;
+
+  //   // select everything based on the batch inventory id
+
+  //   const product_item = await prisma.batchInventory.findFirst({
+  //     where: {
+  //       batch_name: batch_name
+  //     },
+  //     select: {
+  //       batch_inventory_id: true,
+  //       purchase_id: true,
+  //       total_units: true,
+  //       batch_name: true,
+  //       status: true,
+  //       purchase: {
+  //         select: {
+  //           supplier_products_id: true,
+  //           unit_id: true,
+  //           supplierProduct: {
+  //             select: {
+  //               supplier: {
+  //                 select: {
+  //                   name: true
+  //                 }
+  //               },
+  //               product: {
+  //                 select: {
+  //                   name: true
+  //                 }
+  //               }
+  //             }
+  //           }
+  //         }
+  //       }
+  //     }
+  //   });
+
+  //   if (!product_item) {
+  //     throw new NotFoundError('resource does not found');
+  //   }
+
+  //   console.log(product_item);
+
+  //   // data transformation
+
+  //   const transformed: InputData = {
+  //     batch_inventory_id: product_item.batch_inventory_id,
+  //     purchase_id: product_item.purchase_id,
+  //     total_units: product_item.total_units,
+  //     batch_name: product_item.batch_name,
+  //     status: product_item.status,
+  //     unit_id: product_item.purchase.unit_id,
+  //     supplier_products_id: product_item.purchase.supplier_products_id,
+  //     name: `${product_item.purchase.supplierProduct.supplier.name} - ${product_item.purchase.supplierProduct.product.name}`
+  //   };
+
+  //   // check if product already has an active inventory
+  //   const existing = await prisma.inventory.findFirst({
+  //     where: { batch_inventory_id: transformed.batch_inventory_id, status: 'ACTIVE' }
+  //   });
+
+  //   if (existing) {
+  //     throw new ConflictError('An active batch already exists for this product');
+  //   }
+
+  //   // Create or update inventory
+  //   const inventory = await prisma.inventory.upsert({
+  //     where: { supplier_products_id: transformed.supplier_products_id },
+  //     create: {
+  //       supplier_products_id: transformed.supplier_products_id,
+  //       batch_inventory_id: transformed.batch_inventory_id,
+  //       stock_quantity: transformed.total_units,
+  //       unit_id: transformed.unit_id,
+  //       status: 'ACTIVE'
+  //     },
+  //     update: {
+  //       batch_inventory_id: transformed.batch_inventory_id,
+  //       stock_quantity: transformed.total_units,
+  //       status: 'ACTIVE'
+  //     }
+  //   });
+
+  //   // Mark BatchInventory as active
+  //   await prisma.batchInventory.update({
+  //     where: { batch_inventory_id: transformed.batch_inventory_id },
+  //     data: { status: 'ACTIVE' }
+  //   });
+
+  //    await tx.batchLifecycle.update({
+  //               where: { batch_id: item.batch_inventory_id },
+  //               data: {
+  //                 ended_at: new Date()
+  //               }
+  //             });
+
+  //   // Log action
+  //   const log = await prisma.inventoryLog.create({
+  //     data: {
+  //       batch_inventory_id: transformed.batch_inventory_id,
+  //       inventory_id: inventory.inventoryId,
+  //       batch_id: transformed.batch_inventory_id,
+  //       quantity: transformed.total_units,
+  //       action: 'ACTIVATE',
+  //       user: req.currentUser!.username
+  //     }
+  //   });
+
+  //   res.json(log);
+  //   // res
+  //   //   .status(StatusCodes.CREATED)
+  //   //   .json(GetSuccessMessage(StatusCodes.CREATED, [],'Batch activated successfully'));
+  // }
 
   /**
    * Update stock quantity (restock or sale).

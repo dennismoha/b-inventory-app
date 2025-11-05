@@ -52,7 +52,8 @@ import type {
   TrialBalance,
   pos_session_header,
   TransactionProductsBetweenDates,
-  CustomerSalesResponse
+  CustomerSalesResponse,
+  purchaseList
   // PurchasePayableResponse,
   // purchasePayable
 } from '@/feature-module/interface/features-interface';
@@ -269,7 +270,7 @@ export const AuthAPI = InventoryApi.injectEndpoints({
 const PurchaseApi = InventoryApi.injectEndpoints({
   endpoints: (build) => ({
     // Fetch all purchases
-    getPurchases: build.query<ApiResponse<CreatePurchaseRequest[]>, void>({
+    getPurchases: build.query<ApiResponse<purchaseList[]>, void>({
       query: () => '/purchase',
       providesTags: ['Purchases']
     }),
@@ -463,13 +464,13 @@ export const AccountsAPI = InventoryApi.injectEndpoints({
       })
       // invalidatesTags: (result, error, { accountId }) => [{ type: 'Accounts', id: accountId }]
     }),
-
     // Soft delete account
-    deleteAccount: build.mutation({
+    deleteAccount: build.mutation<void, string>({
       query: (accountId) => ({
         url: `/accounts/${accountId}`,
         method: 'DELETE'
-      })
+      }),
+      invalidatesTags: [{ type: 'Accounts' }]
       // invalidatesTags: (result, error, id) => [{ type: 'Accounts', id }]
     })
   })

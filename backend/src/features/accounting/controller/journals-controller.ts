@@ -49,14 +49,36 @@ export class JournalService {
     });
 
     // Update running balances
-    for (const line of je.lines) {
-      const net = Number(line.debit) - Number(line.credit);
-      await tx.account.update({
-        where: { account_id: line.account_id },
-        data: { running_balance: { increment: net } }
-      });
-    }
+    //   for (const line of je.lines) {
+    //     console.log('updating account running balance for line', line);
+    //     const net = Number(line.debit) - Number(line.credit);
+    //     console.log('net amount for line', net);
+    //  const upda =   await tx.account.update({
+    //       where: { account_id: line.account_id },
+    //       data: { running_balance: { increment: new Decimal(net) } }
+    //     });
+    //     console.log('updated account running balance', upda);
+    //   }
 
+    for (const line of je.lines) {
+      console.log('Updating account running balance for line', line);
+
+      const debit = new Decimal(line.debit || 0);
+      const credit = new Decimal(line.credit || 0);
+      const net = debit.minus(credit);
+
+      console.log('Net amount for line', net.toString());
+
+      const updated = await tx.account.update({
+        where: { account_id: line.account_id },
+        data: {
+          running_balance: { increment: Number(net) }
+        },
+        select: { account_id: true, running_balance: true }
+      });
+
+      console.log('Updated account running balance:', updated);
+    }
     return je;
   }
 }
