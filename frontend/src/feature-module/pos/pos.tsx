@@ -177,7 +177,7 @@ const Pos = () => {
                             <Link to="#">All</Link>
                           </h6>
                         </li> */}
-                        {Object.keys(groupedInventory).map((supplier, index) => (
+                        {Object.keys(groupedInventory).map((supplier) => (
                           <li key={supplier} onClick={() => setActiveTab(supplier)} className={activeTab === supplier ? 'active' : ''}>
                             <Link to="#">{/* <img src={`/assets/img/categories/category-0${index + 2}.svg`} alt="Supplier" /> */}</Link>
                             <h6>
