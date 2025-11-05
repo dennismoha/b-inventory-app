@@ -1,20 +1,11 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { saleslist } from "../../core/json/saleslistdata";
-import PrimeDataTable from "../../components/data-table";
-import {
-  closeIcon,
-  excel,
-  pdf,
-  qrCodeImage,
-  scanners,
-  stockImg02,
-  stockImg03,
-  stockImg05,
-} from "../../utils/imagepath";
-import CommonDatePicker from "../../components/date-picker/common-date-picker";
-import TableTopHead from "../../components/table-top-head";
-import CommonSelect from "../../components/select/common-select";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { saleslist } from '../../core/json/saleslistdata';
+import PrimeDataTable from '../../components/data-table';
+import { closeIcon, excel, pdf, qrCodeImage, scanners, stockImg02, stockImg03, stockImg05 } from '../../utils/imagepath';
+import CommonDatePicker from '../../components/date-picker/common-date-picker';
+import TableTopHead from '../../components/table-top-head';
+import CommonSelect from '../../components/select/common-select';
 
 const SalesList = () => {
   type SalesEntry = {
@@ -36,21 +27,13 @@ const SalesList = () => {
   const [date2, setDate2] = useState<Date | null>(new Date());
   const [date3, setDate3] = useState<Date | null>(new Date());
   const [selectedSortDate, setSelectedSortDate] = useState<string | null>(null);
-  const [selectedCustomerName, setSelectedCustomerName] = useState<
-    string | null
-  >(null);
+  const [selectedCustomerName, setSelectedCustomerName] = useState<string | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
-  const [selectedPaymentStatus, setSelectedPaymentStatus] = useState<
-    string | null
-  >(null);
+  const [selectedPaymentStatus, setSelectedPaymentStatus] = useState<string | null>(null);
   const [selectedCustomer, setSelectedCustomer] = useState<string | null>(null);
   const [selectedSupplier, setSelectedSupplier] = useState<string | null>(null);
-  const [selectedStatusUpdate, setSelectedStatusUpdate] = useState<
-    string | null
-  >(null);
-  const [selectedPaymentType, setSelectedPaymentType] = useState<string | null>(
-    null
-  );
+  const [selectedStatusUpdate, setSelectedStatusUpdate] = useState<string | null>(null);
+  const [selectedPaymentType, setSelectedPaymentType] = useState<string | null>(null);
 
   const toggleFilterVisibility = () => {
     setIsFilterVisible((prevVisibility) => !prevVisibility);
@@ -58,170 +41,130 @@ const SalesList = () => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('');
   const filteredData = saleslistdata.filter((entry) => {
     return (Object.keys(entry) as (keyof SalesEntry)[]).some((key) => {
-      return String(entry[key])
-        .toLowerCase()
-        .includes(searchText.toLowerCase());
+      return String(entry[key]).toLowerCase().includes(searchText.toLowerCase());
     });
   });
   const oldandlatestvalue = [
-    { value: "Sort by Date", label: "Sort by Date" },
-    { value: "07 09 23", label: "07 09 23" },
-    { value: "21 09 23", label: "21 09 23" },
+    { value: 'Sort by Date', label: 'Sort by Date' },
+    { value: '07 09 23', label: '07 09 23' },
+    { value: '21 09 23', label: '21 09 23' }
   ];
   const customername = [
-    { value: "Choose Customer Name", label: "Choose Customer Name" },
-    { value: "Macbook pro", label: "Macbook pro" },
-    { value: "Orange", label: "Orange" },
+    { value: 'Choose Customer Name', label: 'Choose Customer Name' },
+    { value: 'Macbook pro', label: 'Macbook pro' },
+    { value: 'Orange', label: 'Orange' }
   ];
   const status = [
-    { value: "Choose Status", label: "Choose Status" },
-    { value: "Computers", label: "Computers" },
-    { value: "Fruits", label: "Fruits" },
+    { value: 'Choose Status', label: 'Choose Status' },
+    { value: 'Computers', label: 'Computers' },
+    { value: 'Fruits', label: 'Fruits' }
   ];
   const paymentstatus = [
-    { value: "Choose Payment Status", label: "Choose Payment Status" },
-    { value: "Computers", label: "Computers" },
-    { value: "Fruits", label: "Fruits" },
+    { value: 'Choose Payment Status', label: 'Choose Payment Status' },
+    { value: 'Computers', label: 'Computers' },
+    { value: 'Fruits', label: 'Fruits' }
   ];
   const customer = [
-    { value: "Choose Customer", label: "Choose Customer" },
-    { value: "Customer Name", label: "Customer Name" },
+    { value: 'Choose Customer', label: 'Choose Customer' },
+    { value: 'Customer Name', label: 'Customer Name' }
   ];
   const suppliername = [
-    { value: "Supplier", label: "Supplier" },
-    { value: "Supplier Name", label: "Supplier Name" },
+    { value: 'Supplier', label: 'Supplier' },
+    { value: 'Supplier Name', label: 'Supplier Name' }
   ];
   const statusupdate = [
-    { value: "Supplier", label: "Choose" },
-    { value: "Completed", label: "Completed" },
-    { value: "InProgress", label: "InProgress" },
+    { value: 'Supplier', label: 'Choose' },
+    { value: 'Completed', label: 'Completed' },
+    { value: 'InProgress', label: 'InProgress' }
   ];
   const paymenttype = [
-    { value: "Choose", label: "Choose" },
-    { value: "Cash", label: "Cash" },
-    { value: "Online", label: "Online" },
+    { value: 'Choose', label: 'Choose' },
+    { value: 'Cash', label: 'Cash' },
+    { value: 'Online', label: 'Online' }
   ];
- 
-  
+
   const columns = [
     {
-      header: "CustomerName",
-      field: "customerName",
+      header: 'CustomerName',
+      field: 'customerName'
     },
     {
-      header: "Reference",
-      field: "reference",
-    },
-
-    {
-      header: "Date",
-      field: "date",
+      header: 'Reference',
+      field: 'reference'
     },
 
     {
-      header: "Status",
-      field: "status",
+      header: 'Date',
+      field: 'date'
+    },
+
+    {
+      header: 'Status',
+      field: 'status',
       body: (text: any) => (
-        <span
-          className={`badge ${
-            text?.Status === "Completed" ? "badge-bgsuccess" : "badge-bgdanger"
-          }`}
-        >
-          {text?.Status}
-        </span>
-      ),
+        <span className={`badge ${text?.Status === 'Completed' ? 'badge-bgsuccess' : 'badge-bgdanger'}`}>{text?.Status}</span>
+      )
     },
     {
-      header: "GrandTotal",
-      field: "grandTotal",
+      header: 'GrandTotal',
+      field: 'grandTotal'
     },
     {
-      header: "Paid",
-      field: "paid",
+      header: 'Paid',
+      field: 'paid'
     },
     {
-      header: "Due",
-      field: "due",
+      header: 'Due',
+      field: 'due'
     },
     {
-      header: "PaymentStatus",
-      field: "paymentStatus",
+      header: 'PaymentStatus',
+      field: 'paymentStatus',
       body: (text: any) => {
         return (
-          <span
-            className={`badge ${
-              text?.paymentStatus === "Paid"
-                ? "badge-linesuccess"
-                : "badge-linedanger"
-            }`}
-          >
+          <span className={`badge ${text?.paymentStatus === 'Paid' ? 'badge-linesuccess' : 'badge-linedanger'}`}>
             {text?.paymentStatus}
           </span>
         );
-      },
+      }
     },
     {
-      header: "Biller",
-      field: "biller",
+      header: 'Biller',
+      field: 'biller'
     },
     {
-      header: "Actions",
-      field: "actions",
-      key: "actions",
+      header: 'Actions',
+      field: 'actions',
+      key: 'actions',
       body: () => (
         <div className="text-center">
-          <Link
-            className="action-set"
-            to="#"
-            data-bs-toggle="dropdown"
-            aria-expanded="true"
-          >
+          <Link className="action-set" to="#" data-bs-toggle="dropdown" aria-expanded="true">
             <i className="ti ti-dots-vertical" />
           </Link>
           <ul className="dropdown-menu">
             <li>
-              <Link
-                to="#"
-                className="dropdown-item"
-                data-bs-toggle="modal"
-                data-bs-target="#sales-details-new"
-              >
+              <Link to="#" className="dropdown-item" data-bs-toggle="modal" data-bs-target="#sales-details-new">
                 <i className="ti ti-eye" />
                 Sale Detail
               </Link>
             </li>
             <li>
-              <Link
-                to="#"
-                className="dropdown-item"
-                data-bs-toggle="modal"
-                data-bs-target="#edit-sales-new"
-              >
+              <Link to="#" className="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit-sales-new">
                 <i className="ti ti-edit" />
                 Edit Sale
               </Link>
             </li>
             <li>
-              <Link
-                to="#"
-                className="dropdown-item"
-                data-bs-toggle="modal"
-                data-bs-target="#showpayment"
-              >
+              <Link to="#" className="dropdown-item" data-bs-toggle="modal" data-bs-target="#showpayment">
                 <i className="ti ti-currency-dollar" />
                 Show Payments
               </Link>
             </li>
             <li>
-              <Link
-                to="#"
-                className="dropdown-item"
-                data-bs-toggle="modal"
-                data-bs-target="#createpayment"
-              >
+              <Link to="#" className="dropdown-item" data-bs-toggle="modal" data-bs-target="#createpayment">
                 <i className="ti ti-circle-plus me-2" />
                 Create Payment
               </Link>
@@ -244,8 +187,8 @@ const SalesList = () => {
             </li>
           </ul>
         </div>
-      ),
-    },
+      )
+    }
   ];
   return (
     <div>
@@ -260,12 +203,7 @@ const SalesList = () => {
             </div>
             <TableTopHead />
             <div className="page-btn">
-              <Link
-                to="#"
-                className="btn btn-added"
-                data-bs-toggle="modal"
-                data-bs-target="#add-sales-new"
-              >
+              <Link to="#" className="btn btn-added" data-bs-toggle="modal" data-bs-target="#add-sales-new">
                 <i className="ti ti-circle-plus me-1"></i>
                 Add New Sales
               </Link>
@@ -293,17 +231,8 @@ const SalesList = () => {
                 <div className="search-path">
                   <div className="d-flex align-items-center">
                     <div className="search-path">
-                      <Link
-                        to="#"
-                        className={`btn btn-filter ${
-                          isFilterVisible ? "setclose" : ""
-                        }`}
-                        id="filter_search"
-                      >
-                        <i
-                          className="feather icon-filter filter-icon"
-                          onClick={toggleFilterVisibility}
-                        />
+                      <Link to="#" className={`btn btn-filter ${isFilterVisible ? 'setclose' : ''}`} id="filter_search">
+                        <i className="feather icon-filter filter-icon" onClick={toggleFilterVisibility} />
                         <span onClick={toggleFilterVisibility}>
                           <img src={closeIcon} alt="img" />
                         </span>
@@ -325,9 +254,9 @@ const SalesList = () => {
               </div>
               {/* /Filter */}
               <div
-                className={`card${isFilterVisible ? " visible" : ""}`}
+                className={`card${isFilterVisible ? ' visible' : ''}`}
                 id="filter_inputs"
-                style={{ display: isFilterVisible ? "block" : "none" }}
+                style={{ display: isFilterVisible ? 'block' : 'none' }}
               >
                 <div className="card-body pb-0">
                   <div className="row">
@@ -361,11 +290,7 @@ const SalesList = () => {
                     <div className="col-lg-2 col-sm-6 col-12">
                       <div className="input-blocks">
                         <i className="info-img feather icon-file-text" />
-                        <input
-                          type="text"
-                          placeholder="Enter Reference"
-                          className="form-control"
-                        />
+                        <input type="text" placeholder="Enter Reference" className="form-control" />
                       </div>
                     </div>
                     <div className="col-lg-3 col-sm-6 col-12">
@@ -384,8 +309,8 @@ const SalesList = () => {
                     <div className="col-lg-2 col-sm-6 col-12">
                       <div className="input-blocks">
                         <Link to="#" className="btn btn-filters ms-auto">
-                          {" "}
-                          <i className="ti ti-search" /> Search{" "}
+                          {' '}
+                          <i className="ti ti-search" /> Search{' '}
                         </Link>
                       </div>
                     </div>
@@ -420,12 +345,7 @@ const SalesList = () => {
                     <div className="page-title">
                       <h4> Add Sales</h4>
                     </div>
-                    <button
-                      type="button"
-                      className="close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    >
+                    <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">×</span>
                     </button>
                   </div>
@@ -441,9 +361,7 @@ const SalesList = () => {
                                   <CommonSelect
                                     options={customer}
                                     value={selectedCustomer}
-                                    onChange={(e) =>
-                                      setSelectedCustomer(e.value)
-                                    }
+                                    onChange={(e) => setSelectedCustomer(e.value)}
                                     placeholder="Newest"
                                     filter={false}
                                   />
@@ -463,11 +381,7 @@ const SalesList = () => {
                               <label>Date</label>
                               <div className="input-groupicon calender-input">
                                 <i className="feather icon-calendar info-img" />
-                                <CommonDatePicker
-                                  value={date1}
-                                  onChange={setDate1}
-                                  className="w-100"
-                                />
+                                <CommonDatePicker value={date1} onChange={setDate1} className="w-100" />
                               </div>
                             </div>
                           </div>
@@ -487,10 +401,7 @@ const SalesList = () => {
                             <div className="input-blocks">
                               <label>Product Name</label>
                               <div className="input-groupicon select-code">
-                                <input
-                                  type="text"
-                                  placeholder="Please type product code and select"
-                                />
+                                <input type="text" placeholder="Please type product code and select" />
                                 <div className="addonset">
                                   <img src={qrCodeImage} alt="img" />
                                 </div>
@@ -555,11 +466,7 @@ const SalesList = () => {
                             <div className="input-blocks">
                               <label>Order Tax</label>
                               <div className="input-groupicon select-code">
-                                <input
-                                  type="text"
-                                  defaultValue={0}
-                                  className="p-2"
-                                />
+                                <input type="text" defaultValue={0} className="p-2" />
                               </div>
                             </div>
                           </div>
@@ -567,11 +474,7 @@ const SalesList = () => {
                             <div className="input-blocks">
                               <label>Discount</label>
                               <div className="input-groupicon select-code">
-                                <input
-                                  type="text"
-                                  defaultValue={0}
-                                  className="p-2"
-                                />
+                                <input type="text" defaultValue={0} className="p-2" />
                               </div>
                             </div>
                           </div>
@@ -579,11 +482,7 @@ const SalesList = () => {
                             <div className="input-blocks">
                               <label>Shipping</label>
                               <div className="input-groupicon select-code">
-                                <input
-                                  type="text"
-                                  defaultValue={0}
-                                  className="p-2"
-                                />
+                                <input type="text" defaultValue={0} className="p-2" />
                               </div>
                             </div>
                           </div>
@@ -593,20 +492,14 @@ const SalesList = () => {
                               <CommonSelect
                                 options={statusupdate}
                                 value={selectedStatusUpdate}
-                                onChange={(e) =>
-                                  setSelectedStatusUpdate(e.value)
-                                }
+                                onChange={(e) => setSelectedStatusUpdate(e.value)}
                                 placeholder="Status"
                                 filter={false}
                               />
                             </div>
                           </div>
                           <div className="col-lg-12 text-end">
-                            <button
-                              type="button"
-                              className="btn btn-cancel add-cancel me-3"
-                              data-bs-dismiss="modal"
-                            >
+                            <button type="button" className="btn btn-cancel add-cancel me-3" data-bs-dismiss="modal">
                               Cancel
                             </button>
                             <Link to="#" className="btn btn-submit add-sale">
@@ -635,11 +528,7 @@ const SalesList = () => {
                         <h4>Sales Detail : SL0101</h4>
                       </div>
                       <div className="page-btn">
-                        <Link
-                          to="#"
-                          className="btn btn-added"
-                          data-bs-dismiss="modal"
-                        >
+                        <Link to="#" className="btn btn-added" data-bs-dismiss="modal">
                           <i className="ti ti-circle-plus me-1"></i>
                           Add New Sales
                         </Link>
@@ -647,42 +536,22 @@ const SalesList = () => {
                     </div>
                     <ul className="table-top-head">
                       <li>
-                        <Link
-                          to="#"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="top"
-                          title="Pdf"
-                        >
+                        <Link to="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Pdf">
                           <i className="ti ti-edit sales-action" />
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          to="#"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="top"
-                          title="Pdf"
-                        >
+                        <Link to="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Pdf">
                           <img src={pdf} alt="img" />
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          to="#"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="top"
-                          title="Excel"
-                        >
+                        <Link to="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Excel">
                           <img src={excel} alt="img" />
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          to="#"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="top"
-                          title="Print"
-                        >
+                        <Link to="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Print">
                           <i className="ti ti-printer" />
                         </Link>
                       </li>
@@ -753,10 +622,7 @@ const SalesList = () => {
                                 <tr>
                                   <td>
                                     <div className="productimgname">
-                                      <Link
-                                        to="#"
-                                        className="product-img stock-img"
-                                      >
+                                      <Link to="#" className="product-img stock-img">
                                         <img src={stockImg02} alt="product" />
                                       </Link>
                                       <Link to="#">Nike Jordan</Link>
@@ -768,11 +634,7 @@ const SalesList = () => {
                                         +
                                         <i className="feather icon-plus-circle" />
                                       </span>
-                                      <input
-                                        type="text"
-                                        className="quntity-input"
-                                        defaultValue={2}
-                                      />
+                                      <input type="text" className="quntity-input" defaultValue={2} />
                                       <span className="quantity-btn">
                                         <i className="feather icon-minus-circle" />
                                       </span>
@@ -788,10 +650,7 @@ const SalesList = () => {
                                 <tr>
                                   <td>
                                     <div className="productimgname">
-                                      <Link
-                                        to="#"
-                                        className="product-img stock-img"
-                                      >
+                                      <Link to="#" className="product-img stock-img">
                                         <img src={stockImg03} alt="product" />
                                       </Link>
                                       <Link to="#">Apple Series 5 Watch</Link>
@@ -803,11 +662,7 @@ const SalesList = () => {
                                         +
                                         <i className="feather icon-plus-circle" />
                                       </span>
-                                      <input
-                                        type="text"
-                                        className="quntity-input"
-                                        defaultValue={2}
-                                      />
+                                      <input type="text" className="quntity-input" defaultValue={2} />
                                       <span className="quantity-btn">
                                         <i className="feather icon-minus-circle" />
                                       </span>
@@ -823,10 +678,7 @@ const SalesList = () => {
                                 <tr>
                                   <td>
                                     <div className="productimgname">
-                                      <Link
-                                        to="#"
-                                        className="product-img stock-img"
-                                      >
+                                      <Link to="#" className="product-img stock-img">
                                         <img src={stockImg05} alt="product" />
                                       </Link>
                                       <Link to="#">Lobar Handy</Link>
@@ -838,11 +690,7 @@ const SalesList = () => {
                                         +
                                         <i className="feather icon-plus-circle" />
                                       </span>
-                                      <input
-                                        type="text"
-                                        className="quntity-input"
-                                        defaultValue={2}
-                                      />
+                                      <input type="text" className="quntity-input" defaultValue={2} />
                                       <span className="quantity-btn">
                                         <i className="feather icon-minus-circle" />
                                       </span>
@@ -909,12 +757,7 @@ const SalesList = () => {
                       <div className="page-title">
                         <h4>Edit Sales</h4>
                       </div>
-                      <button
-                        type="button"
-                        className="close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      >
+                      <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                       </button>
                     </div>
@@ -931,9 +774,7 @@ const SalesList = () => {
                                   <CommonSelect
                                     options={customer}
                                     value={selectedCustomer}
-                                    onChange={(e) =>
-                                      setSelectedCustomer(e.value)
-                                    }
+                                    onChange={(e) => setSelectedCustomer(e.value)}
                                     placeholder="Newest"
                                     filter={false}
                                   />
@@ -953,11 +794,7 @@ const SalesList = () => {
                               <label>Purchase Date</label>
                               <div className="input-groupicon calender-input">
                                 <i className="feather icon-calendar info-img" />
-                                <CommonDatePicker
-                                  value={date2}
-                                  onChange={setDate2}
-                                  className="w-100"
-                                />
+                                <CommonDatePicker value={date2} onChange={setDate2} className="w-100" />
                               </div>
                             </div>
                           </div>
@@ -977,10 +814,7 @@ const SalesList = () => {
                             <div className="input-blocks">
                               <label>Product Name</label>
                               <div className="input-groupicon select-code">
-                                <input
-                                  type="text"
-                                  placeholder="Please type product code and select"
-                                />
+                                <input type="text" placeholder="Please type product code and select" />
                                 <div className="addonset">
                                   <img src={scanners} alt="img" />
                                 </div>
@@ -1006,10 +840,7 @@ const SalesList = () => {
                               <tr>
                                 <td>
                                   <div className="productimgname">
-                                    <Link
-                                      to="#"
-                                      className="product-img stock-img"
-                                    >
+                                    <Link to="#" className="product-img stock-img">
                                       <img src={stockImg02} alt="product" />
                                     </Link>
                                     <Link to="#">Nike Jordan</Link>
@@ -1021,11 +852,7 @@ const SalesList = () => {
                                       +
                                       <i className="feather icon-plus-circle" />
                                     </span>
-                                    <input
-                                      type="text"
-                                      className="quntity-input"
-                                      defaultValue={2}
-                                    />
+                                    <input type="text" className="quntity-input" defaultValue={2} />
                                     <span className="quantity-btn">
                                       <i className="feather icon-minus-circle" />
                                     </span>
@@ -1041,10 +868,7 @@ const SalesList = () => {
                               <tr>
                                 <td>
                                   <div className="productimgname">
-                                    <Link
-                                      to="#"
-                                      className="product-img stock-img"
-                                    >
+                                    <Link to="#" className="product-img stock-img">
                                       <img src={stockImg03} alt="product" />
                                     </Link>
                                     <Link to="#">Apple Series 5 Watch</Link>
@@ -1056,11 +880,7 @@ const SalesList = () => {
                                       +
                                       <i className="feather icon-plus-circle" />
                                     </span>
-                                    <input
-                                      type="text"
-                                      className="quntity-input"
-                                      defaultValue={2}
-                                    />
+                                    <input type="text" className="quntity-input" defaultValue={2} />
                                     <span className="quantity-btn">
                                       <i className="feather icon-minus-circle" />
                                     </span>
@@ -1076,10 +896,7 @@ const SalesList = () => {
                               <tr>
                                 <td>
                                   <div className="productimgname">
-                                    <Link
-                                      to="#"
-                                      className="product-img stock-img"
-                                    >
+                                    <Link to="#" className="product-img stock-img">
                                       <img src={stockImg05} alt="product" />
                                     </Link>
                                     <Link to="#">Lobar Handy</Link>
@@ -1091,11 +908,7 @@ const SalesList = () => {
                                       +
                                       <i className="feather icon-plus-circle" />
                                     </span>
-                                    <input
-                                      type="text"
-                                      className="quntity-input"
-                                      defaultValue={2}
-                                    />
+                                    <input type="text" className="quntity-input" defaultValue={2} />
                                     <span className="quantity-btn">
                                       <i className="feather icon-minus-circle" />
                                     </span>
@@ -1140,7 +953,7 @@ const SalesList = () => {
                             <div className="input-blocks">
                               <label>Order Tax</label>
                               <div className="input-groupicon select-code">
-                                <input type="text" placeholder={"0"} />
+                                <input type="text" placeholder={'0'} />
                               </div>
                             </div>
                           </div>
@@ -1148,7 +961,7 @@ const SalesList = () => {
                             <div className="input-blocks">
                               <label>Discount</label>
                               <div className="input-groupicon select-code">
-                                <input type="text" placeholder={"0"} />
+                                <input type="text" placeholder={'0'} />
                               </div>
                             </div>
                           </div>
@@ -1156,7 +969,7 @@ const SalesList = () => {
                             <div className="input-blocks">
                               <label>Shipping</label>
                               <div className="input-groupicon select-code">
-                                <input type="text" placeholder={"0"} />
+                                <input type="text" placeholder={'0'} />
                               </div>
                             </div>
                           </div>
@@ -1166,9 +979,7 @@ const SalesList = () => {
                               <CommonSelect
                                 options={statusupdate}
                                 value={selectedStatusUpdate}
-                                onChange={(e) =>
-                                  setSelectedStatusUpdate(e.value)
-                                }
+                                onChange={(e) => setSelectedStatusUpdate(e.value)}
                                 placeholder="Status"
                                 filter={false}
                               />
@@ -1177,18 +988,11 @@ const SalesList = () => {
                           <div className="col-lg-12">
                             <div className="input-blocks">
                               <label>Notes</label>
-                              <textarea
-                                className="form-control"
-                                defaultValue={""}
-                              />
+                              <textarea className="form-control" defaultValue={''} />
                             </div>
                           </div>
                           <div className="col-lg-12 text-end">
-                            <button
-                              type="button"
-                              className="btn btn-cancel add-cancel me-3"
-                              data-bs-dismiss="modal"
-                            >
+                            <button type="button" className="btn btn-cancel add-cancel me-3" data-bs-dismiss="modal">
                               Cancel
                             </button>
                             <Link to="#" className="btn btn-submit add-sale">
@@ -1206,13 +1010,7 @@ const SalesList = () => {
         </div>
         {/* /edit popup */}
         {/* show payment Modal */}
-        <div
-          className="modal fade"
-          id="showpayment"
-          tabIndex={-1}
-          aria-labelledby="showpayment"
-          aria-hidden="true"
-        >
+        <div className="modal fade" id="showpayment" tabIndex={-1} aria-labelledby="showpayment" aria-hidden="true">
           <div className="modal-dialog modal-dialog-centered stock-adjust-modal">
             <div className="modal-content">
               <div className="page-wrapper-new p-0">
@@ -1221,12 +1019,7 @@ const SalesList = () => {
                     <div className="page-title">
                       <h4>Show Payments</h4>
                     </div>
-                    <button
-                      type="button"
-                      className="close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    >
+                    <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">×</span>
                     </button>
                   </div>
@@ -1256,12 +1049,7 @@ const SalesList = () => {
                                       <Link className="me-3 p-2" to="#">
                                         <i className="ti ti-printer" />
                                       </Link>
-                                      <Link
-                                        className="me-3 p-2"
-                                        to="#"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#editpayment"
-                                      >
+                                      <Link className="me-3 p-2" to="#" data-bs-toggle="modal" data-bs-target="#editpayment">
                                         <i className="ti ti-edit" />
                                       </Link>
                                       <Link className="confirm-text p-2" to="#">
@@ -1284,25 +1072,14 @@ const SalesList = () => {
         </div>
         {/* show payment Modal */}
         {/* Create payment Modal */}
-        <div
-          className="modal fade"
-          id="createpayment"
-          tabIndex={-1}
-          aria-labelledby="createpayment"
-          aria-hidden="true"
-        >
+        <div className="modal fade" id="createpayment" tabIndex={-1} aria-labelledby="createpayment" aria-hidden="true">
           <div className="modal-dialog modal-lg modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header border-0 custom-modal-header">
                 <div className="page-title">
                   <h4>Create Payments</h4>
                 </div>
-                <button
-                  type="button"
-                  className="close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
+                <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span>
                 </button>
               </div>
@@ -1315,11 +1092,7 @@ const SalesList = () => {
                         <div className="input-groupicon calender-input ">
                           <i className="feather icon-calendar info-img" />
 
-                          <CommonDatePicker
-                            value={date3}
-                            onChange={setDate3}
-                            className="w-100"
-                          />
+                          <CommonDatePicker value={date3} onChange={setDate3} className="w-100" />
                         </div>
                       </div>
                     </div>
@@ -1364,18 +1137,14 @@ const SalesList = () => {
                     <div className="col-lg-12">
                       <div className="input-blocks">
                         <label>Description</label>
-                        <textarea className="form-control" defaultValue={""} />
+                        <textarea className="form-control" defaultValue={''} />
                         <p>Maximum 60 Characters</p>
                       </div>
                     </div>
                   </div>
                   <div className="col-lg-12">
                     <div className="modal-footer-btn">
-                      <button
-                        type="button"
-                        className="btn btn-cancel me-2"
-                        data-bs-dismiss="modal"
-                      >
+                      <button type="button" className="btn btn-cancel me-2" data-bs-dismiss="modal">
                         Cancel
                       </button>
                       <Link to="#" className="btn btn-submit">
@@ -1390,25 +1159,14 @@ const SalesList = () => {
         </div>
         {/* Create payment Modal */}
         {/* edit payment Modal */}
-        <div
-          className="modal fade"
-          id="editpayment"
-          tabIndex={-1}
-          aria-labelledby="editpayment"
-          aria-hidden="true"
-        >
+        <div className="modal fade" id="editpayment" tabIndex={-1} aria-labelledby="editpayment" aria-hidden="true">
           <div className="modal-dialog modal-lg modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header border-0 custom-modal-header">
                 <div className="page-title">
                   <h4>Edit Payments</h4>
                 </div>
-                <button
-                  type="button"
-                  className="close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
+                <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span>
                 </button>
               </div>
@@ -1420,11 +1178,7 @@ const SalesList = () => {
                         <label>19 Jan 2023</label>
                         <div className="input-groupicon calender-input">
                           <i className="feather icon-calendar info-img" />
-                          <input
-                            type="text"
-                            className="datetimepicker form-control"
-                            placeholder="Select Date"
-                          />
+                          <input type="text" className="datetimepicker form-control" placeholder="Select Date" />
                         </div>
                       </div>
                     </div>
@@ -1467,18 +1221,14 @@ const SalesList = () => {
                     <div className="col-lg-12">
                       <div className="input-blocks summer-description-box transfer">
                         <label>Description</label>
-                        <textarea className="form-control" defaultValue={""} />
+                        <textarea className="form-control" defaultValue={''} />
                       </div>
                       <p>Maximum 60 Characters</p>
                     </div>
                   </div>
                   <div className="col-lg-12">
                     <div className="modal-footer-btn mb-3 me-3">
-                      <button
-                        type="button"
-                        className="btn btn-cancel me-2"
-                        data-bs-dismiss="modal"
-                      >
+                      <button type="button" className="btn btn-cancel me-2" data-bs-dismiss="modal">
                         Cancel
                       </button>
                       <button type="submit" className="btn btn-submit">
@@ -1495,13 +1245,7 @@ const SalesList = () => {
         <div className="customizer-links" id="setdata">
           <ul className="sticky-sidebar">
             <li className="sidebar-icons">
-              <Link
-                to="#"
-                className="navigation-add"
-                data-bs-toggle="tooltip"
-                data-bs-placement="left"
-                data-bs-original-title="Theme"
-              >
+              <Link to="#" className="navigation-add" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-original-title="Theme">
                 <i className="ti ti-settings" />
               </Link>
             </li>

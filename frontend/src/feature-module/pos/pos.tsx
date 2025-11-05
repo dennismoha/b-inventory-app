@@ -179,9 +179,7 @@ const Pos = () => {
                         </li> */}
                         {Object.keys(groupedInventory).map((supplier, index) => (
                           <li key={supplier} onClick={() => setActiveTab(supplier)} className={activeTab === supplier ? 'active' : ''}>
-                            <Link to="#">
-                              <img src={`/assets/img/categories/category-0${index + 2}.svg`} alt="Supplier" />
-                            </Link>
+                            <Link to="#">{/* <img src={`/assets/img/categories/category-0${index + 2}.svg`} alt="Supplier" /> */}</Link>
                             <h6>
                               <Link to="#">{supplier}</Link>
                             </h6>

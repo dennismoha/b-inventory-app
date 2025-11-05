@@ -586,7 +586,7 @@ const PurchasesList = () => {
   const table = useMaterialReactTable({
     columns,
     data: data?.data ?? [], // your purchase data
-    enableEditing: true,
+    enableEditing: false,
     // onEditingRowSave: handleSavePurchase,
     // onEditingCellChange: handleSavePurchase,
     editDisplayMode: 'cell',
