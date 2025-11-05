@@ -1,1 +1,0 @@
-import{j as s,L as t}from"./index-C3wPXBNN.js";const o=()=>s.jsx("li",{children:s.jsx(t,{to:"#",className:"pr-tooltip","data-pr-tooltip":"Refresh","data-pr-position":"top",children:s.jsx("i",{className:"ti ti-refresh"})})});export{o as R};
