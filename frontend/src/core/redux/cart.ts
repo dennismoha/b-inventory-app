@@ -52,34 +52,80 @@ const checkoutSlice = createSlice({
         supplier_products_id,
         total_stock_quantity
       } = action.payload;
+      console.log('total is ', quantity + stock_quantity + total_stock_quantity);
+      console.log('total is ', 'quantity', quantity, 'stock quantity', stock_quantity, 'total stock quantity', typeof total_stock_quantity);
+      console.log(
+        'type of quantty',
+        typeof quantity,
+        ' type of stock_quantity',
+        typeof stock_quantity,
+        'type of total_stock_quantity ',
+        total_stock_quantity
+      );
+      console.log(
+        'sum of quantity and stock_quantty',
+        quantity + stock_quantity,
+        'quantity and tt_stockQuantuty',
+        quantity + total_stock_quantity,
+        ' sum of stock quantity and total+stock_quantity ',
+        stock_quantity + total_stock_quantity
+      );
 
+      console.log('string to number', typeof  Number(stock_quantity));
       // Find if the product already exists in the cartProducts
       const indexProductId = state.cartProducts.findIndex((item) => item.inventoryId === inventoryId);
-
       if (indexProductId >= 0) {
         // Update its quantity
-        state.cartProducts[indexProductId].quantity += quantity;
+        state.cartProducts[indexProductId].quantity += Number(quantity);
         state.cartProducts[indexProductId].needsBatchLoad =
-          state.cartProducts[indexProductId].quantity > stock_quantity && state.cartProducts[indexProductId].quantity < total_stock_quantity
+          Number(state.cartProducts[indexProductId].quantity) >= Number(stock_quantity) &&
+          Number(state.cartProducts[indexProductId].quantity) <= Number(total_stock_quantity)
             ? true
             : false;
       } else {
         // Add new product
+
         state.cartProducts.push({
           inventoryId,
-          quantity,
+          quantity: Number(quantity),
           status,
-          stock_quantity,
+          stock_quantity: Number(stock_quantity),
           productName,
           price: Number(price),
-          VAT,
-          discount,
+          VAT: Number(VAT),
+          discount: Number(discount),
           supplier_products_id,
-          total_stock_quantity,
+          total_stock_quantity: Number(total_stock_quantity),
           batch_inventory_id,
-          needsBatchLoad: quantity > stock_quantity && quantity < total_stock_quantity ? true : false
+          needsBatchLoad: Number(quantity) >= Number(stock_quantity) && Number(quantity) <= Number(total_stock_quantity) ? true : false
         });
       }
+
+      // if (indexProductId >= 0) {
+      //   // Update its quantity
+      //   state.cartProducts[indexProductId].quantity += quantity;
+      //   state.cartProducts[indexProductId].needsBatchLoad =
+      //     state.cartProducts[indexProductId].quantity >= stock_quantity &&
+      //     state.cartProducts[indexProductId].quantity <= total_stock_quantity
+      //       ? true
+      //       : false;
+      // } else {
+      //   // Add new product
+      //   state.cartProducts.push({
+      //     inventoryId,
+      //     quantity,
+      //     status,
+      //     stock_quantity,
+      //     productName,
+      //     price: Number(price),
+      //     VAT,
+      //     discount,
+      //     supplier_products_id,
+      //     total_stock_quantity,
+      //     batch_inventory_id,
+      //     needsBatchLoad: quantity >= stock_quantity && quantity <= total_stock_quantity ? true : false
+      //   });
+      // }
 
       // Use each item's own values, not the payload values
       const subtotal = state.cartProducts.reduce((total, item) => total + item.quantity * item.price, 0);

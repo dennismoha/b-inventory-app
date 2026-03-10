@@ -623,6 +623,7 @@ export class PurchaseController {
   }
 
   public static async updateBatchName(purchase_id: string, newBatch: string) {
+    console.log('updaing batch name', newBatch);
     return await prisma.$transaction(async (tx) => {
       const existing = await tx.batchInventory.findUnique({
         where: { batch_name: newBatch }
@@ -630,9 +631,14 @@ export class PurchaseController {
 
       if (existing) throw new BadRequestError('Batch name already exists.');
 
-      await tx.batchInventory.updateMany({
+      await tx.batchInventory.update({
         where: { purchase_id },
         data: { batch_name: newBatch }
+      });
+
+      await tx.purchase.update({
+        where: { purchase_id },
+        data: { batch: newBatch }
       });
 
       return {
@@ -990,5 +996,292 @@ export class PurchaseController {
   //       ]
   //     });
 
+  // }
+
+  // PaymentService.ts
+
+  public async updatePaymentType(req: Request, res: Response) {
+    console.log('req is ', req);
+    console.log(' req body si s', req.body);
+
+    const { purchase_id, payment_type } = req.body;
+    const data: purchaseList = req.body;
+    // 🔹 Fetch existing purchase
+    const existingPurchase = await prisma.purchase.findUnique({
+      where: { purchase_id },
+      select: { payment_type: true }
+    });
+
+    if (!existingPurchase) {
+      throw new BadRequestError('Purchase record not found');
+    }
+
+    // 🔹 Prevent redundant updates
+    if (existingPurchase.payment_type === payment_type) {
+      throw new BadRequestError(`Payment type is already ${payment_type}`);
+    }
+
+    const oldPaymentType = existingPurchase.payment_type;
+
+    // 🔹 Delegate to type-specific handler
+    const result = await prisma.$transaction(async (tx) =>
+      PurchaseController.handlePaymentTypeUpdate(tx, oldPaymentType, payment_type, data)
+    );
+    res.json(result);
+  }
+
+  static async handlePaymentTypeUpdate(
+    tx: PrismaTransactionalClient,
+    // purchase: Partial<PaymentType>,
+    oldPaymentType: Partial<PaymentType>,
+    newPaymentType: Partial<PaymentType>,
+    payload: purchaseList
+  ) {
+    switch (oldPaymentType) {
+      case 'credit':
+        if (newPaymentType === 'full') {
+          return this.handleFullPaymentTypeUpdate(tx, payload);
+        } else if (newPaymentType === 'partial') {
+          return 'this is not completed yet';
+          // return this.handlePartialPaymentTypeUpdate(tx, payload);
+        }
+        break;
+
+      case 'full':
+        if (newPaymentType === 'credit') {
+          return this.handleCreditPaymentTypeUpdate(tx, payload);
+        }
+        break;
+
+      default:
+        throw new BadRequestError(`Unsupported payment type transition: ${oldPaymentType} → ${newPaymentType}`);
+    }
+  }
+
+  // =======================================================
+  // CREDIT → FULL
+  // =======================================================
+  static async handleFullPaymentTypeUpdate(tx: PrismaTransactionalClient, payload: purchaseList) {
+    const payable = await tx.batchPayables.findUnique({
+      where: { purchase_id: payload.purchase_id }
+    });
+
+    if (!payable) {
+      throw new BadRequestError('Credit -> Full payment Batch payable not found for this purchase');
+    }
+
+    const now = new Date();
+
+    //  Update BatchPayables
+    await tx.batchPayables.update({
+      where: { purchase_id: payload.purchase_id },
+      data: {
+        payment_type: 'full',
+        total_paid: payable.amount_due,
+        balance_due: 0,
+        status: 'settled',
+        settlement_date: now,
+        updated_at: now
+      }
+    });
+
+    //  Update Purchase
+    const updatedPurchase = await tx.purchase.update({
+      where: { purchase_id: payload.purchase_id },
+      data: {
+        payment_type: 'full',
+        payment_status: 'paid',
+        total_purchase_cost: payload.total_purchase_cost,
+        purchase_cost_per_unit: payload.purchase_cost_per_unit,
+        payment_date: now,
+        account_id: payload.account_id,
+        payment_reference: payload.payment_reference,
+        updated_at: now
+      }
+    });
+
+    const InventoryAccount = await AccountController.findAccount({
+      tx,
+      name: Account_Inventory.name,
+      type: Account_Inventory.acc_type
+    });
+
+    await JournalService.createJournalEntry(tx, {
+      transactionId: 'purchase_payment_full',
+      description: `Full payment for purchase ${payload.batch}`,
+      lines: [
+        {
+          account_id: InventoryAccount.account_id, // Debit Inventory
+          debit: payable.amount_due
+        },
+        {
+          account_id: payload.account_id!, // Credit Bank
+          credit: payable.amount_due
+        }
+      ]
+    });
+
+    // Create Journal Entry
+    return { message: 'Payment type updated from credit to full', purchase: updatedPurchase };
+  }
+
+  // =======================================================
+  // FULL → CREDIT
+  // =======================================================
+  static async handleCreditPaymentTypeUpdate(tx: PrismaTransactionalClient, purchase: purchaseList) {
+    // const payable = await tx.batchPayables.findUnique({
+    //   where: { purchase_id: purchase.purchase_id },
+    // });
+
+    // if (!payable) {
+    //   throw new BadRequestError('Full -> CreditBatch payable not found for this purchase');
+    // }
+
+    const now = new Date();
+
+    await tx.batchPayables.upsert({
+      where: { purchase_id: purchase.purchase_id },
+      create: {
+        purchase_id: purchase.purchase_id,
+        amount_due: purchase.total_purchase_cost,
+        total_paid: 0,
+        status: 'unsettled',
+        payment_type: 'credit',
+        balance_due: purchase.total_purchase_cost,
+        settlement_date: null,
+        created_at: now,
+        updated_at: now
+      },
+      update: {
+        payment_type: 'credit',
+        total_paid: 0,
+        amount_due: purchase.total_purchase_cost,
+        balance_due: purchase.total_purchase_cost,
+        status: 'unsettled',
+        settlement_date: null,
+        updated_at: now
+      }
+    });
+
+    const updatedPurchase = await tx.purchase.update({
+      where: { purchase_id: purchase.purchase_id },
+      data: {
+        payment_type: 'credit',
+        payment_status: 'unpaid',
+        payment_date: null,
+        total_purchase_cost: 0,
+        account_id: null,
+        payment_reference: null,
+        updated_at: now
+      }
+    });
+
+    const InventoryAccount = await AccountController.findAccount({
+      tx,
+      name: Account_Inventory.name,
+      type: Account_Inventory.acc_type
+    });
+
+    // if (!payable) {
+    //   await JournalService.createJournalEntry(tx, {
+    //   transactionId: 'credit',
+    //   description: `from Full to credit payment for purchase ${purchase.batch}`,
+    //   lines: [
+    //     {
+    //       account_id:  purchase.account_id!, // Debit Inventory
+    //       debit: payable.amount_due
+    //     },
+    //     {
+    //       account_id: InventoryAccount.account_id, // Credit Bank
+    //       credit: payable.amount_due
+    //     }
+    //   ]
+    // });
+    // }else {
+    //    await JournalService.createJournalEntry(tx, {
+    //   transactionId: 'credit',
+    //   description: `from Full to credit payment for purchase ${purchase.batch}`,
+    //   lines: [
+    //     {
+    //       account_id:  purchase.account_id!, // Debit Inventory
+    //       debit: payable.amount_due
+    //     },
+    //     {
+    //       account_id: InventoryAccount.account_id, // Credit Bank
+    //       credit: payable.amount_due
+    //     }
+    //   ]
+    // });
+    // }
+
+    await JournalService.createJournalEntry(tx, {
+      transactionId: 'credit',
+      description: `from Full to credit payment for purchase ${purchase.batch}`,
+      lines: [
+        {
+          account_id: purchase.account_id!, // Debit Inventory
+          debit: purchase.total_purchase_cost
+        },
+        {
+          account_id: InventoryAccount.account_id, // Credit Bank
+          credit: purchase.total_purchase_cost
+        }
+      ]
+    });
+
+    return { message: 'Payment type updated from full to credit', purchase: updatedPurchase };
+  }
+
+  // =======================================================
+  // CREDIT → PARTIAL (for completeness)
+  // =======================================================
+  // static async handlePartialPaymentTypeUpdate(tx: PrismaTransactionalClient, payload: any) {
+  //   const payable = await tx.batchPayables.findUnique({
+  //     where: { purchase_id: payload.purchase_id },
+  //   });
+
+  //   if (!payable) {
+  //     throw new BadRequestError('Batch payable not found for this purchase');
+  //   }
+
+  //   const now = new Date();
+
+  //   const { partialPaymentAmount } = payload;
+
+  //   if (partialPaymentAmount <= 0 || partialPaymentAmount > Number(payable.amount_due)) {
+  //     throw new BadRequestError('Invalid partial payment amount');
+  //   }
+
+  //   await tx.batchPayables.update({
+  //     where: { purchase_id: purchase.purchase_id },
+  //     data: {
+  //       payment_type: 'partial',
+  //       total_paid: partialPaymentAmount,
+  //       balance_due: Number(payable.amount_due) - partialPaymentAmount,
+  //       status: partialPaymentAmount === Number(payable.amount_due) ? 'paid' : 'partially_paid',
+  //       settlement_date: partialPaymentAmount === Number(payable.amount_due) ? now : null,
+  //       updated_at: now,
+  //     },
+  //   });
+
+  //   const updatedPurchase = await tx.purchase.update({
+  //     where: { purchase_id: purchase.purchase_id },
+  //     data: {
+  //       payment_type: 'partial',
+  //       payment_status: partialPaymentAmount === Number(payable.amount_due) ? 'paid' : 'partially_paid',
+  //       payment_date: now,
+  //       updated_at: now,
+  //     },
+  //   });
+
+  //   await JournalService.createJournalEntry(tx, {
+  //     type: 'PartialPayment',
+  //     debitAccount: 'Inventory',
+  //     creditAccount: 'Bank',
+  //     amount: partialPaymentAmount,
+  //     description: `Partial payment made for batch ${purchase.batch}`,
+  //   });
+
+  //   return { message: 'Payment type updated from credit to partial', purchase: updatedPurchase };
   // }
 }

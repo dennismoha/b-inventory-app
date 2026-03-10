@@ -365,8 +365,6 @@ const Dashboard = () => {
     return `${year}-${month}-${day}`;
   }
 
-
-
   // State for selected transaction details
   // const [selectedTransaction, setSelectedTransaction] = useState(null);
 

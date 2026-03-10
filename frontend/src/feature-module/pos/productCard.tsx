@@ -12,14 +12,6 @@ interface ProductCardProps {
   activeTab: string;
 }
 
-// type ProductCardProps = {
-//   data: InventoryItem;
-// };
-
-// type InputData = {
-//   data: InventoryItem;
-// };
-
 interface ProductsCard {
   supplier_products_id: string;
   // product_weight,

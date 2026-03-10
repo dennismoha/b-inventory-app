@@ -37,6 +37,11 @@ export interface PurchasePayload {
   arrival_date: Date | null;
 }
 
+export interface DeletePurchasePayload {
+  purchase_id: string;
+  batch: string;
+}
+
 interface CreatePurchaseListProps {
   supplierOptions: { label: string; value: string }[];
   Accounts: Account[] | [];

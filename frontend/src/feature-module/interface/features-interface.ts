@@ -33,6 +33,13 @@ export interface ProductApiResponse {
   status: string;
 }
 
+export interface PurchaseEditPayload {
+  field: Partial<CreatePurchaseRequest>;
+  value: string;
+  purchase_id: string;
+  batch: string;
+}
+
 export interface NewProductPayload {
   name: string;
   description: string;
@@ -416,6 +423,12 @@ export interface CreatePurchaseRequest {
   payment_reference: string | null;
   arrival_date: Date; // ISO date
 }
+
+export type deleteMessage = {
+  message: string;
+  statusCode: number | string | null;
+  status: string;
+};
 
 export type purchaseList = CreatePurchaseRequest & {
   purchase_id: string;

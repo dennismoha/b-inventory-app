@@ -383,12 +383,20 @@ model CustomerReceivable {
   customer_receivable_id String        @id @default(cuid())
   customer_id            String
   total_Amount           Decimal
+  total_paid        Decimal       @default(0.00) @db.Decimal(12, 2)
+  balance_due      Decimal       @default(0.00) @db.Decimal(12, 2)
+
   transaction_id         String        @unique
-  status                 AccountStatus @default(ACTIVE)
+  status                customerStatus @default(ACTIVE)
+  payment_status       PayableStatus @default(unsettled)
+  // created_at             DateTime      @default(now())
+  // updated_at             DateTime      @updatedAt
+  
 
   // Relations
   customer     Customer    @relation(fields: [customer_id], references: [customerId])
   Transactions Transaction @relation(fields: [transaction_id], references: [transactionId])
+  // @@unique([customer_id, transaction_id])
 }
 
 model Transaction {
@@ -1034,6 +1042,11 @@ enum AccountStatus {
   INACTIVE // Account is inactive, cannot be used for transactions.
   CLOSED // Account is closed and cannot be used for any transactions.
   CREATED
+}
+
+enum customerStatus {
+  ACTIVE
+  INACTIVE 
 }
 
 enum AssetCategory {

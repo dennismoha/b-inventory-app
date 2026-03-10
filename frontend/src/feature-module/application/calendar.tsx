@@ -1,17 +1,17 @@
-import  { useRef, useState } from "react";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import "../../assets/css/fullcalendar.min.css"; 
-import { Calendar } from "primereact/calendar";
-import { Link } from "react-router-dom";
-import RefreshIcon from "../../components/tooltip-content/refresh";
-import CollapesIcon from "../../components/tooltip-content/collapes";
-import TooltipIcons from "../../components/tooltip-content/tooltipIcons";
-import { emailbg01, emailbg02 } from "../../utils/imagepath";
-import CommonDatePicker from "../../components/date-picker/common-date-picker";
-import CommonTimePicker from "../../components/time-picker";
+import { useRef, useState } from 'react';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import '../../assets/css/fullcalendar.min.css';
+import { Calendar } from 'primereact/calendar';
+import { Link } from 'react-router-dom';
+import RefreshIcon from '../../components/tooltip-content/refresh';
+import CollapesIcon from '../../components/tooltip-content/collapes';
+import TooltipIcons from '../../components/tooltip-content/tooltipIcons';
+import { emailbg01, emailbg02 } from '../../utils/imagepath';
+import CommonDatePicker from '../../components/date-picker/common-date-picker';
+import CommonTimePicker from '../../components/time-picker';
 
 const Calendars = () => {
   const calendarRef = useRef(null);
@@ -23,41 +23,41 @@ const Calendars = () => {
 
   const events = [
     {
-      title: "Meeting with Team Dev",
-      className: "badge badge-pink-transparent",
-      backgroundColor: "#FFEDF6",
-      textColor: "#FD3995",
+      title: 'Meeting with Team Dev',
+      className: 'badge badge-pink-transparent',
+      backgroundColor: '#FFEDF6',
+      textColor: '#FD3995',
       start: new Date(Date.now() - 168000000).toJSON().slice(0, 10),
-      end: new Date(Date.now() - 168000000).toJSON().slice(0, 10),
+      end: new Date(Date.now() - 168000000).toJSON().slice(0, 10)
     },
     {
-      title: "UI/UX Team...",
-      className: "badge badge-secondary-transparent",
-      backgroundColor: "#EDF2F4",
-      textColor: "#0C4B5E",
-      start: new Date(Date.now() + 338000000).toJSON().slice(0, 10),
+      title: 'UI/UX Team...',
+      className: 'badge badge-secondary-transparent',
+      backgroundColor: '#EDF2F4',
+      textColor: '#0C4B5E',
+      start: new Date(Date.now() + 338000000).toJSON().slice(0, 10)
     },
     {
-      title: "Data Update...",
-      className: "badge badge-purple-transparent",
-      backgroundColor: "#F7EEF9",
-      textColor: "#AB47BC",
-      start: new Date(Date.now() - 338000000).toJSON().slice(0, 10),
+      title: 'Data Update...',
+      className: 'badge badge-purple-transparent',
+      backgroundColor: '#F7EEF9',
+      textColor: '#AB47BC',
+      start: new Date(Date.now() - 338000000).toJSON().slice(0, 10)
     },
     {
-      title: "Meeting with Team Dev",
-      className: "badge badge-dark-transparent",
-      backgroundColor: "#E8E9EA",
-      textColor: "#212529",
-      start: new Date(Date.now() + 68000000).toJSON().slice(0, 10),
+      title: 'Meeting with Team Dev',
+      className: 'badge badge-dark-transparent',
+      backgroundColor: '#E8E9EA',
+      textColor: '#212529',
+      start: new Date(Date.now() + 68000000).toJSON().slice(0, 10)
     },
     {
-      title: "Design System",
-      className: "badge badge-danger-transparent",
-      backgroundColor: "#FAE7E7",
-      textColor: "#E70D0D",
-      start: new Date(Date.now() + 88000000).toJSON().slice(0, 10),
-    },
+      title: 'Design System',
+      className: 'badge badge-danger-transparent',
+      backgroundColor: '#FAE7E7',
+      textColor: '#E70D0D',
+      start: new Date(Date.now() + 88000000).toJSON().slice(0, 10)
+    }
   ];
 
   return (
@@ -74,11 +74,7 @@ const Calendars = () => {
             <ul className="table-top-head">
               <li className="me-2">
                 <div className="input-icon-end position-relative calender-datepicker">
-                  <CommonDatePicker
-                    value={date1}
-                    onChange={setDate1}
-                    className="w-100"
-                  />
+                  <CommonDatePicker value={date1} onChange={setDate1} className="w-100" />
                   <span className="input-icon-addon">
                     <i className="ti ti-chevron-down ms-1" />
                   </span>
@@ -89,12 +85,7 @@ const Calendars = () => {
               <CollapesIcon />
             </ul>
             <div className="page-btn">
-              <Link
-                to="#"
-                className="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#add_event"
-              >
+              <Link to="#" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_event">
                 <i className="ti ti-circle-plus me-1"></i>
                 Create
               </Link>
@@ -119,19 +110,11 @@ const Calendars = () => {
                     <div className="border-bottom pb-4 mb-4">
                       <div className="d-flex align-items-center justify-content-between mb-2">
                         <h5>Event </h5>
-                        <Link
-                          to="#"
-                          className="link-primary"
-                          data-bs-toggle="modal"
-                          data-inert={true}
-                          data-bs-target="#add_event"
-                        >
+                        <Link to="#" className="link-primary" data-bs-toggle="modal" data-inert={true} data-bs-target="#add_event">
                           <i className="ti ti-square-rounded-plus-filled fs-16" />
                         </Link>
                       </div>
-                      <p className="fs-12 mb-2">
-                        Drag and drop your event or click in the calendar
-                      </p>
+                      <p className="fs-12 mb-2">Drag and drop your event or click in the calendar</p>
                       <div id="external-events">
                         <div
                           className="fc-event bg-transparent-success mb-1"
@@ -188,15 +171,11 @@ const Calendars = () => {
                     <div className="border-bottom pb-2 mb-4">
                       <h5 className="mb-2">
                         Upcoming Event
-                        <span className="badge badge-success rounded-pill ms-2">
-                          15
-                        </span>
+                        <span className="badge badge-success rounded-pill ms-2">15</span>
                       </h5>
                       <div className="border-start border-purple border-3 mb-3">
                         <div className="ps-3">
-                          <h6 className="fw-medium mb-1">
-                            Meeting with Team Dev
-                          </h6>
+                          <h6 className="fw-medium mb-1">Meeting with Team Dev</h6>
                           <p className="fs-12">
                             <i className="ti ti-calendar-check text-info me-2" />
                             15 Mar 2025
@@ -205,9 +184,7 @@ const Calendars = () => {
                       </div>
                       <div className="border-start border-pink border-3 mb-3">
                         <div className="ps-3">
-                          <h6 className="fw-medium mb-1">
-                            Design System With Client
-                          </h6>
+                          <h6 className="fw-medium mb-1">Design System With Client</h6>
                           <p className="fs-12">
                             <i className="ti ti-calendar-check text-info me-2" />
                             24 Mar 2025
@@ -230,9 +207,7 @@ const Calendars = () => {
                       <span className="avatar avatar-lg rounded-circle bg-white mb-2">
                         <i className="ti ti-alert-triangle text-dark" />
                       </span>
-                      <h6 className="text-white mb-3">
-                        Enjoy Unlimited Access on a small price monthly.
-                      </h6>
+                      <h6 className="text-white mb-3">Enjoy Unlimited Access on a small price monthly.</h6>
                       <Link to="#" className="btn btn-white">
                         Upgrade Now <i className="ti ti-arrow-right" />
                       </Link>
@@ -256,17 +231,13 @@ const Calendars = () => {
                 <div className="card border-0">
                   <div className="card-body">
                     <FullCalendar
-                      plugins={[
-                        dayGridPlugin,
-                        timeGridPlugin,
-                        interactionPlugin,
-                      ]}
+                      plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                       initialView="dayGridMonth"
                       events={events}
                       headerToolbar={{
-                        start: "today,prev,next",
-                        center: "title",
-                        end: "dayGridMonth,dayGridWeek,dayGridDay",
+                        start: 'today,prev,next',
+                        center: 'title',
+                        end: 'dayGridMonth,dayGridWeek,dayGridDay'
                       }}
                       ref={calendarRef}
                     />
@@ -284,12 +255,7 @@ const Calendars = () => {
             <div className="modal-content">
               <div className="modal-header">
                 <h4 className="modal-title">Add New Event</h4>
-                <button
-                  type="button"
-                  className="btn-close custom-btn-close p-0 p-0"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
+                <button type="button" className="btn-close custom-btn-close p-0 p-0" data-bs-dismiss="modal" aria-label="Close">
                   <i className="ti ti-x" />
                 </button>
               </div>
@@ -310,11 +276,7 @@ const Calendars = () => {
                           Event Date<span className="text-danger ms-1">*</span>
                         </label>
                         <div className="input-icon-end position-relative">
-                          <CommonDatePicker
-                            value={date2}
-                            onChange={setDate2}
-                            className="w-100"
-                          />
+                          <CommonDatePicker value={date2} onChange={setDate2} className="w-100" />
                           <span className="input-icon-addon">
                             <i className="ti ti-calendar text-gray-7" />
                           </span>
@@ -327,10 +289,7 @@ const Calendars = () => {
                           Start Time<span className="text-danger ms-1">*</span>
                         </label>
                         <div className="input-icon-end position-relative">
-                          <CommonTimePicker
-                            selectedTime={selectedTime1}
-                            onChange={setSelectedTime1}
-                          />
+                          <CommonTimePicker selectedTime={selectedTime1} onChange={setSelectedTime1} />
                           <span className="input-icon-addon">
                             <i className="ti ti-clock text-gray-7" />
                           </span>
@@ -343,10 +302,7 @@ const Calendars = () => {
                           End Time<span className="text-danger ms-1">*</span>
                         </label>
                         <div className="input-icon-end position-relative">
-                          <CommonTimePicker
-                            selectedTime={selectedTime2}
-                            onChange={setSelectedTime2}
-                          />
+                          <CommonTimePicker selectedTime={selectedTime2} onChange={setSelectedTime2} />
                           <span className="input-icon-addon">
                             <i className="ti ti-clock text-gray-7" />
                           </span>
@@ -366,28 +322,16 @@ const Calendars = () => {
                           Descriptions
                           <span className="text-danger ms-1">*</span>
                         </label>
-                        <textarea
-                          className="form-control"
-                          rows={3}
-                          defaultValue={""}
-                        />
+                        <textarea className="form-control" rows={3} defaultValue={''} />
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary me-2"
-                    data-bs-dismiss="modal"
-                  >
+                  <button type="button" className="btn btn-secondary me-2" data-bs-dismiss="modal">
                     Cancel
                   </button>
-                  <Link
-                    to="#"
-                    className="btn btn-primary"
-                    data-bs-dismiss="modal"
-                  >
+                  <Link to="#" className="btn btn-primary" data-bs-dismiss="modal">
                     Add Event
                   </Link>
                 </div>
@@ -404,12 +348,7 @@ const Calendars = () => {
                 <div className="modal-title text-gray-9">
                   <span id="eventTitle" />
                 </div>
-                <button
-                  type="button"
-                  className="btn-close p-0 custom-btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                >
+                <button type="button" className="btn-close p-0 custom-btn-close" data-bs-dismiss="modal" aria-label="Close">
                   <i className="ti ti-x" />
                 </button>
               </div>
@@ -427,8 +366,7 @@ const Calendars = () => {
                   Las Vegas, US
                 </p>
                 <p className="d-flex align-items-center fw-medium text-black mb-0">
-                  <i className="ti ti-calendar-check text-default me-2" />A
-                  recurring or repeating event is simply any event that you will
+                  <i className="ti ti-calendar-check text-default me-2" />A recurring or repeating event is simply any event that you will
                   occur more than once on your calendar.
                 </p>
               </div>

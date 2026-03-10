@@ -7,7 +7,12 @@ import { utilMessage } from '@src/shared/globals/helpers/utils';
 import GetSuccessMessage from '@src/shared/globals/helpers/success-messages';
 // import prisma, { PrismaTransactionalClient } from '@src/shared/prisma/prisma-client'; // Prisma client to interact with the database
 import prisma, { PrismaTransactionalClient } from '@src/shared/prisma/prisma-client'; // Prisma client to interact with the database
-import { Transaction, TransactionProduct, TransactionProductItems } from '@src/features/transactions/interfaces/transaction.interface';
+import {
+  PayableStatus,
+  Transaction,
+  TransactionProduct,
+  TransactionProductItems
+} from '@src/features/transactions/interfaces/transaction.interface';
 // import { Decimal } from '@prisma/client/runtime/library';
 
 import crypto from 'crypto';
@@ -1365,7 +1370,7 @@ export class TransactionsController {
     await tx.productSummary.update({
       where: { supplier_products_id: item.supplier_products_id },
       data: {
-        total_received: item.total_stock_quantity - Number(item.stock_quantity),
+        // total_received: item.total_stock_quantity - Number(item.stock_quantity),
         total_sold: { increment: item.quantity }
       }
     });
@@ -1383,5 +1388,95 @@ export class TransactionsController {
       updatedBatches,
       updatedInventories
     };
+  }
+
+  // fetch customer receivables
+
+  public async getCustomerReceivables(req: Request, res: Response): Promise<void> {
+    // const customerId = req.params.customerId;
+
+    const receivables = await prisma.customerReceivable.findMany({
+      where: { payment_status: 'unsettled' },
+      select: {
+        customer_receivable_id: true,
+        customer_id: true,
+        total_Amount: true,
+        total_paid: true,
+        balance_due: true,
+        transaction_id: true
+        // created_at: true
+      }
+      // orderBy: { created_at: 'desc' }
+    });
+
+    const message = utilMessage.fetchedMessage('customer receivables');
+    res.json({ message, receivables });
+  }
+
+  public async handleCustomerReceivablePayment(req: Request, res: Response): Promise<void> {
+    const { transactionId, paymentAmount } = req.body;
+
+    const receivable = await prisma.customerReceivable.findUnique({
+      where: { transaction_id: transactionId }
+    });
+
+    if (!receivable) {
+      throw new BadRequestError('Customer receivable not found');
+    }
+
+    if (receivable.payment_status === 'settled') {
+      throw new BadRequestError('This receivable is already settled');
+    }
+
+    if (paymentAmount > Number(receivable.balance_due)) {
+      throw new BadRequestError('Payment amount exceeds balance due');
+    }
+
+    const newTotalPaid = money(Number(receivable.total_paid) + paymentAmount);
+    const newBalanceDue = money(Number(receivable.balance_due) - paymentAmount);
+
+    let newPaymentStatus: PayableStatus = 'unsettled';
+    if (newBalanceDue <= 0) {
+      newPaymentStatus = 'settled';
+    }
+
+    const results = await prisma.$transaction(async (tx) => {
+      // Update the customer receivable
+      const updatedReceivable = await tx.customerReceivable.update({
+        where: { transaction_id: transactionId },
+        data: {
+          total_paid: newTotalPaid,
+          balance_due: newBalanceDue,
+          payment_status: newPaymentStatus
+        }
+      });
+      return updatedReceivable;
+    });
+
+    // const message = utilMessage.updated('customer receivable');
+    // res.json({ message, updatedReceivable });
+
+    res.json({ message: 'receivable payment processed successfully', results });
+  }
+
+  public async getTransactionsReport(req: Request, res: Response): Promise<void> {
+    const { startDate, endDate } = req.query;
+
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        transactionDateCreated: {
+          gte: new Date(startDate as string),
+          lte: new Date(endDate as string)
+        }
+      },
+      include: {
+        Sales: true,
+        customer: true
+      },
+      orderBy: { transactionDateCreated: 'desc' }
+    });
+
+    const message = utilMessage.fetchedMessage('transactions report');
+    res.json({ message, transactions });
   }
 }

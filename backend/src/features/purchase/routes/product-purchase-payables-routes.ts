@@ -18,10 +18,16 @@ class PurchasePayablesRoutes {
       authMiddleware.checkAuthentication,
       PurchasePayablesController.prototype.getPartialPurchasePayablesById
     );
+    // this.router.put(
+    //   '/purchase-payables/purchase/:id',
+    //   authMiddleware.checkAuthentication,
+    //   PurchasePayablesController.prototype.createPartialPurchasePayableById
+    // );
+
     this.router.put(
-      '/purchase-payables/purchase/:id',
+      '/purchase-payables/payable/:id',
       authMiddleware.checkAuthentication,
-      PurchasePayablesController.prototype.createPartialPurchasePayableById
+      PurchasePayablesController.prototype.BatchPurchasePayablesPayment
     );
 
     return this.router;

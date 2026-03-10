@@ -1,8 +1,8 @@
-import CommonFooter from "../../components/footer/commonFooter";
+import CommonFooter from '../../components/footer/commonFooter';
 
-import { all_routes } from "../../routes/all_routes";
-import { Link } from "react-router-dom";
-import { logo, pdf, qrCodeImage, sign } from "../../utils/imagepath";
+import { all_routes } from '../../routes/all_routes';
+import { Link } from 'react-router-dom';
+import { logo, pdf, qrCodeImage, sign } from '../../utils/imagepath';
 
 const Invoicedetails = () => {
   const route = all_routes;
@@ -19,40 +19,24 @@ const Invoicedetails = () => {
             </div>
             <ul className="table-top-head">
               <li>
-                <Link
-                  to="#"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="Pdf"
-                >
+                <Link to="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Pdf">
                   <img src={pdf} alt="img" />
                 </Link>
               </li>
               <li>
-                <Link
-                  to="#"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="Print"
-                >
+                <Link to="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Print">
                   <i className="feather icon-printer feather-rotate-ccw" />
                 </Link>
               </li>
               <li>
-                <Link
-                  to="#"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="Collapse"
-                  id="collapse-header"
-                >
-                  <i  className="feather icon-chevron-up feather-chevron-up" />
+                <Link to="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Collapse" id="collapse-header">
+                  <i className="feather icon-chevron-up feather-chevron-up" />
                 </Link>
               </li>
             </ul>
             <div className="page-btn">
               <Link to={route.invoice} className="btn btn-primary">
-                <i  className="feather icon-arrow-left me-2" />
+                <i className="feather icon-arrow-left me-2" />
                 Back to Invoices
               </Link>
             </div>
@@ -63,11 +47,7 @@ const Invoicedetails = () => {
               <div className="row justify-content-between align-items-center border-bottom mb-3">
                 <div className="col-md-6">
                   <div className="mb-2">
-                    <img
-                      src={logo}
-                      className="img-fluid"
-                      alt="logo"
-                    />
+                    <img src={logo} className="img-fluid" alt="logo" />
                   </div>
                   <p>3099 Kennedy Court Framingham, MA 01702</p>
                 </div>
@@ -77,12 +57,10 @@ const Invoicedetails = () => {
                       Invoice No <span className="text-primary">#INV0001</span>
                     </h5>
                     <p className="mb-1 fw-medium">
-                      Created Date :{" "}
-                      <span className="text-dark">Sep 24, 2024</span>{" "}
+                      Created Date : <span className="text-dark">Sep 24, 2024</span>{' '}
                     </p>
                     <p className="fw-medium">
-                      Due Date :{" "}
-                      <span className="text-dark">Sep 30, 2024</span>{" "}
+                      Due Date : <span className="text-dark">Sep 30, 2024</span>{' '}
                     </p>
                   </div>
                 </div>
@@ -94,8 +72,7 @@ const Invoicedetails = () => {
                     <h4 className="mb-1">Thomas Lawler</h4>
                     <p className="mb-1">2077 Chicago Avenue Orosi, CA 93647</p>
                     <p className="mb-1">
-                      Email :{" "}
-                      <span className="text-dark">Tarala2445@example.com</span>
+                      Email : <span className="text-dark">Tarala2445@example.com</span>
                     </p>
                     <p>
                       Phone : <span className="text-dark">+1 987 654 3210</span>
@@ -108,8 +85,7 @@ const Invoicedetails = () => {
                     <h4 className="mb-1">Carl Evans</h4>
                     <p className="mb-1">3103 Trainer Avenue Peoria, IL 61602</p>
                     <p className="mb-1">
-                      Email :{" "}
-                      <span className="text-dark">Sara_inc34@example.com</span>
+                      Email : <span className="text-dark">Sara_inc34@example.com</span>
                     </p>
                     <p>
                       Phone : <span className="text-dark">+1 987 471 6589</span>
@@ -124,21 +100,14 @@ const Invoicedetails = () => {
                       Paid
                     </span>
                     <div className="mt-3">
-                      <img
-                        src={qrCodeImage}
-                        className="img-fluid"
-                        alt="QR"
-                      />
+                      <img src={qrCodeImage} className="img-fluid" alt="QR" />
                     </div>
                   </div>
                 </div>
               </div>
               <div>
                 <p className="fw-medium">
-                  Invoice For :{" "}
-                  <span className="text-dark fw-medium">
-                    Design &amp; development of Website
-                  </span>
+                  Invoice For : <span className="text-dark fw-medium">Design &amp; development of Website</span>
                 </p>
                 <div className="table-responsive mb-3">
                   <table className="table">
@@ -166,39 +135,27 @@ const Invoicedetails = () => {
                           <h6>Design System</h6>
                         </td>
                         <td className="text-gray-9 fw-medium text-end">1</td>
-                        <td className="text-gray-9 fw-medium text-end">
-                          $5000
-                        </td>
+                        <td className="text-gray-9 fw-medium text-end">$5000</td>
                         <td className="text-gray-9 fw-medium text-end">$100</td>
-                        <td className="text-gray-9 fw-medium text-end">
-                          $5000
-                        </td>
+                        <td className="text-gray-9 fw-medium text-end">$5000</td>
                       </tr>
                       <tr>
                         <td>
                           <h6>Brand Guidellines</h6>
                         </td>
                         <td className="text-gray-9 fw-medium text-end">1</td>
-                        <td className="text-gray-9 fw-medium text-end">
-                          $5000
-                        </td>
+                        <td className="text-gray-9 fw-medium text-end">$5000</td>
                         <td className="text-gray-9 fw-medium text-end">$100</td>
-                        <td className="text-gray-9 fw-medium text-end">
-                          $5000
-                        </td>
+                        <td className="text-gray-9 fw-medium text-end">$5000</td>
                       </tr>
                       <tr>
                         <td>
                           <h6>Social Media Template</h6>
                         </td>
                         <td className="text-gray-9 fw-medium text-end">1</td>
-                        <td className="text-gray-9 fw-medium text-end">
-                          $5000
-                        </td>
+                        <td className="text-gray-9 fw-medium text-end">$5000</td>
                         <td className="text-gray-9 fw-medium text-end">$100</td>
-                        <td className="text-gray-9 fw-medium text-end">
-                          $5000
-                        </td>
+                        <td className="text-gray-9 fw-medium text-end">$5000</td>
                       </tr>
                     </tbody>
                   </table>
@@ -222,9 +179,7 @@ const Invoicedetails = () => {
                     <h5>Total Amount</h5>
                     <h5>$5775</h5>
                   </div>
-                  <p className="fs-12">
-                    Amount in Words : Dollar Five thousand Seven Seventy Five
-                  </p>
+                  <p className="fs-12">Amount in Words : Dollar Five thousand Seven Seventy Five</p>
                 </div>
               </div>
               <div className="row align-items-center border-bottom mb-3">
@@ -232,11 +187,7 @@ const Invoicedetails = () => {
                   <div>
                     <div className="mb-3">
                       <h6 className="mb-1">Terms and Conditions</h6>
-                      <p>
-                        Please pay within 15 days from the date of invoice,
-                        overdue interest @ 14% will be charged on delayed
-                        payments.
-                      </p>
+                      <p>Please pay within 15 days from the date of invoice, overdue interest @ 14% will be charged on delayed payments.</p>
                     </div>
                     <div className="mb-3">
                       <h6 className="mb-1">Notes</h6>
@@ -246,11 +197,7 @@ const Invoicedetails = () => {
                 </div>
                 <div className="col-md-5">
                   <div className="text-end">
-                    <img
-                      src={sign}
-                      className="img-fluid"
-                      alt="sign"
-                    />
+                    <img src={sign} className="img-fluid" alt="sign" />
                   </div>
                   <div className="text-end mb-3">
                     <h6 className="fs-14 fw-medium pe-3">Ted M. Davis</h6>
@@ -260,23 +207,15 @@ const Invoicedetails = () => {
               </div>
               <div className="text-center">
                 <div className="mb-3">
-                  <img
-                    src={logo}
-                    className="img-fluid"
-                    alt="logo"
-                  />
+                  <img src={logo} className="img-fluid" alt="logo" />
                 </div>
-                <p className="text-dark mb-1">
-                  Payment Made Via bank transfer / Cheque in the name of Thomas
-                  Lawler
-                </p>
+                <p className="text-dark mb-1">Payment Made Via bank transfer / Cheque in the name of Thomas Lawler</p>
                 <div className="d-flex justify-content-center align-items-center">
                   <p className="fs-12 mb-0 me-3">
                     Bank Name : <span className="text-dark">HDFC Bank</span>
                   </p>
                   <p className="fs-12 mb-0 me-3">
-                    Account Number :{" "}
-                    <span className="text-dark">45366287987</span>
+                    Account Number : <span className="text-dark">45366287987</span>
                   </p>
                   <p className="fs-12">
                     IFSC : <span className="text-dark">HDFC0018159</span>
@@ -287,17 +226,11 @@ const Invoicedetails = () => {
           </div>
           {/* /Invoices */}
           <div className="d-flex justify-content-center align-items-center mb-4">
-            <Link
-              to="#"
-              className="btn btn-primary d-flex justify-content-center align-items-center me-2"
-            >
+            <Link to="#" className="btn btn-primary d-flex justify-content-center align-items-center me-2">
               <i className="ti ti-printer me-2" />
               Print Invoice
             </Link>
-            <Link
-              to="#"
-              className="btn btn-secondary d-flex justify-content-center align-items-center border"
-            >
+            <Link to="#" className="btn btn-secondary d-flex justify-content-center align-items-center border">
               <i className="ti ti-copy me-2" />
               Clone Invoice
             </Link>

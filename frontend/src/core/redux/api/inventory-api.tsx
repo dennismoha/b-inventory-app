@@ -53,7 +53,9 @@ import type {
   pos_session_header,
   TransactionProductsBetweenDates,
   CustomerSalesResponse,
-  purchaseList
+  purchaseList,
+  deleteMessage,
+  PurchaseEditPayload
   // PurchasePayableResponse,
   // purchasePayable
 } from '@/feature-module/interface/features-interface';
@@ -63,7 +65,7 @@ import { createApi, fetchBaseQuery, type BaseQueryFn, type FetchArgs, type Fetch
 import type { RootState } from '@core/redux/store';
 import { setClearCredentials } from '../authslice';
 import type { ProductItems } from '../cart';
-import type { PurchasePayload } from '@/feature-module/purchases/components/modals/create-purchase-list';
+import type { DeletePurchasePayload, PurchasePayload } from '@/feature-module/purchases/components/modals/create-purchase-list';
 
 interface ApiError {
   statusCode: number;
@@ -289,26 +291,36 @@ const PurchaseApi = InventoryApi.injectEndpoints({
         body: newPurchase
       }),
       invalidatesTags: ['Purchases', 'InventoryItems']
-    })
+    }),
 
     // // Update an existing purchase
-    // updatePurchase: build.mutation<ApiResponse<any>, { purchaseId: string; patch: Partial<any> }>({
-    //   query: ({ purchaseId, patch }) => ({
-    //     url: `/purchases/${purchaseId}`,
-    //     method: 'PUT',
-    //     body: patch
+    updatePurchase: build.mutation<ApiResponse<[]>, { purchaseId: string; patch: PurchaseEditPayload }>({
+      query: ({ _purchaseId, ...patch }) => ({
+        // url: `/purchases/${purchaseId}`,
+        url: `/purchases/`,
+        method: 'PUT',
+        body: patch
+      }),
+      invalidatesTags: ['Purchases']
+    }),
+
+    // Delete a purchase
+    // deletePurchase: build.mutation<void, string>({
+    //   query: (purchaseId) => ({
+    //     url: `/purchase/${purchaseId}`,
+    //     method: 'DELETE'
     //   }),
     //   invalidatesTags: ['Purchases']
     // }),
 
-    // // Delete a purchase
-    // deletePurchase: build.mutation<void, string>({
-    //   query: (purchaseId) => ({
-    //     url: `/purchases/${purchaseId}`,
-    //     method: 'DELETE'
-    //   }),
-    //   invalidatesTags: ['Purchases']
-    // })
+    deletePurchase: build.mutation<deleteMessage, Partial<DeletePurchasePayload>>({
+      query: (newPurchase) => ({
+        url: '/purchase',
+        method: 'DELETE',
+        body: newPurchase
+      }),
+      invalidatesTags: ['Purchases', 'InventoryItems']
+    })
   }),
   overrideExisting: false
 });
@@ -1639,9 +1651,9 @@ export const {
 export const {
   useGetPurchasesQuery,
   // useGetPurchaseByIdQuery,
-  useCreatePurchaseMutation
-  // useUpdatePurchaseMutation,
-  // useDeletePurchaseMutation
+  useCreatePurchaseMutation,
+  useUpdatePurchaseMutation,
+  useDeletePurchaseMutation
 } = PurchaseApi;
 
 // // export const {

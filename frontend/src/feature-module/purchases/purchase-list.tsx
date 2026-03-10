@@ -2,7 +2,7 @@
 // import PrimeDataTable from './components/data-table/index';
 // import SearchFromApi from '../../components/data-table/search';
 // import CommonDatePicker from '../../components/date-picker/common-date-picker';
-import DeleteModal from '../../components/delete-modal';
+// import DeleteModal from '../../components/delete-modal';
 // import CommonSelect from '../../components/select/common-select';
 // import TableTopHead from '../../components/table-top-head';
 import CommonFooter from '../../components/footer/commonFooter';
@@ -14,7 +14,9 @@ import {
   useGetPurchasesQuery,
   useGetSupplierProductsQuery,
   useGetAccountsQuery,
-  useGetUnitsQuery
+  useGetUnitsQuery,
+  useDeletePurchaseMutation,
+  useUpdatePurchaseMutation
 } from '@core/redux/api/inventory-api';
 import type {
   // Account,
@@ -31,6 +33,7 @@ import {
   // MRT_EditActionButtons,
   MaterialReactTable,
   type MRT_ColumnDef,
+  type MRT_TableOptions,
   // type MRT_Row,
   // type MRT_TableOptions,
   useMaterialReactTable
@@ -54,12 +57,17 @@ const PurchasesList = () => {
   // const [totalRecords, _setTotalRecords] = useState<any>(5);
   // const [rows, setRows] = useState<number>(10);
   // const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [purchase_id, setPurchaseId] = useState<string | null>(null);
+  const [batch, setBatch] = useState<string | null>(null);
   // const [_searchQuery, setSearchQuery] = useState<string | undefined>(undefined);
   // const [selectedSupplier, setSelectedSupplier] = useState('');
   // const [selectedStatus, setSelectedStatus] = useState('');
   // const [date, setDate] = useState<Date | null>(new Date());
   const { data: supplierproductsdata } = useGetSupplierProductsQuery();
   const { data, isLoading, isFetching, isError } = useGetPurchasesQuery();
+  const [deletePurchase, { isError: isDeletePurchaseError, error: deletePurchaseError }] = useDeletePurchaseMutation();
+  const [updatePurchase, { isLoading: isUpdatingPurchase }] = useUpdatePurchaseMutation();
+
   const { data: unitsData } = useGetUnitsQuery();
   const units = unitsData?.data ?? [];
   const { data: AccountsData } = useGetAccountsQuery();
@@ -68,14 +76,6 @@ const PurchasesList = () => {
   // keep track of rows that have been edited
   const [editedPurchases, setEditedPurchases] = useState<Record<string, purchaseList>>({});
   const [validationErrors, setValidationErrors] = useState<Record<string, string | undefined>>({});
-  // const {
-  //   data: SupplierPricingData,
-  //   isLoading: isPricingLoading,
-  //   isError: isPricingError,
-  //   error: pricingError
-  // } = useGetSupplierPricingQuery();
-
-  // console.log('supplier pricing is ', SupplierPricingData);
 
   const supplierOptions = useMemo(
     () => [
@@ -87,229 +87,6 @@ const PurchasesList = () => {
     ],
     [supplierProductsData]
   );
-  // const supplierOptions2 = [
-  //   { label: 'Select', value: '' },
-  //   { label: 'Apex Computers', value: 'apex-computers' },
-  //   { label: 'Dazzle Shoes', value: 'dazzle-shoes' },
-  //   { label: 'Best Accessories', value: 'best-accessories' }
-  // ];
-
-  // const statusOptions = [
-  //   { label: 'Select', value: '' },
-  //   { label: 'Received', value: 'received' },
-  //   { label: 'Pending', value: 'pending' }
-  // ];
-
-  // ---------- Columns ----------
-  // const columns = useMemo<MRT_ColumnDef<purchaseList>[]>(
-  //   () => [
-  //     {
-  //       accessorKey: 'purchase_id',
-  //       header: 'Purchase ID',
-  //       enableEditing: false,
-  //       enableHiding: false,
-  //       enableSorting: false, // not sortable
-  //       enableColumnFilter: false, // not filterable
-  //       Cell: () => null // hides it visually (no cell content)
-  //     },
-  //     {
-  //       accessorKey: 'account_id',
-  //       header: 'Account',
-  //       enableEditing: false,
-  //       Cell: ({ row }) => {
-  //         const account = Accountsdata.find((acc) => acc.account_id === row.original.account_id);
-  //         const isCredit = row.original.account_id == null;
-  //         return (
-  //           <span
-  //             className={`p-1 pe-2 rounded-1 fs-10 ${
-  //               isCredit ? 'text-danger bg-danger-transparent' : 'text-success bg-success-transparent'
-  //             }`}
-  //           >
-  //             <i className="ti ti-point-filled me-1 fs-11" />
-  //             {isCredit ? 'credit' : account ? account.name : row.original.account_id}
-  //           </span>
-  //         );
-  //       }
-  //     },
-
-  //     // {
-  //     //   accessorKey: 'arrival_date',
-  //     //   header: 'Arrival Date',
-  //     //   Cell: ({ cell }) => cell.getValue<string>() && new Date(cell.getValue<string>()).toLocaleDateString(),
-  //     //   muiEditTextFieldProps: {
-  //     //     type: 'date' // <-- this makes it a calendar when creating/editing
-  //     //   }
-  //     // },
-  //     {
-  //       accessorKey: 'arrival_date',
-  //       header: 'Arrival Date',
-  //       Cell: ({ cell }) => {
-  //         const value = cell.getValue<string>();
-  //         return value ? new Date(value).toLocaleDateString() : '—';
-  //       },
-
-  //       muiEditTextFieldProps: ({ cell, row }) => {
-  //         const currentValue = cell.getValue<string | null>();
-  //         const today = new Date().toISOString().split('T')[0];
-
-  //         return {
-  //           type: 'date',
-  //           size: 'small',
-  //           InputLabelProps: { shrink: true },
-  //           // controlled input — always a valid date
-  //           value: currentValue ? currentValue.split('T')[0] : today,
-  //           onChange: (e) => {
-  //             row._valuesCache[cell.column.id] = e.target.value;
-  //           }
-  //         };
-  //       }
-  //     },
-  //     { accessorKey: 'batch', header: 'Batch' },
-  //     { accessorKey: 'damaged_units', header: 'Damaged Units' },
-  //     { accessorKey: 'discounts', header: 'Discounts' },
-  //     {
-  //       accessorKey: 'payment_date',
-  //       header: 'Payment Date',
-
-  //       Cell: ({ cell }) => {
-  //         const value = cell.getValue<string>();
-  //         return value ? new Date(value).toLocaleDateString() : '—';
-  //       },
-
-  //       muiEditTextFieldProps: ({ cell, row }) => {
-  //         // Ensure ISO yyyy-MM-dd format
-  //         const currentValue = cell.getValue<string | null>();
-  //         const today = new Date().toISOString().split('T')[0];
-
-  //         return {
-  //           type: 'date',
-  //           size: 'small',
-  //           InputLabelProps: { shrink: true },
-  //           value: currentValue ? currentValue.split('T')[0] : today,
-  //           onChange: (e) => {
-  //             // Manually update MRT’s state when editing
-  //             row._valuesCache[cell.column.id] = e.target.value;
-  //           }
-  //         };
-  //       }
-  //     },
-  //     // {
-  //     //   accessorKey: 'payment_date',
-  //     //   header: 'Payment Date',
-  //     //   Cell: ({ cell }) => cell.getValue<string>() && new Date(cell.getValue<string>()).toLocaleDateString(),
-  //     //   muiEditTextFieldProps: {
-  //     //     type: 'date' // <-- this makes it a calendar when creating/editing
-  //     //   }
-  //     // },
-  //     { accessorKey: 'payment_method', header: 'Payment Method', enableEditing: false },
-  //     { accessorKey: 'payment_reference', header: 'Payment Reference' },
-  //     {
-  //       accessorKey: 'payment_status',
-  //       header: 'Payment Status',
-  //       Cell: ({ row }) => (
-  //         <span
-  //           className={`p-1 pe-2 rounded-1 fs-10 ${
-  //             row.original.payment_status === 'paid'
-  //               ? 'text-success bg-success-transparent'
-  //               : row.original.payment_status === 'unpaid'
-  //                 ? 'text-danger bg-danger-transparent'
-  //                 : 'text-warning bg-warning-transparent'
-  //           }`}
-  //         >
-  //           <i className="ti ti-point-filled me-1 fs-11" />
-  //           {row.original.payment_status}
-  //         </span>
-  //       )
-  //     },
-  //     {
-  //       accessorKey: 'payment_type',
-  //       header: 'Payment Type',
-  //       enableEditing: false,
-  //       Cell: ({ row }) => (
-  //         <span
-  //           className={`p-1 pe-2 rounded-1 fs-10 ${
-  //             row.original.payment_type === 'full'
-  //               ? 'text-success bg-success-transparent'
-  //               : row.original.payment_type === 'credit'
-  //                 ? 'text-danger bg-danger-transparent'
-  //                 : 'text-warning bg-warning-transparent'
-  //           }`}
-  //         >
-  //           <i className="ti ti-point-filled me-1 fs-11" />
-  //           {row.original.payment_type}
-  //         </span>
-  //       )
-  //     },
-  //     { accessorKey: 'purchase_cost_per_unit', header: 'Purchase Cost Per Unit' },
-  //     { accessorKey: 'quantity', header: 'Quantity' },
-  //     { accessorKey: 'reason_for_damage', header: 'Reason For Damage' },
-  //     {
-  //       accessorKey: 'supplier_products_id',
-  //       header: 'Supplier Products ID',
-  //       muiEditTextFieldProps: {
-  //         select: true,
-  //         size: 'small',
-  //         children: supplierOptions.map((option) => (
-  //           <MenuItem key={option.value} value={option.value}>
-  //             {option.label}
-  //           </MenuItem>
-  //         ))
-  //       },
-
-  //       Cell: ({ row }) => {
-  //         const supplierProduct = supplierProductsData.find((sp) => sp.supplier_products_id === row.original.supplier_products_id);
-  //         return (
-  //           <span className="p-1 pe-2 rounded-1 fs-10">
-  //             <i className="ti ti-point-filled me-1 fs-11" />
-  //             {supplierProduct ? supplierProduct.supplier.name : row.original.supplier_products_id}
-  //           </span>
-  //         );
-  //       }
-  //     },
-  //     { accessorKey: 'tax', header: 'Tax' },
-  //     { accessorKey: 'total_purchase_cost', header: 'Total Purchase Cost' },
-  //     {
-  //       accessorKey: 'unit_id',
-  //       header: 'Unit',
-  //       editVariant: 'select',
-  //       muiEditTextFieldProps: {
-  //         select: true,
-  //         size: 'small',
-  //         children: units.map((u) => (
-  //           <MenuItem key={u.unit_id} value={u.unit_id}>
-  //             {u.short_name}
-  //           </MenuItem>
-  //         ))
-  //       },
-  //       Cell: ({ cell }) => {
-  //         const value = cell.getValue<string | undefined>();
-  //         const unit = units.find((u) => u.unit_id === value);
-  //         return (
-  //           <span className="p-1 pe-2 rounded-1 fs-10">
-  //             <i className="ti ti-point-filled me-1 fs-11" />
-  //             {unit ? unit.short_name : '—'}
-  //           </span>
-  //         );
-  //       }
-  //     }
-
-  //     // {
-  //     //   accessorKey: 'unit_id',
-  //     //   header: 'Unit',
-  //     //   Cell: ({ row }) => {
-  //     //     const unit = units.find((u) => u.unit_id === row.original.unit_id);
-  //     //     return (
-  //     //       <span className="p-1 pe-2 rounded-1 fs-10">
-  //     //         <i className="ti ti-point-filled me-1 fs-11" />
-  //     //         {unit ? unit.short_name : row.original.unit_id}
-  //     //       </span>
-  //     //     );
-  //     //   },
-
-  //     // }
-  //   ],
-  //   [Accountsdata, supplierProductsData, units]
-  // );
 
   const columns = useMemo<MRT_ColumnDef<purchaseList>[]>(
     () => [
@@ -367,7 +144,81 @@ const PurchasesList = () => {
           };
         }
       },
-      { accessorKey: 'batch', header: 'Batch' },
+      // { accessorKey: 'batch', header: 'Batch' },
+      // {
+      //   accessorKey: 'batch',
+      //   header: 'Batch',
+      //   muiEditTextFieldProps: ({ cell, row }) => ({
+      //     type: 'text',
+      //     required: true,
+      //     error: !!validationErrors?.[cell.id],
+      //     helperText: validationErrors?.[cell.id],
+      //     onBlur: (event) => {
+      //       const value = event.currentTarget.value.trim();
+
+      //       // simple validation (you can make this more complex)
+      //       const validationError = value === '' ? 'Batch is required' : undefined;
+
+      //       // update validation errors
+      //       setValidationErrors({
+      //         ...validationErrors,
+      //         [cell.id]: validationError
+      //       });
+
+      //       // store edited purchase row
+      //       setEditedPurchases({
+      //         ...editedPurchases,
+      //         [row.id]: {
+      //           ...row.original,
+      //           batch: value
+      //         }
+      //       });
+      //       if (!validationError) {
+      //          handleSavePurchases();
+      //       }
+      //     }
+      //   })
+      // },
+
+      {
+        accessorKey: 'batch',
+        header: 'Batch',
+        muiEditTextFieldProps: ({ cell, row }) => ({
+          type: 'text',
+          required: true,
+          error: !!validationErrors?.[cell.id],
+          helperText: validationErrors?.[cell.id],
+          onBlur: (event) => {
+            const value = event.target.value.trim();
+
+            // Step 1: Validate
+            const validationError = value === '' ? 'Batch is required' : undefined;
+
+            // Step 2: Update validationErrors
+            setValidationErrors((prev) => ({
+              ...prev,
+              [cell.id]: validationError
+            }));
+
+            // Step 3: Update editedPurchases state for this row
+            setEditedPurchases((prev) => ({
+              ...prev,
+              [row.id]: {
+                ...row.original,
+                batch: value
+              }
+            }));
+
+            // Step 4: Only save if there is no validation error
+            if (!validationError) {
+              // delay to ensure state updates propagate before save
+              setTimeout(() => {
+                handleSavePurchases();
+              }, 100);
+            }
+          }
+        })
+      },
       { accessorKey: 'damaged_units', header: 'Damaged Units' },
       { accessorKey: 'discounts', header: 'Discounts' },
       {
@@ -553,6 +404,10 @@ const PurchasesList = () => {
   // ---------- UPDATE (edit-only validation applied) ----------
   // const handleSavePurchase: MRT_TableOptions<purchaseList>['onEditingRowSave'] = async ({ values, table }) => {
   //   console.log('values are ', values);
+  //   // const payload = {
+  //   //   field: values.
+  //   // }
+
   //   // const newValidationErrors = validatePurchaseForEdit(values);
   //   // if (Object.values(newValidationErrors).some(Boolean)) {
   //   //   setValidationErrors(newValidationErrors);
@@ -572,21 +427,41 @@ const PurchasesList = () => {
   // };
 
   // ---------- DELETE ----------
-  // const handleDelete = async () => {
-  //   if (!deleteId) return;
-  //   try {
-  //     await deletePurchase(deleteId).unwrap();
-  //   } catch (err) {
-  //     console.error('delete error', err);
-  //   } finally {
-  //     setDeleteId(null);
-  //   }
-  // };
+  const sethandleDeleteValuesHandler = async (values: { purchase_id: string; batch: string }) => {
+    const { purchase_id, batch } = values;
+    if (!purchase_id || !batch) {
+      alert('purchase id or batch missing');
+      return;
+    }
+    setBatch(batch);
+    setPurchaseId(purchase_id);
+
+    // if (!deleteId) return;
+    // try {
+    //   await deletePurchase(deleteId).unwrap();
+    // } catch (err) {
+    //   console.error('delete error', err);
+    // } finally {
+    //   setDeleteId(null);
+    // }
+  };
+
+  const handleDelete = async () => {
+    if (!batch || !purchase_id) return;
+    const values = { purchase_id, batch };
+    try {
+      await deletePurchase(values).unwrap();
+    } catch (err) {
+      console.error('delete error', err);
+    } finally {
+      // setDeleteId(null);
+    }
+  };
 
   const table = useMaterialReactTable({
     columns,
     data: data?.data ?? [], // your purchase data
-    enableEditing: false,
+    enableEditing: true,
     // onEditingRowSave: handleSavePurchase,
     // onEditingCellChange: handleSavePurchase,
     editDisplayMode: 'cell',
@@ -605,7 +480,8 @@ const PurchasesList = () => {
           onClick={handleSavePurchases}
           disabled={Object.keys(editedPurchases).length === 0 || Object.values(validationErrors).some((error) => !!error)}
         >
-          Save
+          {isUpdatingPurchase ? <p>updating...</p> : 'save'}
+          {Object.values(validationErrors).some((error) => !!error)}
         </Button>
         {Object.values(validationErrors).some((error) => !!error) && <Typography color="error">Fix errors before submitting</Typography>}
       </Box>
@@ -619,8 +495,8 @@ const PurchasesList = () => {
 
         <Link
           data-bs-toggle="modal"
-          data-bs-target="#delete-modal"
-          // onClick={() => setDeleteId(row.original.supplier_products_id)}
+          data-bs-target="#delete-purchase-modal"
+          onClick={() => sethandleDeleteValuesHandler({ purchase_id: row.original.purchase_id, batch: row.original.batch })}
           className="me-2 p-2 d-flex align-items-center border rounded error"
           to="#"
         >
@@ -639,16 +515,17 @@ const PurchasesList = () => {
         </Link>
       </Box>
     ),
-    // muiToolbarAlertBannerProps:
-    //   isError || isUpdatingError || isCreatingError
-    //     ? {
-    //         color: 'error',
-    //         children: updateError?.message || createErrorr?.message
-    //       }
-    //     : undefined
+    muiToolbarAlertBannerProps:
+      isError || isDeletePurchaseError
+        ? {
+            color: 'error',
+            children: deletePurchaseError?.message
+          }
+        : undefined,
     state: {
       isLoading,
-      showAlertBanner: isError,
+      showAlertBanner: isError || isDeletePurchaseError,
+      isSaving: isUpdatingPurchase,
       showProgressBars: isFetching,
       columnVisibility: {
         purchase_id: false
@@ -927,7 +804,43 @@ const PurchasesList = () => {
       <CreatePurchaseListModal supplierOptions={supplierOptions} Accounts={Accountsdata} unitsData={units} />
 
       {/* /Import Purchase */}
-      <DeleteModal />
+      {/* <DeleteModal /> */}
+      <div className="modal fade" id="delete-purchase-modal">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="page-wrapper-new p-0">
+              <div className="content p-5 px-3 text-center">
+                <span className="rounded-circle d-inline-flex p-2 bg-danger-transparent mb-2">
+                  <i className="ti ti-trash fs-24 text-danger" />
+                </span>
+                <h4 className="mb-0 delete-account-font">Are you sure you want to delete this?</h4>
+                <div className="modal-footer-btn mt-3 d-flex justify-content-center">
+                  <button type="button" className="btn me-2 btn-secondary fs-13 fw-medium p-2 px-3 shadow-none" data-bs-dismiss="modal">
+                    Cancel
+                  </button>
+                  {/* <Link to="#" className="btn btn-primary fs-13 fw-medium p-2 px-3" data-bs-dismiss="modal">
+                    Yes Delete
+                  </Link> */}
+                  <button
+                    onClick={async () => {
+                      if (purchase_id && batch) {
+                        console.log('delete id is ', purchase_id);
+                        await handleDelete();
+                        // setDeleteId(null);
+                      }
+                    }}
+                    type="button"
+                    className="btn btn-danger px-3"
+                    data-bs-dismiss="modal"
+                  >
+                    Yes Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* <EditPurchaseListModal supplierOptions={supplierOptions} Accounts={Accountsdata} unitsData={units} /> */}
       <EditPaymentTypeModal supplierOptions={supplierOptions} Accounts={Accountsdata} unitsData={units} />
     </>

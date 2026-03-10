@@ -77,3 +77,5 @@ export interface TransactionProductItems {
   paymentMethod: 'CASH' | 'BANK' | 'CREDIT';
   customerId?: string;
 }
+
+export type PayableStatus = 'settled' | 'unsettled';

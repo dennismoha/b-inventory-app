@@ -26,11 +26,13 @@ class PurchaseRoutes {
     //   PurchaseController.prototype.getById
     // );
 
+    // update purchase payment type
+    this.router.patch('/purchase/payment-type/', authMiddleware.checkAuthentication, PurchaseController.prototype.updatePaymentType);
     // // Update purchase by ID
     // this.router.put(
-    //   '/purchase/:id',
+    //   '/purchase/',
     //   authMiddleware.checkAuthentication,
-    //   PurchaseController.prototype.update
+    //   PurchaseController.prototype.editPurchase
     // );
 
     // // Delete purchase by ID

@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import PosModals from "../../core/modals/pos-modal/posModalstjsx";
-import CounterTwo from "../../components/counter/counterTwo";
+import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import PosModals from '../../core/modals/pos-modal/posModalstjsx';
+import CounterTwo from '../../components/counter/counterTwo';
 import {
   card,
   cashIcon,
@@ -36,12 +36,12 @@ import {
   posProduct16,
   posProduct17,
   posProduct18,
-  product4,
-} from "../../utils/imagepath";
-import CommonSelect from "../../components/select/common-select";
+  product4
+} from '../../utils/imagepath';
+import CommonSelect from '../../components/select/common-select';
 
 const Pos4 = () => {
-  const [activeTab, setActiveTab] = useState("all");
+  const [activeTab, setActiveTab] = useState('all');
   const [showAlert1, setShowAlert1] = useState(true);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
 
@@ -58,70 +58,65 @@ const Pos4 = () => {
       {
         breakpoint: 992,
         settings: {
-          slidesToShow: 8,
-        },
+          slidesToShow: 8
+        }
       },
       {
         breakpoint: 800,
         settings: {
-          slidesToShow: 5,
-        },
+          slidesToShow: 5
+        }
       },
       {
         breakpoint: 776,
         settings: {
-          slidesToShow: 2,
-        },
+          slidesToShow: 2
+        }
       },
       {
         breakpoint: 567,
         settings: {
-          slidesToShow: 1,
-        },
-      },
-    ],
+          slidesToShow: 1
+        }
+      }
+    ]
   };
   const options = [
-    { value: "walkInCustomer", label: "Walk in Customer" },
-    { value: "john", label: "John" },
-    { value: "smith", label: "Smith" },
-    { value: "ana", label: "Ana" },
-    { value: "elza", label: "Elza" },
+    { value: 'walkInCustomer', label: 'Walk in Customer' },
+    { value: 'john', label: 'John' },
+    { value: 'smith', label: 'Smith' },
+    { value: 'ana', label: 'Ana' },
+    { value: 'elza', label: 'Elza' }
   ];
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
-      const productInfo = target.closest(".product-info") as HTMLElement | null;
+      const productInfo = target.closest('.product-info') as HTMLElement | null;
 
       if (productInfo) {
-        productInfo.classList.toggle("active");
+        productInfo.classList.toggle('active');
 
-        const emptyCart = document.querySelector(
-          ".product-wrap .empty-cart"
-        ) as HTMLElement | null;
-        const productList = document.querySelector(
-          ".product-wrap .product-list"
-        ) as HTMLElement | null;
+        const emptyCart = document.querySelector('.product-wrap .empty-cart') as HTMLElement | null;
+        const productList = document.querySelector('.product-wrap .product-list') as HTMLElement | null;
 
-        const hasActive =
-          document.querySelectorAll(".product-info.active").length > 0;
+        const hasActive = document.querySelectorAll('.product-info.active').length > 0;
 
         if (hasActive) {
-          if (emptyCart) emptyCart.style.display = "none";
-          if (productList) productList.style.display = "flex";
+          if (emptyCart) emptyCart.style.display = 'none';
+          if (productList) productList.style.display = 'flex';
         } else {
-          if (emptyCart) emptyCart.style.display = "flex";
-          if (productList) productList.style.display = "none";
+          if (emptyCart) emptyCart.style.display = 'flex';
+          if (productList) productList.style.display = 'none';
         }
       }
     };
 
-    document.addEventListener("click", handleClick);
-    document.body.classList.add("pos-page");
+    document.addEventListener('click', handleClick);
+    document.body.classList.add('pos-page');
 
     return () => {
-      document.removeEventListener("click", handleClick);
-      document.body.classList.remove("pos-page");
+      document.removeEventListener('click', handleClick);
+      document.body.classList.remove('pos-page');
     };
   }, [Location.pathname, showAlert1]);
 
@@ -143,26 +138,15 @@ const Pos4 = () => {
                       <span className="input-icon-addon">
                         <i className="ti ti-search" />
                       </span>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder="Search Product"
-                      />
+                      <input type="text" className="form-control" placeholder="Search Product" />
                     </div>
                     <Link to="#" className="btn btn-sm btn-primary">
                       View All Categories
                     </Link>
                   </div>
                 </div>
-                <Slider
-                  {...settings}
-                  className="tabs owl-carousel pos-category3 mb-4"
-                >
-                  <li
-                    onClick={() => setActiveTab("all")}
-                    className={`owl-item ${activeTab === "all" ? "active" : ""}`}
-                    id="all"
-                  >
+                <Slider {...settings} className="tabs owl-carousel pos-category3 mb-4">
+                  <li onClick={() => setActiveTab('all')} className={`owl-item ${activeTab === 'all' ? 'active' : ''}`} id="all">
                     <Link to="#">
                       <img src={category1} alt="Categories" />
                     </Link>
@@ -171,8 +155,8 @@ const Pos4 = () => {
                     </h6>
                   </li>
                   <li
-                    onClick={() => setActiveTab("headphones")}
-                    className={`owl-item ${activeTab === "headphones" ? "active" : ""}`}
+                    onClick={() => setActiveTab('headphones')}
+                    className={`owl-item ${activeTab === 'headphones' ? 'active' : ''}`}
                     id="headphones"
                   >
                     <Link to="#">
@@ -182,11 +166,7 @@ const Pos4 = () => {
                       <Link to="#">Headphones</Link>
                     </h6>
                   </li>
-                  <li
-                    onClick={() => setActiveTab("shoes")}
-                    className={`owl-item ${activeTab === "shoes" ? "active" : ""}`}
-                    id="shoes"
-                  >
+                  <li onClick={() => setActiveTab('shoes')} className={`owl-item ${activeTab === 'shoes' ? 'active' : ''}`} id="shoes">
                     <Link to="#">
                       <img src={category3} alt="Categories" />
                     </Link>
@@ -195,8 +175,8 @@ const Pos4 = () => {
                     </h6>
                   </li>
                   <li
-                    onClick={() => setActiveTab("mobiles")}
-                    className={`owl-item ${activeTab === "mobiles" ? "active" : ""}`}
+                    onClick={() => setActiveTab('mobiles')}
+                    className={`owl-item ${activeTab === 'mobiles' ? 'active' : ''}`}
                     id="mobiles"
                   >
                     <Link to="#">
@@ -207,8 +187,8 @@ const Pos4 = () => {
                     </h6>
                   </li>
                   <li
-                    onClick={() => setActiveTab("watches")}
-                    className={`owl-item ${activeTab === "watches" ? "active" : ""}`}
+                    onClick={() => setActiveTab('watches')}
+                    className={`owl-item ${activeTab === 'watches' ? 'active' : ''}`}
                     id="watches"
                   >
                     <Link to="#">
@@ -219,8 +199,8 @@ const Pos4 = () => {
                     </h6>
                   </li>
                   <li
-                    onClick={() => setActiveTab("laptops")}
-                    className={`owl-item ${activeTab === "laptops" ? "active" : ""}`}
+                    onClick={() => setActiveTab('laptops')}
+                    className={`owl-item ${activeTab === 'laptops' ? 'active' : ''}`}
                     id="laptops"
                   >
                     <Link to="#">
@@ -231,8 +211,8 @@ const Pos4 = () => {
                     </h6>
                   </li>
                   <li
-                    onClick={() => setActiveTab("homeneed")}
-                    className={`owl-item ${activeTab === "homeneed" ? "active" : ""}`}
+                    onClick={() => setActiveTab('homeneed')}
+                    className={`owl-item ${activeTab === 'homeneed' ? 'active' : ''}`}
                     id="homeneed"
                   >
                     <Link to="#">
@@ -243,8 +223,8 @@ const Pos4 = () => {
                     </h6>
                   </li>
                   <li
-                    onClick={() => setActiveTab("headphone")}
-                    className={`owl-item ${activeTab === "headphone" ? "active" : ""}`}
+                    onClick={() => setActiveTab('headphone')}
+                    className={`owl-item ${activeTab === 'headphone' ? 'active' : ''}`}
                     id="headphone"
                   >
                     <Link to="#">
@@ -257,10 +237,7 @@ const Pos4 = () => {
                 </Slider>
                 <div className="pos-products">
                   <div className="tabs_container">
-                    <div
-                      className={`tab_content ${activeTab === "all" ? "active" : ""} `}
-                      data-tab="all"
-                    >
+                    <div className={`tab_content ${activeTab === 'all' ? 'active' : ''} `} data-tab="all">
                       <div className="row row-cols-xxl-5 g-3">
                         <div className="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl">
                           <div
@@ -296,9 +273,7 @@ const Pos4 = () => {
                                 <Link to="#">Apple Airpods 2</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $120
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$120</h6>
                                 <p className="text-pink">25 Pcs</p>
                               </div>
                             </div>
@@ -318,9 +293,7 @@ const Pos4 = () => {
                                 <Link to="#">Vacuum Cleaner</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $800
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$800</h6>
                                 <p className="text-pink">12 Pcs</p>
                               </div>
                             </div>
@@ -340,9 +313,7 @@ const Pos4 = () => {
                                 <Link to="#">Realme 8 Pro</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $700
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$700</h6>
                                 <p className="text-pink">18 Pcs</p>
                               </div>
                             </div>
@@ -362,9 +333,7 @@ const Pos4 = () => {
                                 <Link to="#">Vacuum Robot</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $600
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$600</h6>
                                 <p className="text-pink">35 Pcs</p>
                               </div>
                             </div>
@@ -384,9 +353,7 @@ const Pos4 = () => {
                                 <Link to="#">Apple Watch Series 9</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $300
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$300</h6>
                                 <p className="text-pink">08 Pcs</p>
                               </div>
                             </div>
@@ -406,9 +373,7 @@ const Pos4 = () => {
                                 <Link to="#">Apple Watch Series 9</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $300
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$300</h6>
                                 <p className="text-pink">08 Pcs</p>
                               </div>
                             </div>
@@ -428,9 +393,7 @@ const Pos4 = () => {
                                 <Link to="#">Bracelet</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $1430
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$1430</h6>
                                 <p className="text-pink">13 Pcs</p>
                               </div>
                             </div>
@@ -450,9 +413,7 @@ const Pos4 = () => {
                                 <Link to="#">YETI Flask</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $1560
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$1560</h6>
                                 <p className="text-pink">30 Pcs</p>
                               </div>
                             </div>
@@ -472,9 +433,7 @@ const Pos4 = () => {
                                 <Link to="#">Osmo Med Kit</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $410
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$410</h6>
                                 <p className="text-pink">15 Pcs</p>
                               </div>
                             </div>
@@ -494,9 +453,7 @@ const Pos4 = () => {
                                 <Link to="#">Celestique Perfume</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $150
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$150</h6>
                                 <p className="text-pink">45 Pcs</p>
                               </div>
                             </div>
@@ -516,9 +473,7 @@ const Pos4 = () => {
                                 <Link to="#">Dell XPS 13</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $1140
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$1140</h6>
                                 <p className="text-pink">22 Pcs</p>
                               </div>
                             </div>
@@ -558,9 +513,7 @@ const Pos4 = () => {
                                 <Link to="#">Blue Boot Shoes</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $320
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$320</h6>
                                 <p className="text-pink">30 Pcs</p>
                               </div>
                             </div>
@@ -580,9 +533,7 @@ const Pos4 = () => {
                                 <Link to="#">Sonic Aura X7</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $230
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$230</h6>
                                 <p className="text-pink">20 Pcs</p>
                               </div>
                             </div>
@@ -602,9 +553,7 @@ const Pos4 = () => {
                                 <Link to="#">Brown Formal Shoes</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $160
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$160</h6>
                                 <p className="text-pink">13 Pcs</p>
                               </div>
                             </div>
@@ -624,9 +573,7 @@ const Pos4 = () => {
                                 <Link to="#">Apple Iphone 13 </Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $1200
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$1200</h6>
                                 <p className="text-pink">15 Pcs</p>
                               </div>
                             </div>
@@ -646,9 +593,7 @@ const Pos4 = () => {
                                 <Link to="#">PixelCrafter 3000</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $900
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$900</h6>
                                 <p className="text-pink">20 Pcs</p>
                               </div>
                             </div>
@@ -688,9 +633,7 @@ const Pos4 = () => {
                                 <Link to="#">Aroma Coffee Maker</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $170
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$170</h6>
                                 <p className="text-pink">35 Pcs</p>
                               </div>
                             </div>
@@ -698,10 +641,7 @@ const Pos4 = () => {
                         </div>
                       </div>
                     </div>
-                    <div
-                      className={`tab_content ${activeTab === "headphones" ? "active" : ""} `}
-                      data-tab="headphones"
-                    >
+                    <div className={`tab_content ${activeTab === 'headphones' ? 'active' : ''} `} data-tab="headphones">
                       <div className="row row-cols-xxl-5 g-3">
                         <div className="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl">
                           <div
@@ -717,9 +657,7 @@ const Pos4 = () => {
                                 <Link to="#">Apple Airpods 2</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $120
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$120</h6>
                                 <p className="text-pink">25 Pcs</p>
                               </div>
                             </div>
@@ -739,9 +677,7 @@ const Pos4 = () => {
                                 <Link to="#">Sonic Aura X7</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $1200
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$1200</h6>
                                 <p className="text-pink">15 Pcs</p>
                               </div>
                             </div>
@@ -749,10 +685,7 @@ const Pos4 = () => {
                         </div>
                       </div>
                     </div>
-                    <div
-                      className={`tab_content ${activeTab === "shoes" ? "active" : ""} `}
-                      data-tab="shoes"
-                    >
+                    <div className={`tab_content ${activeTab === 'shoes' ? 'active' : ''} `} data-tab="shoes">
                       <div className="row row-cols-xxl-5 g-3">
                         <div className="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl">
                           <div
@@ -768,9 +701,7 @@ const Pos4 = () => {
                                 <Link to="#">Blue Boot Shoes</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $320
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$320</h6>
                                 <p className="text-pink">30 Pcs</p>
                               </div>
                             </div>
@@ -790,9 +721,7 @@ const Pos4 = () => {
                                 <Link to="#">Brown Formal Shoes</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $160
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$160</h6>
                                 <p className="text-pink">13 Pcs</p>
                               </div>
                             </div>
@@ -800,10 +729,7 @@ const Pos4 = () => {
                         </div>
                       </div>
                     </div>
-                    <div
-                      className={`tab_content ${activeTab === "mobiles" ? "active" : ""} `}
-                      data-tab="mobiles"
-                    >
+                    <div className={`tab_content ${activeTab === 'mobiles' ? 'active' : ''} `} data-tab="mobiles">
                       <div className="row row-cols-xxl-5 g-3">
                         <div className="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl">
                           <div
@@ -839,9 +765,7 @@ const Pos4 = () => {
                                 <Link to="#">Realme 8 Pro</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $700
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$700</h6>
                                 <p className="text-pink">18 Pcs</p>
                               </div>
                             </div>
@@ -861,9 +785,7 @@ const Pos4 = () => {
                                 <Link to="#">Apple Iphone 13 </Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $1200
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$1200</h6>
                                 <p className="text-pink">15 Pcs</p>
                               </div>
                             </div>
@@ -871,10 +793,7 @@ const Pos4 = () => {
                         </div>
                       </div>
                     </div>
-                    <div
-                      className={`tab_content ${activeTab === "watches" ? "active" : ""} `}
-                      data-tab="watches"
-                    >
+                    <div className={`tab_content ${activeTab === 'watches' ? 'active' : ''} `} data-tab="watches">
                       <div className="row row-cols-xxl-5 g-3">
                         <div className="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl">
                           <div
@@ -890,9 +809,7 @@ const Pos4 = () => {
                                 <Link to="#">Apple Watch Series 9</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $300
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$300</h6>
                                 <p className="text-pink">08 Pcs</p>
                               </div>
                             </div>
@@ -900,10 +817,7 @@ const Pos4 = () => {
                         </div>
                       </div>
                     </div>
-                    <div
-                      className={`tab_content ${activeTab === "laptops" ? "active" : ""} `}
-                      data-tab="laptops"
-                    >
+                    <div className={`tab_content ${activeTab === 'laptops' ? 'active' : ''} `} data-tab="laptops">
                       <div className="row row-cols-xxl-5">
                         <div className="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl">
                           <div
@@ -919,9 +833,7 @@ const Pos4 = () => {
                                 <Link to="#">Dell XPS 13</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $1140
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$1140</h6>
                                 <p className="text-pink">22 Pcs</p>
                               </div>
                             </div>
@@ -949,10 +861,7 @@ const Pos4 = () => {
                         </div>
                       </div>
                     </div>
-                    <div
-                      className={`tab_content ${activeTab === "homeneed" ? "active" : ""} `}
-                      data-tab="homeneed"
-                    >
+                    <div className={`tab_content ${activeTab === 'homeneed' ? 'active' : ''} `} data-tab="homeneed">
                       <div className="row row-cols-xxl-5">
                         <div className="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl">
                           <div
@@ -968,9 +877,7 @@ const Pos4 = () => {
                                 <Link to="#">Vacuum Cleaner</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $800
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$800</h6>
                                 <p className="text-pink">12 Pcs</p>
                               </div>
                             </div>
@@ -990,9 +897,7 @@ const Pos4 = () => {
                                 <Link to="#">Vacuum Robot</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $600
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$600</h6>
                                 <p className="text-pink">35 Pcs</p>
                               </div>
                             </div>
@@ -1052,9 +957,7 @@ const Pos4 = () => {
                                 <Link to="#">Aroma Coffee Maker</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $170
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$170</h6>
                                 <p className="text-pink">35 Pcs</p>
                               </div>
                             </div>
@@ -1062,10 +965,7 @@ const Pos4 = () => {
                         </div>
                       </div>
                     </div>
-                    <div
-                      className={`tab_content ${activeTab === "headphone" ? "active" : ""} `}
-                      data-tab="headphone"
-                    >
+                    <div className={`tab_content ${activeTab === 'headphone' ? 'active' : ''} `} data-tab="headphone">
                       <div className="row row-cols-xxl-5">
                         <div className="col-sm-6 col-md-6 col-lg-4 col-xl-3 col-xxl">
                           <div
@@ -1081,9 +981,7 @@ const Pos4 = () => {
                                 <Link to="#">Apple Airpods 2</Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $120
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$120</h6>
                                 <p className="text-pink">25 Pcs</p>
                               </div>
                             </div>
@@ -1103,9 +1001,7 @@ const Pos4 = () => {
                                 <Link to="#">Apple Iphone 13 </Link>
                               </h6>
                               <div className="d-flex align-items-center justify-content-between">
-                                <h6 className="text-teal fs-14 fw-bold">
-                                  $1200
-                                </h6>
+                                <h6 className="text-teal fs-14 fw-bold">$1200</h6>
                                 <p className="text-pink">15 Pcs</p>
                               </div>
                             </div>
@@ -1125,16 +1021,9 @@ const Pos4 = () => {
                   <div className="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
                     <div className="d-flex align-items-center">
                       <h4 className="mb-0">New Order</h4>
-                      <span className="badge badge-purple badge-xs fs-10 fw-medium ms-2">
-                        #5655898
-                      </span>
+                      <span className="badge badge-purple badge-xs fs-10 fw-medium ms-2">#5655898</span>
                     </div>
-                    <Link
-                      to="#"
-                      className="btn btn-sm btn-outline-primary shadow-primary"
-                      data-bs-toggle="modal"
-                      data-bs-target="#create"
-                    >
+                    <Link to="#" className="btn btn-sm btn-outline-primary shadow-primary" data-bs-toggle="modal" data-bs-target="#create">
                       Add Customer
                     </Link>
                   </div>
@@ -1149,9 +1038,7 @@ const Pos4 = () => {
                 </div>
                 <div className="product-added block-section">
                   <div className="d-flex align-items-center justify-content-between gap-3 mb-3">
-                    <h5 className="d-flex align-items-center mb-0">
-                      Order Details
-                    </h5>
+                    <h5 className="d-flex align-items-center mb-0">Order Details</h5>
                     <div className="badge bg-light text-gray-9 fs-12 fw-semibold py-2 border rounded">
                       Items : <span className="text-teal">3</span>
                     </div>
@@ -1168,9 +1055,7 @@ const Pos4 = () => {
                         <table className="table table-borderless">
                           <thead>
                             <tr>
-                              <th className="bg-transparent fw-bold">
-                                Product
-                              </th>
+                              <th className="bg-transparent fw-bold">Product</th>
                               <th className="bg-transparent fw-bold">QTY</th>
                               <th className="bg-transparent fw-bold">Price</th>
                               <th className="bg-transparent fw-bold text-end" />
@@ -1181,20 +1066,11 @@ const Pos4 = () => {
                               <td>
                                 <div className="d-flex align-items-center mb-1">
                                   <h6 className="fs-16 fw-medium">
-                                    <Link
-                                      to="#"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#products"
-                                    >
+                                    <Link to="#" data-bs-toggle="modal" data-bs-target="#products">
                                       Iphone 11S
                                     </Link>
                                   </h6>
-                                  <Link
-                                    to="#"
-                                    className="ms-2 edit-icon"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#edit-product"
-                                  >
+                                  <Link to="#" className="ms-2 edit-icon" data-bs-toggle="modal" data-bs-target="#edit-product">
                                     <i className="ti ti-edit" />
                                   </Link>
                                 </div>
@@ -1207,12 +1083,7 @@ const Pos4 = () => {
                               </td>
                               <td className="fw-bold">$400</td>
                               <td className="text-end">
-                                <Link
-                                  className="btn-icon delete-icon"
-                                  to="#"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#delete"
-                                >
+                                <Link className="btn-icon delete-icon" to="#" data-bs-toggle="modal" data-bs-target="#delete">
                                   <i className="ti ti-trash" />
                                 </Link>
                               </td>
@@ -1221,20 +1092,11 @@ const Pos4 = () => {
                               <td>
                                 <div className="d-flex align-items-center mb-1">
                                   <h6 className="fs-16 fw-medium">
-                                    <Link
-                                      to="#"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#products"
-                                    >
+                                    <Link to="#" data-bs-toggle="modal" data-bs-target="#products">
                                       Samsung Galaxy S21
                                     </Link>
                                   </h6>
-                                  <Link
-                                    to="#"
-                                    className="ms-2 edit-icon"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#edit-product"
-                                  >
+                                  <Link to="#" className="ms-2 edit-icon" data-bs-toggle="modal" data-bs-target="#edit-product">
                                     <i className="ti ti-edit" />
                                   </Link>
                                 </div>
@@ -1247,12 +1109,7 @@ const Pos4 = () => {
                               </td>
                               <td className="fw-bold">$400</td>
                               <td className="text-end">
-                                <Link
-                                  className="btn-icon delete-icon"
-                                  to="#"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#delete"
-                                >
+                                <Link className="btn-icon delete-icon" to="#" data-bs-toggle="modal" data-bs-target="#delete">
                                   <i className="ti ti-trash" />
                                 </Link>
                               </td>
@@ -1261,20 +1118,11 @@ const Pos4 = () => {
                               <td>
                                 <div className="d-flex align-items-center mb-1">
                                   <h6 className="fs-16 fw-medium">
-                                    <Link
-                                      to="#"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#products"
-                                    >
+                                    <Link to="#" data-bs-toggle="modal" data-bs-target="#products">
                                       Red Boot Shoes
                                     </Link>
                                   </h6>
-                                  <Link
-                                    to="#"
-                                    className="ms-2 edit-icon"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#edit-product"
-                                  >
+                                  <Link to="#" className="ms-2 edit-icon" data-bs-toggle="modal" data-bs-target="#edit-product">
                                     <i className="ti ti-edit" />
                                   </Link>
                                 </div>
@@ -1287,12 +1135,7 @@ const Pos4 = () => {
                               </td>
                               <td className="fw-bold">$600</td>
                               <td className="text-end">
-                                <Link
-                                  className="btn-icon delete-icon"
-                                  to="#"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#delete"
-                                >
+                                <Link className="btn-icon delete-icon" to="#" data-bs-toggle="modal" data-bs-target="#delete">
                                   <i className="ti ti-trash" />
                                 </Link>
                               </td>
@@ -1301,20 +1144,11 @@ const Pos4 = () => {
                               <td>
                                 <div className="d-flex align-items-center mb-1">
                                   <h6 className="fs-16 fw-medium">
-                                    <Link
-                                      to="#"
-                                      data-bs-toggle="modal"
-                                      data-bs-target="#products"
-                                    >
+                                    <Link to="#" data-bs-toggle="modal" data-bs-target="#products">
                                       Bracelet
                                     </Link>
                                   </h6>
-                                  <Link
-                                    to="#"
-                                    className="ms-2 edit-icon"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#edit-product"
-                                  >
+                                  <Link to="#" className="ms-2 edit-icon" data-bs-toggle="modal" data-bs-target="#edit-product">
                                     <i className="ti ti-edit" />
                                   </Link>
                                 </div>
@@ -1327,12 +1161,7 @@ const Pos4 = () => {
                               </td>
                               <td className="fw-bold">$1400</td>
                               <td className="text-end">
-                                <Link
-                                  className="btn-icon delete-icon"
-                                  to="#"
-                                  data-bs-toggle="modal"
-                                  data-bs-target="#delete"
-                                >
+                                <Link className="btn-icon delete-icon" to="#" data-bs-toggle="modal" data-bs-target="#delete">
                                   <i className="ti ti-trash" />
                                 </Link>
                               </td>
@@ -1412,10 +1241,7 @@ const Pos4 = () => {
                         <i className="ti ti-receipt-tax me-2" />
                         Tax
                       </Link>
-                      <Link
-                        to="#"
-                        className="btn btn-info d-flex align-items-center justify-content-center w-100 mb-2"
-                      >
+                      <Link to="#" className="btn btn-info d-flex align-items-center justify-content-center w-100 mb-2">
                         <i className="ti ti-trash me-2" />
                         Void
                       </Link>
@@ -1464,56 +1290,31 @@ const Pos4 = () => {
                   <h5 className="mb-2">Select Payment</h5>
                   <div className="row align-items-center justify-content-center methods g-2 mb-4">
                     <div className="col-sm-6 col-md-4 col-xl d-flex">
-                      <Link
-                        to="#"
-                        className="payment-item flex-fill"
-                        data-bs-toggle="modal"
-                        data-bs-target="#payment-cash"
-                      >
+                      <Link to="#" className="payment-item flex-fill" data-bs-toggle="modal" data-bs-target="#payment-cash">
                         <img src={cashIcon} alt="img" />
                         <p className="fw-medium">Cash</p>
                       </Link>
                     </div>
                     <div className="col-sm-6 col-md-4 col-xl d-flex">
-                      <Link
-                        to="#"
-                        className="payment-item flex-fill"
-                        data-bs-toggle="modal"
-                        data-bs-target="#payment-card"
-                      >
+                      <Link to="#" className="payment-item flex-fill" data-bs-toggle="modal" data-bs-target="#payment-card">
                         <img src={card} alt="img" />
                         <p className="fw-medium">Card</p>
                       </Link>
                     </div>
                     <div className="col-sm-6 col-md-4 col-xl d-flex">
-                      <Link
-                        to="#"
-                        className="payment-item flex-fill"
-                        data-bs-toggle="modal"
-                        data-bs-target="#payment-points"
-                      >
+                      <Link to="#" className="payment-item flex-fill" data-bs-toggle="modal" data-bs-target="#payment-points">
                         <img src={points} alt="img" />
                         <p className="fw-medium">Points</p>
                       </Link>
                     </div>
                     <div className="col-sm-6 col-md-4 col-xl d-flex">
-                      <Link
-                        to="#"
-                        className="payment-item flex-fill"
-                        data-bs-toggle="modal"
-                        data-bs-target="#payment-deposit"
-                      >
+                      <Link to="#" className="payment-item flex-fill" data-bs-toggle="modal" data-bs-target="#payment-deposit">
                         <img src={desposit} alt="img" />
                         <p className="fw-medium">Deposit</p>
                       </Link>
                     </div>
                     <div className="col-sm-6 col-md-4 col-xl d-flex">
-                      <Link
-                        to="#"
-                        className="payment-item flex-fill"
-                        data-bs-toggle="modal"
-                        data-bs-target="#payment-cheque"
-                      >
+                      <Link to="#" className="payment-item flex-fill" data-bs-toggle="modal" data-bs-target="#payment-cheque">
                         <img src={cheque} alt="img" />
                         <p className="fw-medium">Cheque</p>
                       </Link>
